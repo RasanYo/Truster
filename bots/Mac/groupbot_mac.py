@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
 import time, random, csv
 
 # Username and password of your instagram account:
@@ -67,6 +67,18 @@ def check_correct_url(url):
         return False
     return True
 
+def read_file(file):
+    cities = []
+    try:
+        f = open(file, "r")
+        cities =  f.read().splitlines()
+        f.close()
+    except Exception as err:
+        print(f'{type(err)}: {err}')
+    finally:
+        return cities
+     
+
 
 # Authorization:
 def auth():
@@ -95,13 +107,13 @@ def auth():
         browser.quit()
 
 
-def request_group():
-    url = 'https://www.facebook.com/search/groups/?q=apartments%20paris'
+def request_group(city,f):
+    url = f'https://www.facebook.com/search/groups/?q=apartments%20{city}'
     try:
         # Enter in Search bar "milan apartments"
         # time.sleep(1200)
         browser.get(url)
-        print("Searched for milan apartments")
+        print(f"Searched for 'apartments {city}'")
 
         # Click on page to ignore popup
         print("Loading...")
@@ -110,26 +122,41 @@ def request_group():
     except Exception as err:
         print(f'{type(err)}: {err}')
 
-    # Open csv file with group-names
-    f = open('/Users/meneliknouvellon/Documents/HTML/Menesite/bots/group_list.txt', 'w')
+    
+
+    empty_click()
+
 
     print("Scrolling...")
     for i in range(3):
         browser.execute_script("window.scrollBy(0,1000);")
+        time.sleep(0.5)
 
+    
+    print("Looking for join buttons")
     join_buttons = browser.find_elements(By.XPATH, "//span[text()='Join']")
     i = 1
     for button in join_buttons:
-        group_name = browser.find_element(By.XPATH,
+        try:
+            group_name = browser.find_element(By.XPATH,
                                               f'/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div[{i}]/div/div/div/div/div/div/div[2]/div[1]/div/div/div[1]/span/div/a').text
-        group_link = browser.find_element(By.LINK_TEXT, group_name)
-        button.click()
-        empty_click()
-        print(group_link)
-        #write_to(f, group_link)
-        i = i + 1
+            group_link = browser.find_element(By.LINK_TEXT, group_name).get_attribute('href')
 
-
+            button.click()
+            empty_click()
+            print(f"Adding link of '{group_name}' to txt file: {group_link}")
+            write_to(f, group_link)
+        except UnicodeEncodeError:
+            print("Couldn't recognize characters in name. Skipping group")
+        except ElementClickInterceptedException:
+            empty_click()
+            time.sleep(0.5)
+        except Exception as err:
+            print(f'{type(err)}: {err}')
+            return
+        
+        finally:
+            i = i + 1
 
     return
     # while True:
@@ -172,6 +199,15 @@ def request_group():
 
         
 auth()
-request_group()
+# Open csv file with group-names
+print("Opening group_list.txt...")
+f = open('/Users/meneliknouvellon/Documents/HTML/Menesite/bots/group_list.txt', 'a')
+print("Reading cities.txt...")
+cities = read_file("/Users/meneliknouvellon/Documents/HTML/Menesite/bots/cities.txt")
+for city in cities[0:2]:
+
+    request_group(city,f)
+    
+f.close()
 browser.close()
 
