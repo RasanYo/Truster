@@ -10,18 +10,9 @@ import time, random, csv
 my_username = 'rasanhy@gmail.com'
 my_password = 'procf888'
 
-# Instagram username list for DM:
-usernames = ['user1', 'user2', 'user3']
-
-# Messages:
-messages = ['Hey! Pls follow my page', 'Hey, how you doing?', 'Hey']
-
-# Delay time between messages in sec:
-between_messages = 2000
 
 browser = webdriver.Chrome('chromedriver.exe')
 
-NOT_NOW_XPATH = '/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div[3]/div[2]/div/div[2]/div/div[1]/div[2]'
 
 
 def write_to(file, text):
@@ -200,7 +191,7 @@ def request_group(city,f):
 
         
 auth()
-# Open csv file with group-names
+# Open file with group-names
 print("Opening group_list.txt...")
 f = open('group_list.txt', 'a')
 print("Reading cities.txt...")
