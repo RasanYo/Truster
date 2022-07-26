@@ -19,7 +19,7 @@ messages = ['Hey! Pls follow my page', 'Hey, how you doing?', 'Hey']
 # Delay time between messages in sec:
 between_messages = 2000
 
-browser = webdriver.Chrome('./chromedriver')
+browser = webdriver.Chrome('chromedriver.exe')
 
 NOT_NOW_XPATH = '/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div[3]/div[2]/div/div[2]/div/div[1]/div[2]'
 
@@ -143,7 +143,8 @@ def request_group(city,f):
             group_link = browser.find_element(By.LINK_TEXT, group_name).get_attribute('href')
 
             button.click()
-            empty_click()
+            time.sleep(1)   #Wait 1 sec to wait for potential popup window
+            empty_click()   #Empty click event for ignoring popup window
             print(f"Adding link of '{group_name}' to txt file: {group_link}")
             write_to(f, group_link)
         except UnicodeEncodeError:
@@ -201,13 +202,12 @@ def request_group(city,f):
 auth()
 # Open csv file with group-names
 print("Opening group_list.txt...")
-f = open('/Users/meneliknouvellon/Documents/HTML/Menesite/bots/group_list.txt', 'a')
+f = open('group_list.txt', 'a')
 print("Reading cities.txt...")
-cities = read_file("/Users/meneliknouvellon/Documents/HTML/Menesite/bots/cities.txt")
-for city in cities[0:2]:
+cities = read_file("cities.txt")
+for city in cities:
 
     request_group(city,f)
     
 f.close()
 browser.close()
-
