@@ -1,0 +1,117 @@
+from abc import ABC, abstractmethod
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException
+import time, random
+
+# Basic Bot architecture
+class AbstractBot(ABC):
+    
+    
+    def __init__(self, my_username, my_password, web_driver):
+        self.my_username = my_username
+        self.my_password = my_password
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        self.browser = webdriver.Chrome(web_driver, options=options)
+    
+    def write_to(self, file, text):
+        file.write(text + "\n")
+        print("     Requested " + text)
+
+
+    def sleep(self, t):
+        time.sleep(random.randrange(t, 2 * t))
+
+
+    def check_exists_by_xpath(self, xpath):
+        try:
+            self.browser.find_element(By.XPATH, xpath)
+        except NoSuchElementException:
+            return False
+        return True
+
+    def check_exists_by_css(self, css):
+        try:
+            self.browser.find_element(By.CSS_SELECTOR, css)
+        except NoSuchElementException:
+            return False
+        return True
+
+    def wait_until_shows_css(self, css):
+        while not self.check_exists_by_css(css):
+            time.sleep(0.5)
+        time.sleep(0.2)
+
+    def wait_until_shows(self, xpath):
+        while not self.check_exists_by_xpath(xpath):
+            time.sleep(0.5)
+        time.sleep(0.2)
+
+
+    def empty_click(self):
+        self.browser.find_element(By.XPATH, 'html').click()
+        self.sleep(1)
+
+
+    def click_on(self, xpath, wait=False):
+        if wait: self.wait_until_shows(xpath)
+        self.browser.find_element(By.XPATH, xpath).click()
+
+    def check_correct_url(self, url):
+        if self.browser.current_url != url:
+            print("Left group page. Redirecting...")
+            self.browser.get(url)
+            self.sleep(2)
+            self.empty_click()
+            self.sleep(2)
+
+            return False
+        return True
+
+    def read_file(self, file):
+        cities = []
+        try:
+            f = open(file, "r")
+            cities =  f.read().splitlines()
+            f.close()
+        except Exception as err:
+            print(f'{type(err)}: {err}')
+        finally:
+            return cities
+        
+    def close_browser(self):
+        self.browser.close()
+        
+
+
+    # Authorization:
+    def auth(self):
+        try:
+            self.browser.get('https://www.facebook.com/')
+            # sleep(1200)
+            self.sleep(1)
+
+            # Press ENTER to access page behind cookie-popup
+            self.browser.find_element(By.XPATH, 'html').send_keys(Keys.ENTER)
+
+            input_username = self.browser.find_element(By.ID, 'email')
+            input_password = self.browser.find_element(By.ID, 'pass')
+
+            input_username.send_keys(self.my_username)
+            input_password.send_keys(self.my_password)
+            input_password.send_keys(Keys.ENTER)
+
+            print("Logged in")
+            print("Loading facebook page...")
+            time.sleep(2)
+
+
+        except Exception as err:
+            print(err)
+            self.browser.quit()
+            
+    @abstractmethod
+    def scrape(self):
+        pass
