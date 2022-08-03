@@ -1,3 +1,4 @@
+import re
 from AbstractBot import AbstractBot
 import time
 from selenium.webdriver.common.by import By
@@ -74,8 +75,12 @@ class GroupBot(AbstractBot):
         f = open('group_list.txt', 'a')
         print("Reading cities.txt...")
         cities = self.read_file("cities.txt")
+
+        requested = open('requestedCities.txt','a')
         for city in cities:
             self.request_group(city,f)
+            self.write_to(requested, city)
+            
         
         f.close()
         self.close_browser()
