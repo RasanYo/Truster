@@ -72,15 +72,21 @@ class GroupBot(AbstractBot):
         self.auth()
         # Open file with group-names
         print("Opening group_list.txt...")
-        f = open('group_list.txt', 'a')
+        f = open('group_links.txt', 'a')
         print("Reading cities.txt...")
-        cities = self.read_file("cities.txt")
+
+        cities_file = open("cities.txt","a")
+        cities = self.read_file(cities_file)
 
         requested = open('requestedCities.txt','a')
+
         for city in cities:
             self.request_group(city,f)
             self.write_to(requested, city)
-            
+            self.delete_line(cities_file)
+
         
         f.close()
+        requested.close()
         self.close_browser()
+        

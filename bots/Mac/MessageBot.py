@@ -41,6 +41,14 @@ class MessageBot(AbstractBot):
     # We iterate over all links in teh group_list.txt file and post our custom message on their feed
     def scrape(self):
         self.auth()
-        for group in self.read_file("group_list.txt"):
+
+        requested = open('requestedCities.txt','a')
+        group_links_file = open("group_list.txt","a")
+
+        for group in self.read_file(group_links_file):
             self.post_message(self.msg, group)
+            self.write_to(requested, group)
+            self.delete_line(group_links_file,0) #delete first line
+
+        requested.close()
         self.close_browser()

@@ -86,12 +86,10 @@ class AbstractBot(ABC):
             return False
         return True
 
-    def read_file(self, file):
+    def read_file(self, f):
         cities = []
         try:
-            f = open(file, "r")
             cities =  f.read().splitlines()
-            f.close()
         except Exception as err:
             print(f'{type(err)}: {err}')
         finally:
