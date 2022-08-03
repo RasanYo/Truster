@@ -21,22 +21,20 @@ class AbstractBot(ABC):
         file.write(text + "\n")
         print("     Requested " + text)
         
-    def delete_line(self, file, line):
-        with open(file, 'r+') as fp:
-            
-            lines = fp.readlines()
-            
-            # move file pointer to the beginning of a file
-            fp.seek(0)
-            # truncate the file
-            fp.truncate()
-            
-            first_new_line = lines[0:line]
-            second_new_line = lines[line+1:]
-            
-            new_lines = [*first_new_line, *second_new_line]
+    def delete_line(self, fp, line):
+        lines = fp.readlines()
+        
+        # move file pointer to the beginning of a file
+        fp.seek(0)
+        # truncate the file
+        fp.truncate()
+        
+        first_new_line = lines[0:line]
+        second_new_line = lines[line+1:]
+        
+        new_lines = [*first_new_line, *second_new_line]
 
-            fp.writelines(new_lines)
+        fp.writelines(new_lines)
 
 
     def sleep(self, t):
