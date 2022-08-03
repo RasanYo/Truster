@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from readline import set_completer
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -19,6 +20,23 @@ class AbstractBot(ABC):
     def write_to(self, file, text):
         file.write(text + "\n")
         print("     Requested " + text)
+        
+    def delete_line(self, file, line):
+        with open(file, 'r+') as fp:
+            
+            lines = fp.readlines()
+            
+            # move file pointer to the beginning of a file
+            fp.seek(0)
+            # truncate the file
+            fp.truncate()
+            
+            first_new_line = lines[0:line]
+            second_new_line = lines[line+1:]
+            
+            new_lines = [*first_new_line, *second_new_line]
+
+            fp.writelines(new_lines)
 
 
     def sleep(self, t):
