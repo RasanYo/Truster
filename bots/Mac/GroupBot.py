@@ -51,6 +51,8 @@ class GroupBot(AbstractBot):
                 button.click()
                 time.sleep(1)   #Wait 1 sec to wait for potential popup window
                 self.empty_click()   #Empty click event for ignoring popup window
+                self.empty_click()
+                self.empty_click()
                 print(f"Adding link of '{group_name}' to txt file: {group_link}")
                 self.write_to(f, group_link)
             except UnicodeEncodeError:
@@ -75,15 +77,24 @@ class GroupBot(AbstractBot):
         f = open('group_links.txt', 'a')
         print("Reading cities.txt...")
 
-        cities_file = open("cities.txt","a")
+        cities_file = open("cities.txt","r+")
         cities = self.read_file(cities_file)
+        
 
         requested = open('requestedCities.txt','a')
+        cursor_file = open('curseur.txt',"r+")
+        cursor = self.read_file(cursor_file)
 
+        i = 0
         for city in cities:
-            self.request_group(city,f)
-            self.write_to(requested, city)
-            self.delete_line(cities_file)
+            if(int(cursor[0]) < i):
+                self.request_group(city,f)
+                self.write_to(requested, city)
+                self.write_to(cursor_file,i)
+
+
+            i += 1
+            #self.delete_line(cities_file,0)
 
         
         f.close()

@@ -22,7 +22,7 @@ class AbstractBot(ABC):
         print("     Requested " + text)
         
     def delete_line(self, fp, line):
-        lines = fp.readlines()
+        lines = fp.read().splitlines()
         
         # move file pointer to the beginning of a file
         fp.seek(0)
@@ -36,6 +36,10 @@ class AbstractBot(ABC):
 
         fp.writelines(new_lines)
 
+    #en test
+    def delete_first_line(self, fp):
+        data = fp.read().splitlines(True)
+        fp.writelines(data[1:])
 
     def sleep(self, t):
         time.sleep(random.randrange(t, 2 * t))
