@@ -1,6 +1,9 @@
 from Group import Group
 import json
 
+file = "data/test.json"
+group_tag = "groups"
+
 def write_json(file_name, data, write_mode='a'):
     with open(file_name, write_mode) as f:
         json.dump(data, f, indent=4)
@@ -28,16 +31,29 @@ def remove_json_from(file_name, tag, data):
         
         new_data = {tag : data_filtered}
         write_json(file_name, new_data, write_mode='w')
+        
+def filter_groups(file_name):
+    data = read_json(file_name)["groups"]
+    
+    i = 0
+    for group_1 in data:
+        i = i + 1
+        for group_2 in data[i:]:
+            if (group_1["name"] == group_2["name"]) and (group_1["requester_email"] != group_2["requester_email"]):
+                remove_json_from(file, "groups", group_2)
+    
     
 
-groupJSON1 = Group("Test Group", "https://www.facebook.com/", "Milan", False, "test@email.com", "test123").toJSON()
-groupJSON2 = Group("Test Group 2", "https://www.facebook.com/", "Milan", False, "test@email.com", "test123").toJSON()
-groupJSON3 = Group("Test Group 3", "https://www.facebook.com/", "Milan", False, "test@email.com", "test123").toJSON()
+groupJSON1 = Group("Test Group 1", "https://www.facebook.com/", "Milan", False, "test1@email.com", "test123").toJSON()
+groupJSON2 = Group("Test Group 2", "https://www.facebook.com/", "Milan", False, "test2@email.com", "test123").toJSON()
+groupJSON3 = Group("Test Group 3", "https://www.facebook.com/", "Milan", False, "test3@email.com", "test123").toJSON()
+groupJSON4 = Group("Test Group 1", "https://www.facebook.com/", "Milan", False, "test3@email.com", "test123").toJSON()
+
+groups = [groupJSON1, groupJSON2, groupJSON3, groupJSON4]
 
 
+#for group in groups:
+#    append_json(file, "groups", group)
+    
+filter_groups(file)
 
-
-append_json("data/groups.json", "groups", groupJSON2)
-data = read_json("data/groups.json")["groups"]
-for d in data:
-    print(d["name"])

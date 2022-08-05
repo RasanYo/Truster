@@ -99,6 +99,10 @@ class GroupBot(AbstractBot):
         
         print("Looking for join buttons")
         join_buttons = self.browser.find_elements(By.XPATH, "//span[text()='Join']")
+        
+        if len(join_buttons) == 0:
+            join_buttons = self.browser.find_elements(By.XPATH, "//i[@data-visualcompletion='css-img']")
+            
         i = 1
         for button in join_buttons:
             try:
@@ -106,7 +110,6 @@ class GroupBot(AbstractBot):
                 group_name = self.browser.find_element(By.XPATH,
                                                 f'/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div[{i}]/div/div/div/div/div/div/div[2]/div[1]/div/div/div[1]/span/div/a').text
                 group_link = self.browser.find_element(By.LINK_TEXT, group_name).get_attribute('href')
-
                 button.click()
                 time.sleep(1)   #Wait 1 sec to wait for potential popup window
                 self.empty_click()   #Empty click event for ignoring popup window
