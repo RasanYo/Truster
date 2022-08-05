@@ -3,7 +3,7 @@ from MessageBot import MessageBot
 from GroupBot import GroupBot
 import sys
 
-from bots.Mac.AbstractBot import AbstractBot
+from AbstractBot import AbstractBot
 
     
 if __name__ == "__main__":
