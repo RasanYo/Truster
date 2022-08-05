@@ -1,7 +1,10 @@
+from asyncio import SendfileNotAvailableError
+
+import selenium
 from AbstractBot import AbstractBot
 import time
 from selenium.webdriver.common.by import By
-
+from selenium.common import exceptions as SeleniumExceptions
 # Bot which will post on all requested groups a custom message
 class MessageBot(AbstractBot):
     
@@ -35,10 +38,12 @@ class MessageBot(AbstractBot):
             #post_button = self.browser.find_element(By.XPATH, "//span[text()='Post']")
             #post_button.click()
             print(f"Posted message to {url}\n")
+        except SeleniumExceptions.NoSuchElementException:
+            print("Couldn't find necessary element. Skipping group...")
         except Exception as err:
             print(f'{type(err)}: {err}') 
            
-    # We iterate over all links in teh group_list.txt file and post our custom message on their feed
+    # We iterate over all links in the group_list.txt file and post our custom message on their feed
     def scrape(self):
         self.auth()
 
