@@ -52,3 +52,21 @@ class MessageBot(AbstractBot):
 
         requested.close()
         self.close_browser()
+        
+        
+    def scape_with_json(self):
+        self.auth()
+        
+        groups_file_name = "data/groups.json"
+        groups = self.read_json(groups_file_name)["groups"]
+        
+        for group in groups:
+            if group["requested"] == False:
+                self.post_message(self.msg, group["link"])
+                self.remove_json_from(groups_file_name, "groups", group)
+                
+                group["requested"] = True
+                self.append_json_to(groups_file_name, "groups", group)
+        
+        self.close_browser()
+            

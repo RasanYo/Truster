@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from readline import set_completer
+import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -16,7 +16,35 @@ class AbstractBot(ABC):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
         self.browser = webdriver.Chrome(web_driver, options=options)
+        
+    def write_json(self, file_name, data, write_mode='a'):
+        with open(file_name, write_mode) as f:
+            json.dump(data, f, indent=4)
     
+    def read_json(self, file_name):
+        with open(file_name, 'r') as f:
+            data = json.load(f)
+        f.close()
+        return data
+    
+    def append_json_to(self, file_name, tag, data):
+        previous_data = self.read_json(file_name)
+        previous_data = previous_data[tag]
+        previous_data.append(data)
+        
+        new_data = {tag : previous_data}
+        self.write_json(file_name, new_data, write_mode='w')
+        
+    def remove_json_from(self, file_name, tag, data):
+        previous_data = self.read_json(file_name)
+        previous_data = previous_data[tag]
+        
+        data_filtered = list(filter(lambda json_data: json_data != data, previous_data))
+        
+        new_data = {tag : data_filtered}
+        self.write_json(file_name, new_data, write_mode='w')
+
+        
     def write_to(self, file, text):
         file.write(text + "\n")
         print("     Requested " + text)
@@ -35,6 +63,7 @@ class AbstractBot(ABC):
         new_lines = [*first_new_line, *second_new_line]
 
         fp.writelines(new_lines)
+        fp.close()
 
     #en test
     def delete_first_line(self, fp):
