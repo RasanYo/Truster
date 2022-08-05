@@ -93,9 +93,8 @@ class GroupBot(AbstractBot):
 
 
         print("Scrolling...")
-        for i in range(3):
-            self.browser.execute_script("window.scrollBy(0,1000);")
-            time.sleep(0.5)
+        self.browser.execute_script("window.scrollBy(0,1000);")
+        time.sleep(0.5)
 
         
         print("Looking for join buttons")
@@ -164,6 +163,7 @@ class GroupBot(AbstractBot):
         f.close()
         requested.close()
         self.close_browser()
+
             
         
         
