@@ -111,13 +111,10 @@ class GroupBot(AbstractBot):
         i = 1
         for button in join_buttons:
             try:
-                self.check_correct_url(url)
-                
-    
-                group_name_xpath = f'/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div[{i}]/div/div/div/div/div/div/div[2]/div[1]/div/div/div[1]/span/div/a' if facebook_version == 1 else f'/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div[{i}]/div/div/div/div/div/div[2]/div/div[1]/h2/span/span/span/a'
-                
+                self.check_correct_url(url)                  
+                                    
                 group_name = self.browser.find_element(By.XPATH,
-                                                group_name_xpath).text
+                                                f'/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div[{i}]/div/div/div/div/div/div/div[2]/div[1]/div/div/div[1]/span/div/a').text
                 group_link = self.browser.find_element(By.LINK_TEXT, group_name).get_attribute('href')
                 button.click()
                 time.sleep(1)   #Wait 1 sec to wait for potential popup window

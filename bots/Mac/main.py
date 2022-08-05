@@ -5,6 +5,13 @@ import sys
 
 from AbstractBot import AbstractBot
 
+def get_auth_info(auth_info_file_name):
+    infos = []
+    with open(auth_info_file_name, 'r') as auth_info:
+        infos = auth_info.read().splitlines()
+        infos = map(lambda el: el.split(' '), infos)
+    return list(infos)
+
     
 if __name__ == "__main__":
     try:
