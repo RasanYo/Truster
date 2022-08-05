@@ -117,7 +117,7 @@ class GroupBot(AbstractBot):
                 group_name_xpath = f'/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div[{i}]/div/div/div/div/div/div/div[2]/div[1]/div/div/div[1]/span/div/a'
                 #f'/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div[{i}]/div/div/div/div/div/div/div[2]/div[1]/div/div/div[1]/span/div/a' if facebook_version == 1 else
                 group_name = self.browser.find_element(By.XPATH,
-                                                group_name_xpath).text
+                                                f'/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div[{i}]/div/div/div/div/div/div/div[2]/div[1]/div/div/div[1]/span/div/a').text
                 group_link = self.browser.find_element(By.LINK_TEXT, group_name).get_attribute('href')
                 button.click()
                 time.sleep(1)   #Wait 1 sec to wait for potential popup window
