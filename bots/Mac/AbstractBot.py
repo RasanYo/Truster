@@ -15,6 +15,13 @@ class AbstractBot(ABC):
         self.my_password = my_password
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        options.add_argument("--disable-infobars")
+        options.add_experimental_option("prefs", { \
+            "profile.default_content_setting_values.media_stream_mic": 2,     # 1:allow, 2:block 
+            "profile.default_content_setting_values.media_stream_camera": 2,  # 1:allow, 2:block 
+            "profile.default_content_setting_values.geolocation": 2,          # 1:allow, 2:block 
+            "profile.default_content_setting_values.notifications": 2         # 1:allow, 2:block 
+        })
         self.browser = webdriver.Chrome(web_driver, options=options)
         
     def write_json(self, file_name, data, write_mode='a'):
