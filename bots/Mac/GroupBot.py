@@ -177,6 +177,7 @@ class GroupBot(AbstractBot):
         cities_file = open("cities.txt","r+")
         cities = self.read_file(cities_file)
         
+        
         cities_file.close()
         
         for city in cities:
