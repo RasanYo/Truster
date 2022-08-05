@@ -147,17 +147,18 @@ class GroupBot(AbstractBot):
         
 
         requested = open('requestedCities.txt','a')
-        cursor_file = open('curseur.txt',"w+")
+        cursor_file = open('curseur.txt',"r+")
         cursor = self.read_file(cursor_file)
 
         i = 0
         for city in cities:
+            print(i)
             if(int(cursor[0]) < i):
+                print("Should search for city")
                 self.request_group_with_JSON(city)
                 self.write_to(requested, city)
-                print(1)
-                self.write_to(cursor_file,i)
-                print(2)
+                #self.write_to(cursor_file,i)
+                #print("updated_cursors")
 
 
             i += 1
