@@ -58,10 +58,6 @@ class GroupBot(AbstractBot):
                 
                 self.write_to(f, group_link)
                 
-               
-    
-                
-                
             except UnicodeEncodeError:
                 print("Couldn't recognize characters in name. Skipping group")
             except ElementClickInterceptedException:
@@ -164,26 +160,9 @@ class GroupBot(AbstractBot):
 
 
             i += 1
-            #self.delete_line(cities_file,0)
 
-        
         f.close()
         requested.close()
-        self.close_browser()
-        
-    def scrape_avec_json(self):
-        self.auth()
-        
-        cities_file = open("cities.txt","r+")
-        cities = self.read_file(cities_file)
-        
-        
-        cities_file.close()
-        
-        for city in cities:
-            self.request_group_with_JSON(city)
-            #ptet faite meme structure pour les villes
-        
         self.close_browser()
             
         
