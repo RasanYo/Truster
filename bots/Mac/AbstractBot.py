@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -15,28 +16,59 @@ class AbstractBot(ABC):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
         self.browser = webdriver.Chrome(web_driver, options=options)
+        
+    def write_json(self, file_name, data, write_mode='a'):
+        with open(file_name, write_mode) as f:
+            json.dump(data, f, indent=4)
     
+    def read_json(self, file_name):
+        with open(file_name, 'r') as f:
+            data = json.load(f)
+        f.close()
+        return data
+    
+    def append_json_to(self, file_name, tag, data):
+        previous_data = self.read_json(file_name)
+        previous_data = previous_data[tag]
+        previous_data.append(data)
+        
+        new_data = {tag : previous_data}
+        self.write_json(file_name, new_data, write_mode='w')
+        
+    def remove_json_from(self, file_name, tag, data):
+        previous_data = self.read_json(file_name)
+        previous_data = previous_data[tag]
+        
+        data_filtered = list(filter(lambda json_data: json_data != data, previous_data))
+        
+        new_data = {tag : data_filtered}
+        self.write_json(file_name, new_data, write_mode='w')
+
+        
     def write_to(self, file, text):
         file.write(text + "\n")
         print("     Requested " + text)
         
-    def delete_line(self, file, line):
-        with open(file, "r+") as fp:
-            lines = fp.readlines()
+    def delete_line(self, fp, line):
+        lines = fp.read().splitlines()
+        
+        # move file pointer to the beginning of a file
+        fp.seek(0)
+        # truncate the file
+        fp.truncate()
+        
+        first_new_line = lines[0:line]
+        second_new_line = lines[line+1:]
+        
+        new_lines = [*first_new_line, *second_new_line]
 
-            # move file pointer to the beginning of a file
-            fp.seek(0)
-            # truncate the file
-            fp.truncate()
+        fp.writelines(new_lines)
+        fp.close()
 
-            first_new_line = lines[0:line]
-            second_new_line = lines[line+1:]
-
-            new_lines = [*first_new_line, *second_new_line]
-
-            fp.writelines(new_lines)
-            fp.close()
-
+    #en test
+    def delete_first_line(self, fp):
+        data = fp.read().splitlines(True)
+        fp.writelines(data[1:])
 
     def sleep(self, t):
         time.sleep(random.randrange(t, 2 * t))
@@ -87,12 +119,10 @@ class AbstractBot(ABC):
             return False
         return True
 
-    def read_file(self, file):
+    def read_file(self, f):
         cities = []
         try:
-            f = open(file, "r")
             cities =  f.read().splitlines()
-            f.close()
         except Exception as err:
             print(f'{type(err)}: {err}')
         finally:

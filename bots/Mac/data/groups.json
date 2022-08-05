@@ -1,0 +1,28 @@
+{
+    "groups": [
+        {
+            "name": "Test Group",
+            "link": "https://www.facebook.com/",
+            "city": "Milan",
+            "requested": true,
+            "requester_email": "test@email.com",
+            "requester_password": "test123"
+        },
+        {
+            "name": "Test Group 3",
+            "link": "https://www.facebook.com/",
+            "city": "Milan",
+            "requested": true,
+            "requester_email": "test@email.com",
+            "requester_password": "test123"
+        },
+        {
+            "name": "Test Group 2",
+            "link": "https://www.facebook.com/",
+            "city": "Milan",
+            "requested": false,
+            "requester_email": "test@email.com",
+            "requester_password": "test123"
+        }
+    ]
+}
