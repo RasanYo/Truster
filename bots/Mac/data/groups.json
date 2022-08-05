@@ -1,28 +1,140 @@
 {
     "groups": [
         {
-            "name": "Test Group",
-            "link": "https://www.facebook.com/",
-            "city": "Milan",
-            "requested": true,
-            "requester_email": "test@email.com",
-            "requester_password": "test123"
-        },
-        {
-            "name": "Test Group 3",
-            "link": "https://www.facebook.com/",
-            "city": "Milan",
-            "requested": true,
-            "requester_email": "test@email.com",
-            "requester_password": "test123"
-        },
-        {
-            "name": "Test Group 2",
-            "link": "https://www.facebook.com/",
-            "city": "Milan",
+            "name": "Lyon Rentals: Flats, rooms and apartments in Lyon",
+            "link": "https://www.facebook.com/groups/lyonrentals/",
+            "city": "Lyon",
             "requested": false,
-            "requester_email": "test@email.com",
-            "requester_password": "test123"
+            "requester_email": "rasanhy@gmail.com",
+            "requester_password": "procf888"
+        },
+        {
+            "name": "Lyon Apartments and Housing (NO SPAM)",
+            "link": "https://www.facebook.com/groups/apartments.lyon/",
+            "city": "Lyon",
+            "requested": false,
+            "requester_email": "rasanhy@gmail.com",
+            "requester_password": "procf888"
+        },
+        {
+            "name": "Erasmus & International Students Lyon (2022 - 2023)",
+            "link": "https://www.facebook.com/groups/erasmuslyon20222023/",
+            "city": "Lyon",
+            "requested": false,
+            "requester_email": "rasanhy@gmail.com",
+            "requester_password": "procf888"
+        },
+        {
+            "name": "Lyon Logement: lieux / chambre / appartement \u00e0 louer",
+            "link": "https://www.facebook.com/groups/louer/",
+            "city": "Lyon",
+            "requested": false,
+            "requester_email": "rasanhy@gmail.com",
+            "requester_password": "procf888"
+        },
+        {
+            "name": "Expat Housing in Lyon",
+            "link": "https://www.facebook.com/groups/ExpatHousingInLYON/",
+            "city": "Lyon",
+            "requested": false,
+            "requester_email": "rasanhy@gmail.com",
+            "requester_password": "procf888"
+        },
+        {
+            "name": "Paris Colocation,Chambre, Appartement, Housing 2021/2022",
+            "link": "https://www.facebook.com/groups/905943403531094/",
+            "city": "Marseille",
+            "requested": false,
+            "requester_email": "rasanhy@gmail.com",
+            "requester_password": "procf888"
+        },
+        {
+            "name": "Student rooms & apartments in Marseille / Logements \u00e9tudiants \u00e0 Marseille",
+            "link": "https://www.facebook.com/groups/studentroomsandapartmentinMarseille/",
+            "city": "Marseille",
+            "requested": false,
+            "requester_email": "rasanhy@gmail.com",
+            "requester_password": "procf888"
+        },
+        {
+            "name": "Marseille Housing, Rooms, Apartments, Sublets",
+            "link": "https://www.facebook.com/groups/2162049874081570/",
+            "city": "Marseille",
+            "requested": false,
+            "requester_email": "rasanhy@gmail.com",
+            "requester_password": "procf888"
+        },
+        {
+            "name": "PARIS : renting rooms, locations chambres, appartements",
+            "link": "https://www.facebook.com/groups/566428453732847/",
+            "city": "Marseille",
+            "requested": false,
+            "requester_email": "rasanhy@gmail.com",
+            "requester_password": "procf888"
+        },
+        {
+            "name": "Louer appartements, colocation Marseille sans frais",
+            "link": "https://www.facebook.com/groups/1582711655151379/",
+            "city": "Marseille",
+            "requested": false,
+            "requester_email": "rasanhy@gmail.com",
+            "requester_password": "procf888"
+        },
+        {
+            "name": "Petites Annonces En Provence",
+            "link": "https://www.facebook.com/groups/467430630618344/",
+            "city": "Marseille",
+            "requested": false,
+            "requester_email": "rasanhy@gmail.com",
+            "requester_password": "procf888"
+        },
+        {
+            "name": "marketplace Marseille",
+            "link": "https://www.facebook.com/groups/462027341589338/",
+            "city": "Marseille",
+            "requested": false,
+            "requester_email": "rasanhy@gmail.com",
+            "requester_password": "procf888"
+        },
+        {
+            "name": "Sous-location / Location / Colocation Paris",
+            "link": "https://www.facebook.com/groups/1612234032324285/",
+            "city": "Marseille",
+            "requested": false,
+            "requester_email": "rasanhy@gmail.com",
+            "requester_password": "procf888"
+        },
+        {
+            "name": "Bons plans colocation Paris : Annonce chambre \u00e0 louer, location appartement",
+            "link": "https://www.facebook.com/groups/2057836717771500/",
+            "city": "Marseille",
+            "requested": false,
+            "requester_email": "rasanhy@gmail.com",
+            "requester_password": "procf888"
+        },
+        {
+            "name": "\u00c9tudiants d'Aix-en-Provence",
+            "link": "https://www.facebook.com/groups/3970736586334680/",
+            "city": "Marseille",
+            "requested": false,
+            "requester_email": "rasanhy@gmail.com",
+            "requester_password": "procf888"
+        },
+        {
+            "name": "Marseille",
+            "link": "https://www.facebook.com/groups/975989543054916/",
+            "city": "Marseille",
+            "requested": false,
+            "requester_email": "rasanhy@gmail.com",
+            "requester_password": "procf888"
+        },
+        {
+            "name": "Marseille",
+            "link": "https://www.facebook.com/groups/975989543054916/",
+            "city": "Marseille",
+            "requested": false,
+            "requester_email": "rasanhy@gmail.com",
+            "requester_password": "procf888"
         }
     ]
 }
