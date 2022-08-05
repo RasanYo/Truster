@@ -66,7 +66,7 @@ class MessageBot(AbstractBot):
         groups = self.read_json(groups_file_name)["groups"]
         
         for group in groups:
-            if group["requested"] == False:
+            if (group["requested"] == False) and group["requester_email"] == self.my_username:
                 self.post_message(self.msg, group["link"])
                 self.remove_json_from(groups_file_name, "groups", group)
                 

@@ -3,7 +3,7 @@ from MessageBot import MessageBot
 from GroupBot import GroupBot
 import sys
 
-from bots.Mac.AbstractBot import AbstractBot
+from AbstractBot import AbstractBot
 
     
 if __name__ == "__main__":
@@ -11,8 +11,8 @@ if __name__ == "__main__":
         my_username = sys.argv[1]
         my_password = sys.argv[2]
         print(f'username: {my_username} - password: {my_password}')
-        group_bot = GroupBot(my_username, my_password, "/Users/meneliknouvellon/Documents/HTML/Menesite/bots/Mac/chromedriverMac") #Menelik
-        #group_bot = GroupBot(my_username, my_password, "chromedriverMac.exe") #Rasan
+        #group_bot = GroupBot(my_username, my_password, "/Users/meneliknouvellon/Documents/HTML/Menesite/bots/Mac/chromedriverMac") #Menelik
+        group_bot = GroupBot(my_username, my_password, "chromedriver.exe") #Rasan
         group_bot.scrape()
         # message_bot = MessageBot(my_username, my_password, "chromedriver.exe", "Test")
         # message_bot.scrape()
