@@ -102,17 +102,20 @@ class GroupBot(AbstractBot):
         join_buttons = self.browser.find_elements(By.XPATH, "//span[text()='Join']")
         
         # If can't fin the join button because their is an image insted of text
-        if len(join_buttons) == 0:
-            facebook_version = 2
-            join_buttons = self.browser.find_elements(By.XPATH, "//div[@role = 'button']")
+        # if len(join_buttons) == 0:
+        #     facebook_version = 2
+        #     join_buttons = self.browser.find_elements(By.XPATH, "//div[@role = 'button']")
             
-        print(f"join_buttons length: {len(join_buttons)}")
+        # print(f"join_buttons length: {len(join_buttons)}")
             
         i = 1
         for button in join_buttons:
             try:
-                self.check_correct_url(url)                  
-                                    
+                self.check_correct_url(url)
+                
+    
+                group_name_xpath = f'/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div[{i}]/div/div/div/div/div/div/div[2]/div[1]/div/div/div[1]/span/div/a'
+                #f'/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div[{i}]/div/div/div/div/div/div/div[2]/div[1]/div/div/div[1]/span/div/a' if facebook_version == 1 else
                 group_name = self.browser.find_element(By.XPATH,
                                                 f'/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div[{i}]/div/div/div/div/div/div/div[2]/div[1]/div/div/div[1]/span/div/a').text
                 group_link = self.browser.find_element(By.LINK_TEXT, group_name).get_attribute('href')
