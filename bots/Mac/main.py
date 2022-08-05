@@ -3,6 +3,9 @@ from MessageBot import MessageBot
 from GroupBot import GroupBot
 import sys
 
+from bots.Mac.AbstractBot import AbstractBot
+
+    
 if __name__ == "__main__":
     try:
         my_username = sys.argv[1]
