@@ -1023,6 +1023,54 @@
             "requested": false,
             "requester_email": "razboub@hotmail.com",
             "requester_password": "scamna000"
+        },
+        {
+            "name": "Erasmus Porto 2022/2023 by Student Room Flat",
+            "link": "https://www.facebook.com/groups/299367691017437/",
+            "city": "Porto",
+            "requested": false,
+            "requester_email": "menelik.nouvellon@epfl.ch",
+            "requester_password": "scamna001"
+        },
+        {
+            "name": "Rooms, flats and apartments for students in Porto: rent your accommodation!",
+            "link": "https://www.facebook.com/groups/portorentals/",
+            "city": "Porto",
+            "requested": false,
+            "requester_email": "menelik.nouvellon@epfl.ch",
+            "requester_password": "scamna001"
+        },
+        {
+            "name": "Erasmus Porto 2021/2022 Parties & Accommodations",
+            "link": "https://www.facebook.com/groups/Erasmuslifeporto/",
+            "city": "Porto",
+            "requested": false,
+            "requester_email": "menelik.nouvellon@epfl.ch",
+            "requester_password": "scamna001"
+        },
+        {
+            "name": "Lisbon Housing, Rooms, Apartments, Sublets",
+            "link": "https://www.facebook.com/groups/168153883837156/",
+            "city": "Lisbonne",
+            "requested": false,
+            "requester_email": "menelik.nouvellon@epfl.ch",
+            "requester_password": "scamna001"
+        },
+        {
+            "name": "Bons Plans Strasbourg",
+            "link": "https://www.facebook.com/groups/groupebonsplansstrasbourg/",
+            "city": "Hambourg",
+            "requested": false,
+            "requester_email": "menelik.nouvellon@epfl.ch",
+            "requester_password": "scamna001"
+        },
+        {
+            "name": "STUTTGART \ud83c\udde9\ud83c\uddea - Rent a House, Villa, Apartment, Flat, Condo, Room, Dorm",
+            "link": "https://www.facebook.com/groups/2011114819166930/",
+            "city": "Stuttgart",
+            "requested": false,
+            "requester_email": "menelik.nouvellon@epfl.ch",
+            "requester_password": "scamna001"
         }
     ]
 }

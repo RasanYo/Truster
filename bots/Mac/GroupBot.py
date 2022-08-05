@@ -96,19 +96,28 @@ class GroupBot(AbstractBot):
         self.browser.execute_script("window.scrollBy(0,1000);")
         time.sleep(0.5)
 
+        facebook_version = 1
         
         print("Looking for join buttons")
         join_buttons = self.browser.find_elements(By.XPATH, "//span[text()='Join']")
         
+        # If can't fin the join button because their is an image insted of text
         if len(join_buttons) == 0:
-            join_buttons = self.browser.find_elements(By.XPATH, "//i[@data-visualcompletion='css-img']")
+            facebook_version = 2
+            join_buttons = self.browser.find_elements(By.XPATH, "//div[@role = 'button']")
+            
+        print(f"join_buttons length: {len(join_buttons)}")
             
         i = 1
         for button in join_buttons:
             try:
                 self.check_correct_url(url)
+                
+    
+                group_name_xpath = f'/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div[{i}]/div/div/div/div/div/div/div[2]/div[1]/div/div/div[1]/span/div/a' if facebook_version == 1 else f'/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div[{i}]/div/div/div/div/div/div[2]/div/div[1]/h2/span/span/span/a'
+                
                 group_name = self.browser.find_element(By.XPATH,
-                                                f'/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div[{i}]/div/div/div/div/div/div/div[2]/div[1]/div/div/div[1]/span/div/a').text
+                                                group_name_xpath).text
                 group_link = self.browser.find_element(By.LINK_TEXT, group_name).get_attribute('href')
                 button.click()
                 time.sleep(1)   #Wait 1 sec to wait for potential popup window

@@ -1,7 +1,7 @@
 from Group import Group
 import json
 
-file = "data/test.json"
+file = "data/groups.json"
 group_tag = "groups"
 
 def write_json(file_name, data, write_mode='a'):
@@ -55,5 +55,5 @@ groups = [groupJSON1, groupJSON2, groupJSON3, groupJSON4]
 #for group in groups:
 #    append_json(file, "groups", group)
     
-filter_groups(file)
+print(len(read_json(file)["groups"]))
 
