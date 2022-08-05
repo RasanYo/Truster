@@ -148,7 +148,7 @@ class GroupBot(AbstractBot):
         
 
         requested = open('requestedCities.txt','a')
-        cursor_file = open('curseur.txt',"r+")
+        cursor_file = open('curseur.txt',"w+")
         cursor = self.read_file(cursor_file)
 
         i = 0
@@ -156,7 +156,9 @@ class GroupBot(AbstractBot):
             if(int(cursor[0]) < i):
                 self.request_group_with_JSON(city)
                 self.write_to(requested, city)
+                print(1)
                 self.write_to(cursor_file,i)
+                print(2)
 
 
             i += 1
