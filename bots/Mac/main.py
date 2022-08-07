@@ -14,6 +14,7 @@ def get_auth_info(auth_info_file_name):
 
 def scrape_with_auth(auth_info, chromedriver, message):
     for auth in auth_info:
+        print(f"Trying with {auth[0]} and {auth[1]}")
         message_bot = MessageBot(auth[0], auth[1], chromedriver, message)
         message_bot.scrape()
 
