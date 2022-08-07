@@ -64,7 +64,7 @@ class MessageBot(AbstractBot):
         
         groups_file_name = "data/groups.json"
         groups = self.read_json(groups_file_name)["groups"]
-        
+
         for group in groups:
             if (group["requested"] == False) and group["requester_email"] == self.my_username:
                 self.post_message(self.msg, group["link"])

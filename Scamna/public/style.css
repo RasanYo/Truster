@@ -11,3 +11,21 @@
     text-align: center;
 
 }
+
+@media screen and (max-width:900px){
+    .mainText{
+        margin : 100px 100px auto 100px ;
+    }
+}
+
+@media screen and (max-width:700px){
+    .mainText{
+        margin : 100px 60px auto 60px ;
+    }
+}
+
+@media screen and (max-width:500px){
+    .mainText{
+        margin : 100px 30px auto 30px ;
+    }
+}
