@@ -12,6 +12,11 @@ def get_auth_info(auth_info_file_name):
         infos = map(lambda el: el.split(' '), infos)
     return list(infos)
 
+def scrape_with_auth(auth_info, chromedriver, message):
+    for auth in auth_info:
+        message_bot = MessageBot(auth[0], auth[1], chromedriver, message)
+        message_bot.scrape()
+
     
 if __name__ == "__main__":
     try:

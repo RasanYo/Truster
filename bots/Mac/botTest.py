@@ -56,4 +56,3 @@ groups = [groupJSON1, groupJSON2, groupJSON3, groupJSON4]
 #    append_json(file, "groups", group)
     
 print(len(read_json(file)["groups"]))
-
