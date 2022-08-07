@@ -20,14 +20,11 @@ def scrape_with_auth(auth_info, chromedriver, message):
     
 if __name__ == "__main__":
     try:
-        my_username = sys.argv[1]
-        my_password = sys.argv[2]
-        print(f'username: {my_username} - password: {my_password}')
-        group_bot = GroupBot(my_username, my_password, "/Users/meneliknouvellon/Documents/HTML/Menesite/bots/Mac/chromedriverMac") #Menelik
-        #group_bot = GroupBot(my_username, my_password, "chromedriver.exe") #Rasan
-        group_bot.scrape()
-        # message_bot = MessageBot(my_username, my_password, "chromedriver.exe", "Test")
-        # message_bot.scrape()
+        chromedriver_path = "/Users/meneliknouvellon/Documents/HTML/Menesite/bots/Mac/chromedriverMac" #Menelik
+        #chromedriver_path = "chromedriver.exe" #Rasan
+        MESSAGE = ""
+        
+        scrape_with_auth(get_auth_info("data/accounts.txt"), chromedriver_path, MESSAGE)
     except IndexError:
         print("Missing arguments. Enter '[py/python3] main.py email password")
     except Exception as err:
