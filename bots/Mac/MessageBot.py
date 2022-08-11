@@ -22,24 +22,24 @@ class MessageBot(AbstractBot):
             print(f"Loading {url}...")
             self.browser.get(url)
             time.sleep(1)
-            self.empty_click()
             
             
             # Opening post form
-            post = self.browser.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div[4]/div/div/div/div/div/div[1]/div[1]/div/div/div/div[1]/div")
+            post_xpath = "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div[4]/div/div/div/div/div/div[1]/div[1]/div/div/div/div[1]/div"
+            post = self.browser.find_element(By.XPATH, post_xpath)
             post.click()
             time.sleep(1)
             
             # Locate message area and write message
             text_area = self.browser.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/div/div/div[1]/div/div[2]/div[1]/div[1]/div[1]/div/div/div/div/div/div/div/div")
             text_area.send_keys(message)
-            time.sleep(100)
-            self.close_browser()
             
             # Locate 'Post' button and press it
-            #post_button = self.browser.find_element(By.XPATH, "//span[text()='Post']")
-            #post_button.click()
+            self.wait_until_shows("//span[text()='Post']")
+            post_button = self.browser.find_element(By.XPATH, "//span[text()='Post']")
+            post_button.click()
             print(f"Posted message to {url}\n")
+            self.wait_until_disappears("//span[text()='Post']")
         except SeleniumExceptions.NoSuchElementException:
             print("Couldn't find necessary element. Skipping group...")
         except Exception as err:

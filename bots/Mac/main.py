@@ -21,19 +21,17 @@ def scrape_with_auth(auth_info, chromedriver, message):
     
 if __name__ == "__main__":  
     try:
-        chromedriver_path = "/Users/meneliknouvellon/Documents/HTML/Menesite/bots/Mac/chromedriverMac" #Menelik
-        #chromedriver_path = "chromedriver.exe" #Rasan
-        MESSAGE = """
-Hi guys,
+        #chromedriver_path = "/Users/meneliknouvellon/Documents/HTML/Menesite/bots/Mac/chromedriverMac" #Menelik
+        chromedriver_path = "chromedriver.exe" #Rasan
+        MESSAGE = """Hi guys,
 Are you looking for a lodging in a foreign country but don't have the option of visiting the place yourself ?
 
 Link up with a trustworthy local to do the visit for you on the Scamna platform :
 
-https://scamna-23958.web.app/
-        """
+https://scamna-23958.web.app/"""
         
         scrape_with_auth(get_auth_info("data/accounts.txt"), chromedriver_path, MESSAGE)
-        print(MESSAGE)
+        #print(MESSAGE)
     except IndexError:
         print("Missing arguments. Enter '[py/python3] main.py email password")
     except Exception as err:

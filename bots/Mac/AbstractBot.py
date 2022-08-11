@@ -104,6 +104,11 @@ class AbstractBot(ABC):
         while not self.check_exists_by_xpath(xpath):
             time.sleep(0.5)
         time.sleep(0.2)
+        
+    def wait_until_disappears(self, xpath):
+        while self.check_exists_by_xpath(xpath):
+            time.sleep(0.5)
+        time.sleep(0.2)
 
 
     def empty_click(self):
