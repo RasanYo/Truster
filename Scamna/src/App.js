@@ -3,6 +3,7 @@ import './App.css';
 import TestBlock from './components/TestBlock';
 
 import { initializeApp } from 'firebase/app'
+import { getFirestore } from 'firebase/firestore'
 
 const firebaseConfig = {
   apiKey: "AIzaSyC1KOsIQvb-1dqRzefWggoYm5gertAiEhQ",
@@ -19,6 +20,7 @@ const firebaseConfig = {
 
 function App() {
   const app = initializeApp(firebaseConfig)
+  const db = getFirestore()
   return (
     <TestBlock/>
   );

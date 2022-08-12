@@ -1,32 +1,15 @@
-const DBClient = () => {
+import { initializeApp } from 'firebase/app'
+import { getFirestore } from 'firebase/firestore'
+import { getAuth } from 'firebase/auth'
 
-    function getJSONFrom(serverUrl) {
-        return fetch(serverUrl)
-                .then(res => {
-                    return res.json()
-                })
+class DBClient {
+    constructor(config) {
+        this.app = initializeApp(config)
+        this.db = getFirestore()
+        this.auth = getAuth()
     }
-
-    function addJSONTo(data, serverUrl) {
-        return fetch(serverUrl, {
-            method: 'POST',
-            headers: { "Content-Type": "application/json"},
-            body: data
-        })
-    }
-
-    function deleteJSONAttributeFrom(attribute, serverUrl) {
-        return fetch(`${serverUrl}/${attribute}`, {
-            method: 'DELETE',
-            headers: { "Content-Type": "application/json" }
-        })
-    }
-
-    return ( { 
-        getJSONFrom: getJSONFrom,
-        addJSONTo: addJSONTo,
-        deleteJSONAttributeFrom: deleteJSONAttributeFrom
-    } );
 }
- 
-export default DBClient;
+
+
+
+

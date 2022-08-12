@@ -1,0 +1,31 @@
+.header {
+    background-color: #fd7400;
+    height: 200px;
+    border: solid black 0.2em;
+}
+
+.mainText {
+    font-size: 2em;
+    display: block;
+    margin : 100px 200px auto 200px ;
+    text-align: center;
+
+}
+
+@media screen and (max-width:900px){
+    .mainText{
+        margin : 100px 100px auto 100px ;
+    }
+}
+
+@media screen and (max-width:700px){
+    .mainText{
+        margin : 100px 60px auto 60px ;
+    }
+}
+
+@media screen and (max-width:500px){
+    .mainText{
+        margin : 100px 30px auto 30px ;
+    }
+}
