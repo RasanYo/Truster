@@ -21,8 +21,8 @@ def scrape_with_auth(auth_info, chromedriver, message):
     
 if __name__ == "__main__":  
     try:
-        #chromedriver_path = "/Users/meneliknouvellon/Documents/HTML/Menesite/bots/Mac/chromedriverMac" #Menelik
-        chromedriver_path = "chromedriver.exe" #Rasan
+        chromedriver_path = "/Users/meneliknouvellon/Documents/HTML/Menesite/bots/Mac/chromedriverMac" #Menelik
+        #chromedriver_path = "chromedriver.exe" #Rasan
         MESSAGE = """Hi guys,
 Are you looking for a lodging in a foreign country but don't have the option of visiting the place yourself ?
 
