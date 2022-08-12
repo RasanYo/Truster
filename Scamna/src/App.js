@@ -1,9 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 import TestBlock from './components/TestBlock';
+import { DBClient } from './components/DBClient';
+import React from 'react';
 
-import { initializeApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyC1KOsIQvb-1dqRzefWggoYm5gertAiEhQ",
@@ -15,14 +16,16 @@ const firebaseConfig = {
   measurementId: "G-W8HKDF4HHW"
 }
 
-
-
+export const DBContext = React.createContext(null)
 
 function App() {
-  const app = initializeApp(firebaseConfig)
-  const db = getFirestore()
+
+
+
   return (
-    <TestBlock/>
+    <DBContext.Provider value={new DBClient(firebaseConfig)}>
+      <TestBlock/>
+    </DBContext.Provider>
   );
 }
 
