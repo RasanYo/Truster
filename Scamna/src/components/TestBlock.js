@@ -13,8 +13,7 @@ const TestBlock = () => {
     const client = useContext(DBContext)
 
     useEffect(() => {
-        client.getDocument("tule/custom_id/sub_tule", "sub").then(doc => console.log(doc.data().name))
-        
+        client.getDocument("tule/1HKYhAQ428roGu7C2PeZ/prepus", "S11O7lbShbAREXisvtHV").then(doc => console.log(doc.data()))
     }, [])
     
 
