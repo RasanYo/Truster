@@ -1,10 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
-import TestBlock from './components/TestBlock';
+import { createContext } from 'react';
 import { DBClient } from './components/DBClient';
-import React from 'react';
-
-
+import Navbar from './components/Navbar';
+import SignUp from './components/SignUp';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const firebaseConfig = {
   apiKey: "AIzaSyC1KOsIQvb-1dqRzefWggoYm5gertAiEhQ",
@@ -16,16 +16,30 @@ const firebaseConfig = {
   measurementId: "G-W8HKDF4HHW"
 }
 
-export const DBContext = React.createContext(null)
+export const DBContext = createContext(null)
 
 function App() {
 
+  // Add this in node_modules/react-dom/index.js
+  window.React1 = require('react');
 
-
+  // Add this in your component file
+  require('react-dom');
+  window.React2 = require('react');
+  console.log(window.React1 === window.React2);
   return (
-    <DBContext.Provider value={new DBClient(firebaseConfig)}>
-      <TestBlock/>
-    </DBContext.Provider>
+    <Router>
+      <div className="App">
+        <DBContext.Provider value={new DBClient(firebaseConfig)}>
+          <Navbar/>
+          <div className="content">
+            <Routes>
+              <Route path="/signup" element={<SignUp />} />
+            </Routes>
+          </div>
+        </DBContext.Provider>
+      </div>
+    </Router>
   );
 }
 
