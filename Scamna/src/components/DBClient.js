@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, QuerySnapshot, setDoc, Timestamp } from 'firebase/firestore'
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 
 export class DBClient {
     constructor(config) {
@@ -88,11 +88,13 @@ export class DBClient {
 
     /**
      * 
-     * @returns auth function from firebase
+     * @returns {Promise<void} empty promise
      */
-    auth() {
-        return this.auth()
+    logOutCurrentUser() {
+        return signOut(this.auth)
     }
+
+
 
 
 }
