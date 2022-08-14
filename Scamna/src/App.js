@@ -5,6 +5,7 @@ import Home from './components/Home';
 import LogIn from './components/LogIn';
 import Navbar from './components/Navbar';
 import Profile from './components/Profile';
+import NewPosts from './components/NewPosts';
 import SignUp from './components/SignUp';
 
 export const DBClientContext = createContext(null)
@@ -35,10 +36,11 @@ function App() {
       <DBClientContext.Provider value={client}>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route exact path="/" element={<Home />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/newPost" element={<NewPosts />}/>
         </Routes>
       </DBClientContext.Provider>
     </Router>

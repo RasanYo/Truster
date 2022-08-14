@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useState } from "react";
 import { DBClientContext } from "../App";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
 
@@ -42,6 +43,46 @@ const SignUp = () => {
         <div className="signup">
             <h2>Sign up</h2>
             <form onSubmit={handleSubmit}>
+                <input 
+                placeholder="First name"
+                type="text" 
+                required 
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                />
+
+                <input 
+                placeholder="Last name"
+                type="text" 
+                required 
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                />
+
+                <input 
+                placeholder="Email"
+                type="email" 
+                required 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                />
+
+                <input 
+                placeholder="New password"
+                type="password" 
+                required 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                />
+
+                <input 
+                placeholder="Confirm password"
+                type="password" 
+                required 
+                value={passwordConfirmation}
+                onChange={(e) => setPasswordConfirmation(e.target.value)}
+                />
+
                 <label>Gender</label>
                 <select
                     value={gender}
@@ -53,96 +94,56 @@ const SignUp = () => {
                     <option value="Non-binary">Non-binary</option>
                 </select>
 
-                <label>First name</label>
-                <input 
-                type="text" 
-                required 
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                />
-
-                <label>Last name</label>
-                <input 
-                type="text" 
-                required 
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                />
-
-                <label>Email</label>
-                <input 
-                type="email" 
-                required 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                />
-
-                <label>Password</label>
-                <input 
-                type="password" 
-                required 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                />
-
-                <label>Confirm password</label>
-                <input 
-                type="password" 
-                required 
-                value={passwordConfirmation}
-                onChange={(e) => setPasswordConfirmation(e.target.value)}
-                />
 
                 <label>Date of birth</label>
                 <input 
-                type="text" 
+                type="date" 
                 required 
-                value={dateOfBirth}
                 onChange={(e) => setDateOfBirth(e.target.value)}
                 />
 
-                <label>Street number</label>
                 <input 
+                placeholder="Street Number"
                 type="number" 
                 required 
                 value={streetNumber}
                 onChange={(e) => setStreetNumber(e.target.value)}
                 />
 
-                <label>Street name</label>
                 <input 
+                placeholder="Street Name"
                 type="text" 
                 required 
                 value={streetName}
                 onChange={(e) => setStreetName(e.target.value)}
                 />
 
-                <label>NPA</label>
                 <input 
+                placeholder="NPA"
                 type="number"  
                 required 
                 value={npa}
                 onChange={(e) => setNpa(e.target.value)}
                 />
 
-                <label>City</label>
                 <input 
+                placeholder="City"
                 type="text" 
                 required 
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 />
 
-                <label>Country</label>
                 <input 
+                placeholder="Country"
                 type="text" 
                 required 
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
                 />
 
-                <label>Phone number (optional)</label>
                 <input 
+                placeholder="Phone number (optional)"
                 type="text"  
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}

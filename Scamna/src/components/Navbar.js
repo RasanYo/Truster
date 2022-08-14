@@ -26,12 +26,15 @@ const Navbar = () => {
 
     return ( 
         <nav className="navbar">
-            <h1>Scamna</h1>
+            <Link to="/"><h1>Scamna</h1></Link>
             <div className="links">
                 {!isLoggedIn && <Link to="/signup">Sign up</Link>}
                 {!isLoggedIn && <Link to="/login">Log in</Link>}
                 {isLoggedIn && <Link to ="/profile">Profile</Link>}
                 {isLoggedIn && <button onClick={handleLogout}>Log out</button>}
+                {isLoggedIn && client.auth.currentUser.email}
+                {isLoggedIn && <button onClick={handleLogout}>Sign out</button>}
+                {isLoggedIn && <Link to="/newPost">New Post</Link>}
             </div>
         </nav>
      );
