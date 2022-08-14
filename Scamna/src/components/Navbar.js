@@ -8,10 +8,17 @@ const Navbar = () => {
     const client = useContext(DBClientContext)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
+    const handleLogout = e => {
+        client.logOutCurrentUser()
+    }
 
-    client.auth().onAuthStateChanged(user => {
+    client.auth.onAuthStateChanged(user => {
         if (user) {
+            console.log("Logged in")
             setIsLoggedIn(true)
+        } else {
+            console.log("Logged out")
+            setIsLoggedIn(false)
         }
     })
 
@@ -19,8 +26,9 @@ const Navbar = () => {
         <nav className="navbar">
             <h1>Scamna</h1>
             <div className="links">
-                <Link to="/signup">Sign up</Link>
-                <Link to="/login">Log in</Link>
+                {!isLoggedIn && <Link to="/signup">Sign up</Link>}
+                {!isLoggedIn && <Link to="/login">Log in</Link>}
+                {isLoggedIn && <button onClick={handleLogout}>Log out</button>}
             </div>
         </nav>
      );
