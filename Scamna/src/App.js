@@ -1,25 +1,10 @@
-import logo from './logo.svg';
-import './App.css';
-import { createContext } from 'react';
-import { DBClient } from './components/DBClient';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './components/Home';
 import Navbar from './components/Navbar';
 import SignUp from './components/SignUp';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyC1KOsIQvb-1dqRzefWggoYm5gertAiEhQ",
-  authDomain: "scamna-b0b94.firebaseapp.com",
-  projectId: "scamna-b0b94",
-  storageBucket: "scamna-b0b94.appspot.com",
-  messagingSenderId: "220971708276",
-  appId: "1:220971708276:web:97a5af4c5858003baa8621",
-  measurementId: "G-W8HKDF4HHW"
-}
-
-export const DBContext = createContext(null)
 
 function App() {
-
+  
   // // Add this in node_modules/react-dom/index.js
   // window.React1 = require('react');
 
@@ -27,16 +12,13 @@ function App() {
   // require('react-dom');
   // window.React2 = require('react');
   // console.log(window.React1 === window.React2);
-  return (
+  return ( 
     <Router>
-      <div className="App">
-        <Navbar/>
-        <div className="content">
-          <Routes>
-            <Route exact path="/signup" element={<SignUp />} />
-          </Routes>
-        </div>
-      </div>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
     </Router>
   );
 }
