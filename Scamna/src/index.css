@@ -77,3 +77,8 @@ form input, select {
 
 
 /* ################################ */
+/* Log in styles */
+.login {
+  align-items: center;
+  text-align: center;
+}

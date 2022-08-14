@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, QuerySnapshot, setDoc, Timestamp } from 'firebase/firestore'
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 
 export class DBClient {
     constructor(config) {
@@ -74,6 +74,24 @@ export class DBClient {
                 return setDoc(doc(this.db, 'users/regular/users', userCred.user.uid), userObject)
             })
         
+    }
+
+    /**
+     * 
+     * @param {string} email account email
+     * @param {string} password account password 
+     * @returns {Promise<UserCredential>} promise containing user credentials of logged in user
+     */
+    logInUser(email, password) {
+        return signInWithEmailAndPassword(this.auth, email, password)
+    }
+
+    /**
+     * 
+     * @returns auth function from firebase
+     */
+    auth() {
+        return this.auth()
     }
 
 
