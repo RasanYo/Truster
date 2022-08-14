@@ -13,9 +13,11 @@ const Navbar = () => {
     }
 
     client.auth.onAuthStateChanged(user => {
+        client.currentUser = user
         if (user) {
             console.log("Logged in")
             setIsLoggedIn(true)
+            
         } else {
             console.log("Logged out")
             setIsLoggedIn(false)
@@ -28,6 +30,7 @@ const Navbar = () => {
             <div className="links">
                 {!isLoggedIn && <Link to="/signup">Sign up</Link>}
                 {!isLoggedIn && <Link to="/login">Log in</Link>}
+                {isLoggedIn && <Link to ="/profile">Profile</Link>}
                 {isLoggedIn && <button onClick={handleLogout}>Log out</button>}
             </div>
         </nav>

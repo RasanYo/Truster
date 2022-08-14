@@ -4,6 +4,7 @@ import { DBClient } from './components/DBClient';
 import Home from './components/Home';
 import LogIn from './components/LogIn';
 import Navbar from './components/Navbar';
+import Profile from './components/Profile';
 import SignUp from './components/SignUp';
 
 export const DBClientContext = createContext(null)
@@ -20,6 +21,8 @@ function App() {
     measurementId: "G-W8HKDF4HHW"
   }
 
+  const client = new DBClient(firebaseConfig)
+
   // // Add this in node_modules/react-dom/index.js
   // window.React1 = require('react');
 
@@ -29,12 +32,13 @@ function App() {
   // console.log(window.React1 === window.React2);
   return ( 
     <Router>
-      <DBClientContext.Provider value={new DBClient(firebaseConfig)}>
+      <DBClientContext.Provider value={client}>
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<LogIn />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </DBClientContext.Provider>
     </Router>
