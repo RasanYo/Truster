@@ -70,7 +70,7 @@ form input, select {
 }
 
 .signup h2 {
-  margin: 0 45%;
+  margin: auto;
   text-align: center;
   padding: 16px;
 }
@@ -81,4 +81,13 @@ form input, select {
 .login {
   align-items: center;
   text-align: center;
+}
+
+
+/* ################################ */
+/* Add new post styles */
+.new-post-preview h2 {
+  margin: auto;
+  text-align: center;
+  padding: 16px;
 }

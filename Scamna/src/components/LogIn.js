@@ -10,6 +10,7 @@ const LogIn = () => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [isGoodPassword,setIsGoodPassword] = useState(true)
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -17,7 +18,9 @@ const LogIn = () => {
             .then(userCred => {
                 navigate("/")
                 console.log(`User ${userCred.user.uid}`)
-            })
+            }).catch(error => 
+                setIsGoodPassword(false) 
+            )
     }
 
     return ( 
@@ -38,6 +41,8 @@ const LogIn = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
+                {!isGoodPassword && <div>Sorry, your password was incorrect. Please double-check your password.</div>
+                }
                 <button>Log in</button>
             </form>
             <Link to="/signup">No account yet? Create it here</Link>
