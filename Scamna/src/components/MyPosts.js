@@ -1,6 +1,8 @@
 import { useContext, useState, useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { DBClientContext } from "../App"
+import PostPreview from "./PostPreview"
+
 
 const MyPosts = () => {
 
@@ -8,6 +10,7 @@ const MyPosts = () => {
     const [posts, setPosts] = useState(null)
     const [loadingData, setLoadingData] = useState(posts == null)
     const previousUser = useRef(null)
+    const navigate = useNavigate()
 
     const unsubscribe = client.auth.onAuthStateChanged(user => {
         if (user && user !== previousUser.current) {
@@ -31,7 +34,15 @@ const MyPosts = () => {
         <div className="post-list">
             {loadingData && <div>Loading...</div>}
             {!loadingData && posts.map((post, index) => (
-                <PostPreview post={post} key={index}/>
+                <PostPreview 
+                    post={post} 
+                    key={index}
+                    handleClick={e => {
+                        e.preventDefault()
+                        console.log(post)
+                        navigate(`${post.id}`)
+                    }}
+                />
             ))}
         </div>
      );
@@ -39,26 +50,5 @@ const MyPosts = () => {
  
 export default MyPosts
 
-const PostPreview = ({ post }) => {
 
-    const navigate = useNavigate()
-
-    const handleClick = e => {
-        e.preventDefault()
-        console.log(post)
-        navigate(`${post.id}`)
-    }
-
-    return ( 
-        <div className="post-preview" onClick={handleClick}>
-            <div className="left-post-preview">
-                <h3>{post.street}</h3>
-                <h4>{post.city}, {post.country}</h4>
-            </div>
-            <div className="right-post-preview">
-                <h3>{post.dateVisit}</h3>
-            </div>
-        </div>
-     );
-}
  

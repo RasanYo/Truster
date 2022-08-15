@@ -32,7 +32,7 @@ const PostPage = () => {
             <div id="information">
                 <div id="date">{postData.dateVisit}</div>
                 <div id="street">{postData.street}</div>
-                <div id="country">{postData.country}</div>
+                <div id="country">{postData.npa} {postData.city}, {postData.country}</div>
             </div>}
             
         </div>

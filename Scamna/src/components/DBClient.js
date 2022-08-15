@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, setDoc, Timestamp, updateDoc } from 'firebase/firestore'
+import { arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, query, QueryConstraint, setDoc, Timestamp, updateDoc, where } from 'firebase/firestore'
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 
 export class DBClient {
@@ -11,6 +11,7 @@ export class DBClient {
     }
 
 
+
     printTest() {
         return "Client present"
     }
@@ -19,11 +20,13 @@ export class DBClient {
     /**
      * 
      * @param {string} collection_name name of the collection. To get subCollection of item write "Collection/item"
+     * @param {QueryConstraint[]} queryConstraints query constraints for the read request
      * @returns {Promise<QuerySnapshot<DocumentData>>} promise containg array of document data
      */
     getCollection(collection_name) {
-        const colRef = collection(this.db, collection_name)
-        return getDocs(colRef)
+        this.readCounter = this.readCounter + 1
+        const q = collection(this.db, collection_name)
+        return getDocs(q)
             .then(snapshot => {
                 return snapshot.docs
             })
@@ -31,6 +34,7 @@ export class DBClient {
 
     /**
      * @param {string} collection_name name of the collection. To get subCollection of item write "Collection/item"
+     * @param {QueryConstraint[]} queryConstraints query constraints for the read request
      * @returns {Promise<Array<DocumentData>>} promise containt array of json data
      */
     getCollectionData(collection_name) {
@@ -38,6 +42,25 @@ export class DBClient {
             return docs.map(doc => doc.data())
         })
     }
+
+    getCollectionWithQuery(collectionName, ...queryConstraints) {
+        this.readCounter = this.readCounter + 1
+        const q = query(collection(this.db, collectionName), ...queryConstraints)
+        return getDocs(q).then(snapshot => {
+            return snapshot.docs
+        })
+    }
+
+    getCollectionDataWithQuery(collectionName, ...queryConstraints) {
+        return this.getCollectionWithQuery(collectionName, ...queryConstraints)
+            .then(docs =>{ 
+                return docs.map(doc.data())
+            })   
+    }
+
+    
+
+
 
     /**
      * 
