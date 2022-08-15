@@ -9,7 +9,7 @@ const MyPosts = () => {
     const [loadingData, setLoadingData] = useState(posts == null)
     const previousUser = useRef(null)
 
-    client.auth.onAuthStateChanged(user => {
+    const unsubscribe = client.auth.onAuthStateChanged(user => {
         if (user && user !== previousUser.current) {
             previousUser.current = user
             client.getDocument("users/regular/users", user.uid)

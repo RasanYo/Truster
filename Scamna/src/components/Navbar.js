@@ -12,7 +12,7 @@ const Navbar = () => {
         client.logOutCurrentUser()
     }
 
-    client.auth.onAuthStateChanged(user => {
+    const unsubscribe = client.auth.onAuthStateChanged(user => {
         if (user) {
             setIsLoggedIn(true)
         } else {
