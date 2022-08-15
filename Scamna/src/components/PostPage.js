@@ -11,13 +11,12 @@ const PostPage = () => {
     const [postData, setPostData] = useState(null)
     const [loadingData, setLoadingData] = useState(postData == null)
 
-    if(postData != previousPostData){
+
+    useEffect(() => {
         client.getDocument("posts/notVisited/posts",id).then(snapshot => {
-            const data = snapshot.data()
-            setPostData(data)
-            previousPostData.current = data
+            setPostData(snapshot.data())
         })
-    }
+    }, [])
     
 
     useEffect(() => {
@@ -31,9 +30,12 @@ const PostPage = () => {
         <div className="post-details">
             <h2>Post Details</h2>
             {loadingData && <div>Loading...</div>}
-            <div id="information">{!loadingData && <div id="date">{postData.dateVisit}</div>}
-            {!loadingData && <div id="street">{postData.street}</div>}
-            {!loadingData && <div id="country">{postData.country}</div>}</div>
+            {!loadingData &&
+            <div id="information">
+                <div id="date">{postData.dateVisit}</div>
+                <div id="street">{postData.street}</div>
+                <div id="country">{postData.country}</div>
+            </div>}
             
         </div>
      );
