@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { useEffect } from "react";
 import { useState } from "react";
 import { DBClientContext } from "../App";
 import { Link } from "react-router-dom";

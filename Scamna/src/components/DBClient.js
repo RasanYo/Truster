@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, QuerySnapshot, setDoc, Timestamp } from 'firebase/firestore'
+import { collection, deleteDoc, doc, getDoc, getDocs, getFirestore, setDoc, Timestamp } from 'firebase/firestore'
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 
 export class DBClient {
@@ -66,7 +66,6 @@ export class DBClient {
      * it has been written to the backend
      */
     createUser(userObject, password) {
-        const regularUserRef = collection(this.db, 'users/regular/users')
         userObject.createdAt = Timestamp.now()
         return createUserWithEmailAndPassword(this.auth, userObject.email, password)
             .then(userCred => {
