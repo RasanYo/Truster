@@ -42,6 +42,7 @@ const PostPreview = ({ post }) => {
 
     const handleClick = e => {
         e.preventDefault()
+        console.log(post)
         navigate(`${post.id}`)
     }
 

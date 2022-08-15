@@ -1,8 +1,11 @@
 import { getAuth } from "firebase/auth";
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { DBClientContext } from "../App";
 
 const NewPosts = () => {
+
+    const navigate = useNavigate()
 
     const client = useContext(DBClientContext);
     const [city, setCity] = useState("");
@@ -22,16 +25,7 @@ const NewPosts = () => {
             country : country,
             dateVisit : dateVisit,
         },getAuth().currentUser.uid)
-
-        // client.hashId({
-        //         street : street,
-        //         city : city,
-        //         npa : npa,
-        //         country : country,
-        //         dateVisit : dateVisit,
-        //         createdBy : getAuth().currentUser.uid
-        //     },getAuth().currentUser.uid)
-
+        navigate("/myposts")
         return true
     }
 

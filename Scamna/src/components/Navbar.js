@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { DBClientContext } from "../App";
+import A from "../images/A"
 
 const Navbar = () => {
 

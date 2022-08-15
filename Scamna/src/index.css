@@ -20,7 +20,6 @@
   padding: 20px;
   display: flex;
   align-items: center;
-  max-width: 75%;
   margin: 0 auto;
   /* background-color: aqua; */
 }
@@ -141,4 +140,32 @@ form input, select {
   position: relative;
   text-align: right;
   margin-left: auto;
+}
+
+/* ################################ */
+/* Post Page styles */
+.post-details #information{
+  display: block;
+  margin: 50px 100px 100px 100px;
+}
+
+.post-details h2{
+  margin: auto;
+  text-align: center;
+  padding: 16px;
+}
+
+.post-details #date{
+  color : red;
+  font-size: 1em;
+}
+
+.post-details #street{
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.post-details #country{
+  font-size: 1.5em;
+  color: gray;
 }
