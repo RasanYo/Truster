@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { DBClientContext } from "../App";
 
@@ -6,13 +6,19 @@ const PostPage = () => {
 
     const {id} = useParams();
     const client = useContext(DBClientContext);
+    const previousPostData = useRef(null)
 
     const [postData, setPostData] = useState(null)
     const [loadingData, setLoadingData] = useState(postData == null)
 
-    client.getDocument("posts/notVisited/posts",id).then(snapshot => {
-        setPostData(snapshot.data())
-    })
+    if(postData != previousPostData){
+        client.getDocument("posts/notVisited/posts",id).then(snapshot => {
+            const data = snapshot.data()
+            setPostData(data)
+            previousPostData.current = data
+        })
+    }
+    
 
     useEffect(() => {
         if (postData) setLoadingData(false)
