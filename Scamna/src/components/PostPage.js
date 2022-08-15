@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { DBClientContext } from "../App";
+import { COLLECTIONS } from "../Constants";
 
 const PostPage = () => {
 
@@ -13,7 +14,7 @@ const PostPage = () => {
 
 
     useEffect(() => {
-        client.getDocument("posts/notVisited/posts",id).then(snapshot => {
+        client.getDocument(COLLECTIONS.AVAILABLE_VISITS,id).then(snapshot => {
             setPostData(snapshot.data())
         })
     }, [])

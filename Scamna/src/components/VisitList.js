@@ -4,9 +4,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import { DBClientContext } from "../App";
 import { COLLECTIONS } from "../Constants";
-import useLoadingState from "../hooks/useLoadingState";
 import PostPreview from "./PostPreview";
-import { getDocs, collection, query } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
 const VisitList = () => {
