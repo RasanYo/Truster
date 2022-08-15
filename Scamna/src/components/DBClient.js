@@ -76,11 +76,19 @@ export class DBClient {
         
     }
 
+    /**
+     * 
+     * @param {*} postObject 
+     * @param {*} userId 
+     */
     createPost(postObject,userId){
         postObject.createdAt = Timestamp.now()
         postObject.createdBy = userId
-        setDoc(doc(this.db, "posts/notVisited/posts",this.hashId(postObject,userId)),postObject)
-        updateDoc(doc(this.db,"users/regular/users",userId),{
+
+        let postId = this.hashId(postObject,userId)
+        setDoc(doc(this.db, "posts/notVisited/posts", postId), postObject)
+        postObject.id = postId
+        updateDoc(doc(this.db, "users/regular/users", userId),{
             myPosts : arrayUnion(postObject)
         }).catch(e => {
             console.log(e)

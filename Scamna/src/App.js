@@ -43,6 +43,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/newPost" element={<NewPosts />}/>
           <Route path="/myposts" element={<MyPosts />} />
+          <Route path="/myposts/:id" element={<div>Post</div>} />
         </Routes>
       </DBClientContext.Provider>
     </Router>
