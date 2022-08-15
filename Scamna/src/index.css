@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
+:root {
+  --font-size: 12px
+}
+
 /* ################################ */
 /* base styles */
 * {
@@ -93,4 +97,48 @@ form input, select {
   margin: auto;
   text-align: center;
   padding: 16px;
+}
+
+/* ################################ */
+/* MyPosts styles */
+
+.post-list {
+  max-width: 75%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.post-preview {
+  display: flex;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+  margin: 12px auto;
+  padding: 10px 20px;
+  align-items: center;
+}
+
+.post-preview:hover{
+  color: #f1356d;
+  box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
+}
+
+.post-preview .left-post-preview {
+  text-align: left;
+  display: block;
+}
+
+.post-preview h3 {
+  font-size: var((--font-size) * 1,5);
+}
+
+.post-preview h4 {
+  font-size: var(--font-size);
+  color: grey;
+}
+
+.post-preview .right-post-preview {
+  position: relative;
+  text-align: right;
+  margin-left: auto;
 }

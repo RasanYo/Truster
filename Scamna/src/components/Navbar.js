@@ -31,7 +31,8 @@ const Navbar = () => {
                 {!isLoggedIn && <Link to="/login">Log in</Link>}
                 {isLoggedIn && <Link to ="/profile">Profile</Link>}
                 {isLoggedIn && <Link to="/" onClick={handleLogout}>Sign out</Link>}
-                {isLoggedIn && <Link to="/newPost">New Post</Link>}
+                {isLoggedIn && <Link to="/newpost">New Post</Link>}
+                {isLoggedIn && <Link to="/myposts">My Posts</Link>}
             </div>
         </nav>
      );

@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import Profile from './components/Profile';
 import NewPosts from './components/NewPosts';
 import SignUp from './components/SignUp';
+import MyPosts from './components/MyPosts';
 
 export const DBClientContext = createContext(null)
 
@@ -41,6 +42,7 @@ function App() {
           <Route path="/login" element={<LogIn />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/newPost" element={<NewPosts />}/>
+          <Route path="/myposts" element={<MyPosts />} />
         </Routes>
       </DBClientContext.Provider>
     </Router>
