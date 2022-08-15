@@ -1,3 +1,4 @@
+import { getAuth } from "firebase/auth";
 import { useContext, useState } from "react";
 import { DBClientContext } from "../App";
 
@@ -10,6 +11,30 @@ const NewPosts = () => {
     const [npa,setNpa] = useState("");
     const [dateVisit, setDateVisit] = useState("");
     
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        //Need condition for correctness of adress
+
+        client.createPost({
+            street : street,
+            city : city,
+            npa : npa,
+            country : country,
+            dateVisit : dateVisit,
+        },getAuth().currentUser.uid)
+
+        // client.hashId({
+        //         street : street,
+        //         city : city,
+        //         npa : npa,
+        //         country : country,
+        //         dateVisit : dateVisit,
+        //         createdBy : getAuth().currentUser.uid
+        //     },getAuth().currentUser.uid)
+
+        return true
+    }
+
 
     return ( 
         <div className="new-post-preview">
@@ -33,7 +58,7 @@ const NewPosts = () => {
                 placeholder="NPA"
                 type="number" 
                 required 
-                onChange={(e) => setCity(e.target.value)}
+                onChange={(e) => setNpa(e.target.value)}
                 />
 
                 <input 
@@ -51,7 +76,7 @@ const NewPosts = () => {
                 />
 
 
-                <button>Submit</button>
+                <button onClick={handleSubmit}>Submit</button>
             </form>
         </div>
      );

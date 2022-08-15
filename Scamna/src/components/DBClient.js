@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { collection, deleteDoc, doc, getDoc, getDocs, getFirestore, setDoc, Timestamp } from 'firebase/firestore'
+import { arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, setDoc, Timestamp, updateDoc } from 'firebase/firestore'
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 
 export class DBClient {
@@ -8,6 +8,7 @@ export class DBClient {
         this.db = getFirestore()
         this.auth = getAuth()
     }
+
 
     printTest() {
         return "Client present"
@@ -73,6 +74,22 @@ export class DBClient {
                 return setDoc(doc(this.db, 'users/regular/users', userCred.user.uid), userObject)
             })
         
+    }
+
+    createPost(postObject,userId){
+        postObject.createdAt = Timestamp.now()
+        postObject.createdBy = userId
+        setDoc(doc(this.db, "posts/notVisited/posts",this.hashId(postObject,userId)),postObject)
+        updateDoc(doc(this.db,"users/regular/users",userId),{
+            myPosts : arrayUnion(postObject)
+        }).catch(e => {
+            console.log(e)
+        })
+    }
+
+    hashId(postObject,userId){
+        const newString = (postObject.street.replace(/\s/g, "") + postObject.city.replace(/\s/g, "") + postObject.country.replace(/\s/g, "")).toLowerCase()  + userId;
+        return newString
     }
 
     /**
