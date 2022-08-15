@@ -13,12 +13,9 @@ const Navbar = () => {
     }
 
     client.auth.onAuthStateChanged(user => {
-        client.currentUser = user
         if (user) {
-            console.log("Logged in")
             setIsLoggedIn(true)
         } else {
-            console.log("Logged out")
             setIsLoggedIn(false)
         }
     })

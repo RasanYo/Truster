@@ -7,6 +7,7 @@ export class DBClient {
         this.app = initializeApp(config)
         this.db = getFirestore()
         this.auth = getAuth()
+        this.readCounter = 0
     }
 
 
@@ -45,6 +46,8 @@ export class DBClient {
      * @returns {Promise<DocumentSnapshot<DocumentData>>} promise of document snapshot
      */
     getDocument(collection_name, doc_id) {
+        this.readCounter = this.readCounter + 1
+        console.log(`Read count is ${this.readCounter}`)
         return getDoc(doc(this.db, collection_name, doc_id))
     }
 
