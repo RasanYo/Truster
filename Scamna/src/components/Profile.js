@@ -8,15 +8,17 @@ const Profile = () => {
     const [userData, setUserData] = useState(null)
     const [loadingData, setLoadingData] = useState(userData == null)
 
+    useEffect(() => {
+        client.auth.onAuthStateChanged(user => {
+            if (user) {
+                client.getDocument("users/regular/users", user.uid)
+                    .then(snapshot => {
+                        setUserData(snapshot.data())
+                    })
+            }
+        })
+    },[])
     
-    client.auth.onAuthStateChanged(user => {
-        if (user) {
-            client.getDocument("users/regular/users", user.uid)
-                .then(snapshot => {
-                    setUserData(snapshot.data())
-                })
-        }
-    })
 
     useEffect(() => {
         if (userData) setLoadingData(false)
