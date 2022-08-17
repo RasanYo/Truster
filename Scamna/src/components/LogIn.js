@@ -15,9 +15,8 @@ const LogIn = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         client.logInUser(email, password)
-            .then(userCred => {
+            .then(() => {
                 navigate("/")
-                console.log(`User ${userCred.user.uid}`)
             }).catch(error => 
                 setIsGoodPassword(false) 
             )

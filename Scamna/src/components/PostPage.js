@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { DBClientContext } from "../App";
 import { COLLECTIONS } from "../Constants";
 
@@ -7,7 +7,8 @@ const PostPage = () => {
 
     const {id} = useParams();
     const client = useContext(DBClientContext);
-    const previousPostData = useRef(null)
+    // const location = useLocation()
+    const navigate = useNavigate()
 
     const [postData, setPostData] = useState(null)
     const [loadingData, setLoadingData] = useState(postData == null)
@@ -21,7 +22,17 @@ const PostPage = () => {
     
 
     useEffect(() => {
-        if (postData) setLoadingData(false)
+        if (postData) {
+            // console.log(postData.createdBy, client.currentUserUID)
+            // if (postData.createdBy == client.currentUserUID && location.pathname.includes("visits")) {
+            //     console.log("NAVIGATE TO MYPOSTS")
+            //     navigate(`../myposts/${id}`)
+            // } else if (postData.createdBy != client.currentUserUID && location.pathname.includes("myposts")) {
+            //     console.log("NAVIGATE TO VISITS")
+            //     navigate(`../visits/${id}`)
+            // }
+            setLoadingData(false)
+        } 
         else {
             setLoadingData(true)
         }
@@ -37,6 +48,7 @@ const PostPage = () => {
                 <div id="street">{postData.street}</div>
                 <div id="country">{postData.npa} {postData.city}, {postData.country}</div>
             </div>}
+            {!loadingData && <Link to={`request`}>Send Request</Link>}
             
         </div>
      );

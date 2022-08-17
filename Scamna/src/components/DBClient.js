@@ -1,12 +1,14 @@
 import { initializeApp } from 'firebase/app'
 import { arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, query, QueryConstraint, setDoc, Timestamp, updateDoc, where } from 'firebase/firestore'
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { COLLECTIONS } from '../Constants'
 
 export class DBClient {
     constructor(config) {
         this.app = initializeApp(config)
         this.db = getFirestore()
         this.auth = getAuth()
+        this.currentUserUID = null
         this.readCounter = 0
     }
 
@@ -97,6 +99,7 @@ export class DBClient {
         return createUserWithEmailAndPassword(this.auth, userObject.email, password)
             .then(userCred => {
                 console.log(`Created user with uid ${userCred.user.uid}`)
+                this.currentUserUID = userCred.user.uid
                 return setDoc(doc(this.db, 'users/regular/users', userCred.user.uid), userObject)
             })
         
@@ -133,7 +136,7 @@ export class DBClient {
      * @returns {Promise<UserCredential>} promise containing user credentials of logged in user
      */
     logInUser(email, password) {
-        return signInWithEmailAndPassword(this.auth, email, password)
+        return signInWithEmailAndPassword(this.auth, email, password).then(userCred => this.currentUserUID = userCred.user.uid)
     }
 
     /**
@@ -141,7 +144,27 @@ export class DBClient {
      * @returns {Promise<void} empty promise
      */
     logOutCurrentUser() {
-        return signOut(this.auth)
+        return signOut(this.auth).then(() => this.currentUserUID = null)
+    }
+
+    /**
+     * 
+     * @param {*} postID 
+     * @param {*} userID 
+     * @param {*} message 
+     * @returns 
+     */
+    sendRequestTo(postID, userID, message) {
+        setDoc(doc(this.db, `${COLLECTIONS.AVAILABLE_VISITS}/${postID}/requests`, userID), {
+            message: message,
+            createdAt: Timestamp.now(),
+            createdBy: userID
+        })
+        return updateDoc(doc(this.db, `${COLLECTIONS.REGULAR_USERS}`, userID),{
+            myVisitRequests : arrayUnion(postID)
+        }).catch(e => {
+            console.log(e)
+        })
     }
 
 
