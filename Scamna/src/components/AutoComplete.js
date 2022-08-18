@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import PlacesAutocomplete, {
   geocodeByAddress,
+  getLatLng
 } from "react-places-autocomplete";
 
-export default function Autocomplete({textObj, setStreet, setCity, setNpa, setCountry, setFullAdress, searchOptions}) {
+export default function Autocomplete({textObj, setStreet, setCity, setNpa, setCountry, setFullAdress, searchOptions, setNumber, setLocation}) {
   const [address, setAddress] = useState("");
 
   // useEffect(()=>{
@@ -14,6 +15,14 @@ export default function Autocomplete({textObj, setStreet, setCity, setNpa, setCo
       setAddress(val)
       if(searchOptions === undefined){
         setFullAdress(val)
+
+        
+
+        geocodeByAddress(val).then(results => {
+          getLatLng(results[0]).then(x => setLocation([val,x.lat,x.lng]))
+        })
+        
+
         setStreet("")
         setCity("")
         setCountry("")
@@ -35,6 +44,9 @@ export default function Autocomplete({textObj, setStreet, setCity, setNpa, setCo
           }else if(y.types[0] === "postal_code"){
             setNpa(y.long_name)
             console.log("postal_code")
+          }else if(y.types[0] === "street_number"){
+            setNumber(y.long_name)
+            console.log("street_number")
           }
 
         })

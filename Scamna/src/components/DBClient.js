@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, query, QueryConstraint, setDoc, Timestamp, updateDoc, where } from 'firebase/firestore'
+import { arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, query, setDoc, Timestamp, updateDoc } from 'firebase/firestore'
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { COLLECTIONS } from '../Constants'
 

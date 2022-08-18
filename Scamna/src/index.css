@@ -114,6 +114,20 @@ form input, select {
   font-size: 1.3em;
 }
 
+.street-name-number {
+  display: flex;
+  flex-direction: row;
+}
+
+.street-name-number #one{
+  flex: 5;
+  margin-right: 5px;
+}
+
+.street-name-number #two{
+  flex : 1;
+}
+
 /* ################################ */
 /* MyPosts styles */
 
@@ -227,4 +241,62 @@ form input, select {
   position: absolute;
   z-index: 1000;
   border-radius: 0 0 2px 2px; */
+}
+
+/* ################################ */
+/* Map */
+
+.map-h2 {
+  text-transform: uppercase;
+  font-size: 1rem;
+  padding: 20px;
+  padding-left: 10px;
+  text-align: center;
+}
+
+.google-map {
+  margin: auto;
+  width: 100%;
+  height: 40vh;
+  border-radius: 100px;
+  margin-bottom: 30px;
+}
+
+.pin {
+  display: flex;
+  align-items: center;
+  width: 200px;
+  color: var(--main-blue);
+}
+
+.pin-icon {
+  font-size: 4rem;
+}
+
+.pin-text {
+  font-size: 1em;
+  color: black;
+  font-weight: bold;
+  background-color: rgba(118, 117, 117, 0.5);
+  border-radius: 30px;
+  padding: 8px;
+}
+
+@media screen and (min-width: 799px) {
+  .google-map {
+    height: 80vh;
+  }
+
+  .map-h2 {
+    font-size: 1.3rem;
+    font-weight: 400;
+  }
+
+  .pin {
+    width: 15vw;
+  }
+
+  .pin-icon {
+    font-size: 10vw;
+  }
 }
