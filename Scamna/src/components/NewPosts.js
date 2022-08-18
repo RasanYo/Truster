@@ -47,7 +47,7 @@ const NewPosts = () => {
                 <AutoComplete textObj={{text : "Type Adress"}} setStreet={setStreet} setCity={setCity} setNpa={setNpa} setCountry={setCountry} setFullAdress={setFullAdress}/>
 
                 <input 
-                
+                className="inputForm"
                 placeholder="Street name & number"
                 type="text" 
                 value={street}
@@ -56,6 +56,7 @@ const NewPosts = () => {
                 />
 
                 <input 
+                className="inputForm"
                 placeholder="City"
                 type="text" 
                 required 
@@ -65,6 +66,7 @@ const NewPosts = () => {
                 {/* <AutoComplete  textObj={{text : "City"}} setCity={setCity} searchOptions={{types : ['locality']}}/> */}
 
                 <input 
+                className="inputForm"
                 placeholder="NPA"
                 type="number" 
                 required 
@@ -76,8 +78,9 @@ const NewPosts = () => {
                         
                       
 
-                <label>Date of Visit</label>
+                <label className="labelForm">Date of Visit</label>
                 <input 
+                className="inputForm"
                 type="date" 
                 required 
                 onChange={(e) => setDateVisit(e.target.value)}
