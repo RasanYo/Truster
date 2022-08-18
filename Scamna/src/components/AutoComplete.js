@@ -58,13 +58,13 @@ export default function Autocomplete({setStreet, setCity, setNpa, setCountry, se
             <div>
               {loading ? <div>...loading</div> : null}
 
-              {suggestions.map(suggestion => {
+              {suggestions.map((suggestion, index) => {
                 const style = {
                   backgroundColor: suggestion.active ? "#41b6e6" : "#fff"
                 };
 
                 return (
-                  <div {...getSuggestionItemProps(suggestion, { style })} >
+                  <div {...getSuggestionItemProps(suggestion, { style })} key={index} >
                     {suggestion.description}
                   </div>
                 );
