@@ -13,7 +13,6 @@ import VisitList from './components/VisitList';
 import AutoComplete from './components/AutoComplete';
 import RequestPage from './components/RequestPage';
 
-
 export const DBClientContext = createContext(null)
 
 function App() {

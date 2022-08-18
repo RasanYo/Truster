@@ -1,35 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PlacesAutocomplete, {
   geocodeByAddress,
-  getLatLng
 } from "react-places-autocomplete";
 
-// export default function Autocomplete({address,setAddress}) {
-export default function Autocomplete({setStreet, setCity, setNpa, setCountry, setFullAdress}) {
+export default function Autocomplete({textObj, setStreet, setCity, setNpa, setCountry, setFullAdress, searchOptions}) {
   const [address, setAddress] = useState("");
-  
 
-  // const handleSelect = async value => {
-  //   const results = await geocodeByAddress(value);
-  //   const latLng = await getLatLng(results[0]);
-  //   setAddress(value);
-  //   setCoordinates(latLng);
-  // };
+  // useEffect(()=>{
+
+  // })
 
   const handleSelect = (val) => {
+      setAddress(val)
+      if(searchOptions === undefined){
+        setFullAdress(val)
+        setStreet("")
+        setCity("")
+        setCountry("")
+        setNpa("")
+      } 
+      
       geocodeByAddress(val).then(x => {
         console.log(x[0].address_components)
         x[0].address_components.forEach(y => {
-          if(y.types[0] == "route"){
+          if(y.types[0] === "route"){
             setStreet(y.long_name)
             console.log("route")
-          }else if(y.types[0] == "country"){
+          }else if(y.types[0] === "country"){
             setCountry(y.long_name)
             console.log("country")
-          }else if(y.types[0] == "locality"){
+          }else if(y.types[0] === "locality"){
             setCity(y.long_name)
             console.log("locality")
-          }else if(y.types[0] == "postal_code"){
+          }else if(y.types[0] === "postal_code"){
             setNpa(y.long_name)
             console.log("postal_code")
           }
@@ -39,8 +42,7 @@ export default function Autocomplete({setStreet, setCity, setNpa, setCountry, se
       })
       
       //geocodeByAddress(val).then(x => setCity(x[0].address_components[0]))
-      setAddress(val)
-      setFullAdress(val)
+      
       
   }
 
@@ -50,17 +52,18 @@ export default function Autocomplete({setStreet, setCity, setNpa, setCountry, se
         value={address}
         onChange={setAddress}
         onSelect={handleSelect}
+        searchOptions={searchOptions}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div>
-            <input {...getInputProps({ placeholder: "Type address" })} />
+          <div className="autocomplete-block">
+            <input {...getInputProps({ placeholder: textObj.text,className: 'location-search-input'})} />
 
-            <div>
+            <div className="autocomplete-dropdown-container">
               {loading ? <div>...loading</div> : null}
 
               {suggestions.map((suggestion, index) => {
                 const style = {
-                  backgroundColor: suggestion.active ? "#41b6e6" : "#fff"
+                  backgroundColor: suggestion.active ? "#41b6e6" : "#fff",
                 };
 
                 return (
