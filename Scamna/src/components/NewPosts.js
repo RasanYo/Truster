@@ -21,6 +21,8 @@ const NewPosts = () => {
     const [npa,setNpa] = useState("");
     const [dateVisit, setDateVisit] = useState("");
     const [fullAdress, setFullAdress] = useState("");
+    const [lat, setLat] = useState("");
+    const [lng, setLng] = useState("");
 
     // const [location, setLocation] = useState({
     //     address: '1600 Amphitheatre Parkway, Mountain View, california.',
@@ -40,6 +42,9 @@ const NewPosts = () => {
             city : city,
             npa : npa,
             country : country,
+            fullAdress : fullAdress,
+            lat:lat,
+            lng:lng,
             dateVisit : dateVisit,
         },getAuth().currentUser.uid)
         navigate("/myposts")
@@ -57,7 +62,11 @@ const NewPosts = () => {
     useEffect(()=>{
         var val = street+" " + number + " " + city + " " + country
         geocodeByAddress(val).then(results => {
-            getLatLng(results[0]).then(x => setLocation([val,x.lat,x.lng]))
+            getLatLng(results[0]).then(x => {
+                setLat(x.lat)
+                setLng(x.lng)
+                setLocation([val,x.lat,x.lng])
+            })
           })
     },[city,street,number,country,npa])
 
@@ -66,7 +75,7 @@ const NewPosts = () => {
             <h2>Add New Post</h2> 
             <form onSubmit={handleSubmit}>
                 {/* {<AutoComplete address={fullAdress} setAddress={setFullAdress}/>} */}
-                <AutoComplete textObj={{text : "Type Adress"}} setStreet={setStreet} setCity={setCity} setNpa={setNpa} setCountry={setCountry} setFullAdress={setFullAdress} setNumber = {setNumber} setLocation={setLocation}/>
+                <AutoComplete textObj={{text : "Type Adress"}} setStreet={setStreet} setCity={setCity} setNpa={setNpa} setCountry={setCountry} setFullAdress={setFullAdress} setNumber = {setNumber} setLocation={setLocation} setLat={setLat} setLng={setLng}/>
 
                 <div className="street-name-number">
                 <input 
@@ -120,7 +129,7 @@ const NewPosts = () => {
 
                 {/* <AutoComplete  textObj={{text : "Country"}} setCountry={setCountry} searchOptions={{types : ['country']}}/> */}
                         
-                <MapSection location={location} zoomLevel={15}/>
+                <MapSection location={location} zoomLevel={15} id="New Post"/>
 
                 <label className="labelForm">Date of Visit</label>
                 <input 

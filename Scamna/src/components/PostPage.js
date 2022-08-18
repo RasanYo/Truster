@@ -2,24 +2,29 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { DBClientContext } from "../App";
 import { COLLECTIONS } from "../Constants";
+import MapSection from "./Map"
+import PlacesAutocomplete, {
+    geocodeByAddress,
+    getLatLng
+  } from "react-places-autocomplete";
 
 const PostPage = () => {
 
     const {id} = useParams();
     const client = useContext(DBClientContext);
-    // const location = useLocation()
+    const [location, setLocation] = useState("")
     const navigate = useNavigate()
 
     const [postData, setPostData] = useState(null)
     const [loadingData, setLoadingData] = useState(postData == null)
     const allowRequest = useLocation().pathname.includes("visits")
 
-
     useEffect(() => {
         client.getDocument(COLLECTIONS.AVAILABLE_VISITS,id).then(snapshot => {
             setPostData(snapshot.data())
         })
     }, [])
+
     
 
     useEffect(() => {
@@ -49,6 +54,9 @@ const PostPage = () => {
                 <div id="street">{postData.street}</div>
                 <div id="country">{postData.npa} {postData.city}, {postData.country}</div>
             </div>}
+        
+            {!loadingData && <MapSection location={[postData.fullAdress,parseFloat(postData.lat),parseFloat(postData.lng)]} zoomLevel={15} id="PostPage"/>}
+            
             {!loadingData && allowRequest && <Link to={`request`}>Send Request</Link>}
             
         </div>
