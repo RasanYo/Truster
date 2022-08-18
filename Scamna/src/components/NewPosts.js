@@ -71,7 +71,7 @@ const NewPosts = () => {
                 <input 
                 id="two"
                 className="inputForm"
-                placeholder="Number"
+                placeholder="Nº"
                 type="text" 
                 value={number}
                 required 
