@@ -12,6 +12,7 @@ const PostPage = () => {
 
     const [postData, setPostData] = useState(null)
     const [loadingData, setLoadingData] = useState(postData == null)
+    const allowRequest = useLocation().pathname.includes("visits")
 
 
     useEffect(() => {
@@ -48,7 +49,7 @@ const PostPage = () => {
                 <div id="street">{postData.street}</div>
                 <div id="country">{postData.npa} {postData.city}, {postData.country}</div>
             </div>}
-            {!loadingData && <Link to={`request`}>Send Request</Link>}
+            {!loadingData && allowRequest && <Link to={`request`}>Send Request</Link>}
             
         </div>
      );
