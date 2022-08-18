@@ -2,6 +2,10 @@ import { getAuth } from "firebase/auth";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DBClientContext } from "../App";
+import PlacesAutocomplete, {
+    geocodeByAddress,
+    getLatLng
+  } from "react-places-autocomplete";
 import AutoComplete from './AutoComplete';
 import MapSection from "./Map";
 
@@ -50,10 +54,17 @@ const NewPosts = () => {
         console.log(fullAdress)
     },[fullAdress])
 
+    useEffect(()=>{
+        var val = street+" " + number + " " + city + " " + country
+        geocodeByAddress(val).then(results => {
+            getLatLng(results[0]).then(x => setLocation([val,x.lat,x.lng]))
+          })
+    },[city,street,number,country,npa])
+
     return ( 
         <div className="new-post-preview">
             <h2>Add New Post</h2> 
-            <form >
+            <form onSubmit={handleSubmit}>
                 {/* {<AutoComplete address={fullAdress} setAddress={setFullAdress}/>} */}
                 <AutoComplete textObj={{text : "Type Adress"}} setStreet={setStreet} setCity={setCity} setNpa={setNpa} setCountry={setCountry} setFullAdress={setFullAdress} setNumber = {setNumber} setLocation={setLocation}/>
 
@@ -120,7 +131,7 @@ const NewPosts = () => {
                 />
 
 
-                <button onClick={handleSubmit}>Submit</button>
+                <button>Submit</button>
             </form>
             
             
