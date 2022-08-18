@@ -10,11 +10,8 @@ import SignUp from './components/SignUp';
 import MyPosts from './components/MyPosts';
 import PostPage from './components/PostPage';
 import VisitList from './components/VisitList';
-<<<<<<< HEAD
 import AutoComplete from './components/AutoComplete';
-=======
 import RequestPage from './components/RequestPage';
->>>>>>> 3a2a81f6aaa60507af2aa2568a33edceb53da958
 
 export const DBClientContext = createContext(null)
 
