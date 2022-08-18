@@ -26,6 +26,7 @@
 
 .navbar .links {
   margin-left: auto;
+  
 }
 
 .links a {
@@ -168,4 +169,19 @@ form input, select {
 .post-details #country{
   font-size: 1.5em;
   color: gray;
+}
+
+
+
+/* ################################ */
+/* Autocomplete */
+.autocomplete-preview{
+  text-align: left;
+  /* border: #333;
+  border-style: solid; */
+  padding-left: 20px;
+}
+
+.autocomplete-block{
+  
 }
