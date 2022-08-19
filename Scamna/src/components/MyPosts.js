@@ -1,10 +1,11 @@
+import { firestore, limit, query, where } from "firebase/firestore"
 import { useContext, useState, useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { DBClientContext } from "../App"
 import PostPreview from "./PostPreview"
 
 
-const MyPosts = () => {
+const MyPosts = ({numberofElements}) => {
 
     const client = useContext(DBClientContext)
     const [posts, setPosts] = useState(null)
@@ -15,10 +16,18 @@ const MyPosts = () => {
     const unsubscribe = client.auth.onAuthStateChanged(user => {
         if (user && user !== previousUser.current) {
             previousUser.current = user
-            client.getDocument("users/regular/users", user.uid)
+            if(numberofElements === undefined){
+                client.getDocument("users/regular/users", user.uid)
                 .then(snapshot => {
                     setPosts(snapshot.data().myPosts)
                 })
+            }else {
+                client.getDocument("users/regular/users", user.uid)
+                .then(snapshot => {
+                    setPosts(snapshot.data().myPosts.slice(0,numberofElements))
+                })
+            }
+            
         }
     })
 

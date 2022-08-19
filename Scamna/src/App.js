@@ -46,7 +46,7 @@ function App() {
           <Route path="/login" element={<LogIn />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/newPost" element={<NewPosts />}/>
-          <Route path="/myposts" element={<MyPosts />} />
+          <Route path="/myposts" element={<MyPosts/>} />
           <Route path="/myposts/:id" element={<PostPage/>} />
           <Route path="/visits" element={<VisitList />} />
           <Route path="/autocomplete" element={< AutoComplete/>} />
