@@ -6,7 +6,7 @@ const RolldownItem = ({preview, body}) => {
 
     const handleClick = e => {
         e.preventDefault()
-        setShowFull(!showFull)
+        if (e.target.classList.contains("title")) setShowFull(!showFull)
     }
 
     return ( 

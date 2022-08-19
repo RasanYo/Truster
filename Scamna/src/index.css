@@ -387,11 +387,18 @@ form input, select {
   border-color: rgb(207, 193, 193);
 }
 
-.rolldown-item .preview {
+
+.rolldown-item .preview div {
+  display: flex;
+  margin: 0 auto;
+}
+
+.rolldown-item .preview h2 {
   font-size: 20px;
   margin: 5px 0;
   padding: auto 10px;
   transition: font-weight 0.2s;
+  margin-right: auto;
 }
 
 .rolldown-item .body div {
@@ -406,15 +413,15 @@ form input, select {
   font-weight: normal;
 }
 
-.rolldown-item .body button {
+.rolldown-item .preview button {
   margin-left: auto;
 }
 
-.rolldown-item .body span {
+.rolldown-item .preview span {
   margin-left: auto;
 }
 
-.rolldown-item .body span *{
+.rolldown-item .preview span *{
   /* border-style: solid; */
   border-radius: 6px;
   padding: 5px;
@@ -422,40 +429,53 @@ form input, select {
   transition: background-color, color .2s;
 }
 
-.rolldown-item .body span *:hover{
+.rolldown-item .preview span *:hover{
   cursor: pointer;
 }
 
-.rolldown-item .body span .check *{
+.rolldown-item .preview span .check *{
   color: rgb(130, 204, 130);
 }
 
-.rolldown-item .body span .check:hover{
+.rolldown-item .preview span .check:hover{
   background-color: rgb(130, 204, 130);
 }
 
-.rolldown-item .body span .check:hover *{
+.rolldown-item .preview span .check:hover *{
   color: white;
 }
 
-.rolldown-item .body span .cross *{
+.rolldown-item .preview span .cross *{
   color: rgb(222, 128, 117);
 }
 
-.rolldown-item .body span .cross:hover{
+.rolldown-item .preview span .cross:hover{
   background-color: rgb(222, 128, 117);
 }
 
-.rolldown-item .body span .cross:hover *{
+.rolldown-item .preview span .cross:hover *{
   color: white;
 }
 
-
-.rolldown-item .body button:hover {
-  cursor: pointer;
+.rolldown-item .preview button {
+  background: none;
+  border-radius: 6px;
+  border-style: none;
+  font-size: 16px;
+  padding: 5px;
+  margin: 5px;
+  background-color: rgb(222, 128, 117);
+  color: white;
+  transition: background-color, box-shadow .2s;
 }
 
-.rolldown-item .preview:hover{
+.rolldown-item .preview button:hover {
+  cursor: pointer;
+  background-color: rgb(212, 77, 62);
+  box-shadow: 0 5px 10px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+.rolldown-item .preview h2:hover{
   cursor: pointer;
   font-weight: 1000;
 }

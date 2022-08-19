@@ -53,7 +53,32 @@ const RequesterList = ({ postID, style }) => {
             requests.map((request, index) => {
                 return <RolldownItem
                     key={index}
-                    preview={<div>{request.createdBy}</div>}
+                    preview={
+                        <div>
+                            <h2 className="title">{request.createdBy}</h2>
+                            {visitor == request.createdBy ? 
+                            <button onClick={e => {
+                                e.preventDefault()
+                                client.cancelVisit(postID, request.createdBy)
+                            }}>Cancel visit</button> : 
+                            <span className="request-buttons">
+                                {!visitor && 
+                                <ImCheckmark 
+                                    onClick={e => {
+                                        e.preventDefault()
+                                        client.acceptVisitRequest(postID, request.createdBy)
+                                    }}
+                                    className="check"
+                                />}
+                                <ImCross 
+                                    onClick={e => {
+                                        e.preventDefault()
+                                        client.declineVisitRequest(postID, request.createdBy)
+                                    }}
+                                    className="cross"
+                                />
+                            </span>}
+                        </div>}
                     body={
                     <div>
                         <h4>{request.message}</h4>
@@ -69,29 +94,6 @@ const RequesterList = ({ postID, style }) => {
                             e.preventDefault()
                             client.cancelVisit(postID, request.createdBy)
                         }}>Cancel visit</button>} */}
-
-                        {visitor == request.createdBy ? 
-                        <button onClick={e => {
-                            e.preventDefault()
-                            client.cancelVisit(postID, request.createdBy)
-                        }}>Cancel visit</button> : 
-                        <span className="request-buttons">
-                            {!visitor && 
-                            <ImCheckmark 
-                                onClick={e => {
-                                    e.preventDefault()
-                                    client.acceptVisitRequest(postID, request.createdBy)
-                                }}
-                                className="check"
-                            />}
-                            <ImCross 
-                                onClick={e => {
-                                    e.preventDefault()
-                                    client.declineVisitRequest(postID, request.createdBy)
-                                }}
-                                className="cross"
-                            />
-                        </span>}
                     </div>}
                 />
             })}
