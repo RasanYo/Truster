@@ -39,7 +39,8 @@ const VisitList = (numberofElements) => {
                 {isLoading && <div>Loading ...</div>}
                 {!isLoading && visits.map((visit, index) => (
                     <PostPreview 
-                        post={visit.data()} 
+                        post={visit.data()}
+                        id={visit.id}
                         key={index} 
                         handleClick={e => {
                             e.preventDefault()

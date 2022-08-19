@@ -168,13 +168,17 @@ form input, select {
 }
 
 .post-preview {
-  display: flex;
   border-style: solid;
   border-width: 1px;
   border-radius: 5px;
   margin: 12px auto;
   padding: 10px 20px;
   align-items: center;
+}
+
+.post-preview .header {
+  display: flex;
+  
 }
 
 .post-preview:hover{
@@ -197,10 +201,45 @@ form input, select {
 }
 
 .post-preview .right-post-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   text-align: right;
   margin-left: auto;
 }
+
+.post-preview .right-post-preview .icon-show {
+  padding: 8px;
+  margin: 12px;
+  transition: transform .2s;
+  transform: rotate(-180deg);
+}
+
+.post-preview .right-post-preview span {
+  transition: transform .2s;
+}
+
+.post-preview .right-post-preview span:hover {
+  transform: scale(1.5);
+  cursor: pointer;
+}
+
+
+.post-preview .right-post-preview .icon {
+  padding: 8px;
+  margin: 12px;
+  transition: transform .2s;
+}
+
+
+.post-preview .right-post-preview .icon:hover {
+  transform: scale(1.5);
+  cursor: pointer;
+}
+
+
+
 
 /* ################################ */
 /* Post Page styles */
@@ -333,7 +372,7 @@ form input, select {
 /* ################################ */
 /* Rolldown list and Rolldown item */
 .rolldown-list {
-  max-width: 75%;
+  /* max-width: 75%; */
   margin: 0 auto;
   text-align: center;
 }
@@ -352,6 +391,7 @@ form input, select {
   font-size: 20px;
   margin: 5px 0;
   padding: auto 10px;
+  transition: font-weight 0.2s;
 }
 
 .rolldown-item .body div {
@@ -369,6 +409,47 @@ form input, select {
 .rolldown-item .body button {
   margin-left: auto;
 }
+
+.rolldown-item .body span {
+  margin-left: auto;
+}
+
+.rolldown-item .body span *{
+  /* border-style: solid; */
+  border-radius: 6px;
+  padding: 5px;
+  margin: 5px;
+  transition: background-color, color .2s;
+}
+
+.rolldown-item .body span *:hover{
+  cursor: pointer;
+}
+
+.rolldown-item .body span .check *{
+  color: rgb(130, 204, 130);
+}
+
+.rolldown-item .body span .check:hover{
+  background-color: rgb(130, 204, 130);
+}
+
+.rolldown-item .body span .check:hover *{
+  color: white;
+}
+
+.rolldown-item .body span .cross *{
+  color: rgb(222, 128, 117);
+}
+
+.rolldown-item .body span .cross:hover{
+  background-color: rgb(222, 128, 117);
+}
+
+.rolldown-item .body span .cross:hover *{
+  color: white;
+}
+
 
 .rolldown-item .body button:hover {
   cursor: pointer;
