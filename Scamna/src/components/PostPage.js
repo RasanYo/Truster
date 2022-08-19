@@ -54,9 +54,9 @@ const PostPage = () => {
                 <div id="street">{postData.street}</div>
                 <div id="country">{postData.npa} {postData.city}, {postData.country}</div>
             </div>}
-        
-            {!loadingData && <MapSection location={[postData.fullAdress,parseFloat(postData.lat),parseFloat(postData.lng)]} zoomLevel={15} id="PostPage"/>}
-            
+            {/* {!loadingData && console.log(postData)} */}
+            {!loadingData && <MapSection location={[postData.fullAdress,parseFloat(postData.lat),parseFloat(postData.lng)]} zoomLevel={13} />}
+
             {!loadingData && allowRequest && <Link to={`request`}>Send Request</Link>}
             {!loadingRequests && !allowRequest && 
             <div className="rolldown-list">

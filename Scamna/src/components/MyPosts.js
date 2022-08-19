@@ -1,11 +1,10 @@
-import { firestore, limit, query, where } from "firebase/firestore"
 import { useContext, useState, useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { DBClientContext } from "../App"
 import PostPreview from "./PostPreview"
 
 
-const MyPosts = ({numberofElements}) => {
+const MyPosts = ({numberofElements, usedOutside}) => {
 
     const client = useContext(DBClientContext)
     const [posts, setPosts] = useState(null)
@@ -50,8 +49,9 @@ const MyPosts = ({numberofElements}) => {
                     key={index}
                     handleClick={e => {
                         e.preventDefault()
-                        console.log(post)
-                        navigate(`${post.id}`)
+                        // console.log(post)
+                        const r = usedOutside ? "/myposts/" : ""
+                        navigate(r + `${post.id}`)
                     }}
                 />
             ))}

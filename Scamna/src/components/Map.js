@@ -1,64 +1,72 @@
-import GoogleMapReact from 'google-map-react'
-import { Icon } from '@iconify/react'
+import { Icon } from '@iconify/react';
+import { GoogleMap, useJsApiLoader , InfoBox, Marker} from '@react-google-maps/api';
+import { memo, useCallback, useState } from 'react';
 
-const LocationPin = ({ text }) => (
-  <div className="pin">
-    <Icon icon="ic:twotone-push-pin" className="pin-icon" />
-    <p className="pin-text">{text}</p>
-  </div>
-)
+const containerStyle = {
+  width: '80%',
+  height: '400px',
+  marginLeft : '80px'
+};
 
-const Map = ({ location, zoomLevel, id }) => {return (
-  <div className="map">
 
-    <div className="google-map">
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: 'AIzaSyDESnQJUVxDZRs9_3gsMV9W_arspyJFrj4',  id: {id} }}
-        defaultCenter={{lat : 37.42216, lng : -122.08427}}
-        center={{lat : location[1], lng : location[2]}}
-        defaultZoom={zoomLevel}
-      >
-        <LocationPin
-          lat={location[1]}
-          lng={location[2]}
-          text={location[0]}
-        />
-      </GoogleMapReact>
-    </div>
-  </div>
-)}
 
-export default Map;
+function MyComponent({ location, zoomLevel}) {
 
-// import GoogleMapReact from 'google-map-react';
+    const center = {
+        lat: location[1],
+        lng: location[2]
+      };
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: "YOUR_API_KEY"
+  })
 
-// const AnyReactComponent = ({ text }) => <div>{text}</div>;
+  const [map, setMap] = useState(null)
+  const [isIconHovered,setIsIconHovered] = useState(false)
 
-// const Map = () => {
-//     const defaultProps = {
-//         center: {
-//           lat: 10.99835602,
-//           lng: 77.01502627
-//         },
-//         zoom: 11
-//       };
+  const onLoad = useCallback(function callback(map) {
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
+    setMap(map)
+  }, [])
+
+  const options = { closeBoxURL: '', enableEventPropagation: true };
+
+    const onLoadInfoBox = infoBox => {
+    console.log('infoBox: ', infoBox)
+    };
+
+  const onUnmount = useCallback(function callback(map) {
+    setMap(null)
+  }, [])
+
+  return isLoaded ? (
     
-//       return (
-//         // Important! Always set the container height explicitly
-//         <div>
-//           <GoogleMapReact
-//             bootstrapURLKeys={{ key: "AIzaSyDESnQJUVxDZRs9_3gsMV9W_arspyJFrj4" }}
-//             defaultCenter={defaultProps.center}
-//             defaultZoom={defaultProps.zoom}
-//           >
-//             <AnyReactComponent
-//               lat={59.955413}
-//               lng={30.337844}
-//               text="My Marker"
-//             />
-//           </GoogleMapReact>
-//         </div>
-//       );
-// }
- 
-// export default Map;
+      <GoogleMap
+        zoom={zoomLevel}
+        mapContainerStyle={containerStyle}
+        center={center}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+      >
+        {console.log(zoomLevel)}
+        {isIconHovered && <InfoBox
+            onLoad={onLoadInfoBox}
+            options={options}
+            position={center}
+            >
+            <div style={{ backgroundColor: 'gray', opacity: 0.5, padding: 12 }}>
+                <div style={{ fontSize: 16, fontColor: `#000000` }}>
+                {location[0]}
+                </div>
+            </div>
+        </InfoBox>}
+        <Marker position={center} onClick={() => {
+            isIconHovered ? setIsIconHovered(false) : setIsIconHovered(true)
+        }} title={location[0]}></Marker>
+        <></>
+      </GoogleMap>
+  ) : <></>
+}
+
+export default memo(MyComponent)

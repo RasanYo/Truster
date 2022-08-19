@@ -67,6 +67,8 @@ const NewPosts = () => {
                 setLng(x.lng)
                 setLocation([val,x.lat,x.lng])
             })
+          }).catch(ZERO_RESULTS => {
+            console.log("no result for current adress")
           })
     },[city,street,number,country,npa])
 
@@ -129,7 +131,7 @@ const NewPosts = () => {
 
                 {/* <AutoComplete  textObj={{text : "Country"}} setCountry={setCountry} searchOptions={{types : ['country']}}/> */}
                         
-                <MapSection location={location} zoomLevel={15} id="New Post"/>
+                <MapSection location={location} zoomLevel={15} id={"New Post"+location[1]+location[2]}/>
 
                 <label className="labelForm">Date of Visit</label>
                 <input 

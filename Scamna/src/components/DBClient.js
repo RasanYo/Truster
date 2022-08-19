@@ -125,7 +125,7 @@ export class DBClient {
     }
 
     hashId(postObject,userId){
-        const newString = (postObject.street.replace(/\s/g, "") + postObject.city.replace(/\s/g, "") + postObject.country.replace(/\s/g, "")).toLowerCase()  + userId;
+        const newString = (postObject.lat + postObject.lng   + userId).toString();
         return newString
     }
 
