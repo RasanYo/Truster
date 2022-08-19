@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, query, setDoc, Timestamp, updateDoc } from 'firebase/firestore'
+import { arrayRemove, arrayUnion, collection, deleteDoc, deleteField, doc, getDoc, getDocs, getFirestore, query, setDoc, Timestamp, updateDoc } from 'firebase/firestore'
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { COLLECTIONS } from '../Constants'
 
@@ -164,6 +164,34 @@ export class DBClient {
             myVisitRequests : arrayUnion(postID)
         }).catch(e => {
             console.log(e)
+        })
+    }
+
+    /**
+     * 
+     */
+    acceptVisitRequest(postID, requesterID) {
+        return updateDoc(doc(this.db, COLLECTIONS.AVAILABLE_VISITS, postID), {
+            visitor: requesterID
+        }).then(() => {
+            updateDoc(doc(this.db, COLLECTIONS.REGULAR_USERS, requesterID), {
+                myVisits : arrayUnion(postID)
+            })
+        })
+    }
+
+    /**
+     * 
+     * @param {*} postID 
+     * @param {*} requesterID 
+     */
+    cancelVisit(postID, requesterID) {
+        return updateDoc(doc(this.db, COLLECTIONS.AVAILABLE_VISITS, postID), {
+            visitor: deleteField()
+        }).then(() => {
+            updateDoc(doc(this.db, COLLECTIONS.REGULAR_USERS, requesterID), {
+                myVisits : arrayRemove(postID)
+            })
         })
     }
 

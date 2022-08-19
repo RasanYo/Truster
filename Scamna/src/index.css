@@ -329,3 +329,53 @@ form input, select {
     font-size: 10vw;
   }
 }
+
+/* ################################ */
+/* Rolldown list and Rolldown item */
+.rolldown-list {
+  max-width: 75%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.rolldown-list .rolldown-item {
+  text-align: left;
+  padding: 10px;
+  margin: 10px;
+  border-style: solid;
+  border-radius: 8px;
+  border-width: 1px;
+  border-color: rgb(207, 193, 193);
+}
+
+.rolldown-item .preview {
+  font-size: 20px;
+  margin: 5px 0;
+  padding: auto 10px;
+}
+
+.rolldown-item .body div {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+
+}
+
+.rolldown-item .body h4 {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.rolldown-item .body button {
+  margin-left: auto;
+}
+
+.rolldown-item .body button:hover {
+  cursor: pointer;
+}
+
+.rolldown-item .preview:hover{
+  cursor: pointer;
+  font-weight: 1000;
+}
+
