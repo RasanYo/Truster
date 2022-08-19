@@ -4,6 +4,7 @@ import { DBClientContext } from "../App";
 import { COLLECTIONS } from "../Constants";
 import RolldownItem from "./RolldownItem";
 import MapSection from "./Map"
+import { onSnapshot } from "firebase/firestore";
 
 
 const PostPage = () => {
@@ -18,6 +19,8 @@ const PostPage = () => {
 
     const [requests, setRequests] = useState(null)
     const [loadingRequests, setLoadingRequests] = useState(requests == null)
+
+    const [unsubRealTimeRequests, setUnsubRealTimeRequests] = useState(null)
     const allowRequest = useLocation().pathname.includes("visits")
 
     useEffect(() => {
@@ -63,7 +66,14 @@ const PostPage = () => {
                         preview={<div>{request.createdBy}</div>}
                         body={<div>
                             <h4>{request.message}</h4>
-                            <button>Accept request</button>
+                            {!postData.visitor && <button onClick={e => {
+                                client.acceptVisitRequest(id, request.createdBy)
+                            }}>Accept request</button>}
+                            {postData.visitor && 
+                            postData.visitor == request.createdBy && 
+                            <button onClick={e => {
+                                client.cancelVisit(id, request.createdBy)
+                            }}>Cancel visit</button>}
                         </div>}
                     />
             })}
