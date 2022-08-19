@@ -1,4 +1,4 @@
-import { where } from "firebase/firestore";
+import { limit, where } from "firebase/firestore";
 import { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useContext } from "react";
@@ -7,7 +7,7 @@ import { COLLECTIONS } from "../Constants";
 import PostPreview from "./PostPreview";
 import { useNavigate } from "react-router-dom";
 
-const VisitList = () => {
+const VisitList = (numberofElements) => {
 
     const client = useContext(DBClientContext)
     const [visits, setVisits] = useState(null)
@@ -18,6 +18,10 @@ const VisitList = () => {
     const unsubscribe = client.auth.onAuthStateChanged(user => {
         if (user && user !== previousUser.current) {
             previousUser.current = user
+            // client.getCollectionWithQuery(COLLECTIONS.AVAILABLE_VISITS, where("createdBy", "!=", user.uid), limit(parseInt({numberofElements})))
+            //     .then(visits => {
+            //         setVisits(visits)
+            //     })
             client.getCollectionWithQuery(COLLECTIONS.AVAILABLE_VISITS, where("createdBy", "!=", user.uid))
                 .then(visits => {
                     setVisits(visits)
