@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { DBClientContext } from "../App";
 import { COLLECTIONS } from "../Constants";
+import RolldownItem from "./RolldownItem";
 
 const PostPage = () => {
 
@@ -50,6 +51,7 @@ const PostPage = () => {
                 <div id="country">{postData.npa} {postData.city}, {postData.country}</div>
             </div>}
             {!loadingData && allowRequest && <Link to={`request`}>Send Request</Link>}
+            <RolldownItem/>
             
         </div>
      );
