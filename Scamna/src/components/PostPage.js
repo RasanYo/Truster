@@ -20,8 +20,19 @@ const PostPage = () => {
     const [requests, setRequests] = useState(null)
     const [loadingRequests, setLoadingRequests] = useState(requests == null)
 
-    const [unsubRealTimeRequests, setUnsubRealTimeRequests] = useState(null)
+    const [visitor, setVisitor] = useState(null)
+
     const allowRequest = useLocation().pathname.includes("visits")
+
+    const unsub = client.createRealTimeDocListener(
+        COLLECTIONS.AVAILABLE_VISITS, 
+        id,
+        doc => {
+            let v = doc.data().visitor
+            console.log(v)
+            setVisitor(v)
+        }
+    )
 
     useEffect(() => {
         client.getDocument(COLLECTIONS.AVAILABLE_VISITS,id)
@@ -66,12 +77,14 @@ const PostPage = () => {
                         preview={<div>{request.createdBy}</div>}
                         body={<div>
                             <h4>{request.message}</h4>
-                            {!postData.visitor && <button onClick={e => {
+                            {!visitor && <button onClick={e => {
+                                e.preventDefault()
                                 client.acceptVisitRequest(id, request.createdBy)
                             }}>Accept request</button>}
-                            {postData.visitor && 
-                            postData.visitor == request.createdBy && 
+                            {visitor && 
+                            visitor == request.createdBy && 
                             <button onClick={e => {
+                                e.preventDefault()
                                 client.cancelVisit(id, request.createdBy)
                             }}>Cancel visit</button>}
                         </div>}
