@@ -24,8 +24,10 @@ const MyPosts = () => {
 
 
     useEffect(() => {
-        if (posts) setLoadingData(false)
-        else {
+        if (posts) {
+            setLoadingData(false)
+            unsubscribe()
+        } else {
             setLoadingData(true)
         }
     }, [posts])

@@ -114,6 +114,20 @@ form input, select {
   font-size: 1.3em;
 }
 
+.street-name-number {
+  display: flex;
+  flex-direction: row;
+}
+
+.street-name-number #one{
+  flex: 5;
+  margin-right: 5px;
+}
+
+.street-name-number #two{
+  flex : 1;
+}
+
 /* ################################ */
 /* MyPosts styles */
 
@@ -228,3 +242,111 @@ form input, select {
   z-index: 1000;
   border-radius: 0 0 2px 2px; */
 }
+
+/* ################################ */
+/* Map */
+
+.map-h2 {
+  text-transform: uppercase;
+  font-size: 1rem;
+  padding: 20px;
+  padding-left: 10px;
+  text-align: center;
+}
+
+.google-map {
+  margin: auto;
+  width: 90%;
+  height: 200px;
+  border-radius: 100px;
+  margin-bottom: 30px;
+}
+
+.pin {
+  display: flex;
+  align-items: center;
+  width: 200px;
+  color: var(--main-blue);
+}
+
+.pin-icon {
+  font-size: 4rem;
+}
+
+.pin-text {
+  font-size: 1em;
+  color: black;
+  font-weight: bold;
+  background-color: rgba(118, 117, 117, 0.5);
+  border-radius: 30px;
+  padding: 8px;
+}
+
+@media screen and (min-width: 799px) {
+  .google-map {
+    height: 80vh;
+  }
+
+  .map-h2 {
+    font-size: 1.3rem;
+    font-weight: 400;
+  }
+
+  .pin {
+    width: 15vw;
+  }
+
+  .pin-icon {
+    font-size: 10vw;
+  }
+}
+
+/* ################################ */
+/* Rolldown list and Rolldown item */
+.rolldown-list {
+  max-width: 75%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.rolldown-list .rolldown-item {
+  text-align: left;
+  padding: 10px;
+  margin: 10px;
+  border-style: solid;
+  border-radius: 8px;
+  border-width: 1px;
+  border-color: rgb(207, 193, 193);
+}
+
+.rolldown-item .preview {
+  font-size: 20px;
+  margin: 5px 0;
+  padding: auto 10px;
+}
+
+.rolldown-item .body div {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+
+}
+
+.rolldown-item .body h4 {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.rolldown-item .body button {
+  margin-left: auto;
+}
+
+.rolldown-item .body button:hover {
+  cursor: pointer;
+}
+
+.rolldown-item .preview:hover{
+  cursor: pointer;
+  font-weight: 1000;
+}
+

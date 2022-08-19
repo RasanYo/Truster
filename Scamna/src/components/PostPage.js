@@ -3,42 +3,43 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { DBClientContext } from "../App";
 import { COLLECTIONS } from "../Constants";
 import RolldownItem from "./RolldownItem";
+import MapSection from "./Map"
+
 
 const PostPage = () => {
 
     const {id} = useParams();
     const client = useContext(DBClientContext);
-    // const location = useLocation()
+    const [location, setLocation] = useState("")
     const navigate = useNavigate()
 
     const [postData, setPostData] = useState(null)
     const [loadingData, setLoadingData] = useState(postData == null)
+
+    const [requests, setRequests] = useState(null)
+    const [loadingRequests, setLoadingRequests] = useState(requests == null)
     const allowRequest = useLocation().pathname.includes("visits")
 
-
     useEffect(() => {
-        client.getDocument(COLLECTIONS.AVAILABLE_VISITS,id).then(snapshot => {
-            setPostData(snapshot.data())
-        })
+        client.getDocument(COLLECTIONS.AVAILABLE_VISITS,id)
+            .then(snapshot => {
+                setPostData(snapshot.data())
+            })
     }, [])
+
     
 
     useEffect(() => {
-        if (postData) {
-            // console.log(postData.createdBy, client.currentUserUID)
-            // if (postData.createdBy == client.currentUserUID && location.pathname.includes("visits")) {
-            //     console.log("NAVIGATE TO MYPOSTS")
-            //     navigate(`../myposts/${id}`)
-            // } else if (postData.createdBy != client.currentUserUID && location.pathname.includes("myposts")) {
-            //     console.log("NAVIGATE TO VISITS")
-            //     navigate(`../visits/${id}`)
-            // }
-            setLoadingData(false)
-        } 
-        else {
-            setLoadingData(true)
+        setLoadingData(postData == null)
+        setLoadingRequests(requests == null)
+        if (postData && !requests && !allowRequest) {
+            console.log("Fetching requests")
+            client.getCollectionData(`${COLLECTIONS.AVAILABLE_VISITS}/${id}/requests`)
+                .then(reqs => {
+                    setRequests(reqs)
+                })
         }
-    }, [postData])
+    }, [postData, requests])
 
     return ( 
         <div className="post-details">
@@ -50,9 +51,23 @@ const PostPage = () => {
                 <div id="street">{postData.street}</div>
                 <div id="country">{postData.npa} {postData.city}, {postData.country}</div>
             </div>}
-            {!loadingData && allowRequest && <Link to={`request`}>Send Request</Link>}
-            <RolldownItem/>
+        
+            {!loadingData && <MapSection location={[postData.fullAdress,parseFloat(postData.lat),parseFloat(postData.lng)]} zoomLevel={15} id="PostPage"/>}
             
+            {!loadingData && allowRequest && <Link to={`request`}>Send Request</Link>}
+            {!loadingRequests && !allowRequest && 
+            <div className="rolldown-list">
+                {requests.map((request, index) => {
+                    return <RolldownItem 
+                        key={index}
+                        preview={<div>{request.createdBy}</div>}
+                        body={<div>
+                            <h4>{request.message}</h4>
+                            <button>Accept request</button>
+                        </div>}
+                    />
+            })}
+            </div>}
         </div>
      );
 }
