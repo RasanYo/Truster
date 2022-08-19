@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { arrayRemove, arrayUnion, collection, deleteDoc, deleteField, doc, getDoc, getDocs, getFirestore, query, setDoc, Timestamp, updateDoc } from 'firebase/firestore'
+import { arrayRemove, arrayUnion, collection, deleteDoc, deleteField, doc, getDoc, getDocs, getFirestore, onSnapshot, query, setDoc, Timestamp, updateDoc } from 'firebase/firestore'
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { COLLECTIONS } from '../Constants'
 
@@ -193,6 +193,17 @@ export class DBClient {
                 myVisits : arrayRemove(postID)
             })
         })
+    }
+    
+    /**
+     * 
+     * @param {*} collectionName 
+     * @param {*} docID 
+     * @param {*} callBack 
+     * @returns 
+     */
+    createRealTimeDocListener(collectionName, docID, callBack) {
+        return onSnapshot(doc(this.db, collectionName, docID), callBack)
     }
 
 
