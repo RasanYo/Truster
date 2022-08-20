@@ -55,8 +55,8 @@ function MyComponent({ location, zoomLevel}) {
             options={options}
             position={center}
             >
-            <div style={{ backgroundColor: 'gray', opacity: 0.5, padding: 12 }}>
-                <div style={{ fontSize: 16, fontColor: `#000000` }}>
+            <div style={{ backgroundColor: 'gray', opacity: 0.85, padding: 12 }}>
+                <div style={{ fontSize: 16, fontColor: `#000000`, width:'200px' }}>
                 {location[0]}
                 </div>
             </div>
