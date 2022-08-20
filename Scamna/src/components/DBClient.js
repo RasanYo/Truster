@@ -184,6 +184,21 @@ export class DBClient {
      * 
      * @param {*} postID 
      * @param {*} requesterID 
+     * @returns 
+     */
+    declineVisitRequest(postID, requesterID) {
+        return deleteDoc(doc(this.db, `${COLLECTIONS.AVAILABLE_VISITS}/${postID}/requests`, requesterID))
+            .then(() => {
+                updateDoc(doc(this.db, COLLECTIONS.REGULAR_USERS, requesterID), {
+                    myVisitRequests : arrayRemove(postID)
+                })
+            })
+    }
+
+    /**
+     * 
+     * @param {*} postID 
+     * @param {*} requesterID 
      */
     cancelVisit(postID, requesterID) {
         return updateDoc(doc(this.db, COLLECTIONS.AVAILABLE_VISITS, postID), {
@@ -206,6 +221,15 @@ export class DBClient {
         return onSnapshot(doc(this.db, collectionName, docID), callBack)
     }
 
+    /**
+     * 
+     * @param {*} collectionName 
+     * @param {*} callBack 
+     * @returns 
+     */
+    createRealTimeCollectionListener(collectionName, callBack) { 
+        return onSnapshot(collection(this.db, collectionName), callBack)
+    }
 
 
 

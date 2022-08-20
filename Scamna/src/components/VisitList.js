@@ -39,8 +39,10 @@ const VisitList = (numberofElements) => {
                 {isLoading && <div>Loading ...</div>}
                 {!isLoading && visits.map((visit, index) => (
                     <PostPreview 
-                        post={visit.data()} 
-                        key={index} 
+                        post={visit.data()}
+                        id={visit.id}
+                        key={index}
+                        showRequests={false} 
                         handleClick={e => {
                             e.preventDefault()
                             navigate(`${visit.id}`)
