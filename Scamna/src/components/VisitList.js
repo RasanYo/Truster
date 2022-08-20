@@ -22,10 +22,6 @@ const VisitList = ({numberofElements,usedOutside}) => {
                 .then(visits => {
                     setVisits(visits)
                 })
-            // client.getCollectionWithQuery(COLLECTIONS.AVAILABLE_VISITS, where("createdBy", "!=", user.uid))
-            //     .then(visits => {
-            //         setVisits(visits)
-            //     })
         }
     })
 

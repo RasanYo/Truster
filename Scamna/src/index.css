@@ -284,6 +284,24 @@ form input, select {
   color: gray;
 }
 
+.post-details a {
+  margin-left: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 600;
+  color: #f1356d;
+  border-radius: 16px;
+  padding: 5px 10px;
+  transition: background-color, color .2s;
+}
+
+.post-details a:hover {
+  color: white;
+  background-color: rgb(231, 78, 124);
+}
+
 
 
 /* ################################ */
