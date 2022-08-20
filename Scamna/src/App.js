@@ -12,6 +12,7 @@ import PostPage from './components/PostPage';
 import VisitList from './components/VisitList';
 import AutoComplete from './components/AutoComplete';
 import RequestPage from './components/RequestPage';
+import { COLLECTIONS } from './Constants';
 
 export const DBClientContext = createContext(null)
 
@@ -28,6 +29,19 @@ function App() {
   }
 
   const client = new DBClient(firebaseConfig)
+
+  const unsubscribe = client.auth.onAuthStateChanged(user => {
+    if (user) {
+      client.getDocument(COLLECTIONS.REGULAR_USERS, user.uid)
+        .then(snapshot => {
+          client.currentUser = {
+            uid: user.uid,
+            data: snapshot.data()
+          }
+          unsubscribe()
+      })
+    }
+  })
 
   // // Add this in node_modules/react-dom/index.js
   // window.React1 = require('react');

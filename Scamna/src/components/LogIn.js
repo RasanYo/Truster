@@ -17,9 +17,10 @@ const LogIn = () => {
         client.logInUser(email, password)
             .then(() => {
                 navigate("/")
-            }).catch(error => 
+            }).catch(error => {
+                console.log(error.message)
                 setIsGoodPassword(false) 
-            )
+            })
     }
 
     return ( 
