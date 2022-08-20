@@ -9,6 +9,7 @@ const Profile = () => {
     const [loadingData, setLoadingData] = useState(userData == null)
 
     useEffect(() => {
+        console.log(client.currentUser)
         client.auth.onAuthStateChanged(user => {
             if (user) {
                 client.getDocument("users/regular/users", user.uid)
@@ -17,7 +18,7 @@ const Profile = () => {
                     })
             }
         })
-    },[])
+    }, [])
     
 
     useEffect(() => {

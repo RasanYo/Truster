@@ -8,16 +8,14 @@ export class DBClient {
         this.app = initializeApp(config)
         this.db = getFirestore()
         this.auth = getAuth()
-        this.currentUserUID = null
+        this.currentUser = null
         this.readCounter = 0
     }
-
 
 
     printTest() {
         return "Client present"
     }
-
 
     /**
      * 
@@ -99,7 +97,10 @@ export class DBClient {
         return createUserWithEmailAndPassword(this.auth, userObject.email, password)
             .then(userCred => {
                 console.log(`Created user with uid ${userCred.user.uid}`)
-                this.currentUserUID = userCred.user.uid
+                this.currentUser = {
+                    uid: userCred.user.uid,
+                    data: userObject
+                }
                 return setDoc(doc(this.db, 'users/regular/users', userCred.user.uid), userObject)
             })
         
@@ -136,7 +137,17 @@ export class DBClient {
      * @returns {Promise<UserCredential>} promise containing user credentials of logged in user
      */
     logInUser(email, password) {
-        return signInWithEmailAndPassword(this.auth, email, password).then(userCred => this.currentUserUID = userCred.user.uid)
+        return signInWithEmailAndPassword(this.auth, email, password)
+            .then(userCred => {
+                console.log("USERCRED" + userCred.user.uid)
+                return this.getDocument(COLLECTIONS.REGULAR_USERS, userCred.user.uid).then(snapshot => {
+                    console.log("CHECK")
+                    this.currentUser = {
+                        uid: userCred.user.uid,
+                        data: snapshot.data()
+                    }
+                })
+            })
     }
 
     /**
@@ -144,7 +155,7 @@ export class DBClient {
      * @returns {Promise<void} empty promise
      */
     logOutCurrentUser() {
-        return signOut(this.auth).then(() => this.currentUserUID = null)
+        return signOut(this.auth).then(() => this.currentUser = null)
     }
 
     /**
