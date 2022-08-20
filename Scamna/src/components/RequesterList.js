@@ -11,28 +11,36 @@ const RequesterList = ({ postID, style }) => {
     const [requests, setRequests] = useState(null)
     const [loadingRequests, setLoadingRequests] = useState(requests == null)
     const [visitor, setVisitor] = useState(null)
+
+    const [fetch, setFetch] = useState(true)
     
 
     const allowRequest = useLocation().pathname.includes("visits")
 
     useEffect(() => {
+        let isActive = true
+        if (isActive) {
         client.getCollectionData(`${COLLECTIONS.AVAILABLE_VISITS}/${postID}/requests`)
             .then(reqs => {
                 setRequests(reqs)
             })
+        }
+        return () => { isActive = false}
     }, [])
 
-    // const unsubRequestList = client.createRealTimeCollectionListener(
-    //     `${COLLECTIONS.AVAILABLE_VISITS}/${postID}/requests`,
-    //     collectionSnapshot => {
-    //         let docs = []
-    //         collectionSnapshot.forEach(doc => docs.push(doc.data()))
-    //         console.log(docs)
-    //         setRequests(docs)
-    //     })
+    // modifying fetch will trigger a new get request to the requestercollection
+    useEffect(() => {
+        let isActive = true
+        if (isActive) {
+        client.getCollectionData(`${COLLECTIONS.AVAILABLE_VISITS}/${postID}/requests`)
+            .then(reqs => {
+                setRequests(reqs)
+            })
+        }
+        return () => { isActive = false }
+    }, [fetch])
 
-
-    const unsubVisitor = client.createRealTimeDocListener(
+    const unsubPostListener = client.createRealTimeDocListener(
         COLLECTIONS.AVAILABLE_VISITS, 
         postID,
         doc => {
@@ -49,7 +57,10 @@ const RequesterList = ({ postID, style }) => {
     return ( 
         <div className="rolldown-list" style={style}>
             {loadingRequests && <div>Fetching requests...</div>}
-            {!loadingRequests && !allowRequest && 
+            
+            {
+            !loadingRequests && 
+            !allowRequest && 
             requests.map((request, index) => {
                 return <RolldownItem
                     key={index}
@@ -57,10 +68,16 @@ const RequesterList = ({ postID, style }) => {
                         <div>
                             <h2 className="title">{request.createdBy}</h2>
                             {visitor == request.createdBy ? 
-                            <button onClick={e => {
-                                e.preventDefault()
-                                client.cancelVisit(postID, request.createdBy)
-                            }}>Cancel visit</button> : 
+
+                            <button 
+                                onClick={e => {
+                                    e.preventDefault()
+                                    client.cancelVisit(postID, request.createdBy)
+                                }}
+                            >
+                                Cancel visit
+                            </button> : 
+
                             <span className="request-buttons">
                                 {!visitor && 
                                 <ImCheckmark 
@@ -74,26 +91,16 @@ const RequesterList = ({ postID, style }) => {
                                     onClick={e => {
                                         e.preventDefault()
                                         client.declineVisitRequest(postID, request.createdBy)
+                                        setFetch(!fetch)
                                     }}
                                     className="cross"
                                 />
                             </span>}
-                        </div>}
+                        </div>
+                    }
                     body={
                     <div>
                         <h4>{request.message}</h4>
-                        {/* {!visitor && 
-                        <button 
-                            onClick={e => {
-                                e.preventDefault()
-                                client.acceptVisitRequest(postID, request.createdBy)
-                        }}>Accept request</button>}
-                        {visitor && 
-                        visitor == request.createdBy && 
-                        <button onClick={e => {
-                            e.preventDefault()
-                            client.cancelVisit(postID, request.createdBy)
-                        }}>Cancel visit</button>} */}
                     </div>}
                 />
             })}

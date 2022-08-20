@@ -41,7 +41,8 @@ const VisitList = (numberofElements) => {
                     <PostPreview 
                         post={visit.data()}
                         id={visit.id}
-                        key={index} 
+                        key={index}
+                        showRequests={false} 
                         handleClick={e => {
                             e.preventDefault()
                             navigate(`${visit.id}`)
