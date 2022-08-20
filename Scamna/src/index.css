@@ -61,9 +61,11 @@
 .home-preview a {
   text-decoration: none;
   display: block;
-  width: 80px;
-  /* border: #333 solid; */
+  width: auto;
+  border: #333 solid;
   margin-left: 45%;
+  margin-right: 45%;
+  text-align: center;
 }
 
 .findVisit-home,
