@@ -114,7 +114,7 @@ const NewPosts = () => {
                 <input 
                 className="inputForm"
                 placeholder="NPA"
-                type="number" 
+                type="text" 
                 required 
                 value={npa}
                 onChange={(e) => setNpa(e.target.value)}

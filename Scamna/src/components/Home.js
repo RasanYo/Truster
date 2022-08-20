@@ -25,8 +25,8 @@ const Home = () => {
                             </div>}
             {isLoggedIn && <div className="myPosts-home">
                                 <h2>My Posts</h2>
-                                <MyPosts numberofElements={5} usedOutside={true}></MyPosts>
-                                <Link to="/myposts">See More</Link>
+                                <MyPosts numberofElements={4} usedOutside={true}></MyPosts>
+                                <Link className="" to="/myposts">See More</Link>
                             </div>}                
             {isLoggedIn && <div className="newPost-home">
                                 <h2>New Post</h2>
