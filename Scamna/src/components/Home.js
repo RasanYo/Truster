@@ -21,7 +21,7 @@ const Home = () => {
             {isLoggedIn && <div className="findVisit-home">
                                 <h2>Find Visit</h2>
                                 <VisitList numberofElements={4} usedOutside={true}></VisitList>
-                                <Link to="/visits">Find visit</Link>
+                                <Link to="/visits">...</Link>
                             </div>}
             {isLoggedIn && <div className="myPosts-home">
                                 <h2>My Posts</h2>
