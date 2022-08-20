@@ -7,7 +7,7 @@ import { COLLECTIONS } from "../Constants";
 import PostPreview from "./PostPreview";
 import { useNavigate } from "react-router-dom";
 
-const VisitList = (numberofElements) => {
+const VisitList = ({numberofElements,usedOutside}) => {
 
     const client = useContext(DBClientContext)
     const [visits, setVisits] = useState(null)
@@ -18,14 +18,14 @@ const VisitList = (numberofElements) => {
     const unsubscribe = client.auth.onAuthStateChanged(user => {
         if (user && user !== previousUser.current) {
             previousUser.current = user
-            // client.getCollectionWithQuery(COLLECTIONS.AVAILABLE_VISITS, where("createdBy", "!=", user.uid), limit(parseInt({numberofElements})))
-            //     .then(visits => {
-            //         setVisits(visits)
-            //     })
-            client.getCollectionWithQuery(COLLECTIONS.AVAILABLE_VISITS, where("createdBy", "!=", user.uid))
+            client.getCollectionWithQuery(COLLECTIONS.AVAILABLE_VISITS, where("createdBy", "!=", user.uid), limit(numberofElements))
                 .then(visits => {
                     setVisits(visits)
                 })
+            // client.getCollectionWithQuery(COLLECTIONS.AVAILABLE_VISITS, where("createdBy", "!=", user.uid))
+            //     .then(visits => {
+            //         setVisits(visits)
+            //     })
         }
     })
 
@@ -43,11 +43,13 @@ const VisitList = (numberofElements) => {
                         id={visit.id}
                         key={index}
                         showRequests={false} 
+                        isLast = {index === numberofElements-1 ? true : false}
                         handleClick={e => {
                             e.preventDefault()
-                            navigate(`${visit.id}`)
+                            const r = usedOutside ? "/visits/" : ""
+                            navigate(r + `${visit.id}`)
                         }}
-                    />
+                    ></PostPreview>
                 ))}
             </div>
         </div>

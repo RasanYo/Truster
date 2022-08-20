@@ -47,6 +47,7 @@ const MyPosts = ({numberofElements, usedOutside}) => {
                 <PostPreview 
                     post={post} 
                     key={index}
+                    isLast = {index === numberofElements-1 ? true : false}
                     handleClick={e => {
                         e.preventDefault()
                         // console.log(post)

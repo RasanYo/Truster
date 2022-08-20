@@ -20,7 +20,7 @@ const Home = () => {
         <div className="home-preview">
             {isLoggedIn && <div className="findVisit-home">
                                 <h2>Find Visit</h2>
-                                <VisitList numberofElements={2}></VisitList>
+                                <VisitList numberofElements={4} usedOutside={true}></VisitList>
                                 <Link to="/visits">Find visit</Link>
                             </div>}
             {isLoggedIn && <div className="myPosts-home">

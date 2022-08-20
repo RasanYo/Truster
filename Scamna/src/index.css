@@ -61,7 +61,9 @@
 .home-preview a {
   text-decoration: none;
   display: block;
-  padding-right: 50%;
+  width: 80px;
+  /* border: #333 solid; */
+  margin-left: 45%;
 }
 
 .findVisit-home,
@@ -178,7 +180,18 @@ form input, select {
 
 .post-preview .header {
   display: flex;
-  
+}
+
+.post-preview.lastItem {
+  opacity: 0.5;
+}
+
+.post-preview.lastItem:hover {
+  color: gray;
+}
+
+.isLast{
+  opacity: 0.5;
 }
 
 .post-preview:hover{

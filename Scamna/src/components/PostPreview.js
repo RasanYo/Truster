@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { FiChevronUp, FiChevronDown} from "react-icons/fi";
 import { useState } from "react";
 import RequesterList from "./RequesterList";
-const PostPreview = ({ post, user="", handleClick, id=post.id, showRequests=true}) => {
+const PostPreview = ({ post, user="", handleClick, id=post.id, showRequests=true, isLast}) => {
 
     const navigate = useNavigate()
     const [rolledDown, setRolledDown] = useState(false)
@@ -14,7 +14,7 @@ const PostPreview = ({ post, user="", handleClick, id=post.id, showRequests=true
     }
 
     return ( 
-        <div className="post-preview">
+        <div className={isLast ? "post-preview lastItem" : "post-preview"} >
             <div className="header">
                 <div className="left-post-preview" onClick={handleClick}>
                     <h3>{post.street}</h3>
