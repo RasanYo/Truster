@@ -12,10 +12,11 @@ const containerStyle = {
 
 function MyComponent({ location, zoomLevel}) {
 
-    const center = {
-        lat: location[1],
-        lng: location[2]
-      };
+  const center = {
+      lat: location[1],
+      lng: location[2]
+    };
+
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: "YOUR_API_KEY"
@@ -25,14 +26,14 @@ function MyComponent({ location, zoomLevel}) {
   const [isIconHovered,setIsIconHovered] = useState(false)
 
   const onLoad = useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
+    // const bounds = new window.google.maps.LatLngBounds(center);
+    // map.fitBounds(bounds);
     setMap(map)
   }, [])
 
   const options = { closeBoxURL: '', enableEventPropagation: true };
 
-    const onLoadInfoBox = infoBox => {
+  const onLoadInfoBox = infoBox => {
     console.log('infoBox: ', infoBox)
     };
 
@@ -43,7 +44,7 @@ function MyComponent({ location, zoomLevel}) {
   return isLoaded ? (
     
       <GoogleMap
-        zoom={zoomLevel}
+        zoom = {zoomLevel}
         mapContainerStyle={containerStyle}
         center={center}
         onLoad={onLoad}

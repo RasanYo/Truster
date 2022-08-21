@@ -64,7 +64,7 @@ const PostPage = () => {
                 
                 <div id="country">{postData.npa} {postData.city}, {postData.country}</div>
             </div>}
-            {!loadingData && <MapSection location={[postData.fullAdress,parseFloat(postData.lat),parseFloat(postData.lng)]} zoomLevel={13} />}
+            {!loadingData && <MapSection location={[postData.fullAdress,parseFloat(postData.lat),parseFloat(postData.lng)]} zoomLevel={16} />}
 
             
             <RequesterList postID={id} />
