@@ -59,7 +59,7 @@ const PostPage = () => {
                     { console.log(id)}
                     {!loadingData && 
                     allowRequest && 
-                    !userData.myVisitRequests.includes(id) ? <Link to={`request`}>Send Request</Link> : <Link to={'request'}>View Request</Link>}
+                    (!userData.myVisitRequests.includes(id) ? <Link to={`request`}>Send Request</Link> : <Link to={'viewRequest'}>View Request</Link>)}
                 </div>
                 
                 <div id="country">{postData.npa} {postData.city}, {postData.country}</div>
