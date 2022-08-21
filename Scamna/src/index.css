@@ -514,3 +514,40 @@ form input, select {
   font-weight: 1000;
 }
 
+
+/* ################################ */
+/* Profile */
+
+.profile {
+  margin: 0 auto;
+  max-width: 50%;
+  display: block;
+}
+
+.profile h2 {
+  font-size: 28px;
+  text-align: center;
+}
+
+.profile .profile-list .list-item {
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
+  border-color: rgba(128, 128, 128, 0.582);
+  border-radius: 45px;
+  display: flex;
+  margin: 10px 0;
+  padding: 10px 10px;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+.profile .profile-list .list-item .left-child {
+  font-weight: bold;
+  font-size: 18px;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+.profile .profile-list .list-item .right-child {
+  text-align: left;
+  margin-left: 100px;
+}
