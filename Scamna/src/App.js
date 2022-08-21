@@ -12,6 +12,7 @@ import PostPage from './components/PostPage';
 import VisitList from './components/VisitList';
 import AutoComplete from './components/AutoComplete';
 import RequestPage from './components/RequestPage';
+import ViewRequestPage from './components/ViewRequestPage';
 import { COLLECTIONS } from './Constants';
 
 export const DBClientContext = createContext(null)
@@ -68,6 +69,7 @@ function App() {
             <Route path="/autocomplete" element={< AutoComplete/>} />
             <Route path="/visits/:id" element={<PostPage/>} />
             <Route path="/visits/:id/request" element={<RequestPage/>} />
+            <Route path="/visits/:id/viewRequest" element={<ViewRequestPage/>} />
           </Routes>
         </DBClientContext.Provider>
       </Router>
