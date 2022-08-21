@@ -1,6 +1,7 @@
 import { useContext, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DBClientContext } from "../App";
+import { COLLECTIONS } from "../Constants";
 
 const RequestPage = () => {
 
@@ -10,9 +11,21 @@ const RequestPage = () => {
     const navigate = useNavigate()
     const previousUser = useRef(null)
 
-    client.auth.onAuthStateChanged(user => {
+    const [userData, setUserData] = useState(null)
+    const [canRequest, setCanRequest] = useState(false)
+
+    const unsub = client.auth.onAuthStateChanged(user => {
         if (user && user !== previousUser.current) {
             previousUser.current = user
+            client.getDocument(COLLECTIONS.REGULAR_USERS, user.uid).then(snapshot => {
+                let data = snapshot.data()
+                if (data.myVisitRequests.includes(params.id)) navigate("/visits")
+                else {
+                    setUserData(data)
+                    setCanRequest(true)
+                }
+            })
+            unsub()
         }
     })
 
@@ -26,7 +39,7 @@ const RequestPage = () => {
 
     return ( 
         <div className="request-page">
-            <form onSubmit={handleSubmit}>
+            {canRequest && <form onSubmit={handleSubmit}>
                 <label>Request to visits</label>
                 <input 
                     placeholder="Write a message here..."
@@ -35,7 +48,7 @@ const RequestPage = () => {
                     onChange={e => setMessage(e.target.value)}
                 />
                 <button>Send request</button>
-            </form>
+            </form>}
         </div>
      );
 }
