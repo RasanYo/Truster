@@ -8,7 +8,7 @@ const Home = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const client = useContext(DBClientContext)
 
-    const unsubscribe = client.auth.onAuthStateChanged(user => {
+    client.auth.onAuthStateChanged(user => {
         if (user) {
             setIsLoggedIn(true)
         } else {

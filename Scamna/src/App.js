@@ -43,6 +43,7 @@ function App() {
     }
   })
 
+
   // // Add this in node_modules/react-dom/index.js
   // window.React1 = require('react');
 
@@ -51,24 +52,27 @@ function App() {
   // window.React2 = require('react');
   // console.log(window.React1 === window.React2);
   return ( 
-    <Router>
-      <DBClientContext.Provider value={client}>
-        <Navbar />
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<LogIn />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/newPost" element={<NewPosts />}/>
-          <Route path="/myposts" element={<MyPosts/>} />
-          <Route path="/myposts/:id" element={<PostPage/>} />
-          <Route path="/visits" element={<VisitList />} />
-          <Route path="/autocomplete" element={< AutoComplete/>} />
-          <Route path="/visits/:id" element={<PostPage/>} />
-          <Route path="/visits/:id/request" element={<RequestPage/>} />
-        </Routes>
-      </DBClientContext.Provider>
-    </Router>
+    <div className="App">
+      <Router>
+        <DBClientContext.Provider value={client}>
+          <Navbar />
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<LogIn />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/newPost" element={<NewPosts />}/>
+            <Route path="/myposts" element={<MyPosts/>} />
+            <Route path="/myposts/:id" element={<PostPage/>} />
+            <Route path="/visits" element={<VisitList />} />
+            <Route path="/autocomplete" element={< AutoComplete/>} />
+            <Route path="/visits/:id" element={<PostPage/>} />
+            <Route path="/visits/:id/request" element={<RequestPage/>} />
+          </Routes>
+        </DBClientContext.Provider>
+      </Router>
+    </div>
+
   );
 }
 

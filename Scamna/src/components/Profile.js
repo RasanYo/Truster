@@ -9,16 +9,16 @@ const Profile = () => {
     const [loadingData, setLoadingData] = useState(userData == null)
 
     useEffect(() => {
-        console.log(client.currentUser)
-        client.auth.onAuthStateChanged(user => {
+        let unsub = client.auth.onAuthStateChanged(user => {
             if (user) {
                 client.getDocument("users/regular/users", user.uid)
                     .then(snapshot => {
                         setUserData(snapshot.data())
+                        unsub()
                     })
             }
         })
-    }, [])
+    }, [client])
     
 
     useEffect(() => {

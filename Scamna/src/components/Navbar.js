@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { DBClientContext } from "../App";
-import A from "../images/A"
 
 const Navbar = () => {
 
@@ -13,7 +12,7 @@ const Navbar = () => {
         client.logOutCurrentUser()
     }
 
-    const unsubscribe = client.auth.onAuthStateChanged(user => {
+    client.auth.onAuthStateChanged(user => {
         if (user) {
             setIsLoggedIn(true)
         } else {
