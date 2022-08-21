@@ -23,10 +23,11 @@ export default function Autocomplete({textObj, setStreet, setCity, setNpa, setCo
         })
         
 
-        setStreet("")
-        setCity("")
-        setCountry("")
-        setNpa("")
+        setNumber(null)
+        setStreet(null)
+        setCity(null)
+        setCountry(null)
+        setNpa(null)
       } 
       
       geocodeByAddress(val).then(x => {
@@ -48,9 +49,7 @@ export default function Autocomplete({textObj, setStreet, setCity, setNpa, setCo
             setNumber(y.long_name)
             console.log("street_number")
           }
-
         })
-
       })
       
       //geocodeByAddress(val).then(x => setCity(x[0].address_components[0]))

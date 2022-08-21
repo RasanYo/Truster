@@ -24,6 +24,8 @@ const NewPosts = () => {
     const [lat, setLat] = useState("");
     const [lng, setLng] = useState("");
 
+    const [invalidEntry, setInvalidEntry] = useState(false);
+
     // const [location, setLocation] = useState({
     //     address: '1600 Amphitheatre Parkway, Mountain View, california.',
     //     lat: 37.42216,
@@ -35,6 +37,15 @@ const NewPosts = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         //Need condition for correctness of adress
+
+        if (!street || 
+            !number ||
+            !city ||
+            !npa ||
+            !country) {
+            setInvalidEntry(true)
+            return false
+        }
 
         client.createPost({
             street : street,
@@ -78,56 +89,69 @@ const NewPosts = () => {
             <form onSubmit={handleSubmit}>
                 {/* {<AutoComplete address={fullAdress} setAddress={setFullAdress}/>} */}
                 <AutoComplete textObj={{text : "Type Adress"}} setStreet={setStreet} setCity={setCity} setNpa={setNpa} setCountry={setCountry} setFullAdress={setFullAdress} setNumber = {setNumber} setLocation={setLocation} setLat={setLat} setLng={setLng}/>
+                {invalidEntry &&
+                <div>
+                    Missing: 
+                    {!street && <h6>Street name</h6>}
+                    {!number && <h6>Street number</h6>}
+                    {!npa && <h6>NPA</h6>}
+                    {!city && <h6>City</h6>}
+                    {!country && <h6>Country</h6>}
+                </div>}
+                {/* <div className="street-name-number">
+                    <input 
+                        // style={{display: 'none'}}
+                        id="one"
+                        className="inputForm"
+                        placeholder="Street name"
+                        type="text" 
+                        value={street}
+                        required 
+                        onChange={(e) => setStreet(e.target.value)}
+                    />
 
-                <div className="street-name-number">
-                <input 
-                id="one"
-                className="inputForm"
-                placeholder="Street name"
-                type="text" 
-                value={street}
-                required 
-                onChange={(e) => setStreet(e.target.value)}
-                />
+                    <input 
+                        // style={{display: 'none'}}
+                        id="two"
+                        className="inputForm"
+                        placeholder="Nº"
+                        type="text" 
+                        value={number}
+                        required 
+                        onChange={(e) => setNumber(e.target.value)}
+                    />
+                </div> */}
 
-                <input 
-                id="two"
-                className="inputForm"
-                placeholder="Nº"
-                type="text" 
-                value={number}
-                required 
-                onChange={(e) => setNumber(e.target.value)}
-                />
-                </div>
-
-                <input 
-                className="inputForm"
-                placeholder="City"
-                type="text" 
-                required 
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                />
+                {/* <input 
+                    // style={{display: 'none'}}
+                    className="inputForm"
+                    placeholder="City"
+                    type="text" 
+                    required 
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                /> */}
                 {/* <AutoComplete  textObj={{text : "City"}} setCity={setCity} searchOptions={{types : ['locality']}}/> */}
 
-                <input 
-                className="inputForm"
-                placeholder="NPA"
-                type="text" 
-                required 
-                value={npa}
-                onChange={(e) => setNpa(e.target.value)}
-                />
+                {/* <input 
+                    // style={{display: 'none'}}
+                    className="inputForm"
+                    placeholder="NPA"
+                    type="text" 
+                    required 
+                    value={npa}
+                    onChange={(e) => setNpa(e.target.value)}
+                /> */}
 
-                <input 
-                className="inputForm"
-                placeholder="Country"
-                type="text" 
-                required 
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                />
+                {/* <input 
+                    // style={{display: 'none'}}
+                    className="inputForm"
+                    placeholder="Country"
+                    type="text" 
+                    required 
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                /> */}
 
                 {/* <AutoComplete  textObj={{text : "Country"}} setCountry={setCountry} searchOptions={{types : ['country']}}/> */}
                         
