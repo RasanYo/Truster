@@ -10,6 +10,7 @@ export class DBClient {
         this.auth = getAuth()
         this.currentUser = null
         this.readCounter = 0
+       
     }
 
 
@@ -139,9 +140,7 @@ export class DBClient {
     logInUser(email, password) {
         return signInWithEmailAndPassword(this.auth, email, password)
             .then(userCred => {
-                console.log("USERCRED" + userCred.user.uid)
                 return this.getDocument(COLLECTIONS.REGULAR_USERS, userCred.user.uid).then(snapshot => {
-                    console.log("CHECK")
                     this.currentUser = {
                         uid: userCred.user.uid,
                         data: snapshot.data()
