@@ -70,7 +70,7 @@ export class User{
 
     test() {
         const ref = collection(this.#db, COLLECTIONS.AVAILABLE_VISITS)
-        const cities = query(collectionGroup(this.#db, 'neighborhoods'), orderBy('value'), limit(10))
+        const cities = query(collectionGroup(this.#db, 'neighborhoods'), orderBy('value') , limit(10))
         getDocs(cities).then(querySnapshot => {
             querySnapshot.forEach((doc) => {
                 console.log(doc.id, ' => ', doc.data());
