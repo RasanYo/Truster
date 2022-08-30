@@ -65,9 +65,13 @@ export class User{
     }
 
     test() {
-        const ref = collection(this.#db, COLLECTIONS.AVAILABLE_VISITS)
-        const cities = query(collectionGroup(this.#db, 'neighborhoods'), orderBy('value'), limit(2))
-        getDocs(cities).then(querySnapshot => {
+        // const ref = collection(this.#db, COLLECTIONS.AVAILABLE_VISITS)
+        // const neighborhoods = query(collectionGroup(this.#db, 'neighborhoods'), orderBy('value'), limit(2))
+        
+        const cities = query(collectionGroup(this.#db, 'cities'), where('name', '==', 'Montpellier'))
+        const filtered = query(collection(cities, 'neighborhoods'), orderBy('value'), limit(2))
+        
+        getDocs(filtered).then(querySnapshot => {
             querySnapshot.forEach((doc) => {
                 console.log(doc.id, ' => ', doc.data());
             })
