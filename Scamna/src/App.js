@@ -14,6 +14,8 @@ import AutoComplete from './components/AutoComplete';
 import RequestPage from './components/RequestPage';
 import ViewRequestPage from './components/ViewRequestPage';
 import { COLLECTIONS } from './Constants';
+import { User } from "./objects/User";
+
 
 export const DBClientContext = createContext(null)
 
@@ -43,6 +45,9 @@ function App() {
       })
     }
   })
+
+  const user = new User(123, client.db)
+  user.test()
 
 
   // // Add this in node_modules/react-dom/index.js

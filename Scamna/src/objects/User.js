@@ -1,11 +1,10 @@
-import { TwitterAuthProvider } from "firebase/auth"
-import { setDoc, Timestamp, updateDoc } from "firebase/firestore"
+import { addDoc, collection, setDoc, Timestamp, updateDoc, doc, arrayUnion, collectionGroup, getDocs, query, where, orderBy, limit } from "firebase/firestore"
 import { COLLECTIONS } from "../Constants"
 
 export class User{
     #uid
     #db
-    
+
     constructor(uid, db) {
         this.#uid = uid
         this.#db = db
@@ -57,11 +56,21 @@ export class User{
             doc(
                 this.#db, 
                 `${COLLECTIONS.REGULAR_USERS}`, 
-                userID
+                this.#uid
             ),
             {
                 myVisitRequests : arrayUnion(post.getId())
             }
         )
+    }
+
+    test() {
+        const ref = collection(this.#db, COLLECTIONS.AVAILABLE_VISITS)
+        const cities = query(collectionGroup(this.#db, 'neighborhoods'), orderBy('value'), limit(2))
+        getDocs(cities).then(querySnapshot => {
+            querySnapshot.forEach((doc) => {
+                console.log(doc.id, ' => ', doc.data());
+            })
+        })
     }
 }
