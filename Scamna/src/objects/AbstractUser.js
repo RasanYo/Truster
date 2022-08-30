@@ -16,5 +16,5 @@ export class AbstractUser {
    getPublicPosts(country, city,  ...queryConstraints) {
         const q = query()
    } 
-
+   
 }

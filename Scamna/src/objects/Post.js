@@ -1,5 +1,3 @@
-import { COLLECTIONS } from "../Constants"
-
 export class Post {
 
     #data
@@ -57,6 +55,6 @@ export class Post {
     }
 
     getLocation() {
-        return `${COLLECTIONS.AVAILABLE_VISITS}/${this.#data.country}/cities/${this.#data.city}/neighborhoods/${this.#data.neighborhood}/posts`
+        return `${COLLECTIONS.AVAILABLE_VISITS}/${this.#data.country}/posts/${this.#data.city}/posts`
     }
 }

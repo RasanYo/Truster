@@ -64,6 +64,10 @@ export class User{
         )
     }
 
+    
+
+
+
     test() {
         // const ref = collection(this.#db, COLLECTIONS.AVAILABLE_VISITS)
         // const neighborhoods = query(collectionGroup(this.#db, 'neighborhoods'), orderBy('value'), limit(2))
