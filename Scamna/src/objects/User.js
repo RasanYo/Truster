@@ -52,5 +52,11 @@ export class User{
                 createdBy: this.#uid
             }
         )
+        updateDoc(doc(this.#db, `${COLLECTIONS.REGULAR_USERS}`, userID),{
+            myVisitRequests : arrayUnion(post.getId())
+        })
+        
+
+
     }
 }

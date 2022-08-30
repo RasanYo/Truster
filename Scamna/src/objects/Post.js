@@ -55,6 +55,6 @@ export class Post {
     }
 
     getLocation() {
-        return `${COLLECTIONS.AVAILABLE_VISITS}/${this.#data.country}/posts/${this.#data.city}/posts`
+        return `${COLLECTIONS.AVAILABLE_VISITS}/${this.#data.country}/posts/${this.#data.city}/posts/${this.#data.neighborhood}/posts`
     }
 }
