@@ -1,6 +1,6 @@
 export const COLLECTIONS = {
-    AVAILABLE_VISITS: "posts/notVisited/posts",
-    FINISHED_VISITS: "posts/visited/posts",
+    AVAILABLE_VISITS: "posts/notVisited/countries",
+    FINISHED_VISITS: "posts/visited/countries",
     REGULAR_USERS: "users/regular/users",
     ADMIN_USERS: "users/admin/users"
 }

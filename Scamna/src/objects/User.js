@@ -5,6 +5,7 @@ import { COLLECTIONS } from "../Constants"
 export class User{
     #uid
     #db
+    
     constructor(uid, db) {
         this.#uid = uid
         this.#db = db
@@ -52,11 +53,15 @@ export class User{
                 createdBy: this.#uid
             }
         )
-        updateDoc(doc(this.#db, `${COLLECTIONS.REGULAR_USERS}`, userID),{
-            myVisitRequests : arrayUnion(post.getId())
-        })
-        
-
-
+        return updateDoc(
+            doc(
+                this.#db, 
+                `${COLLECTIONS.REGULAR_USERS}`, 
+                userID
+            ),
+            {
+                myVisitRequests : arrayUnion(post.getId())
+            }
+        )
     }
 }
