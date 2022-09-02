@@ -15,6 +15,7 @@ import RequestPage from './components/RequestPage';
 import ViewRequestPage from './components/ViewRequestPage';
 import { COLLECTIONS } from './Constants';
 import { User } from "./objects/User";
+import { AbstractUser } from './objects/AbstractUser';
 
 
 export const DBClientContext = createContext(null)
@@ -46,8 +47,9 @@ function App() {
     }
   })
 
+
   const user = new User(123, client.db)
-  user.test()
+  user.test(client.db)
 
 
   // // Add this in node_modules/react-dom/index.js
@@ -63,18 +65,18 @@ function App() {
         <DBClientContext.Provider value={client}>
           <Navbar />
           <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route path="/signup" element={<SignUp />} />
+            {/* <Route exact path="/" element={<Home />} />
+            <Route path="/signup" element={<SignUp />} /> */}
             <Route path="/login" element={<LogIn />} />
-            <Route path="/profile" element={<Profile />} />
+            {/* <Route path="/profile" element={<Profile />} />
             <Route path="/newPost" element={<NewPosts />}/>
             <Route path="/myposts" element={<MyPosts/>} />
-            <Route path="/myposts/:id" element={<PostPage/>} />
+            <Route path="/myposts/:id" element={<PostPage/>} /> */}
             <Route path="/visits" element={<VisitList />} />
-            <Route path="/autocomplete" element={< AutoComplete/>} />
+            {/* <Route path="/autocomplete" element={< AutoComplete/>} />
             <Route path="/visits/:id" element={<PostPage/>} />
             <Route path="/visits/:id/request" element={<RequestPage/>} />
-            <Route path="/visits/:id/viewRequest" element={<ViewRequestPage/>} />
+            <Route path="/visits/:id/viewRequest" element={<ViewRequestPage/>} /> */}
           </Routes>
         </DBClientContext.Provider>
       </Router>
