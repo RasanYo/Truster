@@ -10,7 +10,7 @@ export class DBClient {
         this.auth = getAuth()
         this.currentUser = null
         this.readCounter = 0
-       
+        
     }
 
 
