@@ -7,6 +7,7 @@ import { User } from './objects/User';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LogIn from './components/LogIn';
 import "./styles/app.css"
+import Home from './components/Home';
 
 
 export const UserContext = createContext(null)
@@ -54,7 +55,7 @@ function App() {
           <Navbar />
           <div className="content">
             <Routes>
-              <Route exact path="/" element={user.isLoggedIn() && <div>Logged in</div>}/>
+              <Route exact path="/" element={<Home />}/>
               <Route path="/login" element={<LogIn />} />
             </Routes>
           </div>
