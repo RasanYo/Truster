@@ -6,6 +6,7 @@ const Home = () => {
 
     const [adress, setAdress] = useState("")
 
+
     const handleSubmit = e => {
         e.preventDefault()
     }
@@ -23,6 +24,8 @@ const Home = () => {
                     setValue={setAdress} 
                     placeholder="What adress are you moving to ?"
                     logo={<IoMdMap size={24} />}
+                />
+                <InputField
                 />
             </form>
         </div>
