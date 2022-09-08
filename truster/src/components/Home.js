@@ -1,10 +1,12 @@
 import { useState } from "react";
 import InputField from "./InputField";
 import { IoMdMap } from "react-icons/io"
+import "../styles/home.css"
 
 const Home = () => {
 
     const [adress, setAdress] = useState("")
+    const [date, setDate] = useState("")
 
 
     const handleSubmit = e => {
@@ -20,12 +22,19 @@ const Home = () => {
             </div>
             <form className="search" onSubmit={handleSubmit}>
                 <InputField
+                    id="city"
                     value={adress} 
                     setValue={setAdress} 
                     placeholder="What adress are you moving to ?"
                     logo={<IoMdMap size={24} />}
                 />
                 <InputField
+                    id="date"
+                    value={date} 
+                    setValue={setDate} 
+                    inputType="date"
+                    title="Starting from"
+                    logo={<IoMdMap size={24} />}
                 />
             </form>
         </div>

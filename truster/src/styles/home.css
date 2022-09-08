@@ -1,0 +1,12 @@
+.home {
+    max-width: fit-content;
+    margin: auto;
+}
+
+.search {
+    display: flex;
+}
+
+.search #city {
+    width: 100%;
+}
