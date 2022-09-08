@@ -1,6 +1,7 @@
 import { useState } from "react";
 import InputField from "./InputField";
 import { IoMdMap } from "react-icons/io"
+import { BsCalendar3 } from "react-icons/bs"
 import "../styles/home.css"
 
 const Home = () => {
@@ -34,7 +35,7 @@ const Home = () => {
                     setValue={setDate} 
                     inputType="date"
                     title="Starting from"
-                    logo={<IoMdMap size={24} />}
+                    logo={<BsCalendar3 size={24} />}
                 />
             </form>
         </div>
