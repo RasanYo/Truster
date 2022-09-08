@@ -13,12 +13,10 @@ import { AbstractUser } from "./AbstractUser"
 
 export class User extends AbstractUser{
     #uid
-    #db //necessaire ? il y a celui d'AbstractUser
 
     constructor(uid, db) {
         super(db)
         this.#uid = uid
-        this.#db = db
         
     }
 
@@ -39,14 +37,14 @@ export class User extends AbstractUser{
         data.geohash = hash
         setDoc(
             doc(
-                this.#db,
+                this.db,
                 post.getLocation(),
                 post.getId()
             ),
             data
         )
         return updateDoc(
-            doc(this.#db, COLLECTIONS.REGULAR_USERS, this.#uid),
+            doc(this.db, COLLECTIONS.REGULAR_USERS, this.#uid),
             {
                 myPosts : arrayUnion(data)
             }
@@ -56,7 +54,7 @@ export class User extends AbstractUser{
     requestPost(post, message) {
         setDoc(
             doc(
-                this.#db, 
+                this.db, 
                 `${post.getLocation()}/${post.getId()}/requests`,
                 this.#uid
             ),
@@ -68,7 +66,7 @@ export class User extends AbstractUser{
         )
         return updateDoc(
             doc(
-                this.#db, 
+                this.db, 
                 `${COLLECTIONS.REGULAR_USERS}`, 
                 this.#uid
             ),
@@ -87,11 +85,11 @@ export class User extends AbstractUser{
 
 
 
-    
+
     createPostLocation(coordinates, value){
         const hash = geohashForLocation([coordinates.lat,coordinates.lng])
         console.log(hash)
-        setDoc(doc(this.#db,"cities/Lausanne/posts",String(value)),{
+        setDoc(doc(this.db,"cities/Lausanne/posts",String(value)),{
             geohash : hash,
             lat : coordinates.lat,
             lng : coordinates.lng,
@@ -150,7 +148,7 @@ export class User extends AbstractUser{
 
         const promises = [];
         for (const b of bounds) {
-            const q = query(collection(this.#db,"cities/Lausanne/posts"), orderBy("geohash"),startAt(b[0]),endAt(b[1]))
+            const q = query(collection(this.db,"cities/Lausanne/posts"), orderBy("geohash"),startAt(b[0]),endAt(b[1]))
             promises.push(getDocs(q));
         }
 

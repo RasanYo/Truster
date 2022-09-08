@@ -1,9 +1,13 @@
 import { AbstractUser } from "./AbstractUser";
 
 export class Guest extends AbstractUser{
-    constructor(db){
+    auth
+    constructor(db, auth){
         super(db)
     }
 
-    
+    logIn(){
+
+    }
+
 }
