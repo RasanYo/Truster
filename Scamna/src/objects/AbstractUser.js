@@ -26,14 +26,13 @@ export class AbstractUser {
 
     //center c'est sensé être soit la position du mec qu'on lui aura demandé 
     //ou bien s'il veut pas la lat/lng de la ville
-   getPublicPosts(country, city, {radiusInKm,center} , sortByPrice, ...queryConstraints) {
+   getPublicPosts(country, city, {radiusInKm = 0,center = 0} , sortByPrice = false, ...queryConstraints) {
         if(radiusInKm == 0 ){
             const q = query(collection(this.#db,`${COLLECTIONS.AVAILABLE_VISITS}/${country}/cities/${city}/posts`), ...queryConstraints)
             return getDocs(q).then(snapshot => {
                 return snapshot.docs
             })
         }else{
-
             const bounds = geohashQueryBounds(center, radiusInKm*1000);
 
             const promises = [];
@@ -77,7 +76,6 @@ export class AbstractUser {
               });
         }
 
-        const q = query()
    } 
    
 }

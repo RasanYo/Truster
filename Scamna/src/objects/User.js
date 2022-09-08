@@ -8,6 +8,7 @@ import { distanceBetween } from "geofire-common"
 // import * as geofirestore from "geofirestore"
 import { arrayRemove, deleteDoc, deleteField, getDoc, getFirestore, onSnapshot, updateDoc } from 'firebase/firestore'
 import { AbstractUser } from "./AbstractUser"
+import { Guest } from "./Guest"
 
 
 
@@ -17,6 +18,7 @@ export class User extends AbstractUser{
     constructor(uid, db) {
         super(db)
         this.#uid = uid
+        this.isLoggedIn = true
         
     }
 
@@ -25,6 +27,8 @@ export class User extends AbstractUser{
      * @returns users uid
      */
     getUID() { return this.#uid}
+
+    logout() { return new Guest(this.db) }
 
     /**
      * 

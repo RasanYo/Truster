@@ -1,24 +1,29 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { DBClientContext } from "../App";
+import { DBClientContext, UserContext } from "../App";
 
 const Navbar = () => {
 
     const client = useContext(DBClientContext)
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const {currentUser, setCurrentUser, isLoggedIn} = useContext(UserContext)
+    // const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     const handleLogout = e => {
-        client.logOutCurrentUser()
+        setCurrentUser(currentUser.logout())
     }
 
-    client.auth.onAuthStateChanged(user => {
-        if (user) {
-            setIsLoggedIn(true)
-        } else {
-            setIsLoggedIn(false)
-        }
-    })
+    // client.auth.onAuthStateChanged(user => {
+    //     if (user) {
+    //         setIsLoggedIn(true)
+    //     } else {
+    //         setIsLoggedIn(false)
+    //     }
+    // })
+
+
+    
 
     return ( 
         <nav className="navbar">

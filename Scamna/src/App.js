@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useMemo } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { DBClient } from './components/DBClient';
 import Home from './components/Home';
@@ -16,9 +16,12 @@ import ViewRequestPage from './components/ViewRequestPage';
 import { COLLECTIONS } from './Constants';
 import { User } from "./objects/User";
 import { AbstractUser } from './objects/AbstractUser';
+import { useState } from 'react';
+import { Guest } from './objects/Guest';
 
 
 export const DBClientContext = createContext(null)
+export const UserContext = createContext(null)
 
 function App() {
 
@@ -34,6 +37,11 @@ function App() {
 
   const client = new DBClient(firebaseConfig)
 
+  const guest = new Guest(client.db)
+  const [user, setUser] = useState(guest)
+
+  
+
   const unsubscribe = client.auth.onAuthStateChanged(user => {
     if (user) {
       client.getDocument(COLLECTIONS.REGULAR_USERS, user.uid)
@@ -42,14 +50,22 @@ function App() {
             uid: user.uid,
             data: snapshot.data()
           }
-          unsubscribe()
       })
-    }
+
+      setUser(new User(user.uid, client.db))
+    } else {
+      setUser(guest)
+    }    
+    unsubscribe()
   })
 
+  const isLoggedIn = useMemo(() => user.isLoggedIn, [user])
 
-  const user = new User(123, client.db)
-  user.test(client.db)
+
+  // const user = new User(123, client.db)
+  // user.test(client.db)
+
+  
 
 
   // // Add this in node_modules/react-dom/index.js
@@ -63,21 +79,23 @@ function App() {
     <div className="App">
       <Router>
         <DBClientContext.Provider value={client}>
-          <Navbar />
-          <Routes>
-            {/* <Route exact path="/" element={<Home />} />
-            <Route path="/signup" element={<SignUp />} /> */}
-            <Route path="/login" element={<LogIn />} />
-            {/* <Route path="/profile" element={<Profile />} />
-            <Route path="/newPost" element={<NewPosts />}/>
-            <Route path="/myposts" element={<MyPosts/>} />
-            <Route path="/myposts/:id" element={<PostPage/>} /> */}
-            <Route path="/visits" element={<VisitList />} />
-            {/* <Route path="/autocomplete" element={< AutoComplete/>} />
-            <Route path="/visits/:id" element={<PostPage/>} />
-            <Route path="/visits/:id/request" element={<RequestPage/>} />
-            <Route path="/visits/:id/viewRequest" element={<ViewRequestPage/>} /> */}
-          </Routes>
+          <UserContext.Provider value={{user, setUser, isLoggedIn}}>
+            <Navbar />
+            <Routes>
+              {/* <Route exact path="/" element={<Home />} />
+              <Route path="/signup" element={<SignUp />} /> */}
+              <Route path="/login" element={<LogIn />} />
+              {/* <Route path="/profile" element={<Profile />} />
+              <Route path="/newPost" element={<NewPosts />}/>
+              <Route path="/myposts" element={<MyPosts/>} />
+              <Route path="/myposts/:id" element={<PostPage/>} /> */}
+              <Route path="/visits" element={<VisitList />} />
+              {/* <Route path="/autocomplete" element={< AutoComplete/>} />
+              <Route path="/visits/:id" element={<PostPage/>} />
+              <Route path="/visits/:id/request" element={<RequestPage/>} />
+              <Route path="/visits/:id/viewRequest" element={<ViewRequestPage/>} /> */}
+            </Routes>
+          </UserContext.Provider>
         </DBClientContext.Provider>
       </Router>
     </div>
