@@ -3,10 +3,74 @@
     margin: auto;
 }
 
-.search {
+.home h1 {
+    font-size: 48px;
+    line-height: 32px;
+}
+
+.home h2 {
+    font-size: 20px;
+    line-height: 36px;
+    font-weight: 550;
+}
+
+.home h3 {
+    font-size: 18px;
+    line-height: 0px;
+    font-weight: 500;
+}
+
+.home .content-container {
+    margin: 50px auto;
     display: flex;
+    flex-direction: column;
+    max-width: 55%;
+}
+
+.home img {
+    margin-left: 20px;
+}
+
+.search {
+    margin: auto;
+    display: flex;
+    width: 100%;
 }
 
 .search #city {
     width: 100%;
+    margin-right: 10px;
+}
+
+.search #date {
+    margin-right: 10px;
+}
+
+.search .button {
+    min-width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    background: rgba(255, 0, 0, 0.4);
+    transition: all .2s;
+    transition-property: background, box-shadow;
+}
+
+.search .button * {
+    margin: auto;
+    color: white;
+    transition: all .5s;
+    transition-property: width, height;
+}
+
+.search .button:hover {
+    cursor: pointer;
+    background: rgba(255, 89, 0, 1);
+    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+.search .button:hover *{
+    width: 21px;
+    height: 21px;
+    
 }
