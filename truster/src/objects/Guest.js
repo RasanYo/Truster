@@ -1,5 +1,6 @@
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { setDoc } from "firebase/firestore";
+import { setDoc, doc, Timestamp } from "firebase/firestore";
+import { COLLECTIONS } from "../Constants";
 import { AbstractUser } from "./AbstractUser";
 
 export class Guest extends AbstractUser{
@@ -20,12 +21,30 @@ export class Guest extends AbstractUser{
      */
     isLoggedIn() { return false }
 
-    // signUp(email, password) {
-    //     createUserWithEmailAndPassword(getAuth(), email, password)
-    //         .then(userCred => {
-    //             setDoc(doc(this.db, ))
-    //         })
-    // }
+    signUp(email, password, data) {
+        return createUserWithEmailAndPassword(getAuth(), email, password)
+            .then(userCred => {
+                return setDoc(
+                    doc(
+                        this.db, 
+                        COLLECTIONS.users(data.country, data.city, userCred.user.uid)
+                    ),
+                    {
+                        uid: userCred.user.uid,
+                        createdAt: Timestamp.now(),
+                        dob: data.dob,
+                        email: data.email,
+                        adress: data.adress,
+                        firstName: data.firstName,
+                        lastName: data.lastName,
+                        gender: data.gender,
+                        myPosts: [],
+                        myVisitRequests: [],
+                        myVisits: []
+                    }
+                )
+            })
+    }
 
 
     
