@@ -23,19 +23,20 @@
 
 .home h1 {
     font-size: 48px;
+    font-weight: 550;
     line-height: 32px;
 }
 
 .home h2 {
     font-size: 20px;
     line-height: 36px;
-    font-weight: 550;
+    font-weight: 400;
 }
 
 .home h3 {
     font-size: 18px;
     line-height: 0px;
-    font-weight: 500;
+    font-weight: 40;
 }
 
 .home .content-container {
@@ -50,10 +51,10 @@
 }
 
 .search {
-    margin: auto;
+    /* margin: auto; */
     display: flex;
     width: 100%;
-    border : solid black;
+    height: auto;
 }
 
 .search #city {
@@ -68,14 +69,13 @@
 }
 
 .search .button {
-    border : solid black;
     min-width: 32px;
     height: 32px;
     border-radius: 50%;
     display: flex;
     background: rgba(255, 0, 0, 0.4);
     transition: all .2s;
-    transition-property: background, box-shadow;
+    /* transition-property: background, box-shadow; */
 }
 
 .search .button * {

@@ -69,11 +69,15 @@ export default function Autocomplete({textObj, setStreet, setCity, setNpa, setCo
             <input {...getInputProps({ placeholder: textObj.text,className: 'location-search-input'})} />
 
             <div className="autocomplete-dropdown-container">
-              {loading ? <div>...loading</div> : null}
+              {/* {loading ? <div>...loading</div> : null} */}
 
+            
               {suggestions.map((suggestion, index) => {
                 const style = {
-                  backgroundColor: suggestion.active ? "#41b6e6" : "#cef8eb",
+                  backgroundColor: suggestion.active ? "#b6d6cc" : "#cef8eb",
+                  padding : "10px 10px 10px 38px",
+                  borderRadius : suggestion.active ? "5px" : "0px",
+                  fontSize: "13px"
                 };
 
                 return (

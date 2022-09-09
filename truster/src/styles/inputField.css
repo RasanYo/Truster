@@ -6,6 +6,8 @@
     display: flex;
     width: 60%;
     margin: auto;
+    position: relative;
+
     /* background: rgba(255, 255, 255, 0.4); */
 }
 
@@ -32,8 +34,7 @@
 }
 
 .input-field .location-search-input{
-    /* border:solid black; */
-    border-style: none;
+    /* border-style: none; */
     border-radius: 0px 5px 5px 0px;
     width: 100%;
     padding: 8px 0px 8px 0px;
@@ -88,8 +89,13 @@
 
 
   
-/* .autocomplete-dropdown-container {
+.autocomplete-dropdown-container {
+    top:28px;
+    left:0px;
     display: block;
-    margin: auto;
+    margin-top: 100px;
+    width: 100px;
     text-align: left;
-  } */
+    position:absolute;
+    z-index: 1000;
+  }
