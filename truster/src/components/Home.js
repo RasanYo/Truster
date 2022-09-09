@@ -1,6 +1,7 @@
 import { useState } from "react";
 import InputField from "./InputField";
 import { IoMdMap } from "react-icons/io"
+import "../styles/home.css"
 
 const Home = () => {
 
@@ -25,8 +26,7 @@ const Home = () => {
                     placeholder="What adress are you moving to ?"
                     logo={<IoMdMap size={24} />}
                 />
-                <InputField
-                />
+               
             </form>
         </div>
     );

@@ -4,7 +4,8 @@
     border-radius: 5px;
     border: 1px solid #000000;
     display: flex;
-    max-width: 25%;
+    width: 60%;
+    margin: auto;
     /* background: rgba(255, 255, 255, 0.4); */
 }
 
@@ -14,24 +15,44 @@
     display: flex;
 }
 
-.input-field span * {
+.input-field span  {
+    border-radius: 5px 0px 0px 5px;
     padding: 4px 7px;
-    margin-right: auto;
+    /* margin-right: auto; */
     color: rgba(160, 160, 160, 0.65);
-    background: rgba(255, 255, 255, 0.4);
+    background: rgb(206, 248, 235);
 }  
 
-.input-field input{
-    border-style: none;
+.inputBox{
     width: 100%;
-    padding-left: 5px;
-    background: rgba(255, 255, 255, 0.4);
 }
 
-.input-field input::placeholder{
-    color: rgba(159, 159, 159, 0.65);
+.autocomplete-block{
+    width: 100%;
 }
+
+.input-field .location-search-input{
+    /* border:solid black; */
+    border-style: none;
+    border-radius: 0px 5px 5px 0px;
+    width: 100%;
+    padding: 8px 0px 8px 0px;
+    background: rgb(206, 248, 235);
+    }
+
+/* .input-field input::placeholder{
+    color: rgba(159, 159, 159, 0.65);
+} */
 
 .input-field input:focus {
     outline: none;
 }
+
+
+
+  
+/* .autocomplete-dropdown-container {
+    display: block;
+    margin: auto;
+    text-align: left;
+  } */
