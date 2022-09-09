@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "../styles/signup.css"
 import FormInput from "./FormInput";
 import { AiOutlineArrowRight } from "react-icons/ai"
+import { UserContext } from "../App";
 
 
 const SignUp = () => {
+
+    const {user, isLoggedIn} = useContext(UserContext)
 
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
@@ -13,14 +16,39 @@ const SignUp = () => {
     const [password, setPassword] = useState("")
     const [passwordConfirmation, setPasswordConfirmation] = useState("")
     const [gender, setGender] = useState("Others")
+    const [adress, setAdress] = useState("")
+    const [country, setCountry] = useState("")
+    const [city, setCity] = useState("")
 
 
     const steps = ["step 1", "step 2", "step 3", "step 4"]
 
+    const handleSubmit = e => {
+        e.preventDefault()
+        if (password === passwordConfirmation) {
+            user.signUp(
+                email, 
+                password, 
+                {
+                    dob: birthdate,
+                    email: email,
+                    firstName: firstName,
+                    lastName: lastName,
+                    gender: gender,
+                    adress: adress
+                }
+            ).then(() => {return true})
+        }
+        else {
+            return false
+        }
+        
+    }
+
     return ( 
         <div className="signup">
             <h1>Sign up</h1>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <label>Gender:</label>
                 <select
                     value={gender}

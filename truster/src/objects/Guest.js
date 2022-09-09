@@ -21,13 +21,13 @@ export class Guest extends AbstractUser{
      */
     isLoggedIn() { return false }
 
-    signUp(email, password, data) {
+    signUp(email, password, country, city, data) {
         return createUserWithEmailAndPassword(getAuth(), email, password)
             .then(userCred => {
                 return setDoc(
                     doc(
                         this.db, 
-                        COLLECTIONS.users(data.country, data.city, userCred.user.uid)
+                        COLLECTIONS.user(country, city, userCred.user.uid)
                     ),
                     {
                         uid: userCred.user.uid,
