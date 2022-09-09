@@ -1,0 +1,17 @@
+.home{
+    display: block;
+    margin: 60px;
+    border:solid black;
+}
+
+
+
+.text-container h2{
+    font-size: large;
+    font-weight: 400;
+}
+
+.text-container h3{
+    font-size: medium;
+    font-weight: 300;
+}
