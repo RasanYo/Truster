@@ -1,4 +1,5 @@
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { setDoc } from "firebase/firestore";
 import { AbstractUser } from "./AbstractUser";
 
 export class Guest extends AbstractUser{
@@ -22,7 +23,7 @@ export class Guest extends AbstractUser{
     signUp(email, password) {
         createUserWithEmailAndPassword(getAuth(), email, password)
             .then(userCred => {
-                
+                setDoc(doc(this.db, ))
             })
     }
 

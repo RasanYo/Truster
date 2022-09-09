@@ -6,13 +6,13 @@ import { AiOutlineArrowRight } from "react-icons/ai"
 
 const SignUp = () => {
 
-    const [firstName, setFirstName] = useState(null)
-    const [lastName, setLastName] = useState(null)
-    const [birthdate, setBirthdate] = useState(null) 
-    const [email, setEmail] = useState(null)    
-    const [password, setPassword] = useState(null)
-    const [passwordConfirmation, setPasswordConfirmation] = useState(null)
-    const [gender, setGender] = useState(null)
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [birthdate, setBirthdate] = useState("") 
+    const [email, setEmail] = useState("")    
+    const [password, setPassword] = useState("")
+    const [passwordConfirmation, setPasswordConfirmation] = useState("")
+    const [gender, setGender] = useState("Others")
 
 
     const steps = ["step 1", "step 2", "step 3", "step 4"]
@@ -30,10 +30,6 @@ const SignUp = () => {
                     <option value="Female">Female</option>
                     <option value="Other">Others</option> 
                 </select>
-                <input
-                    type="file"
-                    placeholder="Photo"
-                />
                 <FormInput 
                     title="First name"
                     value={firstName}
