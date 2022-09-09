@@ -89,7 +89,7 @@ export class User extends AbstractUser{
 
 
 
-    
+
     createPostLocation(coordinates, value){
         const hash = geohashForLocation([coordinates.lat,coordinates.lng])
         console.log(hash)

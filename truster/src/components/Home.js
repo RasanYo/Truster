@@ -1,5 +1,6 @@
 import { useState } from "react";
 import InputField from "./InputField";
+import InputLocation from "./InputLocation"
 import { IoMdMap } from "react-icons/io"
 import { BsCalendar3 } from "react-icons/bs"
 import { AiOutlineArrowRight } from "react-icons/ai"
@@ -29,8 +30,9 @@ const Home = () => {
                     alt="city"
                     width={400}
                 />
+
                 <form className="search">
-                    <InputField
+                    <InputLocation
                         id="city"
                         value={adress} 
                         setValue={setAdress} 

@@ -4,6 +4,10 @@
     border-radius: 5px;
     border: 1px solid #000000;
     display: flex;
+    width: 60%;
+    margin: auto;
+    position: relative;
+
     /* background: rgba(255, 255, 255, 0.4); */
 }
 
@@ -13,12 +17,36 @@
     display: flex;
 }
 
-.input-field span * {
+.input-field span  {
+    border-radius: 5px 0px 0px 5px;
     padding: 4px 7px;
-    margin-right: auto;
+    /* margin-right: auto; */
     color: rgba(160, 160, 160, 0.65);
-    background: rgba(255, 255, 255, 0.4);
+    background: rgb(206, 248, 235);
 }  
+
+.inputBox{
+    width: 100%;
+}
+
+.autocomplete-block{
+    width: 100%;
+}
+
+.input-field .location-search-input{
+    /* border-style: none; */
+    border-radius: 0px 5px 5px 0px;
+    width: 100%;
+    padding: 8px 0px 8px 0px;
+    background: rgb(206, 248, 235);
+    }
+
+/* .input-field input::placeholder{
+    color: rgba(159, 159, 159, 0.65);
+} */
+
+.input-field input:focus {}
+
 
 .input-field div {
     width: 100%;
@@ -57,3 +85,17 @@
 .input-field div input:focus {
     outline: none;
 }
+
+
+
+  
+.autocomplete-dropdown-container {
+    top:28px;
+    left:0px;
+    display: block;
+    margin-top: 100px;
+    width: 100px;
+    text-align: left;
+    position:absolute;
+    z-index: 1000;
+  }

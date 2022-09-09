@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../bots"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Scamna"
+	}
+}
