@@ -42,29 +42,33 @@
     margin: 50px auto;
     display: flex;
     flex-direction: column;
-    max-width: 55%;
+    max-width: 75%;
 }
 
 .home img {
-    margin-left: 20px;
+    margin:auto;
 }
 
 .search {
     margin: auto;
     display: flex;
     width: 100%;
+    border : solid black;
 }
 
 .search #city {
-    width: 100%;
+    flex : 4;
+    /* width: 100%; */
     margin-right: 10px;
 }
 
 .search #date {
+    flex : 1;
     margin-right: 10px;
 }
 
 .search .button {
+    border : solid black;
     min-width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -90,5 +94,4 @@
 .search .button:hover *{
     width: 21px;
     height: 21px;
-    
 }

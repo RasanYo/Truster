@@ -5,7 +5,7 @@ import { IoMdMap } from "react-icons/io"
 import { BsCalendar3 } from "react-icons/bs"
 import { AiOutlineArrowRight } from "react-icons/ai"
 import "../styles/home.css"
-// import city from "../res/city drawing.png"
+import city from "../res/city drawing.png"
 
 const Home = () => {
 
