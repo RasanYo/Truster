@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { setDoc, doc, Timestamp } from "firebase/firestore";
+import { setDoc, doc, Timestamp, collection, getFirestore } from "firebase/firestore";
 import { COLLECTIONS } from "../Constants";
 import { AbstractUser } from "./AbstractUser";
 
@@ -21,14 +21,23 @@ export class Guest extends AbstractUser{
      */
     isLoggedIn() { return false }
 
+    /**
+     * Creates a new user and logs user in after creation.
+     * Creation of user in auth service and in database
+     * @param {string} email 
+     * @param {string} password 
+     * @param {string} country 
+     * @param {string} city 
+     * @param {object} data user data
+     * @returns {Promise<>} promise
+     */
     signUp(email, password, country, city, data) {
         return createUserWithEmailAndPassword(getAuth(), email, password)
             .then(userCred => {
+                let collectionRef = collection(getFirestore(), COLLECTIONS.users(country, city))
+                let userRef = doc(collectionRef, userCred.user.uid)
                 return setDoc(
-                    doc(
-                        this.db, 
-                        COLLECTIONS.user(country, city, userCred.user.uid)
-                    ),
+                    userRef,
                     {
                         uid: userCred.user.uid,
                         createdAt: Timestamp.now(),

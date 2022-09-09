@@ -1,21 +1,27 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import '../styles/navbar.css'
 
 const Navbar = () => {
 
     const {user, isLoggedIn} = useContext(UserContext)
+    const navigate = useNavigate()
 
 
     const handleLogout = e => {
         user.logout()
     }
+
+    const handleTitle = e => {
+        e.preventDefault()
+        navigate("/")
+    }
  
 
     return ( 
         <nav className="navbar">
-            <h1>Truster</h1>
+            <h1 onClick={handleTitle}>Truster</h1>
             <div className="actions">
                 <Link to="/login">Make a visit</Link>
                 <Link to="/login">Post a visit</Link>

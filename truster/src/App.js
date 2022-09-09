@@ -57,8 +57,9 @@ function App() {
           <div className="content">
             <Routes>
               <Route exact path="/" element={<Home />}/>
-              <Route path="/login" element={<LogIn />} />
-              <Route path="/signup" element={<SignUp />} />
+              {!isLoggedIn &&<Route path="/login" element={<LogIn />} />}
+              {!isLoggedIn && <Route path="/signup" element={<SignUp />} />}
+              <Route path="*" element={<div>Not found...</div>}/>
             </Routes>
           </div>
         </UserContext.Provider>
