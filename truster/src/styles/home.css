@@ -24,11 +24,11 @@
     margin: 50px auto;
     display: flex;
     flex-direction: column;
-    max-width: 55%;
+    max-width: 65%;
 }
 
 .home img {
-    margin-left: 20px;
+    margin: auto;
 }
 
 .search {

@@ -1,0 +1,83 @@
+.signup {
+    display: flex;
+    background: white;
+    border-radius: 10px;
+    height: 500px;
+    max-width: 50%;
+    margin: 0 auto;
+    flex-direction: column;
+}
+
+.signup h1 {
+    margin: 20px auto;
+    width: fit-content;
+    font-size: 24px;
+}
+
+form > *{
+    margin: 20px 35px;
+    width: fit-content;
+}
+
+.password-container {
+    margin: 0 35px;
+    display: flex;
+    flex-direction: row;
+    width: 95%;
+}
+
+.password-container > * {
+    margin-right: 30px;
+    width: 100%;
+}
+
+button {
+    display: flex;
+    flex-direction: row;
+    background: transparent;
+    border-style: none;
+    margin-left: auto;
+    margin-top: 50px;
+    border-radius: 5px;
+    padding: 3px 3px;
+    transition: all .5s;
+    transition-property: background, box-shadow;
+}
+
+button * {
+    margin: auto auto;
+    padding: 0;
+    color: #DF7FE1;
+    transition: color .2s;
+}
+
+button h6 {
+    margin-right:  5px;
+    margin-left: 3px;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+button:hover {
+    background: #DF7FE1;
+    cursor: pointer;
+    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+
+}
+
+button:hover * {
+    color: white;
+}
+
+label {
+    color: rgba(131, 131, 131, 0.49);
+    margin-right: 5px;
+    margin-left: 38px;
+    font-size: 12px;
+}
+
+select {
+    margin: 0;
+    border-style: none;
+    outline: none;
+}

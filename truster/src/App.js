@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LogIn from './components/LogIn';
 import "./styles/app.css"
 import Home from './components/Home';
+import SignUp from './components/SignUp';
 
 
 export const UserContext = createContext(null)
@@ -57,6 +58,7 @@ function App() {
             <Routes>
               <Route exact path="/" element={<Home />}/>
               <Route path="/login" element={<LogIn />} />
+              <Route path="/signup" element={<SignUp />} />
             </Routes>
           </div>
         </UserContext.Provider>
