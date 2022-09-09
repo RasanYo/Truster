@@ -2,21 +2,28 @@ import { useState } from "react";
 import "../styles/inputField.css"
 import AutoComplete from "./Autocomplete";
 
-const InputField = ({ value, setValue, inputType='text', placeholder="", logo="null"}) => {
 
-    const [country,setCountry] = useState("");
-    const [city, setCity] = useState("");
-    const [adress,setAddress] = useState("");
-
+const InputField = ({ 
+    id=null,
+    value, 
+    setValue, 
+    inputType='text', 
+    placeholder="", 
+    logo="null", 
+    title=null
+}) => {
+    
 
     return ( 
-        <div className="input-field">
+
+
+        <div className="input-field" id={id}>
             <span>
                 {logo}
             </span>
             
 
-            <AutoComplete textObj={{text : placeholder}} setCity={setCity} setCountry={setCountry} setFullAdress={setAddress} searchOptions={{types : ['locality','country']}}/>
+            {/* <AutoComplete textObj={{text : placeholder}} setCity={setCity} setCountry={setCountry} setFullAdress={setAddress} searchOptions={{types : ['locality','country']}}/> */}
             {/* <input 
                 type={inputType} 
                 value={value}
@@ -24,6 +31,16 @@ const InputField = ({ value, setValue, inputType='text', placeholder="", logo="n
                 onChange={e => setValue(e.target.value)}
             /> */}
             
+
+            <div>
+                {title && <h4>{title}</h4>}
+                <input 
+                    type={inputType} 
+                    value={value}
+                    placeholder={placeholder}
+                    onChange={e => setValue(e.target.value)}
+                />
+            </div>
         </div>
      );
 }
