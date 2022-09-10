@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import "../styles/signup.css"
 import FormInput from "./FormInput";
-import { AiOutlineArrowRight } from "react-icons/ai"
+import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai"
 import { UserContext } from "../App";
 import { useNavigate } from "react-router-dom";
 
@@ -40,6 +40,11 @@ const SignUp = () => {
         } else {
             return false
         }
+    }
+
+    const handleFlip = e => {
+        e.preventDefault()
+        flipForm(!flipped)
     }
 
     const handleAdressForm = e => {
@@ -82,6 +87,7 @@ const SignUp = () => {
                 city={city} setCity={setCity}
                 country={country} setCountry={setCountry}
                 handleSubmit={handleAdressForm}
+                handleFlip={handleFlip}
             />}
         </div>
      );
@@ -148,12 +154,15 @@ const UserDetailsForm = ({
                     inputType="password"
                 />
             </div>
-            <button>
-                <h6>Next</h6>
-                <AiOutlineArrowRight
-                    size={20}
-                />
-            </button>
+            <div className="buttons">
+                <button className="btn next">
+                    <h6>Next</h6>
+                    <AiOutlineArrowRight
+                        size={20}
+                    />
+                </button>
+            </div>
+            
         </form>
      );
 }
@@ -165,18 +174,21 @@ const AdressForm = ({
     npa, setNPA,
     city, setCity,
     country, setCountry,
-    handleSubmit
+    handleSubmit,
+    handleFlip=null
 }) => {
     return ( 
         <form onSubmit={handleSubmit}>
-            <div className="street-container">
+            <div className="container">
                 <FormInput 
+                    className="number"
                     title="Street number"
                     value={streetNumber}
                     setValue={setStreetNumber}
                     inputType="number"
                 />
                 <FormInput 
+                    className="street"
                     title="Street"
                     value={street}
                     setValue={setStreet}
@@ -184,12 +196,13 @@ const AdressForm = ({
                 />
             </div>
             <FormInput 
+                className="additional-info"
                 title="Additional information"
                 value={additionalInfo}
                 setValue={setAdditionalInfo}
                 inputType="text"
             />
-            <div className="country-container">
+            <div className="container">
                 <FormInput 
                     title="NPA"
                     value={npa}
@@ -209,12 +222,23 @@ const AdressForm = ({
                     inputType="text"
                 />
             </div>
-            <button>
-                <h6>Next</h6>
-                <AiOutlineArrowRight
-                    size={20}
-                />
-            </button>
+            <div className="buttons">
+                <button 
+                    className="btn-back"
+                    onClick={handleFlip}
+                >
+                    <AiOutlineArrowLeft
+                        size={20}
+                    />
+                    <h6>Back</h6>
+                </button>
+                <button className="btn next">
+                    <h6>Next</h6>
+                    <AiOutlineArrowRight
+                        size={20}
+                    />
+                </button>
+            </div>
         </form>
     );
 }

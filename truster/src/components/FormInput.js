@@ -1,8 +1,8 @@
 import "../styles/forminput.css"
 
-const FormInput = ({title, value, setValue, inputType}) => {
+const FormInput = ({title, value, setValue, inputType, className=""}) => {
     return ( 
-        <div className="input-container">
+        <div className={`input-container ${className}`}>
             <h5>{title}</h5>
             <input 
                 type={inputType}

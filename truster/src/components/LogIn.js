@@ -1,9 +1,12 @@
 import { useContext } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import { UserContext } from "../App";
+import "../styles/login.css"
+import FormInput from "./FormInput";
 
-const LogIn = () => {
+const LogIn = ({toggleLogin}) => {
 
     const {user, isLoggedIn} = useContext(UserContext)
     const navigate = useNavigate()
@@ -26,24 +29,26 @@ const LogIn = () => {
     return ( 
         <div className="login">
             <form onSubmit={handleSubmit}>
-                <label>Email</label>
-                <input 
-                    type="email" 
-                    required 
+                <h1>Log in</h1>
+                <FormInput 
+                    title="Email adress"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    setValue={setEmail}
+                    inputType="email"
                 />
-
-                <label>Password</label>
-                <input 
-                    type="password" 
-                    required 
+                <FormInput 
+                    title="Password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    setValue={setPassword}
+                    inputType="password"
                 />
                 {!isGoodPassword && <div>Sorry, your password was incorrect. Please double-check your password.</div>
                 }
                 <button>Log in</button>
+                <div className="signup-link">
+                    <h5>No account yet ? <Link to="/signup">Sign up here</Link></h5>
+                </div>
+                
             </form>
         </div>
      );

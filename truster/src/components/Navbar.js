@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import '../styles/navbar.css'
 
-const Navbar = () => {
+const Navbar = ({toggleLogin}) => {
 
     const {user, isLoggedIn} = useContext(UserContext)
     const navigate = useNavigate()
