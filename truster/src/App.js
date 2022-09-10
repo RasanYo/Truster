@@ -40,10 +40,16 @@ function App() {
 
   const auth = getAuth()
   const [user, setUser] = useState(new Guest())
+  const [login, setLogin] = useState(false)
   const unsubscribeAuthListener = auth.onAuthStateChanged(u => {
     if (u) setUser(new User(u.uid))
     else setUser(new Guest())
   })
+
+  const toggleLogin = e => {
+    e.preventDefault()
+    setLogin(!login)
+  }
 
   const isLoggedIn = useMemo(() => user.isLoggedIn(), [user])
 
@@ -53,14 +59,19 @@ function App() {
     <div className="app">
       <Router>
         <UserContext.Provider value={{user, isLoggedIn}} >
-          <Navbar />
-          <div className="content">
-            <Routes>
-              <Route exact path="/" element={<Home />}/>
-              {!isLoggedIn &&<Route path="/login" element={<LogIn />} />}
-              {!isLoggedIn && <Route path="/signup" element={<SignUp />} />}
-              <Route path="*" element={<div>Not found...</div>}/>
-            </Routes>
+          {login && <LogIn toggleLogin={toggleLogin}/>}
+          <div className="page">
+            <Navbar 
+              toggleLogin={toggleLogin}
+            />
+            <div className="content">
+              <Routes>
+                <Route exact path="/" element={<Home />}/>
+                {!isLoggedIn && <Route path="/login" element={<LogIn />} />}
+                {!isLoggedIn && <Route path="/signup" element={<SignUp />} />}
+                <Route path="*" element={<div>Not found...</div>}/>
+              </Routes>
+            </div>
           </div>
         </UserContext.Provider>
       </Router>

@@ -7,3 +7,28 @@ body {
   background: rgb(174,243,222);
 }
 
+.app {
+  position: relative;
+}
+
+.app > * {
+  position: absolute;
+  width: 100%;
+}
+
+.login {
+  z-index: 1;
+}
+
+.page {
+  z-index: 2;
+}
+
+
+/* Removes arrows in number input field */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+

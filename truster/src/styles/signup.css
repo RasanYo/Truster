@@ -8,6 +8,7 @@
     flex-direction: column;
 }
 
+
 .signup h1 {
     margin: 20px auto;
     width: fit-content;
@@ -31,17 +32,30 @@ form > *{
     width: 100%;
 }
 
+.buttons {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+}
+
 button {
     display: flex;
     flex-direction: row;
     background: transparent;
     border-style: none;
-    margin-left: auto;
-    margin-top: 50px;
     border-radius: 5px;
     padding: 3px 3px;
     transition: all .5s;
     transition-property: background, box-shadow;
+}
+
+.buttons .next {
+    margin-left: auto;
+}
+
+.back {
+    margin-right: auto;
 }
 
 button * {
@@ -80,4 +94,24 @@ select {
     margin: 0;
     border-style: none;
     outline: none;
+}
+
+form .container {
+    margin: 25px 35px;
+    display: flex;
+    flex-direction: row;
+    width: 82.5%;
+}
+
+form .container > *{
+    margin-right: 30px;
+    width: 100%;
+}
+
+form .container .number {
+    max-width: fit-content;
+}
+
+form .additional-info {
+    width: 82.5%;
 }

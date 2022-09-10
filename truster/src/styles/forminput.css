@@ -23,6 +23,7 @@
 
 input {
     outline: none;  
+    background: transparent;
 }
 
 input[type="date"] {
