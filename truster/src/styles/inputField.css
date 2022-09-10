@@ -37,7 +37,7 @@
     /* border-style: none; */
     border-radius: 0px 5px 5px 0px;
     width: 100%;
-    padding: 8px 0px 8px 0px;
+    padding: 14px 0px 14px 0px;
     background: rgb(206, 248, 235);
     }
 
@@ -90,7 +90,7 @@
 
   
 .autocomplete-dropdown-container {
-    top:28px;
+    top:38px;
     left:0px;
     display: block;
     margin-top: 100px;

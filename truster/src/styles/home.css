@@ -5,6 +5,9 @@
 } */
 
 
+.text-container{
+    margin-top: 100px;
+}
 
 .text-container h2{
     font-size: large;
@@ -79,6 +82,7 @@
     display: flex;
     background: rgba(255, 0, 0, 0.4);
     transition: all .2s;
+    padding: 5px;
     margin: 0;
     /* transition-property: background, box-shadow; */
 }

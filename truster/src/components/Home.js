@@ -37,7 +37,7 @@ const Home = () => {
                         value={adress} 
                         setValue={setAdress} 
                         placeholder="What adress are you moving to ?"
-                        logo={<IoMdMap size={24} />}
+                        logo={<IoMdMap size={34} />}
                     />
                     <InputField
                         id="date"
@@ -45,7 +45,7 @@ const Home = () => {
                         setValue={setDate} 
                         inputType="date"
                         title="Starting from"
-                        logo={<BsCalendar3 size={24} />}
+                        logo={<BsCalendar3 size={34} />}
                     />
                     <div className="button">
                         <AiOutlineArrowRight 
