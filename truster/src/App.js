@@ -9,6 +9,7 @@ import LogIn from './components/LogIn';
 import "./styles/app.css"
 import Home from './components/Home';
 import SignUp from './components/SignUp';
+import Profil from './components/Profil';
 
 
 export const UserContext = createContext(null)
@@ -69,6 +70,7 @@ function App() {
                 <Route exact path="/" element={<Home />}/>
                 {!isLoggedIn && <Route path="/login" element={<LogIn />} />}
                 {!isLoggedIn && <Route path="/signup" element={<SignUp />} />}
+                {isLoggedIn && <Route path="/profile" element={<Profil/>}/>}
                 <Route path="*" element={<div>Not found...</div>}/>
               </Routes>
             </div>

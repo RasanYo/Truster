@@ -2,7 +2,7 @@
     display: flex;
     background: white;
     border-radius: 10px;
-    height: 500px;
+    height: 550px;
     max-width: 50%;
     margin: 0 auto;
     flex-direction: column;
@@ -18,6 +18,10 @@
 form > *{
     margin: 20px 35px;
     width: fit-content;
+}
+
+.email{
+    width: 30%;
 }
 
 .password-container {

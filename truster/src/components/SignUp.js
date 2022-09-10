@@ -139,6 +139,7 @@ const UserDetailsForm = ({
                 value={email}
                 setValue={setEmail}
                 inputType="email"
+                className="email"
             />
             <div className="password-container">
                 <FormInput 
