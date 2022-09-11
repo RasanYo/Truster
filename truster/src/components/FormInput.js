@@ -1,6 +1,13 @@
 import "../styles/forminput.css"
 
-const FormInput = ({title, value, setValue, inputType, className="", required=false}) => {
+const FormInput = ({
+    title, 
+    value, 
+    setValue, 
+    inputType, 
+    className="", 
+    required=false
+}) => {
     return ( 
         <div className={`input-container ${className}`}>
             <label>
@@ -16,8 +23,8 @@ const FormInput = ({title, value, setValue, inputType, className="", required=fa
                     type={inputType}
                     value={value}
                     onChange={e => setValue(e.target.value)}
-                />}
 
+                />}
             </label>
             
         </div>

@@ -13,6 +13,7 @@ const SignUp = () => {
     const navigate = useNavigate()
     const {user, isLoggedIn} = useContext(UserContext)
 
+    // FIRST FORM #################################
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [birthdate, setBirthdate] = useState("") 
@@ -20,14 +21,6 @@ const SignUp = () => {
     const [password, setPassword] = useState("")
     const [passwordConfirmation, setPasswordConfirmation] = useState("")
     const [gender, setGender] = useState("Others")
-
-    const [streetNumber, setStreetNumber] = useState("")
-    const [street, setStreet] = useState("")
-    const [additionalInfo, setAdditionalInfo] = useState("")
-    const [npa, setNPA] = useState("")
-    const [city, setCity] = useState("")
-    const [country, setCountry] = useState("")
-
 
     const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])([0-9a-zA-Z]{8,32})$/
     function validate(password){
@@ -53,6 +46,16 @@ const SignUp = () => {
             return false
         }
     }
+
+    // FIRST FORM #################################
+
+    // SECOND FORM #################################
+    const [streetNumber, setStreetNumber] = useState("")
+    const [street, setStreet] = useState("")
+    const [additionalInfo, setAdditionalInfo] = useState("")
+    const [npa, setNPA] = useState("")
+    const [city, setCity] = useState("")
+    const [country, setCountry] = useState("")
 
 
     const handleAdressForm = e => {
@@ -80,6 +83,8 @@ const SignUp = () => {
             }
         })
     }
+
+    // SECOND FORM #################################
 
     return ( 
         <div className="signup">
@@ -120,6 +125,7 @@ const UserDetailsForm = ({
         password, setPassword,
         passwordConfirmation, setPasswordConfirmation,
         handleSubmit
+        
     }) => {
     return ( 
         <form onSubmit={handleSubmit}>
@@ -271,4 +277,5 @@ const AdressForm = ({
         </form>
     );
 }
+
  
