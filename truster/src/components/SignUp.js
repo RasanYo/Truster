@@ -5,6 +5,7 @@ import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai"
 import { UserContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
+import PictureContainer from "./PictureContainer";
 
 const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])([0-9a-zA-Z]{8,32})$/
 function validate(password){
@@ -188,6 +189,7 @@ const UserDetailsForm = ({
                     validity={() => {return password === passwordConfirmation}}
                     errorMessage="Passwords don't correspond"
                 />
+                <PictureContainer />
             </div>
             <div className="buttons">
                 <button className="btn next">

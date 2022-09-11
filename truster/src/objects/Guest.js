@@ -20,6 +20,7 @@ export class Guest extends AbstractUser{
         return signInWithPopup(getAuth(), provider).then(callback)
     }
 
+
     /**
      * 
      * @returns {boolean}

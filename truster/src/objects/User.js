@@ -1,5 +1,6 @@
 import { getAuth, signOut } from "firebase/auth"
 import { AbstractUser } from "./AbstractUser"
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage"
 import { 
     setDoc, 
     doc, 
@@ -81,5 +82,30 @@ export class User extends AbstractUser{
         return getDoc(doc(this.db,COLLECTIONS.REGULAR_USERS,this.#uid))
     }
 
-    
+    /**
+     * 
+     * @param {*} pictureFile 
+     * @returns {Promise<UploadResult>} promise containing an UploadResult
+     */
+    uploadProfilePicture(pictureFile) {
+        let storageRef = ref(getStorage(), COLLECTIONS.profile_picture(this.#uid))
+        return uploadBytes(storageRef, pictureFile)
+    }
+
+
+    /**
+     * 
+     * @returns {Promise<string>} promise containing download URL of profile picture
+     * @throws an error if no profile picture has been uploaded previously
+     */
+    getProfilePictureURL() {
+        let storageRef
+        try {
+            storageRef = ref(getStorage(), COLLECTIONS.profile_picture_URL(this.#uid)) 
+        } catch (e) {
+            throw e
+        }
+        return getDownloadURL(storageRef).then(url => {return url})
+    }
+
 }
