@@ -1,4 +1,4 @@
-import { createContext, useMemo, useState } from 'react';
+import { createContext, useMemo, useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
@@ -53,7 +53,6 @@ function App() {
   }
 
   const isLoggedIn = useMemo(() => user.isLoggedIn(), [user])
-
 
 
   return (

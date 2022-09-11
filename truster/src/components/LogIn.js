@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../App";
 import "../styles/login.css"
 import FormInput from "./FormInput";
+import { AiOutlineGooglePlus } from "react-icons/ai"
 
 const LogIn = ({toggleLogin}) => {
 
@@ -26,6 +27,7 @@ const LogIn = ({toggleLogin}) => {
             })
     }
 
+    
     return ( 
         <div className="login">
             <form onSubmit={handleSubmit}>
@@ -44,7 +46,19 @@ const LogIn = ({toggleLogin}) => {
                 />
                 {!isGoodPassword && <div>Sorry, your password was incorrect. Please double-check your password.</div>
                 }
-                <button>Log in</button>
+                <div className="buttons">
+                    <button>Log in</button>
+                    <button 
+                        className="btn google"
+                        type="button" 
+                        onClick={e => {
+                            e.preventDefault()
+                            user.loginWithGoogle(userCred => {
+                                navigate("/")
+                            })
+                        }}
+                    >Log in with <AiOutlineGooglePlus size={16}/></button>
+                </div>
                 <div className="signup-link">
                     <h5>No account yet ? <Link to="/signup">Sign up here</Link></h5>
                 </div>

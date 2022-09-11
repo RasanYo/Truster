@@ -52,8 +52,28 @@ form .signup-link h5{
     font-weight: 400;
 }
 
-form button:hover {
+.login form button:hover {
     background: rgb(174, 243, 222);
     color: white
 
+}
+
+.login form .buttons {
+    width: fit-content;
+    margin: 5px auto;
+}
+
+.login form .buttons button {
+    margin: 0 10px;
+}
+
+.google {
+    padding-left: 5px;
+    background: rgb(255, 123, 0);
+    color: white;
+}
+
+.google * {
+    margin: 0 0 0 5px;
+    color: white;
 }
