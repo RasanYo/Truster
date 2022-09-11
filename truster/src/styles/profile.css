@@ -1,0 +1,58 @@
+.frame{
+    width: 600px;
+    height: auto;
+    margin :auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.frame .profilePicture{
+    margin: 30px auto auto auto ;
+    background-color: rgb(184, 182, 182);
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+.frame .menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 40px;    
+    line-height: 40px;
+}
+
+.menu .profileSection,
+.menu .visitsSection,
+.menu .postsSection{
+    height: 40px;
+    background-color: #e6dca5;
+    flex:1;
+    margin: 0px 10px 0px 10px;
+    text-align: center;
+    box-shadow: 3px 3px 3px gray;
+}
+
+.profileSection:focus-within{
+    background-color: red;
+}
+
+.menu .profileSection p,
+.menu .visitsSection p ,
+.menu .postsSection p {
+    margin: auto;
+}
+
+.menu .profileSection{
+    border-radius: 10px 0px 0px 10px;
+    background-color: #ffcb66;
+}
+
+.menu .postsSection{
+    border-radius: 0px 10px 10px 0px;
+    /* margin: auto; */
+}
