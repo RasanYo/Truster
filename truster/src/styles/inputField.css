@@ -41,13 +41,6 @@
     background: rgb(206, 248, 235);
     }
 
-/* .input-field input::placeholder{
-    color: rgba(159, 159, 159, 0.65);
-} */
-
-.input-field input:focus {}
-
-
 .input-field div {
     width: 100%;
     padding: 0;

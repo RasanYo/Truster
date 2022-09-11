@@ -4,7 +4,9 @@ import {
     setDoc, 
     doc, 
     arrayUnion,
-    updateDoc 
+    updateDoc,
+    getDoc,
+    getFirestore
 } from "firebase/firestore"
 import { COLLECTIONS } from "../Constants"
 import { 
@@ -20,10 +22,12 @@ import {
 
 export class User extends AbstractUser{
     #uid
+    #db
 
     constructor(uid) {
         super()
         this.#uid = uid
+        this.#db = getFirestore();
     }
 
     /**
@@ -73,6 +77,10 @@ export class User extends AbstractUser{
 
     #createIdForPost(lat,lng){
         return geohashForLocation([lat,lng])
+    }
+
+    getPersonalInformation(){
+        return getDoc(doc(this.#db,COLLECTIONS.REGULAR_USERS,this.#uid))
     }
 
     
