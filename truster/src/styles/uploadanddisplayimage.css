@@ -1,0 +1,79 @@
+.upload-display-image {
+    display: flex;
+    flex-direction: column;
+}
+
+.image-container {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.profile-pic {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    position: relative;
+}
+
+.image-container img {
+    border-radius: 50%;
+}
+
+.profile-pic .cross {
+    margin-top: 2px;
+    margin-left: 2px;
+    position: absolute;
+    color: white;
+    background: red;
+    padding: 3px;
+    border-radius: 50%;
+    transition: all .05s;
+    transition-property: background, color;
+}
+
+.profile-pic .cross:hover {
+    cursor: pointer;
+    color: red;
+    background: transparent;
+}
+
+
+
+.upload-display-image input {
+    display: none;
+}
+
+.upload-display-image label {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    margin: auto;
+    background: rgb(0, 110, 255);
+    transition: background .1s;
+    border-radius: 3px;
+}
+
+.upload-display-image label * {
+    margin: 5px 5px;
+    color: white;
+    transition: color .1s;
+
+}
+
+.upload-display-image h6 {
+    margin-left: 0;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.upload-display-image label:hover {
+    cursor: pointer;
+    background: white;
+}
+
+.upload-display-image label:hover * {
+    color: rgb(0, 110, 255);
+}
