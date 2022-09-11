@@ -1,3 +1,4 @@
+import { useMemo } from "react"
 import "../styles/forminput.css"
 
 const FormInput = ({
@@ -6,8 +7,18 @@ const FormInput = ({
     setValue, 
     inputType, 
     className="", 
-    required=false
+    required=false,
+    errorMessage=`*Invalid ${title.toLowerCase()}`,
+    validity=() => {return value.length > 0}
 }) => {
+
+    const handleChange = e => {
+        e.preventDefault()
+        setValue(e.target.value)
+    }
+
+    const validInput = useMemo(() => validity(), [value])
+
     return ( 
         <div className={`input-container ${className}`}>
             <label>
@@ -16,17 +27,18 @@ const FormInput = ({
                 <input 
                     type={inputType}
                     value={value}
-                    onChange={e => setValue(e.target.value)}
+                    onChange={handleChange}
                     required
                 /> :
                 <input 
                     type={inputType}
                     value={value}
-                    onChange={e => setValue(e.target.value)}
-
+                    onChange={handleChange}
                 />}
             </label>
-            
+            {required && !validInput &&
+            <h6 className="err-msg">{errorMessage}</h6>
+            }
         </div>
      );
 }

@@ -2,10 +2,11 @@
     display: flex;
     background: white;
     border-radius: 10px;
-    height: 550px;
+    height: fit-content;
     max-width: 50%;
     margin: 0 auto;
     flex-direction: column;
+    max-height: fit-content;
 }
 
 

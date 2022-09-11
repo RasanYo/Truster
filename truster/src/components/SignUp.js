@@ -6,6 +6,10 @@ import { UserContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
 
+const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])([0-9a-zA-Z]{8,32})$/
+function validate(password){
+    return pattern.test(password) ? 1 : 0;
+}
 
 const SignUp = () => {
 
@@ -22,10 +26,7 @@ const SignUp = () => {
     const [passwordConfirmation, setPasswordConfirmation] = useState("")
     const [gender, setGender] = useState("Others")
 
-    const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])([0-9a-zA-Z]{8,32})$/
-    function validate(password){
-        return pattern.test(password) ? 1 : 0;
-      }
+    
 
 
     const [flipped, flipForm] = useState(false)
@@ -175,6 +176,8 @@ const UserDetailsForm = ({
                     setValue={setPassword}
                     inputType="password"
                     required={true}
+                    validity={() => {return validate(password)}}
+                    errorMessage="A correct password has [8-32] characters, at least 1 number sign and at lest 1 uppercase letter"
                 />
                 <FormInput 
                     title="Confirm password"
@@ -182,6 +185,8 @@ const UserDetailsForm = ({
                     setValue={setPasswordConfirmation}
                     inputType="password"
                     required={true}
+                    validity={() => {return password === passwordConfirmation}}
+                    errorMessage="Passwords don't correspond"
                 />
             </div>
             <div className="buttons">
