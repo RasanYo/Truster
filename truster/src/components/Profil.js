@@ -4,6 +4,8 @@ import FormInput from "./FormInput";
 import InformationSquare from "./informationSquare";
 import { UserContext } from "../App";
 import { useEffect } from "react";
+import {MdOutlineMailOutline} from "react-icons/md"
+import {BsPatchCheckFill} from "react-icons/bs"
 
 
 const Profil = () => {
@@ -41,6 +43,7 @@ const Profil = () => {
                     <div className="visitsSection" onClick={() => changeStyleAndCurrentPage(1,'.visitsSection','.profileSection','.postsSection')}><p>Visits</p></div>
                     <div className="postsSection" onClick={() => changeStyleAndCurrentPage(2,'.postsSection','.visitsSection','.profileSection')}><p>My Posts</p></div>
                 </div>
+                
                 <UserDetails data={userData}/>
             </div>
             
@@ -80,6 +83,18 @@ return (
                     title="Gender"
                     value={data.gender}
                 />
+        </div>
+        <div className="confirmed-elements">
+            {/* {data.emailConfimed && true} */}
+            <div className="email-confirmed">
+                <MdOutlineMailOutline size={20}/>
+                {4 == 4 ? "Email Confirmed" : "Email not confirmed"}
+            </div>
+            <div className="identity-confirmed">
+                <BsPatchCheckFill size={20}/>
+                {4 == 4 ? "Verify your identity" : "Verified"}
+            </div>
+            
         </div>
        
         

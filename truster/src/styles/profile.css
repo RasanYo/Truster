@@ -56,3 +56,25 @@
     border-radius: 0px 10px 10px 0px;
     /* margin: auto; */
 }
+
+
+.confirmed-elements {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.confirmed-elements .email-confirmed {
+    display: flex;
+    flex-direction: row;
+    width: 30%;
+    justify-content: space-around;
+    color: green;
+}
+
+.confirmed-elements .identity-confirmed {
+    display: flex;
+    flex-direction: row;
+    width: 30%;
+    justify-content: space-around;
+}
