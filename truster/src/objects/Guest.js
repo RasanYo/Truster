@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithCredential, signInWithEmailAndPassword, signInWithPopup, signInWithRedirect } from "firebase/auth";
 import { setDoc, doc, Timestamp, collection, getFirestore } from "firebase/firestore";
 import { COLLECTIONS } from "../Constants";
 import { AbstractUser } from "./AbstractUser";
@@ -13,6 +13,11 @@ export class Guest extends AbstractUser{
      */
     login(email, password) {
         return signInWithEmailAndPassword(getAuth(), email, password)
+    }
+
+    loginWithGoogle(callback=(userCred => {return})) {
+        let provider = new GoogleAuthProvider()
+        return signInWithPopup(getAuth(), provider).then(callback)
     }
 
     /**

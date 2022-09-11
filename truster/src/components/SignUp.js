@@ -4,6 +4,7 @@ import FormInput from "./FormInput";
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai"
 import { UserContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import { FirebaseError } from "firebase/app";
 
 
 const SignUp = () => {
@@ -12,6 +13,7 @@ const SignUp = () => {
     const navigate = useNavigate()
     const {user, isLoggedIn} = useContext(UserContext)
 
+    // FIRST FORM #################################
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [birthdate, setBirthdate] = useState("") 
@@ -20,21 +22,24 @@ const SignUp = () => {
     const [passwordConfirmation, setPasswordConfirmation] = useState("")
     const [gender, setGender] = useState("Others")
 
-    const [streetNumber, setStreetNumber] = useState("")
-    const [street, setStreet] = useState("")
-    const [additionalInfo, setAdditionalInfo] = useState("")
-    const [npa, setNPA] = useState("")
-    const [city, setCity] = useState("")
-    const [country, setCountry] = useState("")
+    const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])([0-9a-zA-Z]{8,32})$/
+    function validate(password){
+        return pattern.test(password) ? 1 : 0;
+      }
 
-
-    const steps = ["step 1", "step 2", "step 3", "step 4"]
 
     const [flipped, flipForm] = useState(false)
+    const handleFlip = e => {
+        e.preventDefault()
+        flipForm(!flipped)
+    }
 
     const handleUserForm = e => {
         e.preventDefault()
-        if (password === passwordConfirmation) {
+        if (
+            validate(password) &&
+            password === passwordConfirmation 
+        ) {
             flipForm(!flipped)
             return true
         } else {
@@ -42,10 +47,16 @@ const SignUp = () => {
         }
     }
 
-    const handleFlip = e => {
-        e.preventDefault()
-        flipForm(!flipped)
-    }
+    // FIRST FORM #################################
+
+    // SECOND FORM #################################
+    const [streetNumber, setStreetNumber] = useState("")
+    const [street, setStreet] = useState("")
+    const [additionalInfo, setAdditionalInfo] = useState("")
+    const [npa, setNPA] = useState("")
+    const [city, setCity] = useState("")
+    const [country, setCountry] = useState("")
+
 
     const handleAdressForm = e => {
         e.preventDefault()
@@ -62,8 +73,18 @@ const SignUp = () => {
                 gender: gender,
                 adress: `${additionalInfo},\n${streetNumber}, ${street}\n${npa} ${city}, ${country}`
             }
-        ).then(() => {navigate("/")})
+        )
+        .then(() => {navigate("/")})
+        .catch(err => {
+            if (err instanceof FirebaseError) {
+                if (err.code === "auth/email-already-in-use") {
+                    console.log("There is already an account with this email adress. Log in or try another email adress.")
+                }
+            }
+        })
     }
+
+    // SECOND FORM #################################
 
     return ( 
         <div className="signup">
@@ -104,6 +125,7 @@ const UserDetailsForm = ({
         password, setPassword,
         passwordConfirmation, setPasswordConfirmation,
         handleSubmit
+        
     }) => {
     return ( 
         <form onSubmit={handleSubmit}>
@@ -111,6 +133,7 @@ const UserDetailsForm = ({
             <select
                 value={gender}
                 onChange={e => setGender(e.target.value)}
+                required
             >
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -121,18 +144,21 @@ const UserDetailsForm = ({
                 value={firstName}
                 setValue={setFirstName}
                 inputType="text"
+                required={true}
             />
             <FormInput 
                 title="Last name"
                 value={lastName}
                 setValue={setLastName}
                 inputType="text"
+                required={true}
             />
             <FormInput 
                 title="Date of birth"
                 value={birthdate}
                 setValue={setBirthdate}
                 inputType="date"
+                required={true}
             />
             <FormInput 
                 title="Email adress"
@@ -140,6 +166,7 @@ const UserDetailsForm = ({
                 setValue={setEmail}
                 inputType="email"
                 className="email"
+                required={true}
             />
             <div className="password-container">
                 <FormInput 
@@ -147,12 +174,14 @@ const UserDetailsForm = ({
                     value={password}
                     setValue={setPassword}
                     inputType="password"
+                    required={true}
                 />
                 <FormInput 
                     title="Confirm password"
                     value={passwordConfirmation}
                     setValue={setPasswordConfirmation}
                     inputType="password"
+                    required={true}
                 />
             </div>
             <div className="buttons">
@@ -187,6 +216,7 @@ const AdressForm = ({
                     value={streetNumber}
                     setValue={setStreetNumber}
                     inputType="number"
+                    required={true}
                 />
                 <FormInput 
                     className="street"
@@ -194,6 +224,7 @@ const AdressForm = ({
                     value={street}
                     setValue={setStreet}
                     inputType="text"
+                    required={true}
                 />
             </div>
             <FormInput 
@@ -209,18 +240,21 @@ const AdressForm = ({
                     value={npa}
                     setValue={setNPA}
                     inputType="number"
+                    required={true}
                 />
                 <FormInput 
                     title="City"
                     value={city}
                     setValue={setCity}
                     inputType="text"
+                    required={true}
                 />
                 <FormInput 
                     title="Country"
                     value={country}
                     setValue={setCountry}
                     inputType="text"
+                    required={true}
                 />
             </div>
             <div className="buttons">
@@ -243,4 +277,5 @@ const AdressForm = ({
         </form>
     );
 }
+
  
