@@ -5,7 +5,7 @@ import InformationSquare from "./informationSquare";
 import { UserContext } from "../App";
 import { useEffect } from "react";
 import {MdOutlineMailOutline} from "react-icons/md"
-import {BsPatchCheckFill} from "react-icons/bs"
+import {BsPatchCheckFill, BsFillTelephoneFill} from "react-icons/bs"
 
 
 const Profil = () => {
@@ -87,12 +87,24 @@ return (
         <div className="confirmed-elements">
             {/* {data.emailConfimed && true} */}
             <div className="email-confirmed">
-                <MdOutlineMailOutline size={20}/>
+                <div className="logo">
+                    <MdOutlineMailOutline size={20}/>
+                </div>
                 {4 == 4 ? "Email Confirmed" : "Email not confirmed"}
             </div>
             <div className="identity-confirmed">
-                <BsPatchCheckFill size={20}/>
+                <div className="logo">
+                    <BsPatchCheckFill size={20}/>
+                </div>
+                
                 {4 == 4 ? "Verify your identity" : "Verified"}
+            </div>
+            <div className="phone-confirmed">
+                <div className="logo">
+                    <BsFillTelephoneFill size={20}/>
+                </div>
+               
+                {4 == 4 ? "Add your phone number" : "Phone number : ..."}
             </div>
             
         </div>
