@@ -2,10 +2,11 @@
     display: flex;
     background: white;
     border-radius: 10px;
-    height: 550px;
+    height: fit-content;
     max-width: 50%;
     margin: 0 auto;
     flex-direction: column;
+    max-height: fit-content;
 }
 
 
@@ -13,6 +14,10 @@
     margin: 20px auto;
     width: fit-content;
     font-size: 24px;
+}
+
+form {
+    position: relative;
 }
 
 form > *{
@@ -118,4 +123,11 @@ form .container .number {
 
 form .additional-info {
     width: 82.5%;
+}
+
+form .upload-display-image {
+    position: absolute;
+    margin-top: 10%;
+    top: 0;
+    right: 10%;
 }

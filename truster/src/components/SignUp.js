@@ -5,7 +5,13 @@ import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai"
 import { UserContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
+import UploadAndDisplayImage from "./UploadAndDisplayImage";
 
+
+const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])([0-9a-zA-Z]{8,32})$/
+function validate(password){
+    return pattern.test(password) ? 1 : 0;
+}
 
 const SignUp = () => {
 
@@ -21,11 +27,8 @@ const SignUp = () => {
     const [password, setPassword] = useState("")
     const [passwordConfirmation, setPasswordConfirmation] = useState("")
     const [gender, setGender] = useState("Others")
-
-    const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])([0-9a-zA-Z]{8,32})$/
-    function validate(password){
-        return pattern.test(password) ? 1 : 0;
-      }
+    const [picture, setPicture] = useState(null)
+    
 
 
     const [flipped, flipForm] = useState(false)
@@ -99,6 +102,7 @@ const SignUp = () => {
                 password={password} setPassword={setPassword}
                 passwordConfirmation={passwordConfirmation} setPasswordConfirmation={setPasswordConfirmation}
                 handleSubmit={handleUserForm}
+                picture={picture} setPicture={setPicture}
             /> :
             <AdressForm
                 streetNumber={streetNumber} setStreetNumber={setStreetNumber}
@@ -124,6 +128,7 @@ const UserDetailsForm = ({
         email, setEmail,
         password, setPassword,
         passwordConfirmation, setPasswordConfirmation,
+        picture, setPicture,
         handleSubmit
         
     }) => {
@@ -175,6 +180,8 @@ const UserDetailsForm = ({
                     setValue={setPassword}
                     inputType="password"
                     required={true}
+                    validity={() => {return validate(password)}}
+                    errorMessage="A correct password has [8-32] characters, at least 1 number sign and at lest 1 uppercase letter"
                 />
                 <FormInput 
                     title="Confirm password"
@@ -182,8 +189,14 @@ const UserDetailsForm = ({
                     setValue={setPasswordConfirmation}
                     inputType="password"
                     required={true}
+                    validity={() => {return password === passwordConfirmation}}
+                    errorMessage="Passwords don't correspond"
                 />
             </div>
+            <UploadAndDisplayImage 
+                    selectedImage={picture}
+                    setSelectedImage={setPicture}
+                />
             <div className="buttons">
                 <button className="btn next">
                     <h6>Next</h6>
