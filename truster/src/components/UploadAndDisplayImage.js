@@ -43,6 +43,7 @@ const UploadAndDisplayImage = ({
             onChange={(event) => {
                 setSelectedImage(event.target.files[0]);
             }}
+            accept=".jpg, .jpeg, .png"
         />
         <label for="file"><ImUpload2 size={14} /><h6>Choose a file</h6></label>
         
