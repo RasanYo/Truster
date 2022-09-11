@@ -22,12 +22,10 @@ import {
 
 export class User extends AbstractUser{
     #uid
-    #db
 
     constructor(uid) {
         super()
         this.#uid = uid
-        this.#db = getFirestore();
     }
 
     /**
@@ -80,7 +78,7 @@ export class User extends AbstractUser{
     }
 
     getPersonalInformation(){
-        return getDoc(doc(this.#db,COLLECTIONS.REGULAR_USERS,this.#uid))
+        return getDoc(doc(this.db,COLLECTIONS.REGULAR_USERS,this.#uid))
     }
 
     
