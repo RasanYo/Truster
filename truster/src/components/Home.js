@@ -1,6 +1,6 @@
 import { useState } from "react";
-import InputField from "./InputField";
-import InputLocation from "./InputLocation"
+import InputField from "./forms/InputField";
+import InputLocation from "./forms/InputLocation"
 import { IoMdMap } from "react-icons/io"
 import { BsCalendar3 } from "react-icons/bs"
 import { AiOutlineArrowRight } from "react-icons/ai"

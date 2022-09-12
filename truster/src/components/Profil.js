@@ -1,6 +1,6 @@
 import "../styles/profile.css"
 import { useContext, useState } from "react";
-import FormInput from "./FormInput";
+import FormInput from "./forms/FormInput";
 import InformationSquare from "./informationSquare";
 import { UserContext } from "../App";
 import { useEffect } from "react";

@@ -1,5 +1,5 @@
-import dummy from "../res/dummy_profile_pic.png"
-import "../styles/uploadanddisplayimage.css"
+import dummy from "../../res/dummy_profile_pic.png"
+import "../../styles/uploadanddisplayimage.css"
 import { useMemo } from "react"
 import {ImCross, ImUpload2} from "react-icons/im"
 

@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import "../styles/forminput.css"
+import "../../styles/forminput.css"
 
 const FormInput = ({
     title, 
@@ -36,7 +36,7 @@ const FormInput = ({
                     onChange={handleChange}
                 />}
             </label>
-            {required && !validInput &&
+            {required && !validInput && 
             <h6 className="err-msg">{errorMessage}</h6>
             }
         </div>

@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithCredential, signInWithEmailAndPassword, signInWithPopup, signInWithRedirect } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, sendEmailVerification, signInWithCredential, signInWithEmailAndPassword, signInWithPopup, signInWithRedirect } from "firebase/auth";
 import { setDoc, doc, Timestamp, collection, getFirestore } from "firebase/firestore";
 import { COLLECTIONS } from "../Constants";
 import { AbstractUser } from "./AbstractUser";
@@ -58,6 +58,9 @@ export class Guest extends AbstractUser{
                         myVisits: []
                     }
                 )
+                .then(() => {
+                    return sendEmailVerification(userCred.user).then(() => console.log("Sent verification mail"))
+                })
             })
     }
 

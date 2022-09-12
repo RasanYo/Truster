@@ -1,5 +1,5 @@
 .signup {
-    display: flex;
+    position: relative;
     background: white;
     border-radius: 10px;
     height: fit-content;
@@ -12,6 +12,7 @@
 
 .signup h1 {
     margin: 20px auto;
+    padding-top: 20px;
     width: fit-content;
     font-size: 24px;
 }
@@ -43,57 +44,6 @@ form .large {
 .password-container > * {
     margin-right: 30px;
     width: 100%;
-}
-
-.buttons {
-    margin-top: 50px;
-    display: flex;
-    flex-direction: row;
-    width: 90%;
-}
-
-button {
-    display: flex;
-    flex-direction: row;
-    background: transparent;
-    border-style: none;
-    border-radius: 5px;
-    padding: 3px 3px;
-    transition: all .5s;
-    transition-property: background, box-shadow;
-}
-
-.buttons .next {
-    margin-left: auto;
-}
-
-.back {
-    margin-right: auto;
-}
-
-button * {
-    margin: auto auto;
-    padding: 0;
-    color: #DF7FE1;
-    transition: color .2s;
-}
-
-button h6 {
-    margin-right:  5px;
-    margin-left: 3px;
-    font-size: 16px;
-    font-weight: 400;
-}
-
-button:hover {
-    background: #DF7FE1;
-    cursor: pointer;
-    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
-
-}
-
-button:hover * {
-    color: white;
 }
 
 label {

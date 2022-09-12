@@ -5,11 +5,11 @@ import { getAuth } from 'firebase/auth'
 import { Guest } from './objects/Guest';
 import { User } from './objects/User';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LogIn from './components/LogIn';
+import LogIn from './components/forms/LogIn';
 import "./styles/app.css"
 import Home from './components/Home';
-import SignUp from './components/SignUp';
 import Profil from './components/Profil';
+import SignUp from './components/forms/SignUp';
 
 
 export const UserContext = createContext(null)
@@ -43,7 +43,7 @@ function App() {
   const [user, setUser] = useState(new Guest())
   const [login, setLogin] = useState(false)
   const unsubscribeAuthListener = auth.onAuthStateChanged(u => {
-    if (u) setUser(new User(u.uid))
+    if (u) setUser(new User(u.uid, u))
     else setUser(new Guest())
   })
 
@@ -52,6 +52,7 @@ function App() {
     setLogin(!login)
   }
 
+  const emailVerified = useMemo(() => user instanceof User ? user.user.emailVerified : false, [user])
   const isLoggedIn = useMemo(() => user.isLoggedIn(), [user])
 
 
@@ -68,7 +69,8 @@ function App() {
               <Routes>
                 <Route exact path="/" element={<Home />}/>
                 {!isLoggedIn && <Route path="/login" element={<LogIn />} />}
-                {!isLoggedIn && <Route path="/signup" element={<SignUp />} />}
+                {(!isLoggedIn || !emailVerified) && <Route path="/signup" element={<SignUp />} />}
+
                 {isLoggedIn && <Route path="/profile" element={<Profil/>}/>}
                 <Route path="*" element={<div>Not found...</div>}/>
               </Routes>

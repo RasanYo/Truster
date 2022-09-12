@@ -1,7 +1,9 @@
 .upload-display-image {
     display: flex;
     flex-direction: column;
+    margin-top: 0;
 }
+
 
 .image-container {
     width: 150px;
@@ -27,7 +29,7 @@
     margin-left: 2px;
     position: absolute;
     color: white;
-    background: red;
+    background: rgba(255, 0, 0, 0.551);
     padding: 3px;
     border-radius: 50%;
     transition: all .05s;

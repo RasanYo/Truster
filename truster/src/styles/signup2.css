@@ -1,0 +1,106 @@
+.signup {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: relative;
+    background: white;
+    border-radius: 10px;
+    height: fit-content;
+    max-width: 50%;
+    margin: 0 auto;
+    flex-direction: column;
+    max-height: fit-content;
+    overflow: hidden;
+}
+
+.signup h1 {
+    margin: 20px auto;
+    padding-top: 20px;
+    width: fit-content;
+    font-size: 24px;
+}
+
+form {
+    position: relative;
+}
+
+form > *{
+    margin: 20px 35px;
+    width: fit-content;
+}
+
+form .large {
+    width: 43%;
+}
+
+label {
+    color: rgba(131, 131, 131, 0.49);
+    margin-right: 5px;
+    margin-left: 38px;
+    font-size: 12px;
+}
+
+select {
+    margin: 0;
+    border-style: none;
+    outline: none;
+}
+
+.half-width {
+    width: 50%;
+}
+
+.fit-width {
+    width: fit-content;
+}
+
+.buttons {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    width: 84%;
+    padding-bottom: 20px;
+}
+
+button {
+    display: flex;
+    flex-direction: row;
+    background: #DF7FE1;
+    border-style: none;
+    border-radius: 5px;
+    padding: 3px 3px;
+    transition: all .5s;
+    transition-property: background, box-shadow;
+}
+
+.buttons .next {
+    margin-left: auto;
+}
+
+.back {
+    margin-right: auto;
+}
+
+button * {
+    margin: auto auto;
+    padding: 0;
+    color: white;
+    transition: color .2s;
+}
+
+button h6 {
+    margin-right:  5px;
+    margin-left: 3px;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+button:hover {
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+
+}
+
+button:hover * {
+    color: #DF7FE1;
+}

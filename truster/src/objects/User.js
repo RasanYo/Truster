@@ -23,10 +23,12 @@ import {
 
 export class User extends AbstractUser{
     #uid
+    user
 
-    constructor(uid) {
+    constructor(uid, user=null) {
         super()
         this.#uid = uid
+        this.user = user
     }
 
     /**
