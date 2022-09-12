@@ -25,6 +25,10 @@ form > *{
     width: fit-content;
 }
 
+form .large {
+    width: 43%;
+}
+
 .email{
     width: 30%;
 }

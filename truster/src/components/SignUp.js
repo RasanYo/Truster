@@ -145,6 +145,7 @@ const UserDetailsForm = ({
                 <option value="Other">Others</option> 
             </select>
             <FormInput 
+                className="large"
                 title="First name"
                 value={firstName}
                 setValue={setFirstName}
@@ -152,6 +153,7 @@ const UserDetailsForm = ({
                 required={true}
             />
             <FormInput 
+                className="large"
                 title="Last name"
                 value={lastName}
                 setValue={setLastName}
@@ -170,7 +172,7 @@ const UserDetailsForm = ({
                 value={email}
                 setValue={setEmail}
                 inputType="email"
-                className="email"
+                className="large"
                 required={true}
             />
             <div className="password-container">
