@@ -17,6 +17,7 @@
     padding-top: 20px;
     width: fit-content;
     font-size: 24px;
+    font-weight: 400;
 }
 
 form {
@@ -103,4 +104,14 @@ button:hover {
 
 button:hover * {
     color: #DF7FE1;
+}
+
+.signup .email-verification h4 {
+    font-weight: 400;
+    margin: 20px 35px;
+    color: rgba(131, 131, 131, 0.774);;
+}
+
+.signup .email-verification h4 span {
+    color: black;
 }

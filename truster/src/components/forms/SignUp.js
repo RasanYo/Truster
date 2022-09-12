@@ -89,7 +89,7 @@ const SignUp = () => {
     return ( 
         <div className="signup">
             <h1>{showForm ? "Sign up" : "Email Verification"}</h1>
-            {showForm ? 
+            {showForm && !isLoggedIn ? 
             <ErrorContext.Provider value={showErros}>
                 <SlidableContainer 
                     leftComponent={<UserSignUpForm user={userState} setUser={setUserState} onSubmit={submitUser}/>}
@@ -97,9 +97,9 @@ const SignUp = () => {
                     menuSwitch={menuSwitch}
                 />
             </ErrorContext.Provider> :
-            <div>
+            <div className="email-verification">
                 <h4>
-                    We've sent an adress containing a verification link to {userState.email}.
+                    We've sent an adress containing a verification link to <span>{userState.email}</span>.
                     If you don't see the mail, make sure to check your spam.
                 </h4>
             </div>
