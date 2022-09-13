@@ -16,9 +16,12 @@ const Profil = () => {
     const [userData,setUserData] = useState("")
     
     useEffect(()=>{
+        console.log("entering useEffect")
         user.getPersonalInformation().then(snapshot => {
             setUserData(snapshot.data())
+            console.log(snapshot.data())
         })
+        console.log("exiting useEffect")
     },[])
 
 
@@ -43,8 +46,8 @@ const Profil = () => {
                     <div className="visitsSection" onClick={() => changeStyleAndCurrentPage(1,'.visitsSection','.profileSection','.postsSection')}><p>Visits</p></div>
                     <div className="postsSection" onClick={() => changeStyleAndCurrentPage(2,'.postsSection','.visitsSection','.profileSection')}><p>My Posts</p></div>
                 </div>
-                
-                <UserDetails data={userData}/>
+                {/* {console.log(userData)} */}
+                {userData && <UserDetails data={userData} user={user}/>}
             </div>
             
         </div>
@@ -53,7 +56,7 @@ const Profil = () => {
 
 const UserDetails = (
     // {gender,firstName, lastName,birthdate,email,password, passwordConfirmation,handleSubmit}
-    {data}
+    {data, user}
     ) => {
 return ( 
     <div className="profileContent">
@@ -90,7 +93,7 @@ return (
                 <div className="logo">
                     <MdOutlineMailOutline size={20}/>
                 </div>
-                {4 == 4 ? "Email Confirmed" : "Email not confirmed"}
+                {user.user.emailVerified ? "Email Confirmed" : "Email not confirmed"}
             </div>
             <div className="identity-confirmed">
                 <div className="logo">
