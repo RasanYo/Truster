@@ -20,7 +20,7 @@
     font-weight: 400;
 }
 
-form {
+.signup form {
     position: relative;
 }
 
@@ -81,28 +81,28 @@ button {
     margin-right: auto;
 }
 
-button * {
+.btn button * { 
     margin: auto auto;
     padding: 0;
     color: white;
     transition: color .2s;
 }
 
-button h6 {
+.btn button h6 {
     margin-right:  5px;
     margin-left: 3px;
     font-size: 16px;
     font-weight: 400;
 }
 
-button:hover {
+.btn button:hover {
     background: white;
     cursor: pointer;
     box-shadow: 0 5px 10px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
 
 }
 
-button:hover * {
+.btn button:hover * {
     color: #DF7FE1;
 }
 

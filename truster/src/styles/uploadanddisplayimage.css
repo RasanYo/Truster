@@ -1,7 +1,7 @@
 .upload-display-image {
     display: flex;
     flex-direction: column;
-    margin-top: 0;
+    text-align: center;
 }
 
 
@@ -48,7 +48,7 @@
     display: none;
 }
 
-.upload-display-image label {
+.upload-display-image .label {
     display: flex;
     flex-direction: row;
     width: fit-content;
@@ -58,7 +58,7 @@
     border-radius: 3px;
 }
 
-.upload-display-image label * {
+.upload-display-image .label * {
     margin: 5px 5px;
     color: white;
     transition: color .1s;
@@ -71,11 +71,11 @@
     font-weight: 400;
 }
 
-.upload-display-image label:hover {
+.upload-display-image .label:hover {
     cursor: pointer;
     background: white;
 }
 
-.upload-display-image label:hover * {
+.upload-display-image .label:hover * {
     color: rgb(0, 110, 255);
 }

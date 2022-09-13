@@ -45,7 +45,7 @@ const UploadAndDisplayImage = ({
             }}
             accept=".jpg, .jpeg, .png"
         />
-        <label for="file"><ImUpload2 size={14} /><h6>Choose a file</h6></label>
+        <label className="label" for="file"><ImUpload2 size={14} /><h6>Choose a file</h6></label>
         
       </div>
     );

@@ -28,6 +28,28 @@ body {
   z-index: 2;
 }
 
+.row-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.column-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.fit-width {
+  width: fit-content;
+}
+
+.max-width {
+  width: 100%;
+}
+
+.space-right {
+  margin-right: 10px;
+}
+
 
 /* Removes arrows in number input field */
 input::-webkit-outer-spin-button,
@@ -36,3 +58,64 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+textarea:focus {
+  outline: none;
+}
+
+
+/* BASIC BUTTON STYLES */
+
+.buttons {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding-bottom: 20px;
+    margin-bottom: 50px;
+}
+
+.btn {
+    display: flex;
+    flex-direction: row;
+    background: #DF7FE1;
+    border-style: none;
+    border-radius: 5px;
+    padding: 3px 3px;
+    transition: all .5s;
+    transition-property: background, box-shadow;
+}
+
+.buttons .next {
+    margin-left: auto;
+}
+
+.back {
+    margin-right: auto;
+}
+
+.btn * { 
+    margin: auto auto;
+    padding: 0;
+    color: white;
+    transition: color .2s;
+}
+
+.btn h6 {
+    margin-right:  5px;
+    margin-left: 3px;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.btn:hover {
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+
+}
+
+.btn:hover * {
+    color: #DF7FE1;
+}
+
+/* END BASIC BUTTON STYLES */

@@ -1,0 +1,65 @@
+.signup {
+    /* padding-top: 10px;
+    padding-bottom: 10px; */
+    padding: 10px 30px;
+    position: relative;
+    background: white;
+    border-radius: 10px;
+    height: fit-content;
+    max-width: 50%;
+    margin: 0 auto;
+    flex-direction: column;
+    max-height: fit-content;
+    overflow: hidden;
+}
+
+.signup h1 {
+    margin: 20px auto;
+    padding-top: 20px;
+    width: fit-content;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.signup form {
+    position: relative;
+    /* margin: 20px 30px; */
+}
+
+.signup form > * {
+    /* border-style: solid; */
+    margin-top: 15px;
+}
+
+.signup form .upload-display-image {
+    position: absolute;
+    margin-top: 10%;
+    top: 0;
+    right: 10%;
+}
+
+.signup form label {
+    font-size: 13px;
+    margin-right: 5px;
+    color: rgba(131, 131, 131, 0.49);
+    margin-left: 4px;
+    font-weight: 400;
+}
+
+.signup form select {
+    margin: 0;
+    border-style: none;
+    outline: none;
+}
+
+.half-width {
+    width: 50%;
+}
+
+.fit-width {
+    width: fit-content;
+}
+
+/* .signup form .container {
+    width: fit-content;
+} */

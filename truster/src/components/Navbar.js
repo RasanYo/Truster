@@ -24,7 +24,7 @@ const Navbar = ({toggleLogin}) => {
             <h1 onClick={handleTitle}>Truster</h1>
             <div className="actions">
                 <Link to="/login">Make a visit</Link>
-                <Link to="/login">Post a visit</Link>
+                <Link to="/post">Post a visit</Link>
             </div>
             <div className="links">
                 <Link to="/about">About</Link>

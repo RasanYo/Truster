@@ -1,7 +1,8 @@
 import { createContext, useContext, useState } from "react";
 import UserSignUpForm from "./UserSignUpForm";
-import "../../styles/signup2.css"
-import "../../styles/signup.css"
+import "../../styles/signup3.css"
+// import "../../styles/signup2.css"
+// import "../../styles/signup.css"
 import SlidableContainer from "../SlidableContainer";
 import AdressSignUpForm from "./AdressSignUpForm";
 import { ErrorToastContext, UserContext } from "../../App";
@@ -28,7 +29,7 @@ const SignUp = () => {
         picture: null  
     })
 
-    const [showErros, setShowErrors] = useState(false)
+    const [showErrors, setShowErrors] = useState(false)
 
     const submitUser = (e) => {
         e.preventDefault()
@@ -78,7 +79,7 @@ const SignUp = () => {
         <div className="signup">
             <h1>{showForm ? "Sign up" : "Email Verification"}</h1>
             {showForm && !isLoggedIn ? 
-            <ErrorContext.Provider value={showErros}>
+            <ErrorContext.Provider value={showErrors}>
                 <SlidableContainer 
                     leftComponent={<UserSignUpForm user={userState} setUser={setUserState} onSubmit={submitUser}/>}
                     rightComponent={<AdressSignUpForm adress={adress} setAdress={setAdress} onSubmit={submitForm} handleBack={flipMenu} />}

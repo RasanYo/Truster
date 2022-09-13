@@ -22,7 +22,7 @@ const AdressSignUpForm = ({
 
     return ( 
         <form onSubmit={onSubmit}>
-            <div className="row-container">
+            <div className="row-container space">
                 <Input
                     name="number"
                     title="Street number"
@@ -30,6 +30,7 @@ const AdressSignUpForm = ({
                     onChange={handleChange}
                     error={showErrors && adress.number.length === 0}
                     inputProps={{ required:true, type: 'number' }}
+                    className="fit-width space-right"
                 />
                 <Input
                     name="street"
@@ -54,6 +55,7 @@ const AdressSignUpForm = ({
                     onChange={handleChange}
                     error={showErrors && adress.npa.length === 0}
                     inputProps={{ required:true, type: 'number' }}
+                    className="fit-width space-right"
                 />
                 <Input
                     name="city"
@@ -62,6 +64,7 @@ const AdressSignUpForm = ({
                     onChange={handleChange}
                     error={showErrors && adress.city.length === 0}
                     inputProps={{ required:true }}
+                    className="space-right"
                 />
                 <Input
                     name="country"
@@ -74,7 +77,7 @@ const AdressSignUpForm = ({
             </div>
             <div className="buttons">
                 <button 
-                    className="btn-back"
+                    className="btn back"
                     onClick={handleBack}
                 >
                     <AiOutlineArrowLeft

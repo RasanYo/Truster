@@ -12,6 +12,7 @@ import Profil from './components/Profil';
 import SignUp from './components/forms/SignUp';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PostVisitContainer from './components/postvisit/PostVisitContainer';
 
 
 export const UserContext = createContext(null)
@@ -80,8 +81,8 @@ function App() {
                   <Route exact path="/" element={<Home />}/>
                   {!isLoggedIn && <Route path="/login" element={<LogIn />} />}
                   {(!isLoggedIn || !emailVerified) && <Route path="/signup" element={<SignUp />} />}
-
                   {isLoggedIn && <Route path="/profile" element={<Profil/>}/>}
+                  {isLoggedIn && emailVerified && <Route path="/post" element={<PostVisitContainer />} />}
                   <Route path="*" element={<div>Not found...</div>}/>
                 </Routes>
               </div>
