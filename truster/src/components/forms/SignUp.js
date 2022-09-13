@@ -66,7 +66,7 @@ const SignUp = () => {
                         displayError("There is already an account with this email adress. Log in or try another email adress.")
                     }
                 } else {
-                    displayError(err)
+                    console.log(err)
                 }
             })
         

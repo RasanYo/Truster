@@ -7,7 +7,7 @@ import {
     startAt, 
     endAt 
 } from "firebase/firestore"
-
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage"
 import { 
     geohashQueryBounds, 
     distanceBetween 
@@ -93,5 +93,31 @@ export class AbstractUser {
     }
 
 }
+
+    /**
+     * 
+     * @param {*} pictureFile 
+     * @returns {Promise<UploadResult>} promise containing an UploadResult
+     */
+    uploadProfilePicture(pictureFile, uid) {
+        let storageRef = ref(getStorage(), COLLECTIONS.profile_picture(uid))
+        return uploadBytes(storageRef, pictureFile)
+    }
+
+
+    /**
+     * 
+     * @returns {Promise<string>} promise containing download URL of profile picture
+     * @throws an error if no profile picture has been uploaded previously
+     */
+    getProfilePictureURL(uid) {
+        let storageRef
+        try {
+            storageRef = ref(getStorage(), COLLECTIONS.profile_picture_URL(uid)) 
+        } catch (e) {
+            throw e
+        }
+        return getDownloadURL(storageRef).then(url => {return url})
+    }
    
 }
