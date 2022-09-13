@@ -80,7 +80,7 @@ export class User extends AbstractUser{
     }
 
     getPersonalInformation(){
-        return getDoc(doc(getFirestore(),COLLECTIONS.REGULAR_USERS,this.#uid))
+        return getDoc(doc(getFirestore(), COLLECTIONS.REGULAR_USERS,this.#uid))
     }
 
     

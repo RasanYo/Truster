@@ -52,7 +52,7 @@ export class Guest extends AbstractUser{
 
         return createUserWithEmailAndPassword(getAuth(), userObject.email, userObject.password)
             .then(userCred => {
-                let collectionRef = collection(getFirestore(), COLLECTIONS.users(adressObject.country, adressObject.city))
+                let collectionRef = collection(getFirestore(), COLLECTIONS.REGULAR_USERS)
                 let userRef = doc(collectionRef, userCred.user.uid)
                 return setDoc(
                     userRef,

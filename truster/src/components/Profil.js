@@ -51,10 +51,10 @@ const Profil = () => {
      );
 }
 
-const UserDetails = (
+const UserDetails = ({
     // {gender,firstName, lastName,birthdate,email,password, passwordConfirmation,handleSubmit}
-    {data}
-    ) => {
+    data
+}) => {
 return ( 
     <div className="profileContent">
         <h2>Personnal information</h2>
