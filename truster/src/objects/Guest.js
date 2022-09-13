@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, sendEmailV
 import { setDoc, doc, Timestamp, collection, getFirestore } from "firebase/firestore";
 import { COLLECTIONS } from "../Constants";
 import { AbstractUser } from "./AbstractUser";
+import { User } from "./User";
 
 export class Guest extends AbstractUser{
 
@@ -37,7 +38,7 @@ export class Guest extends AbstractUser{
      * @param {object} data user data
      * @returns {Promise<>} promise
      */
-    signUp(email, password, country, city, data) {
+    signUp2(email, password, country, city, data) {
         return createUserWithEmailAndPassword(getAuth(), email, password)
             .then(userCred => {
                 let collectionRef = collection(getFirestore(), COLLECTIONS.users(country, city))
@@ -53,6 +54,47 @@ export class Guest extends AbstractUser{
                         firstName: data.firstName,
                         lastName: data.lastName,
                         gender: data.gender,
+                        myPosts: [],
+                        myVisitRequests: [],
+                        myVisits: []
+                    }
+                )
+                .then(() => {
+                    return sendEmailVerification(userCred.user).then(() => console.log("Sent verification mail"))
+                })
+            })
+    }
+
+    signUp(userObject, adressObject) {
+        if (!userObject || !adressObject) {
+            throw new Error("Null objects passed as arguments")
+        }
+        Object.keys(userObject).forEach(key => {
+            if (key !== "picture" && (userObject[key] === null || userObject[key] === ""))
+                throw new Error(`Detected missing value for ${key}`)
+        })
+
+        if (adressObject.country === null || adressObject.country === "") {
+            throw new Error(`Detected missing value for country`)
+        } else if (adressObject.city === null || adressObject.city === "") {
+            throw new Error(`Detected missing value for city`)
+        }
+
+        return createUserWithEmailAndPassword(getAuth(), userObject.email, userObject.password)
+            .then(userCred => {
+                let collectionRef = collection(getFirestore(), COLLECTIONS.users(adressObject.country, adressObject.city))
+                let userRef = doc(collectionRef, userCred.user.uid)
+                return setDoc(
+                    userRef,
+                    {
+                        uid: userCred.user.uid,
+                        createdAt: Timestamp.now(),
+                        dob: userObject.birthdate,
+                        email: userObject.email,
+                        adress: adressObject,
+                        firstName: userObject.firstName,
+                        lastName: userObject.lastName,
+                        gender: userObject.gender,
                         myPosts: [],
                         myVisitRequests: [],
                         myVisits: []

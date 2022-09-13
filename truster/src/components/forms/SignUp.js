@@ -4,7 +4,7 @@ import "../../styles/signup2.css"
 import "../../styles/signup.css"
 import SlidableContainer from "../SlidableContainer";
 import AdressSignUpForm from "./AdressSignUpForm";
-import { UserContext } from "../../App";
+import { ErrorToastContext, UserContext } from "../../App";
 import { FirebaseError } from "firebase/app";
 
 export const ErrorContext = createContext(null)
@@ -12,6 +12,7 @@ export const ErrorContext = createContext(null)
 const SignUp = () => {
 
     const {user, isLoggedIn} = useContext(UserContext)
+    const displayError = useContext(ErrorToastContext)
 
     const [menuSwitch, switchMenu] = useState(true)
     const [showForm, setShowForm] = useState(true)
@@ -57,30 +58,17 @@ const SignUp = () => {
 
     const submitForm = e => {
         e.preventDefault()
-        user.signUp(
-            userState.email, 
-            userState.password, 
-            adress.country,
-            adress.city,
-            {
-                dob: userState.birthdate,
-                email: userState.email,
-                firstName: userState.firstName,
-                lastName: userState.lastName,
-                gender: userState.gender,
-                adress: adress
-            }
-        )
-        .then(() => setShowForm(false))
-        .catch(err => {
-            if (err instanceof FirebaseError) {
-                if (err.code === "auth/email-already-in-use") {
-                    console.log("There is already an account with this email adress. Log in or try another email adress.")
+        user.signUp(userState, adress)
+            .then(() => setShowForm(false))
+            .catch(err => {
+                if (err instanceof FirebaseError) {
+                    if (err.code === "auth/email-already-in-use") {
+                        displayError("There is already an account with this email adress. Log in or try another email adress.")
+                    }
+                } else {
+                    displayError(err)
                 }
-            } else {
-                console.log(err)
-            }
-        })
+            })
         
     }
 

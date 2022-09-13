@@ -1,4 +1,4 @@
-import { createContext, useMemo, useState, useEffect } from 'react';
+import { createContext, useMemo, useState } from 'react';
 import Navbar from './components/Navbar';
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
@@ -10,9 +10,12 @@ import "./styles/app.css"
 import Home from './components/Home';
 import Profil from './components/Profil';
 import SignUp from './components/forms/SignUp';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export const UserContext = createContext(null)
+export const ErrorToastContext = createContext(null)
 
 function App() {
 
@@ -55,28 +58,36 @@ function App() {
   const emailVerified = useMemo(() => user instanceof User ? user.user.emailVerified : false, [user])
   const isLoggedIn = useMemo(() => user.isLoggedIn(), [user])
 
+  const showToastMessage = (errorMessage) => {
+    toast.error(errorMessage, {
+        position: toast.POSITION.TOP_CENTER
+    });
+  };
 
   return (
     <div className="app">
       <Router>
-        <UserContext.Provider value={{user, isLoggedIn}} >
-          {login && <LogIn toggleLogin={toggleLogin}/>}
-          <div className="page">
-            <Navbar 
-              toggleLogin={toggleLogin}
-            />
-            <div className="content">
-              <Routes>
-                <Route exact path="/" element={<Home />}/>
-                {!isLoggedIn && <Route path="/login" element={<LogIn />} />}
-                {(!isLoggedIn || !emailVerified) && <Route path="/signup" element={<SignUp />} />}
+        <ErrorToastContext.Provider value={showToastMessage}>
+          <UserContext.Provider value={{user, isLoggedIn}} >
+            {login && <LogIn toggleLogin={toggleLogin}/>}
+            <div className="page">
+              <Navbar 
+                toggleLogin={toggleLogin}
+              />
+              <div className="content">
+                <ToastContainer />
+                <Routes>
+                  <Route exact path="/" element={<Home />}/>
+                  {!isLoggedIn && <Route path="/login" element={<LogIn />} />}
+                  {(!isLoggedIn || !emailVerified) && <Route path="/signup" element={<SignUp />} />}
 
-                {isLoggedIn && <Route path="/profile" element={<Profil/>}/>}
-                <Route path="*" element={<div>Not found...</div>}/>
-              </Routes>
+                  {isLoggedIn && <Route path="/profile" element={<Profil/>}/>}
+                  <Route path="*" element={<div>Not found...</div>}/>
+                </Routes>
+              </div>
             </div>
-          </div>
-        </UserContext.Provider>
+          </UserContext.Provider>
+        </ErrorToastContext.Provider>
       </Router>
     </div>
   );
