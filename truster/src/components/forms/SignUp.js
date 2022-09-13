@@ -87,7 +87,7 @@ const SignUp = () => {
             </ErrorContext.Provider> :
             <div className="email-verification">
                 <h4>
-                    We've sent an adress containing a verification link to <span>{userState.email}</span>.
+                    We've sent an email containing a verification link to <span>{userState.email}</span>.
                     If you don't see the mail, make sure to check your spam.
                 </h4>
             </div>
