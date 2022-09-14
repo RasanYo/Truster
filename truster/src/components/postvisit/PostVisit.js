@@ -50,7 +50,7 @@ const PostVisit = ({
                     className="fit-width"
                 />
             </div>
-            <div className="input">
+            <div className="input styled-textarea">
                 <div className="container">
                     <h5>Description</h5>
                     <textarea

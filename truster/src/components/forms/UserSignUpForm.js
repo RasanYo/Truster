@@ -40,13 +40,13 @@ const UserSignUpForm = ({
             <label>Gender:</label>
             <select
                 name="gender"
-                // value={user.gender}
+                value={user.gender}
                 onChange={handleChange}
                 required
             >
+                <option value="Other">Others</option> 
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
-                <option value="Other">Others</option> 
             </select>
             
             <Input
@@ -104,6 +104,19 @@ const UserSignUpForm = ({
                 error={showErrors && user.password !== user.passwordConfirmation}
                 inputProps={{ required:true, type:"password" }}
             />
+            <div className="input styled-textarea">
+                <div className="container">
+                    <h5>About you</h5>
+                    <textarea
+                        name="aboutMe"
+                        value={user.aboutMe}
+                        rows={10}
+                        onChange={handleChange}
+                        placeholder="Tell us about you"
+                    />
+                </div>
+                
+            </div>
             
             <div className="buttons">
                 <button className="btn next">
