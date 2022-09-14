@@ -1,51 +1,80 @@
+import { geohashForLocation } from "geofire-common"
 import { COLLECTIONS } from "../Constants"
 
+export const postConverter = {
+    toFirestore: (post) => {
+        return {
+            address: post.getAddress(),
+            description: post.getDescription(),
+            geohash: post.getGeohash(),
+            id: post.getId(),
+            requesters: post.getRequesters(),
+            timeframe: post.getTimeframe(),
+            creatorUID: post.getCreatorUID()
+        }
+    },
+    fromFirestore: (snapshot, options) => {
+        const data = snapshot.data(options)
+        return new Post(data.address, data.timeframe, data.description, data.creatorUID, data.requesters, data.id)
+    }
+}
 export class Post {
 
-    #data
     #id
+    #address
+    #description
+    #requesters
+    #timeframe
+    #creatorUID
 
-    constructor(
-        uid,
-        country,
-        city,
-        npa,
-        neighborhood,
-        street,
-        number,
-        lat=null,
-        lng=null,
-        timeframe
-    ) {
-        let data = {
-            uid: uid,
-            country: country,
-            city: city,
-            npa: npa,
-            neighborhood: neighborhood,
-            street: street,
-            number: number,
-            lat: lat,
-            lng: lng,
-            timeframe: timeframe,
-            requesters: []
+    constructor(address, timeframe, description="", creatorUID=null, requesters=[], id=null) {
+        this.#address = address
+        this.#timeframe = timeframe
+        this.#description = description
+        this.#creatorUID = creatorUID
+        this.#requesters = requesters
+
+        this.#id = id ? id : this.#createID()
+    }
+
+    #createID() {
+        return this.getGeohash()
+    }
+
+    getGeohash() {
+        return geohashForLocation([this.#address.lat, this.#address.lng])
+    }
+
+    getAddress() {
+        return this.#address
+    }
+
+    getTimeframe() {
+        return this.#timeframe
+    }
+
+    getDescription() {
+        return this.#description
+    }
+
+    getCreatorUID() {
+        return this.#creatorUID
+    }
+
+    getRequesters() {
+        return this.#requesters
+    }
+
+    asDataObject() {
+        return {
+            address: this.getAddress(),
+            description: this.getDescription(),
+            geohash: this.getGeohash(),
+            id: this.getId(),
+            requesters: this.getRequesters(),
+            timeframe: this.getTimeframe(),
+            creatorUID: this.getCreatorUID()
         }
-        this.#id = this.hashId(this.data, uid)
-        data.id = this.#id
-        this.#data = data
-    }
-
-    hashId(postObject, userId){
-        const newString = (postObject.lat + postObject.lng   + userId).toString();
-        return newString
-    }
-
-    /**
-     * 
-     * @returns post data
-     */
-    getData() {
-        return this.#data
     }
 
     /**
@@ -57,6 +86,6 @@ export class Post {
     }
 
     getLocation() {
-        return `${COLLECTIONS.AVAILABLE_VISITS}/${this.#data.country}/cities/${this.#data.city}/posts`
+        return COLLECTIONS.posts(this.#address.country, this.#address.city)
     }
 }

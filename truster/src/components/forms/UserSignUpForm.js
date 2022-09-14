@@ -20,7 +20,7 @@ const UserSignUpForm = ({
     }
 
     const handleChange = e => {
-        let field = e.target.name
+        let field = e.target.name //firstname
         let newUser = user
         newUser[field] = e.target.value
         setUser(newUser)
@@ -76,7 +76,6 @@ const UserSignUpForm = ({
                 inputProps={{ required:true, type:"date" }}
                 className="fit-width"
             />
-            
             <UploadAndDisplayImage
                 selectedImage={user.picture}
                 setSelectedImage={setImage}

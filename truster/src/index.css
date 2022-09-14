@@ -50,6 +50,10 @@ body {
   margin-right: 10px;
 }
 
+.space-bottom {
+  margin-bottom: 10px;
+}
+
 
 /* Removes arrows in number input field */
 input::-webkit-outer-spin-button,

@@ -2,10 +2,15 @@ import { createContext, useState } from "react";
 import PostVisit from "./PostVisit";
 import '../../styles/postvisitcontainer.css'
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import { Post } from "../../objects/Post";
+import { useContext } from "react";
+import { UserContext } from "../../App";
 
 export const ErrorContext = createContext(null)
 
 const PostVisitContainer = () => {
+
+    const { user, isLoggedIn } = useContext(UserContext)
 
     function stringifyAdress(adress) {
         var res = ""
@@ -24,20 +29,7 @@ const PostVisitContainer = () => {
 
     const [showErrors, setShowErrors] = useState(false)
 
-    const [adress, setAdress] = useState({
-        number: "",
-        street: "",
-        additionalInfo: "",
-        npa: "",
-        city: "",
-        country: ""
-    })
-    const handleChangeAdress = e => {
-        let field = e.target.name
-        let newAdress = adress
-        newAdress[field] = e.target.value
-        setAdress(newAdress)
-    }
+    const [address, setAddress] = useState(null)
 
     const [timeframe, setTimeframe] = useState({
         start: "",
@@ -58,9 +50,12 @@ const PostVisitContainer = () => {
 
     const onSubmit = e => {
         e.preventDefault()
-        getAdressCoords(adress)
-            .then(res => console.log(res))
-        
+        setShowErrors(true)
+        if (!address || new Date(timeframe.start).getTime() > new Date(timeframe.end).getTime()) return false
+        else {
+            const post = new Post(address, timeframe, description, user.getUID())
+            user.post(post).then(() => console.log("Successfully posted"))
+        }
     }
 
     return ( 
@@ -68,7 +63,7 @@ const PostVisitContainer = () => {
             <h1 className="fit-width">Post a visit</h1>
             <ErrorContext.Provider value={showErrors}>
                 <PostVisit
-                    adress={adress} handleChangeAdress={handleChangeAdress}
+                    address={address} setAddress={setAddress}
                     timeframe={timeframe} handleChangeTimeframe={handleChangeTimeframe}
                     description={description} handleChangeDescription={handleChangeDescription}
                     onSubmit={onSubmit}
