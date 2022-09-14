@@ -1,0 +1,142 @@
+.personal-information{
+    margin-top: 40px;
+}
+
+.info{
+    margin-top: 50px;
+}
+
+.info >* {
+    margin-top: 30px;
+}
+
+
+.confirmed-elements {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.confirmed-elements .logo{
+    margin-right: 5px;
+}
+
+.email-confirmed {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-around; */
+    color: green;
+    margin: auto;
+}
+
+.confirmed-elements .identity-confirmed {
+    display: flex;
+    flex-direction: row;
+    width: 30%;
+    width: auto;
+    /* justify-content: space-around; */
+}
+
+.confirmed-elements .phone-confirmed {
+    display: flex;
+    flex-direction: row;
+    width: 40%;
+    width: auto;
+    /* justify-content: space-around; */
+}
+
+.about-me{
+    margin-top : 30px;
+}
+
+.about-me h5 {
+    margin-top: 0;
+    margin-left: 5px;
+    margin-bottom: 5px;
+
+    color: rgba(131, 131, 131, 0.49);
+    font-weight: 400;
+    font-size: 12px;
+
+    transition: all .2s ease;
+}
+
+
+textarea {
+    width: 100%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 15px;
+    resize: none;
+  }
+
+.gender{
+    margin-bottom: 10px;
+}
+.gender-title{
+    flex:1;
+    color: rgba(131, 131, 131);
+    padding-left: 5px;
+}
+
+.gender-form{
+    flex:3;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: max-content;
+}
+
+.address-section{
+    margin-top: 100px;
+}
+
+.address-section >*{
+    margin-top: 30px;
+}
+
+
+
+.save-delete-div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 100px;
+}
+
+.save-button{
+    background-color:aliceblue;
+    height: 50px;
+    width: fit-content;
+    font-size: large;
+    border: solid black 1px;
+    border-radius: 10px;
+    
+}
+
+.save-button:hover{
+    background-color:rgb(186, 194, 199);
+}
+
+.save-button h6,
+.delete-button h6{
+    margin: auto;
+}
+
+.delete-button{
+    background-color:rgb(252, 172, 166);
+    height: 50px;
+    width: fit-content;
+    font-size: large;
+    border: solid black 1px;
+    border-radius: 10px;
+}
+
+.delete-button:hover{
+    background-color:rgb(208, 142, 138);
+}
