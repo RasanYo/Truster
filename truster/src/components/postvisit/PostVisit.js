@@ -2,9 +2,11 @@ import Input from '../forms/Input'
 import {AiOutlinePlusSquare} from 'react-icons/ai'
 import { useContext } from 'react';
 import { ErrorContext } from './PostVisitContainer';
+import AutoComplete2 from '../AutoComplete2';
+import { useState } from 'react';
 
 const PostVisit = ({
-    adress, handleChangeAdress,
+    address, setAddress,
     timeframe, handleChangeTimeframe,
     description, handleChangeDescription,
     onSubmit
@@ -15,60 +17,19 @@ const PostVisit = ({
     return ( 
         <form onSubmit={onSubmit}>
             <h3>Where is the visit taking place ?</h3>
-            <div className="row-container">
-                <Input
-                    name="number"
-                    title="Street number"
-                    value={adress.number}
-                    onChange={handleChangeAdress}
-                    error={showErrors && adress.number.length === 0}
-                    inputProps={{ type: 'number' }}
-                    className="space-right fit-width"
-                />
-                <Input
-                    name="street"
-                    title="Street *"
-                    value={adress.street}
-                    onChange={handleChangeAdress}
-                    error={showErrors && adress.street.length === 0}
-                    inputProps={{ required:true }}
-                    className="street"
-                />
+            <div className="input space-bottom">
+                <div className="container max-width ">
+                    <h5>Address</h5>
+                    <AutoComplete2 
+                        setAddress={setAddress}
+                        inputProps={{placeholder: "Type address", className: 'location-search-input max-width', required: true}}
+                    />
+                </div>
+                <h6 className="err-msg" style={{
+                    opacity: showErrors && !address  ? '1' : '0'
+                }}>*Please enter a valid address</h6>
             </div>
-            <Input
-                name="additionalInfo"
-                title="Additional information"
-                value={adress.additionalInfo}
-                onChange={handleChangeAdress}
-            />
-            <div className="row-container">
-                <Input
-                    name="npa"
-                    title="NPA *"
-                    value={adress.npa}
-                    onChange={handleChangeAdress}
-                    error={showErrors && adress.npa.length === 0}
-                    inputProps={{ required:true, type: 'number' }}
-                    className="number fit-width"
-                />
-                <Input
-                    name="city"
-                    title="City *"
-                    value={adress.city}
-                    onChange={handleChangeAdress}
-                    error={showErrors && adress.city.length === 0}
-                    inputProps={{ required:true }}
-                    className="space-right"
-                />
-                <Input
-                    name="country"
-                    title="Country *"
-                    value={adress.country}
-                    onChange={handleChangeAdress}
-                    error={showErrors && adress.country.length === 0}
-                    inputProps={{ required:true }}
-                />
-            </div>
+            
             <div className="row-container">
                 <Input
                     name="start"
@@ -89,7 +50,7 @@ const PostVisit = ({
                     className="fit-width"
                 />
             </div>
-            <div className="input">
+            <div className="input styled-textarea">
                 <div className="container">
                     <h5>Description</h5>
                     <textarea

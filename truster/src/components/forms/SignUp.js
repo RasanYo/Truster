@@ -26,6 +26,7 @@ const SignUp = () => {
         email: "",
         password: "",
         passwordConfirmation: "",
+        aboutMe: "",
         picture: null  
     })
 

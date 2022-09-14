@@ -6,7 +6,8 @@ import {
     arrayUnion,
     updateDoc,
     getDoc,
-    getFirestore
+    getFirestore,
+    collection
 } from "firebase/firestore"
 import { COLLECTIONS } from "../Constants"
 import { 
@@ -14,10 +15,7 @@ import {
     geohashQueryBounds,
     distanceBetween
 } from "geofire-common"
-
-
-
-
+import { postConverter } from "./Post"
 
 
 export class User extends AbstractUser{
@@ -56,31 +54,18 @@ export class User extends AbstractUser{
      * @returns {Pomise<void>} empty promise
      */
      post(post) {
-        let data = post.getData()
-        const hash = this.#createIdForPost(data.lat,data.lng)
-        data.geohash = hash
-        setDoc(
-            doc(
-                this.db,
-                post.getLocation(),
-                post.getId()
-            ),
-            data
-        )
-        return updateDoc(
-            doc(this.db, COLLECTIONS.REGULAR_USERS, this.#uid),
-            {
-                myPosts : arrayUnion(data)
-            }
-        )
+        const col = collection(getFirestore(), post.getLocation())
+        const postRef = doc(col, post.getId()).withConverter(postConverter)
+        console.log("CHECK")
+        setDoc(postRef, post)
+        const userRef = doc(getFirestore(), COLLECTIONS.REGULAR_USERS, this.#uid)
+        
+        return updateDoc(userRef, {myPosts : arrayUnion(post.asDataObject())})
     }
 
-    #createIdForPost(lat,lng){
-        return geohashForLocation([lat,lng])
-    }
 
     getPersonalInformation(){
-        return getDoc(doc(getFirestore(),COLLECTIONS.REGULAR_USERS,this.#uid))
+        return getDoc(doc(getFirestore(), COLLECTIONS.REGULAR_USERS,this.#uid))
     }
 
     updatePersonalInformation(newUserInformation){
