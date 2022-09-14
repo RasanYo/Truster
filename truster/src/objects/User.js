@@ -83,6 +83,10 @@ export class User extends AbstractUser{
         return getDoc(doc(getFirestore(),COLLECTIONS.REGULAR_USERS,this.#uid))
     }
 
+    updatePersonalInformation(newUserInformation){
+        return updateDoc(doc(getFirestore(),COLLECTIONS.REGULAR_USERS,this.#uid),newUserInformation)
+    }
+
     
 
 }
