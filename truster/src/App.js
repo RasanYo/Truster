@@ -74,8 +74,8 @@ function App() {
       <Router>
         <ErrorToastContext.Provider value={showToastMessage}>
           <UserContext.Provider value={{user, isLoggedIn}} >
-            {login && <LogIn toggleLogin={toggleLogin}/>}
-            <div className="page">
+            {/* {login && <LogIn toggleLogin={toggleLogin}/>} */}
+            <div className="page column-container">
               <Navbar 
                 toggleLogin={toggleLogin}
               />

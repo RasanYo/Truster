@@ -1,13 +1,15 @@
 .account {
     position: relative;
     width: 100%;
+    min-height: 100%;
 }
 
+
 .account #menu {
-    top: 0;
+    /* top: 0;
     left: 0;
-    position: absolute;
-    height: 100%;
+    position: absolute; */
+    min-height: 100%;
 
     padding-right: 15px;
     padding-left: 10px;
@@ -15,6 +17,7 @@
     border-right: solid;
     border-width: 1px;
     border-color: #555555;
+    align-items: stretch;
 }
 
 .account #menu .menu-item {
@@ -58,6 +61,7 @@
     width: 60%;
     margin: auto;
     /* overflow-y: scroll; */
+    margin-top: 15px;
 }
 
 .account .menu-item:hover {

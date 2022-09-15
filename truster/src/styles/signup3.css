@@ -8,6 +8,7 @@
     height: fit-content;
     max-width: 50%;
     margin: 0 auto;
+    margin-top: 15px;
     flex-direction: column;
     max-height: fit-content;
     overflow: hidden;
