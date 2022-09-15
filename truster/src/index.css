@@ -11,6 +11,10 @@ body {
   background: rgb(174,243,222);
 }
 
+.content {
+  padding-top: 15px;
+}
+
 .app {
   position: relative;
 }
