@@ -1,8 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import UserSignUpForm from "./UserSignUpForm";
 import "../../styles/signup3.css"
-// import "../../styles/signup2.css"
-// import "../../styles/signup.css"
 import SlidableContainer from "../SlidableContainer";
 import AdressSignUpForm from "./AdressSignUpForm";
 import { ErrorToastContext, UserContext } from "../../App";

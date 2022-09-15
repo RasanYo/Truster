@@ -15,6 +15,7 @@ const Profil = () => {
     
     useEffect(()=>{
         console.log("entering useEffect")
+        console.log(user)
         user.getPersonalInformation().then(snapshot => {
             setUserData(snapshot.data())
             console.log(snapshot.data())
