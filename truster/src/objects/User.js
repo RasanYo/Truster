@@ -1,4 +1,4 @@
-import { getAuth, signOut } from "firebase/auth"
+import { getAuth, signOut,updateEmail,updatePassword } from "firebase/auth"
 import { AbstractUser } from "./AbstractUser"
 import { 
     setDoc, 
@@ -16,6 +16,7 @@ import {
     distanceBetween
 } from "geofire-common"
 import { postConverter } from "./Post"
+
 
 
 export class User extends AbstractUser{
@@ -72,6 +73,8 @@ export class User extends AbstractUser{
         return updateDoc(doc(getFirestore(),COLLECTIONS.REGULAR_USERS,this.#uid),newUserInformation)
     }
 
-    
+    updateCurrentPassword(password){
+        return updatePassword(getAuth().currentUser,password)
+    }
 
 }

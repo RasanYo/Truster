@@ -5,6 +5,7 @@ import { UserContext } from "../App";
 import { useEffect } from "react";
 import UserDetails from "./UserDetails";
 import ContactDetails from "./ContactDetails";
+import PasswordSection from "./PasswordSection";
 
 
 const Profil = () => {
@@ -13,6 +14,10 @@ const Profil = () => {
     const {user, isLoggedIn} = useContext(UserContext)
 
     const [userData,setUserData] = useState("")
+    const [userState, setUserState] = useState({
+        password: "",
+        passwordConfirmation: "",
+    })
     
     useEffect(()=>{
         console.log("entering useEffect")
@@ -44,6 +49,10 @@ const Profil = () => {
             console.error("Error updating document: ", error);
         });
     }
+
+    const submitPassword = () => {
+        user.updateCurrentPassword(userState.password).then(console.log("updated password sucessfully"))
+    }
     
 
     return ( 
@@ -54,11 +63,13 @@ const Profil = () => {
                 <div className="menu">
                     <div className="profileSection" onClick={() => changeStyleAndCurrentPage(0,'.profileSection','.visitsSection','.postsSection')}> <p>Profile</p></div>
                     <div className="visitsSection" onClick={() => changeStyleAndCurrentPage(1,'.visitsSection','.profileSection','.postsSection')}><p>Contact Details</p></div>
-                    <div className="postsSection" onClick={() => changeStyleAndCurrentPage(2,'.postsSection','.visitsSection','.profileSection')}><p>My Posts</p></div>
+                    <div className="postsSection" onClick={() => changeStyleAndCurrentPage(2,'.postsSection','.visitsSection','.profileSection')}><p>Password</p></div>
                 </div>
                 {/* {console.log(userData)} */}
                 {userData && pageNumber==0 && <UserDetails data={userData} user={user} setData={setUserData} onSubmit={submit}/>}
                 {userData && pageNumber==1 && <ContactDetails data={userData} user={user} setData={setUserData} onSubmit={submit}/>}
+                {userData && pageNumber==2 && <PasswordSection user={userState} setUser={setUserState} onSubmit={submitPassword}/>}
+
             </div>
             
         </div>
