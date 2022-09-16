@@ -159,3 +159,7 @@ textarea:focus {
 .styled-textarea textarea::placeholder {
   color: rgba(131, 131, 131, 0.35);
 }
+
+.space-top {
+  margin-top: 15px;
+}

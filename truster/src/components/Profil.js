@@ -6,14 +6,13 @@ import { useEffect } from "react";
 import UserDetails from "./UserDetails";
 import ContactDetails from "./ContactDetails";
 import PasswordSection from "./PasswordSection";
+// import ContactDetails from "./ContactDetails";
 
 
-const Profil = () => {
+const Profil = ({userData, setUserData}) => {
 
-    const [pageNumber, setPageNumber] = useState(0)
     const {user, isLoggedIn} = useContext(UserContext)
 
-    const [userData,setUserData] = useState("")
     const [userState, setUserState] = useState({
         password: "",
         passwordConfirmation: "",
@@ -28,6 +27,7 @@ const Profil = () => {
         })
         console.log("exiting useEffect")
     },[])
+    const [pageNumber, setPageNumber] = useState(0)
 
 
     const changeStyleAndCurrentPage = (number, c,o1,o2) => {
@@ -70,6 +70,7 @@ const Profil = () => {
                 {userData && pageNumber==1 && <ContactDetails data={userData} user={user} setData={setUserData} onSubmit={submit}/>}
                 {userData && pageNumber==2 && <PasswordSection user={userState} setUser={setUserState} onSubmit={submitPassword}/>}
 
+                {/* {userData && pageNumber==1 && <ContactDetails data={userData} user={user} setData={setUserData} onSubmit={submit}/>} */}
             </div>
             
         </div>

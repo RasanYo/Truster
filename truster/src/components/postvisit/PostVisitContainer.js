@@ -59,7 +59,7 @@ const PostVisitContainer = () => {
     }
 
     return ( 
-        <div className="postvisit-container">
+        <div className="postvisit-container space-top">
             <h1 className="fit-width">Post a visit</h1>
             <ErrorContext.Provider value={showErrors}>
                 <PostVisit
