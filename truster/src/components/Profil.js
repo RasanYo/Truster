@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "../App";
 import { useEffect } from "react";
 import UserDetails from "./UserDetails";
+import ContactDetails from "./ContactDetails";
 
 
 const Profil = () => {
@@ -56,6 +57,7 @@ const Profil = () => {
                 </div>
                 {/* {console.log(userData)} */}
                 {userData && pageNumber==0 && <UserDetails data={userData} user={user} setData={setUserData} onSubmit={submit}/>}
+                {userData && pageNumber==1 && <ContactDetails data={userData} user={user} setData={setUserData} onSubmit={submit}/>}
             </div>
             
         </div>

@@ -72,7 +72,7 @@ return (
                         </div>
                         
                     </div>
-                        
+{/*                         
                     
                     <div className="row-container">
                         <Input 
@@ -91,7 +91,7 @@ return (
                             </div>
                             {user.user.emailVerified ? "Email Confirmed" : "Email not confirmed"}
                         </div>
-                    </div>
+                    </div> */}
                     
                     
                 </div>
