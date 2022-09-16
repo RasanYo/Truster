@@ -60,7 +60,7 @@ function App() {
     setLogin(!login)
   }
 
-  const emailVerified = useMemo(() => user instanceof User ? user.user.emailVerified : false, [user])
+  const emailVerified = useMemo(() => user instanceof User ? user.user.emailVerified : false, [user instanceof User ? user.user.emailVerified : user])
   const isLoggedIn = useMemo(() => user.isLoggedIn(), [user])
 
   const showToastMessage = (errorMessage) => {

@@ -4,25 +4,13 @@ import { useContext, useState } from "react";
 import { UserContext } from "../App";
 import { useEffect } from "react";
 import UserDetails from "./UserDetails";
-import ContactDetails from "./ContactDetails";
+// import ContactDetails from "./ContactDetails";
 
 
-const Profil = () => {
+const Profil = ({userData, setUserData}) => {
 
-    const [pageNumber, setPageNumber] = useState(0)
     const {user, isLoggedIn} = useContext(UserContext)
-
-    const [userData,setUserData] = useState("")
-    
-    useEffect(()=>{
-        console.log("entering useEffect")
-        console.log(user)
-        user.getPersonalInformation().then(snapshot => {
-            setUserData(snapshot.data())
-            console.log(snapshot.data())
-        })
-        console.log("exiting useEffect")
-    },[])
+    const [pageNumber, setPageNumber] = useState(0)
 
 
     const changeStyleAndCurrentPage = (number, c,o1,o2) => {
@@ -58,7 +46,7 @@ const Profil = () => {
                 </div>
                 {/* {console.log(userData)} */}
                 {userData && pageNumber==0 && <UserDetails data={userData} user={user} setData={setUserData} onSubmit={submit}/>}
-                {userData && pageNumber==1 && <ContactDetails data={userData} user={user} setData={setUserData} onSubmit={submit}/>}
+                {/* {userData && pageNumber==1 && <ContactDetails data={userData} user={user} setData={setUserData} onSubmit={submit}/>} */}
             </div>
             
         </div>
