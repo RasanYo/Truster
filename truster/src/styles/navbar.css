@@ -1,9 +1,16 @@
 .navbar {
-    padding: 5px 20px 40px 20px; /* top right bottom left */
+    /* position: fixed;
+    top: 0;
+    left: 0;
+    right: 0; */
+    left: 0;
+    padding: 5px 20px 5px 20px; /* top right bottom left */
     display: flex;
     align-items: center;
-    margin: 0 auto; 
-    background: linear-gradient(white 50%, white 10%, rgba(255, 255, 255, 0) 100%, rgba(255, 255, 255, 0) 100%);
+    margin: 0 0; 
+    /* background: linear-gradient(white 50%, white 10%, rgba(255, 255, 255, 0) 100%, rgba(255, 255, 255, 0) 100%); */
+    background: white;
+    box-shadow: 0 1px 8px 1px gray;
 }
 
 .navbar * {

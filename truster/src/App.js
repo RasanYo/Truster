@@ -13,6 +13,7 @@ import SignUp from './components/forms/SignUp';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PostVisitContainer from './components/postvisit/PostVisitContainer';
+import Account from './components/account/Account';
 
 
 export const UserContext = createContext(null)
@@ -47,7 +48,10 @@ function App() {
   const [user, setUser] = useState(new Guest())
   const [login, setLogin] = useState(false)
   const unsubscribeAuthListener = auth.onAuthStateChanged(u => {
-    if (u) setUser(new User(u.uid, u))
+    if (u) { 
+      setUser(new User(u.uid, u)); 
+      // console.log(user);
+    }
     else setUser(new Guest())
   })
 
@@ -70,8 +74,8 @@ function App() {
       <Router>
         <ErrorToastContext.Provider value={showToastMessage}>
           <UserContext.Provider value={{user, isLoggedIn}} >
-            {login && <LogIn toggleLogin={toggleLogin}/>}
-            <div className="page">
+            {/* {login && <LogIn toggleLogin={toggleLogin}/>} */}
+            <div className="page column-container">
               <Navbar 
                 toggleLogin={toggleLogin}
               />
@@ -83,6 +87,7 @@ function App() {
                   {(!isLoggedIn || !emailVerified) && <Route path="/signup" element={<SignUp />} />}
                   {isLoggedIn && <Route path="/profile" element={<Profil/>}/>}
                   {isLoggedIn && emailVerified && <Route path="/post" element={<PostVisitContainer />} />}
+                  {isLoggedIn && <Route path="/account" element={<Account />}/>}
                   <Route path="*" element={<div>Not found...</div>}/>
                 </Routes>
               </div>
