@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import '../styles/navbar.css'
+import MenuDropdown from "./forms/MenuDropdown"
 
 const Navbar = ({toggleLogin}) => {
 
@@ -18,6 +19,12 @@ const Navbar = ({toggleLogin}) => {
         navigate("/")
     }
  
+    const options = [
+        ["Sign out","","",handleLogout],
+        ["Profile","/account","",""],
+        ["My Posts","/account","",""],
+        ["My Visits","/account","",""]
+    ]
 
     return ( 
         <nav className="navbar">
@@ -31,7 +38,9 @@ const Navbar = ({toggleLogin}) => {
                 <Link to="/faq">FAQ</Link>
                 {!isLoggedIn && <Link to="/login">Log in</Link>}
                 {!isLoggedIn && <Link className="signup-button" to="/signup">Sign Up</Link>}
-                {isLoggedIn && <Link to="/" onClick={handleLogout}>Sign out</Link>}
+                {/* {isLoggedIn && <Link to="/" onClick={handleLogout}>Sign out</Link>} */}
+                
+                {isLoggedIn && <MenuDropdown elements={options}/>}
             </div>
         </nav>
      );

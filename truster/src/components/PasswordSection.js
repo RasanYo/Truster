@@ -1,11 +1,10 @@
 import Input from "./forms/Input"
-import {MdOutlineMailOutline, MdOutlineModeEditOutline} from "react-icons/md"
-import {BsPatchCheckFill, BsFillTelephoneFill} from "react-icons/bs"
-import "../styles/contactDetails.css" 
+import "../styles/passwordSection.css" 
 import 'intl-tel-input/build/css/intlTelInput.css';
 import 'react-phone-number-input/style.css'
 import PhoneInput,{isValidPhoneNumber,isPossiblePhoneNumber } from 'react-phone-number-input'
 import { useState } from "react";
+import LogIn from "./forms/LogIn";
 
 
 const PasswordSection = (
@@ -15,6 +14,8 @@ const PasswordSection = (
 
 
     const [error,setError] = useState(false)
+    const [popUp,setPopUp] = useState(false)
+
 
     const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])([0-9a-zA-Z]{8,32})$/
     function validate(password){
@@ -31,14 +32,16 @@ const PasswordSection = (
 
     const submitWithCondition = () => {
         if(!error) {
-            onSubmit()
+            setPopUp(true)
+            const mainPage = document.getElementById("personal-information")
+            mainPage.style.display = "none"
         }
     }
 
 return ( 
     <div>
-        <form>
-            <div className="personal-information">
+        <form id="personal-information">
+            <div >
                 <div className="info">
                     <div className="row-container">
                     <Input
@@ -60,15 +63,6 @@ return (
                     </div>
                     
                 </div>
-                <div className="">
-                    <h2>You need to log in order to change your password</h2>
-                    
-                </div>
-
-                        
-
-                    
-            
                  </div>
         
         
@@ -83,6 +77,13 @@ return (
         
 
         </form>
+        {popUp && <div className="log-in-page-for-changing-password">
+            <div>
+                    <h2>You need to log in order to change your password</h2>
+                    <LogIn></LogIn>
+            </div>
+        </div>}
+        
         
     </div>
  );
