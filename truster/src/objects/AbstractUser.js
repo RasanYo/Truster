@@ -113,7 +113,7 @@ export class AbstractUser {
     getProfilePictureURL(uid) {
         let storageRef
         try {
-            storageRef = ref(getStorage(), COLLECTIONS.profile_picture_URL(uid)) 
+            storageRef = ref(getStorage(), COLLECTIONS.profile_picture_URL(uid))
         } catch (e) {
             throw e
         }

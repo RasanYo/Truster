@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import UserDetails from "./UserDetails";
 import ContactDetails from "./ContactDetails";
 import PasswordSection from "./PasswordSection";
+import dummy from "../res/dummy_profile_pic.png"
 // import ContactDetails from "./ContactDetails";
 
 
@@ -58,7 +59,11 @@ const Profil = ({userData, setUserData}) => {
     return ( 
         <div className="frame">
             <div className="topPart">
-                <div className="profilePicture"></div>
+                <div className="profilePicture">
+                    <img src={dummy} width={"100%"} 
+                          height={"100%"}  alt="" />
+                    {user.getProfilePictureURL(user.getUID()).then(url => console.log(url))}
+                </div>
 
                 <div className="menu">
                     <div className="profileSection" onClick={() => changeStyleAndCurrentPage(0,'.profileSection','.visitsSection','.postsSection')}> <p>Profile</p></div>
