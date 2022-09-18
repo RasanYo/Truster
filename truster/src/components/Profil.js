@@ -21,15 +21,6 @@ const Profil = ({userData, setUserData}) => {
 
     const [profile_picture,setProfilePicture] = useState()
     
-    useEffect(()=>{
-        console.log("entering useEffect")
-        console.log(user)
-        user.getPersonalInformation().then(snapshot => {
-            setUserData(snapshot.data())
-            console.log(snapshot.data())
-        })
-        console.log("exiting useEffect")
-    },[])
     const [pageNumber, setPageNumber] = useState(0)
 
 

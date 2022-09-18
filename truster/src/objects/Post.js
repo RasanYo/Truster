@@ -65,6 +65,10 @@ export class Post {
         return this.#requesters
     }
 
+    getPrice() {
+        return "20"
+    }
+
     asDataObject() {
         return {
             address: this.getAddress(),
