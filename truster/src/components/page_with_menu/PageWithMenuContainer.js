@@ -33,7 +33,7 @@ const PageWithMenuContainer = ({
             </div>
             <div id="content">
                 {elements.map((element, index) => {
-                    return activePage === formattedLinks[index] ? element : null
+                    return activePage === formattedLinks[index] ? <div key={index}>{element}</div> : null
                 })}
             </div>
         </div>

@@ -31,7 +31,7 @@ const AutoComplete2 = ({
             })
 
         if (!neccessaryDetails.every(necessity => givenInputs.includes(necessity))) {
-            displayErrorToast(`You need to give following information: ${neccessaryDetails.join(', ')}`)
+            displayErrorToast(`You need to give at least the following information: ${neccessaryDetails.join(', ')}`)
             return false
         }
 

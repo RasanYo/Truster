@@ -19,12 +19,6 @@ const Navbar = ({toggleLogin}) => {
         navigate("/")
     }
  
-    const options = [
-        ["Sign out","","",handleLogout],
-        ["Profile","/account","",""],
-        ["My Posts","/account","",""],
-        ["My Visits","/account","",""]
-    ]
 
     return ( 
         <nav className="navbar">
@@ -38,9 +32,12 @@ const Navbar = ({toggleLogin}) => {
                 <Link to="/faq">FAQ</Link>
                 {!isLoggedIn && <Link to="/login">Log in</Link>}
                 {!isLoggedIn && <Link className="signup-button" to="/signup">Sign Up</Link>}
-                {/* {isLoggedIn && <Link to="/" onClick={handleLogout}>Sign out</Link>} */}
-                
-                {isLoggedIn && <MenuDropdown elements={options}/>}
+                {isLoggedIn && <MenuDropdown>
+                        <Link to="" onClick={handleLogout}>Sign out</Link>
+                        <Link to="/account">Profile</Link>
+                        <Link to="/account">My Posts</Link>
+                        <Link to="/account">My Visits</Link>
+                    </MenuDropdown>}
             </div>
         </nav>
      );

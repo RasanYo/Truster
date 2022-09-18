@@ -1,14 +1,12 @@
 import "../../styles/menuDropdown.css"
 import { Link } from "react-router-dom";
 
-const MenuDropdown = ({elements}) => {
+const MenuDropdown = ({children}) => {
     return ( 
         <div className="dropdown">
             <button className="dropbtn"></button>
             <div className="dropdown-content">
-                {elements.map((elem,i) => {
-                    return <Link classname={elem[2]} to={elem[1]} onClick={elem[3]}>{elem[0]}</Link>
-                })}
+                {children}
             </div>
         </div>
      );

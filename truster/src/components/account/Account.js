@@ -4,6 +4,7 @@ import "../../styles/account.css"
 import Profil from "../Profil.js"
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
+import PostList from "../PostList";
 
 const Account = () => {
     const {user, isLoggedIn} = useContext(UserContext)
@@ -24,7 +25,7 @@ const Account = () => {
         <div className="account">
             <PageWithMenuContainer>
                 <MenuItem link="Profile" element={<Profil userData={userData} setUserData={setUserData}/>}/>
-                <MenuItem link="My Posts" element={<div>My Posts</div>}/>
+                <MenuItem link="My Posts" element={<PostList />}/>
                 <MenuItem link="My Visits" element={<div>My Visits</div>}/>
                 <MenuItem link="Messages" element={<div>Messages</div>}/>
             </PageWithMenuContainer>

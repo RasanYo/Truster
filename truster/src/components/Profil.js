@@ -19,15 +19,6 @@ const Profil = ({userData, setUserData}) => {
         passwordConfirmation: "",
     })
     
-    useEffect(()=>{
-        console.log("entering useEffect")
-        console.log(user)
-        user.getPersonalInformation().then(snapshot => {
-            setUserData(snapshot.data())
-            console.log(snapshot.data())
-        })
-        console.log("exiting useEffect")
-    },[])
     const [pageNumber, setPageNumber] = useState(0)
 
 
@@ -62,7 +53,7 @@ const Profil = ({userData, setUserData}) => {
                 <div className="profilePicture">
                     <img src={dummy} width={"100%"} 
                           height={"100%"}  alt="" />
-                    {user.getProfilePictureURL(user.getUID()).then(url => console.log(url))}
+                    {/* {user.getProfilePictureURL(user.getUID()).then(url => console.log(url))} */}
                 </div>
 
                 <div className="menu">
