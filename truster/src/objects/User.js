@@ -27,6 +27,7 @@ export class User extends AbstractUser{
         super()
         this.#uid = uid
         this.user = user
+        // console.log(user)
     }
 
     /**
