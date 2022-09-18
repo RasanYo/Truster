@@ -18,6 +18,8 @@ const Profil = ({userData, setUserData}) => {
         password: "",
         passwordConfirmation: "",
     })
+
+    const [profile_picture,setProfilePicture] = useState()
     
     const [pageNumber, setPageNumber] = useState(0)
 
@@ -45,15 +47,22 @@ const Profil = ({userData, setUserData}) => {
     const submitPassword = () => {
         user.updateCurrentPassword(userState.password).then(console.log("updated password sucessfully"))
     }
+
+    useEffect(() => {
+        if(userData.imgUrl) {user.getProfilePictureURL(userData.imgUrl).then(url => {setProfilePicture(url)})}
+    },[userData.imgUrl])
     
 
     return ( 
         <div className="frame">
             <div className="topPart">
                 <div className="profilePicture">
-                    <img src={dummy} width={"100%"} 
-                          height={"100%"}  alt="" />
-                    {/* {user.getProfilePictureURL(user.getUID()).then(url => console.log(url))} */}
+                    {profile_picture && <img src={profile_picture} width={"100%"} 
+                          height={"100%"}  alt="" />}
+                    {!profile_picture && <img src={dummy} width={"100%"} 
+                          height={"100%"}  alt="" />}
+                    
+                    {/* {userData.imgUrl && } */}
                 </div>
 
                 <div className="menu">

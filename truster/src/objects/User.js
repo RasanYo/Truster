@@ -50,6 +50,8 @@ export class User extends AbstractUser{
         return signOut(getAuth())
     }
 
+    getImgUrl() {return this.user.imgUrl}
+
     /**
      * creates a new post in the database
      * @param {Post} post 
