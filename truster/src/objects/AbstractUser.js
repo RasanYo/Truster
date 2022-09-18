@@ -110,10 +110,10 @@ export class AbstractUser {
      * @returns {Promise<string>} promise containing download URL of profile picture
      * @throws an error if no profile picture has been uploaded previously
      */
-    getProfilePictureURL(uid) {
+    getProfilePictureURL(imgUrl) {
         let storageRef
         try {
-            storageRef = ref(getStorage(), COLLECTIONS.profile_picture_URL(uid))
+            storageRef = ref(getStorage(), COLLECTIONS.profile_picture(imgUrl))
         } catch (e) {
             throw e
         }

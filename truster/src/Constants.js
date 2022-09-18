@@ -10,7 +10,17 @@ export const COLLECTIONS = {
     post: (country, city, id) => `${COLLECTIONS.posts(country, city)}/${id}`,
 
     PROFILE_PICTURES: "images/profile_pictures",
-    profile_picture: (uid) => `${COLLECTIONS.PROFILE_PICTURES}/${uid}`,
-    profile_picture_URL: (uid) => `${COLLECTIONS.profile_picture(uid)}.jpg`
+    profile_picture: (imgUrl) => `${COLLECTIONS.PROFILE_PICTURES}/${imgUrl}`
+    // profile_picture_URL: (uid) => {
+    //     const supportedTypes = ['jpg', 'png', 'jpeg']
+    //     for (let supportedType in supportedTypes) {
+    //         try {
+    //             let img = `${COLLECTIONS.profile_picture(uid)}.${supportedTypes[supportedType]}`
+    //             return img
+    //         } catch (e) {
+    //             continue
+    //         }
+    //     }
+    // }
 
 }
