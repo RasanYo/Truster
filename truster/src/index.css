@@ -72,6 +72,10 @@ body {
   margin-bottom: 10px;
 }
 
+.space-top {
+  margin-top: 10px;
+}
+
 
 
 /* Removes arrows in number input field */

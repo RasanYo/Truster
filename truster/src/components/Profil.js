@@ -118,7 +118,7 @@ const Profil = ({userData, setUserData}) => {
                 {/* {console.log(userData)} */}
                 {userData && pageNumber==0 && <UserDetails data={userData} user={user} setData={setUserData} onSubmit={submit} displayError={displayError} displaySuccess={displaySuccess}/>}
                 {userData && pageNumber==1 && <ContactDetails data={userData} user={user} setData={setUserData} onSubmit={submit} displayError={displayError}/>}
-                {userData && pageNumber==2 && <PasswordSection user={userState} setUser={setUserState} onSubmit={submitPassword}/>}
+                {userData && pageNumber==2 && <PasswordSection userState={userState} setUserState={setUserState} onSubmit={submitPassword} user={user}/>}
 
                 {/* {userData && pageNumber==1 && <ContactDetails data={userData} user={user} setData={setUserData} onSubmit={submit}/>} */}
             </div>
