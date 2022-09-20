@@ -16,6 +16,7 @@
     "react-dom": "^18.2.0",
     "react-dropdown": "^1.10.0",
     "react-icons": "^4.4.0",
+    "react-notifications": "^1.7.4",
     "react-phone-number-input": "^3.2.11",
     "react-places-autocomplete": "^7.3.0",
     "react-router-dom": "^6.3.0",

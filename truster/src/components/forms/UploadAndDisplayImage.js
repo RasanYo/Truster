@@ -1,13 +1,21 @@
 import dummy from "../../res/dummy_profile_pic.png"
 import "../../styles/uploadanddisplayimage.css"
-import { useMemo } from "react"
+import { useContext, useMemo } from "react"
 import {ImCross, ImUpload2} from "react-icons/im"
+// import { useEffect } from "react";
+// import { UserContext } from "../../App";
 
 const UploadAndDisplayImage = ({
     selectedImage, setSelectedImage
 }) => {
   
+    // const {user, isLoggedIn} = useContext(UserContext)
     const image = useMemo(() => selectedImage ? URL.createObjectURL(selectedImage) : null, [selectedImage])
+    // useEffect(() => {
+    //     console.log(selectedImage)
+    //     // user.uploadProfilePicture(selectedImage, 12345)
+    //     // user.getProfilePictureURL(12345).then(url => console.log(url))
+    // },[selectedImage])
 
     return (
       <div className="upload-display-image">

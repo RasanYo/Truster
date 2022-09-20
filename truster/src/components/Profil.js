@@ -1,18 +1,21 @@
 import "../styles/profile.css"
 import { useContext, useState } from "react";
 
-import { UserContext } from "../App";
+import { ErrorToastContext, UserContext } from "../App";
 import { useEffect } from "react";
 import UserDetails from "./UserDetails";
 import ContactDetails from "./ContactDetails";
 import PasswordSection from "./PasswordSection";
 import dummy from "../res/dummy_profile_pic.png"
 // import ContactDetails from "./ContactDetails";
+import UploadAndDisplayImage from "./forms/UploadAndDisplayImage";
 
 
 const Profil = ({userData, setUserData}) => {
 
     const {user, isLoggedIn} = useContext(UserContext)
+    const displayError = useContext(ErrorToastContext)
+    const displaySucess = useContext(ErrorToastContext)
 
     const [userState, setUserState] = useState({
         password: "",
@@ -37,10 +40,12 @@ const Profil = ({userData, setUserData}) => {
     const submit = () => {
         user.updatePersonalInformation(userData).then(() => {
             console.log("Document successfully updated!");
+            displaySucess("success","Personal information updated !")
         })
         .catch((error) => {
             // The document probably doesn't exist.
             console.error("Error updating document: ", error);
+            displayError("error","There is an error updating your profile")
         });
     }
 
@@ -49,7 +54,14 @@ const Profil = ({userData, setUserData}) => {
     }
 
     useEffect(() => {
-        if(userData.imgUrl) {user.getProfilePictureURL(userData.imgUrl).then(url => {setProfilePicture(url)})}
+        // if(userData.imgUrl) {user.getProfilePictureURL(userData.imgUrl).then(url => {
+        //     setProfilePicture(url)
+        //     console.log(url)
+        // })}
+        if(userData.imgUrl) {
+            setProfilePicture(userData.imgUrl)
+        }
+
     },[userData.imgUrl])
     
 
@@ -57,12 +69,47 @@ const Profil = ({userData, setUserData}) => {
         <div className="frame">
             <div className="topPart">
                 <div className="profilePicture">
+                    {/* {profile_picture && <UploadAndDisplayImage selectedImage={profile_picture} setSelectedImage={setProfilePicture} />} */}
                     {profile_picture && <img src={profile_picture} width={"100%"} 
                           height={"100%"}  alt="" />}
-                    {!profile_picture && <img src={dummy} width={"100%"} 
-                          height={"100%"}  alt="" />}
+                    <input
+                            className="inputfile"
+                            type="file"
+                            name="file"
+                            id="file"
+                            value={''}
+                            onChange={(event) => {
+                                console.log("Changing image")
+                                let file = event.target.files[0]
+                                console.log("image size is " + file.size)
+
+                                if(file.size > 7000000){
+                                    console.log("File size too big")
+                                    displayError("error","The file size is too big. The maximum size is 7MB")
+                                }else {
+                                    setProfilePicture(URL.createObjectURL(file));
+                                    console.log(profile_picture)
+                                    user.uploadProfilePicture(event.target.files[0], user.getUID())
+                                    .then(() => {
+                                        user.getProfilePictureURL(user.getUID()).then(url => {
+                                            console.log("Changing url in database of user")
+                                            let newUserData = userData
+                                            newUserData["imgUrl"] = url
+                                            setUserData(newUserData)
+                                            submit()
+                                            displaySucess("success","Profile picture updated !")
+                                        })
+                                    })
+                                    
+                                }
+                                
+                            }}
+                            accept=".jpg, .jpeg, .png"
+                        />
+                    <label htmlFor="file">Change Image</label>
                     
-                    {/* {userData.imgUrl && } */}
+                    
+                    
                 </div>
 
                 <div className="menu">

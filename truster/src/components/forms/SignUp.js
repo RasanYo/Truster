@@ -63,7 +63,7 @@ const SignUp = () => {
             .catch(err => {
                 if (err instanceof FirebaseError) {
                     if (err.code === "auth/email-already-in-use") {
-                        displayError("There is already an account with this email adress. Log in or try another email adress.")
+                        displayError("error", "There is already an account with this email adress. Log in or try another email adress.")
                     }
                 } else {
                     console.log(err)
