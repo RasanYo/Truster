@@ -2,20 +2,14 @@ import dummy from "../../res/dummy_profile_pic.png"
 import "../../styles/uploadanddisplayimage.css"
 import { useContext, useMemo } from "react"
 import {ImCross, ImUpload2} from "react-icons/im"
-// import { useEffect } from "react";
-// import { UserContext } from "../../App";
+import { ErrorToastContext } from "../../App";
 
 const UploadAndDisplayImage = ({
     selectedImage, setSelectedImage
 }) => {
   
-    // const {user, isLoggedIn} = useContext(UserContext)
     const image = useMemo(() => selectedImage ? URL.createObjectURL(selectedImage) : null, [selectedImage])
-    // useEffect(() => {
-    //     console.log(selectedImage)
-    //     // user.uploadProfilePicture(selectedImage, 12345)
-    //     // user.getProfilePictureURL(12345).then(url => console.log(url))
-    // },[selectedImage])
+    const displayError = useContext(ErrorToastContext)
 
     return (
       <div className="upload-display-image">
@@ -49,7 +43,13 @@ const UploadAndDisplayImage = ({
             name="myImage"
             value={''}
             onChange={(event) => {
-                setSelectedImage(event.target.files[0]);
+                let file = event.target.files[0]
+                if(file.size > 7000000){
+                    console.log("File size too big")
+                    displayError("error","The file size is too big. The maximum size is 7MB")
+                }else {
+                    setSelectedImage(file);
+                }
             }}
             accept=".jpg, .jpeg, .png"
         />

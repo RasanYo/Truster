@@ -12,6 +12,7 @@ const SignUp = () => {
 
     const {user, isLoggedIn} = useContext(UserContext)
     const displayError = useContext(ErrorToastContext)
+    const displaySuccess = useContext(ErrorToastContext)
 
     const [menuSwitch, switchMenu] = useState(true)
     const [showForm, setShowForm] = useState(true)
@@ -25,7 +26,7 @@ const SignUp = () => {
         password: "",
         passwordConfirmation: "",
         aboutMe: "",
-        picture: null  
+        picture: null,
     })
 
     const [showErrors, setShowErrors] = useState(false)
@@ -59,7 +60,10 @@ const SignUp = () => {
     const submitForm = e => {
         e.preventDefault()
         user.signUp(userState, adress)
-            .then(() => setShowForm(false))
+            .then(() => {
+                setShowForm(false)
+                displaySuccess("success","Account created")
+            })
             .catch(err => {
                 if (err instanceof FirebaseError) {
                     if (err.code === "auth/email-already-in-use") {

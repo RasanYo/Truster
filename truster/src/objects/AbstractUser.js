@@ -16,12 +16,12 @@ import { COLLECTIONS } from "../Constants"
 
 
 export class AbstractUser {
-    #db
+    db
     constructor() {
         if (this.constructor === AbstractUser) {
             throw new Error('Cannot instantiate abstract user');
         }
-        this.#db = getFirestore();
+        this.db = getFirestore();
     }
 
     /**
@@ -43,7 +43,7 @@ export class AbstractUser {
     //ou bien s'il veut pas la lat/lng de la ville
    getPublicPosts(country, city, {radiusInKm, center} , sortByPrice, ...queryConstraints) {
     if(radiusInKm === 0 ){
-        const q = query(collection(this.#db,`${COLLECTIONS.AVAILABLE_VISITS}/${country}/cities/${city}/posts`), ...queryConstraints)
+        const q = query(collection(this.db,`${COLLECTIONS.AVAILABLE_VISITS}/${country}/cities/${city}/posts`), ...queryConstraints)
         return getDocs(q).then(snapshot => {
             return snapshot.docs
         })
@@ -53,7 +53,7 @@ export class AbstractUser {
 
         const promises = [];
         for (const b of bounds) {
-            const q = query(collection(this.#db,`${COLLECTIONS.AVAILABLE_VISITS}/${country}/cities/${city}/posts`), ...queryConstraints, orderBy("geohash"),startAt(b[0]),endAt(b[1]))
+            const q = query(collection(this.db,`${COLLECTIONS.AVAILABLE_VISITS}/${country}/cities/${city}/posts`), ...queryConstraints, orderBy("geohash"),startAt(b[0]),endAt(b[1]))
             promises.push(getDocs(q));
         }
 

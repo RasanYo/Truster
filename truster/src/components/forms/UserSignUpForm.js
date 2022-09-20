@@ -5,6 +5,7 @@ import { AiOutlineArrowRight } from "react-icons/ai"
 import { ErrorContext } from "./SignUp"
 
 
+
 const UserSignUpForm = ({
     user,
     setUser,
