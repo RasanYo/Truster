@@ -53,7 +53,8 @@ const LogIn = ({toggleLogin}) => {
                         type="button" 
                         onClick={e => {
                             e.preventDefault()
-                            user.loginWithGoogle(userCred => {
+                            user.loginWithGoogle().then(userCred => {
+                                console.log(userCred.user)
                                 navigate("/")
                             })
                         }}

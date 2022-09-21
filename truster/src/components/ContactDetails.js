@@ -75,14 +75,8 @@ return (
                         <div className="error">
                             {error&&"Invalid phone input"}
                         </div>
-
-                        
-
-                    
             
                  </div>
-        
-        
         
         <div className="save-delete-div">
             <div >
