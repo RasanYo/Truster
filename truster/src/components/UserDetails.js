@@ -2,11 +2,15 @@ import Input from "./forms/Input"
 import {MdOutlineMailOutline, MdOutlineModeEditOutline} from "react-icons/md"
 import {BsPatchCheckFill, BsFillTelephoneFill} from "react-icons/bs"
 import "../styles/userdetails.css" 
+import { deleteUser, getAuth } from "firebase/auth"
+import {useNavigate } from "react-router-dom"
 
 const UserDetails = (
     // {gender,firstName, lastName,birthdate,email,password, passwordConfirmation,handleSubmit}
-    {data, user, setData, onSubmit}
+    {data, user, setData, onSubmit, displayError, displaySuccess}
     ) => {
+
+    const navigate = useNavigate()
 
     const handleChange = e => {
         let field = e.target.name
@@ -22,6 +26,16 @@ const UserDetails = (
         newAdress[field] = e.target.value
         data.adress = newAdress
         console.log(data)
+    }
+
+    const handleDeleteAccount = () => {
+        user.deleteAccount().then(() => {
+            navigate("/")
+            displaySuccess("success","Account Deleted")
+        }).catch((e) => {
+            console.log(e)
+            displayError("error","Can't delete account")
+        })
     }
         
 return ( 
@@ -189,7 +203,7 @@ return (
                 </button>
             </div>
             <div>
-                <button type="button" className="delete-button">
+                <button type="button" className="delete-button" onClick={handleDeleteAccount} >
                     <h6>DELETE ACCOUNT</h6>
                 </button>
             </div>

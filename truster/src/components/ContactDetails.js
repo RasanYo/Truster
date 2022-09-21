@@ -10,7 +10,7 @@ import { useState } from "react";
 
 const ContactDetails = (
     // {gender,firstName, lastName,birthdate,email,password, passwordConfirmation,handleSubmit}
-    {data, user, setData, onSubmit}
+    {data, user, setData, onSubmit,displayError}
     ) => {
 
     const [value, setValue] = useState(data.phone)
@@ -26,16 +26,28 @@ const ContactDetails = (
         console.log(data)
     }
 
-    const changePhone = e =>{
-        console.log(isValidPhoneNumber(e))
-        if(!isValidPhoneNumber(e) && !error) {setError(true)}
-        if(isValidPhoneNumber(e) && error) {setError(false)}
-        console.log(error)
-        setValue(e)
-        let newData = data
-        newData["phone"] = e
-        setData(newData)
-        console.log(data)
+    // const changePhone = e =>{
+    //     console.log(e)
+
+    //     if(!isValidPhoneNumber(e) && !error) {setError(true)}
+    //     if(isValidPhoneNumber(e) && error) {setError(false)}
+    //     console.log(error)
+    //     setValue(e)
+    //     let newData = data
+    //     newData["phone"] = e
+    //     setData(newData)
+    //     console.log(data)
+    // }
+
+    const submitChanges = () => {
+        if(!isValidPhoneNumber(value)){
+            displayError("error","Please provide a valid number")
+        }else {
+            let newData = data
+            newData["phone"] = value
+            setData(newData)
+            onSubmit()
+        }
     }
         
 return ( 
@@ -66,11 +78,12 @@ return (
                 </div>
                         <div id="phone">
                             <PhoneInput
+                                // type="number"
                                 countrySelectProps={{ unicodeFlags: true }}
                                 international={true}
                                 placeholder="Enter phone number"
                                 value={value}
-                                onChange={changePhone}/>
+                                onChange={setValue}/>
                         </div>
                         <div className="error">
                             {error&&"Invalid phone input"}
@@ -80,7 +93,7 @@ return (
         
         <div className="save-delete-div">
             <div >
-                <button type="button" onClick={!error && onSubmit} className="save-button">
+                <button type="button" onClick={submitChanges} className="save-button">
                     <h6>SAVE CHANGES</h6>
                 </button>
             </div>

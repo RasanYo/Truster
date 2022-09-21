@@ -63,10 +63,19 @@ function App() {
   const emailVerified = useMemo(() => user instanceof User ? user.user.emailVerified : false, [user instanceof User ? user.user.emailVerified : user])
   const isLoggedIn = useMemo(() => user.isLoggedIn(), [user])
 
-  const showToastMessage = (errorMessage) => {
-    toast.error(errorMessage, {
-        position: toast.POSITION.TOP_CENTER
+  const showToastMessage = (type="error", message) => {
+    if(type === "error"){
+      toast.error(message, {
+        position:toast.POSITION.TOP_RIGHT,
+        autoClose:3000
     });
+    }else if(type === "success"){
+      toast.success(message, {
+        position:toast.POSITION.TOP_RIGHT,
+        autoClose:3000
+      })
+    }
+    
   };
 
   return (

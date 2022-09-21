@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, sendEmailVerification, signInWithCredential, signInWithEmailAndPassword, signInWithPopup, signInWithRedirect } from "firebase/auth";
-import { setDoc, doc, Timestamp, collection, getFirestore } from "firebase/firestore";
+import { setDoc, doc, Timestamp, collection, getFirestore, updateDoc } from "firebase/firestore";
 import { COLLECTIONS } from "../Constants";
 import { AbstractUser } from "./AbstractUser";
 import { User } from "./User";
@@ -54,27 +54,36 @@ export class Guest extends AbstractUser{
             .then(userCred => {
                 let collectionRef = collection(getFirestore(), COLLECTIONS.REGULAR_USERS)
                 let userRef = doc(collectionRef, userCred.user.uid)
-                return setDoc(
-                    userRef,
-                    {
-                        uid: userCred.user.uid,
-                        createdAt: Timestamp.now(),
-                        dob: userObject.birthdate,
-                        email: userObject.email,
-                        adress: adressObject,
-                        firstName: userObject.firstName,
-                        lastName: userObject.lastName,
-                        gender: userObject.gender,
-                        myPosts: [],
-                        myVisitRequests: [],
-                        myVisits: []
-                    }
-                )
+                return this.uploadProfilePicture(userObject.picture, userCred.user.uid)
                 .then(() => {
-                    return this.uploadProfilePicture(userObject.picture, userCred.user.uid)
-                })
-                .then(() => {
-                    return sendEmailVerification(userCred.user).then(() => console.log("Sent verification mail"))
+                    console.log("Picture uploaded")
+                    console.log(userObject.picture)
+                    return this.getProfilePictureURL(userCred.user.uid)
+                    .then((result) => {
+                        console.log("We got the URL and it is : ")
+                        if(userObject.picture == null) {result="https://firebasestorage.googleapis.com/v0/b/scamna-b0b94.appspot.com/o/images%2Fprofile_pictures%2Fdummy_profile_pic.png?alt=media&token=573848b9-10ca-447a-a2c8-9062a2b5bd7a"}
+                        console.log(result)
+                        return setDoc(
+                            userRef,
+                            {
+                                uid: userCred.user.uid,
+                                createdAt: Timestamp.now(),
+                                dob: userObject.birthdate,
+                                email: userObject.email,
+                                adress: adressObject,
+                                firstName: userObject.firstName,
+                                lastName: userObject.lastName,
+                                gender: userObject.gender,
+                                myPosts: [],
+                                myVisitRequests: [],
+                                myVisits: [],
+                                aboutMe: userObject.aboutMe,
+                                imgUrl : result
+                            })
+                    })
+                    .then(() => {
+                        return sendEmailVerification(userCred.user).then(() => console.log("Sent verification mail"))
+                    })
                 })
             })
     }

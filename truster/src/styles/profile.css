@@ -18,8 +18,42 @@
     border-radius: 50%;
 }
 
+
 .frame .profilePicture img{
     border-radius: 50%;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+    font-size: 0.8em;
+    font-weight: 700;
+    color: black;
+    background-color: rgb(252, 252, 252);
+    outline: 1px dotted #000;
+    display: none;
+    position: relative;
+    cursor: pointer;
+    top:-20px;
+    left: 3px;
+    border-radius: 10px;
+    padding: 4px;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: rgb(170, 170, 170);
+}
+
+.profilePicture:hover .inputfile + label{
+    display: inline-block;
 }
 
 .frame .menu{
@@ -39,6 +73,7 @@
     margin: 0px 10px 0px 10px;
     text-align: center;
     box-shadow: 3px 3px 3px gray;
+    cursor: pointer;
 }
 
 .profileSection:focus-within{

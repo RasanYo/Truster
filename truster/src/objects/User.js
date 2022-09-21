@@ -1,4 +1,4 @@
-import { getAuth, signOut,updateEmail,updatePassword } from "firebase/auth"
+import { deleteUser, EmailAuthProvider, getAuth, reauthenticateWithCredential, signOut,updateEmail,updatePassword } from "firebase/auth"
 import { AbstractUser } from "./AbstractUser"
 import { 
     setDoc, 
@@ -7,7 +7,8 @@ import {
     updateDoc,
     getDoc,
     getFirestore,
-    collection
+    collection,
+    deleteDoc
 } from "firebase/firestore"
 import { COLLECTIONS } from "../Constants"
 import { 
@@ -16,6 +17,7 @@ import {
     distanceBetween
 } from "geofire-common"
 import { postConverter } from "./Post"
+import { useNavigate } from "react-router-dom"
 
 
 
@@ -76,8 +78,25 @@ export class User extends AbstractUser{
         return updateDoc(doc(getFirestore(),COLLECTIONS.REGULAR_USERS,this.#uid),newUserInformation)
     }
 
-    updateCurrentPassword(password){
-        return updatePassword(getAuth().currentUser,password)
+    updateCurrentPasswordWithCredentials(currEmail, oldPassword, newPassword){
+        const credentials = EmailAuthProvider.credential(currEmail,oldPassword)
+        let curr = getAuth().currentUser
+        return reauthenticateWithCredential(curr, credentials).then(() => {
+            console.log("Re authenticate is good")
+            updatePassword(curr, newPassword)
+          })
+    }
+
+
+
+    deleteAccount(){
+        return deleteDoc(doc(getFirestore(),COLLECTIONS.REGULAR_USERS,this.#uid)).then(() => {
+            console.log("Account deleted from database")
+            const auth = getAuth();
+            const user = auth.currentUser;
+            return deleteUser(user)
+        })
+        
     }
 
 }
