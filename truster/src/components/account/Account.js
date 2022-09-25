@@ -18,7 +18,7 @@ const Account = () => {
             console.log(snapshot.data())
         })
         console.log("exiting useEffect")
-    },[])
+    }, [])
 
     return (
          
@@ -30,7 +30,6 @@ const Account = () => {
                 <MenuItem link="Messages" element={<div>Messages</div>}/>
             </PageWithMenuContainer>
         </div>
-        
      );
 }
  

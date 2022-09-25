@@ -1,4 +1,4 @@
-import { deleteUser, EmailAuthProvider, getAuth, reauthenticateWithCredential, signOut,updateEmail,updatePassword } from "firebase/auth"
+import { deleteUser, EmailAuthProvider, getAuth, reauthenticateWithCredential, reauthenticateWithPopup, sendEmailVerification, signOut,updateEmail,updatePassword, updateProfile } from "firebase/auth"
 import { AbstractUser } from "./AbstractUser"
 import { 
     setDoc, 
@@ -29,6 +29,7 @@ export class User extends AbstractUser{
         super()
         this.#uid = uid
         this.user = user
+        // console.log(user)
     }
 
     /**
@@ -96,6 +97,23 @@ export class User extends AbstractUser{
             return deleteUser(user)
         })
         
+    }
+
+    changeEmail(newEmail) {
+        const auth = getAuth()
+        return updateEmail(auth.currentUser, newEmail)
+            .then(() => {
+                console.log("CHECK 1")
+                return updateProfile(auth.currentUser, {
+                    emailVerified: false
+            })})
+            .then(() => {
+                console.log("CHECK 2")
+                return sendEmailVerification(auth.currentUser)
+            })
+            .then(() => "Sent verification email")
+            .catch((err) => console.log(err.message))
+
     }
 
 }

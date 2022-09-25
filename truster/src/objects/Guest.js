@@ -16,9 +16,9 @@ export class Guest extends AbstractUser{
         return signInWithEmailAndPassword(getAuth(), email, password)
     }
 
-    loginWithGoogle(callback=(userCred => {return})) {
+    loginWithGoogle() {
         let provider = new GoogleAuthProvider()
-        return signInWithPopup(getAuth(), provider).then(callback)
+        return signInWithPopup(getAuth(), provider)
     }
 
 
