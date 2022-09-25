@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LogIn from './components/forms/LogIn';
 import "./styles/app.css"
 import Home from './components/Home';
-import Profil from './components/Profile/Profil';
+import Profil from './components/Profil';
 import SignUp from './components/forms/SignUp';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -83,7 +83,7 @@ function App() {
             {/* {login && <LogIn toggleLogin={toggleLogin}/>} */}
             <div className="page column-container">
               <Navbar 
-                setFirstPage={setFirstPage}
+                // setFirstPage={setFirstPage}
               />
               <div className="content">
                 <ToastContainer />
