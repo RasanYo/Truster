@@ -2,14 +2,19 @@ import { useEffect, useState } from "react";
 
 const PageWithMenuContainer = ({
     children,
-    linkProps={}
+    linkProps={},
+    startPage=null
 }) => {
 
+    function formatLink(link) {
+        return link.toLowerCase().replace(/ /g, '_')
+    }
+
     const links = children.map(child => child.props.link)
-    const formattedLinks = links.map(link => link.toLowerCase().replace(/ /g, '_'))
+    const formattedLinks = links.map(link => formatLink(link))
     const elements = children.map(child => child.props.element)
 
-    const [activePage, setActivePage] = useState(formattedLinks[0])
+    const [activePage, setActivePage] = useState(startPage ? formatLink(startPage) : formattedLinks[0])
 
     // useEffect(() => {console.log(childrenProps)}, [])
 

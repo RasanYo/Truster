@@ -6,9 +6,7 @@ import { useEffect } from "react";
 import UserDetails from "./UserDetails";
 import ContactDetails from "./ContactDetails";
 import PasswordSection from "./PasswordSection";
-import dummy from "../res/dummy_profile_pic.png"
 // import ContactDetails from "./ContactDetails";
-import UploadAndDisplayImage from "./forms/UploadAndDisplayImage";
 
 
 const Profil = ({userData, setUserData}) => {

@@ -14,6 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PostVisitContainer from './components/postvisit/PostVisitContainer';
 import Account from './components/account/Account';
+import { useContext } from 'react';
 
 
 export const UserContext = createContext(null)
@@ -47,7 +48,7 @@ function App() {
   const auth = getAuth()
   const [user, setUser] = useState(new Guest())
   const [login, setLogin] = useState(false)
-  const unsubscribeAuthListener = auth.onAuthStateChanged(u => {
+  auth.onAuthStateChanged(u => {
     if (u) { 
       setUser(new User(u.uid, u)); 
       // console.log(user);
@@ -55,12 +56,6 @@ function App() {
     else setUser(new Guest())
   })
 
-  const toggleLogin = e => {
-    e.preventDefault()
-    setLogin(!login)
-  }
-
-  const emailVerified = useMemo(() => user instanceof User ? user.user.emailVerified : false, [user instanceof User ? user.user.emailVerified : user])
   const isLoggedIn = useMemo(() => user.isLoggedIn(), [user])
 
   const showToastMessage = (type="error", message) => {
@@ -78,6 +73,8 @@ function App() {
     
   };
 
+  const [firstPage, setFirstPage] = useState(null)
+
   return (
     <div className="app">
       <Router>
@@ -86,17 +83,17 @@ function App() {
             {/* {login && <LogIn toggleLogin={toggleLogin}/>} */}
             <div className="page column-container">
               <Navbar 
-                toggleLogin={toggleLogin}
+                setFirstPage={setFirstPage}
               />
               <div className="content">
                 <ToastContainer />
                 <Routes>
                   <Route exact path="/" element={<Home />}/>
                   {!isLoggedIn && <Route path="/login" element={<LogIn />} />}
-                  {(!isLoggedIn || !emailVerified) && <Route path="/signup" element={<SignUp />} />}
+                  {!isLoggedIn && <Route path="/signup" element={<SignUp />} />}
                   {isLoggedIn && <Route path="/profile" element={<Profil/>}/>}
-                  {isLoggedIn && emailVerified && <Route path="/post" element={<PostVisitContainer />} />}
-                  {isLoggedIn && <Route path="/account" element={<Account />}/>}
+                  {isLoggedIn && <Route path="/post" element={<PostVisitContainer />} />}
+                  {isLoggedIn && <Route path="/account" element={<Account startPage={firstPage}/>}/>}
                   <Route path="*" element={<div>Not found...</div>}/>
                 </Routes>
               </div>

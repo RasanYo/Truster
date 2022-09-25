@@ -5,13 +5,16 @@ import "../styles/contactDetails.css"
 import 'intl-tel-input/build/css/intlTelInput.css';
 import 'react-phone-number-input/style.css'
 import PhoneInput,{isValidPhoneNumber,isPossiblePhoneNumber } from 'react-phone-number-input'
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../App";
 
 
 const ContactDetails = (
     // {gender,firstName, lastName,birthdate,email,password, passwordConfirmation,handleSubmit}
-    {data, user, setData, onSubmit,displayError}
+    {data, userObject, setData, onSubmit,displayError}
     ) => {
+
+    const {user, isLoggedIn, emailVerified} = useContext(UserContext)
 
     const [value, setValue] = useState(data.phone)
     const [error, setError] = useState()
@@ -42,9 +45,14 @@ const ContactDetails = (
     const submitChanges = () => {
         if(!isValidPhoneNumber(value)){
             displayError("error","Please provide a valid number")
-        }else {
+        }
+        else {
             let newData = data
             newData["phone"] = value
+            console.log(data.email !== user.user.email)
+            if (data.email !== user.user.email) {
+                user.changeEmail(data.email)
+            }
             setData(newData)
             onSubmit()
         }
@@ -70,7 +78,7 @@ return (
                             <div className="logo space-right">
                                 <MdOutlineMailOutline size={20}/>
                             </div>
-                            {user.user.emailVerified ? "Email Confirmed" : "Email not confirmed"}
+                            {emailVerified ? "Email Confirmed" : "Email not confirmed"}
                         </div>
                     </div>
                     
