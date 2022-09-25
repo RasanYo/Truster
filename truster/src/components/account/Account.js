@@ -1,7 +1,7 @@
 import MenuItem from "../page_with_menu/MenuItem";
 import PageWithMenuContainer from "../page_with_menu/PageWithMenuContainer";
 import "../../styles/account.css"
-import Profil from "../Profile/Profil.js"
+import Profil from "../profile/Profil.js"
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
 // import PostList from "../PostList";
