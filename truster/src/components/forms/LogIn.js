@@ -45,7 +45,7 @@ const LogIn = ({toggleLogin}) => {
                     inputType="password"
                 />
                 {!isGoodPassword && <div>Sorry, your password was incorrect. Please double-check your password.</div>
-                }
+    }
                 <div className="buttons">
                     <button>Log in</button>
                     <button 
