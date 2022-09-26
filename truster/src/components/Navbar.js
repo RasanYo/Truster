@@ -34,9 +34,9 @@ const Navbar = ({setFirstPage}) => {
                 {!isLoggedIn && <Link className="signup-button" to="/signup">Sign Up</Link>}
                 {isLoggedIn && <MenuDropdown>
                         <Link to="" onClick={handleLogout}>Sign out</Link>
-                        <Link to="/account" onClick={setFirstPage("Profile")}>Profile</Link>
-                        <Link to="/account" onClick={setFirstPage("My Posts")}>My Posts</Link>
-                        <Link to="/account" onClick={setFirstPage("My Visits")}>My Visits</Link>
+                        <Link to="/account" onClick={() => setFirstPage("Profile")}>Profile</Link>
+                        <Link to="/account" onClick={() => setFirstPage("My Posts")}>My Posts</Link>
+                        <Link to="/account" onClick={() => setFirstPage("My Visits")}>My Visits</Link>
                     </MenuDropdown>}
             </div>
         </nav>
