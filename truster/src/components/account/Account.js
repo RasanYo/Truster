@@ -4,7 +4,6 @@ import "../../styles/account.css"
 import Profil from "../profile/Profil.js"
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
-// import PostList from "../PostList";
 
 const Account = () => {
     const {user, isLoggedIn} = useContext(UserContext)

@@ -72,7 +72,7 @@ function App() {
     
   };
 
-  const [firstPage, setFirstPage] = useState(null)
+  // const [firstPage, setFirstPage] = useState(null)
 
   return (
     <div className="app">
@@ -82,7 +82,7 @@ function App() {
             {/* {login && <LogIn toggleLogin={toggleLogin}/>} */}
             <div className="page column-container">
               <Navbar 
-                setFirstPage={setFirstPage}
+                // setFirstPage={setFirstPage}
               />
               <div className="content">
                 <ToastContainer />
@@ -92,7 +92,7 @@ function App() {
                   {!isLoggedIn && <Route path="/signup" element={<SignUp />} />}
                   {isLoggedIn && <Route path="/profile" element={<Profil/>}/>}
                   {isLoggedIn && <Route path="/post" element={<PostVisitContainer />} />}
-                  {isLoggedIn && <Route path="/account" element={<Account startPage={firstPage}/>}/>}
+                  {isLoggedIn && <Route path="/account" element={<Account />}/>}
                   <Route path="*" element={<div>Not found...</div>}/>
                 </Routes>
               </div>

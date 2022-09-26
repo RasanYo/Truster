@@ -1,5 +1,3 @@
-import { useMemo, useState } from "react";
-
 const MenuItem = ({
     link, element
 }) => {

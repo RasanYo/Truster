@@ -3,7 +3,6 @@ import {AiOutlinePlusSquare} from 'react-icons/ai'
 import { useContext } from 'react';
 import { ErrorContext } from './PostVisitContainer';
 import AutoComplete2 from '../AutoComplete';
-import { useState } from 'react';
 
 const PostVisit = ({
     address, setAddress,

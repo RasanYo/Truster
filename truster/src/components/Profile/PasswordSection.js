@@ -2,11 +2,8 @@ import Input from "../forms/Input"
 import "../../styles/passwordSection.css" 
 import 'intl-tel-input/build/css/intlTelInput.css';
 import 'react-phone-number-input/style.css'
-import PhoneInput,{isValidPhoneNumber,isPossiblePhoneNumber } from 'react-phone-number-input'
 import { useContext, useState } from "react";
-import LogIn from "../forms/LogIn";
-import { EmailAuthCredential, EmailAuthProvider, getAuth, reauthenticateWithCredential } from "firebase/auth";
-import { ErrorToastContext, UserContext } from "../../App";
+import { ErrorToastContext } from "../../App";
 import { useEffect } from "react";
 
 

@@ -1,15 +1,17 @@
 import Input from "../forms/Input"
-import {MdOutlineMailOutline, MdOutlineModeEditOutline} from "react-icons/md"
 import {BsPatchCheckFill, BsFillTelephoneFill} from "react-icons/bs"
 import "../../styles/userdetails.css" 
-import { deleteUser, getAuth } from "firebase/auth"
 import {useNavigate } from "react-router-dom"
+import { useContext } from "react"
+import { ErrorToastContext } from "../../App"
 
 const UserDetails = (
     // {gender,firstName, lastName,birthdate,email,password, passwordConfirmation,handleSubmit}
-    {data, user, setData, onSubmit, displayError, displaySuccess}
+    {data, user, setData, onSubmit}
     ) => {
 
+    const displayError = useContext(ErrorToastContext)
+    const displaySuccess = useContext(ErrorToastContext)
     const navigate = useNavigate()
 
     const handleChange = e => {
