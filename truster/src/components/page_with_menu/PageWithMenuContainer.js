@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 const PageWithMenuContainer = ({
     children,
     linkProps={},
-    startPage=null
 }) => {
 
     function formatLink(link) {
@@ -14,7 +13,7 @@ const PageWithMenuContainer = ({
     const formattedLinks = links.map(link => formatLink(link))
     const elements = children.map(child => child.props.element)
 
-    const [activePage, setActivePage] = useState(startPage ? formatLink(startPage) : formattedLinks[0])
+    const [activePage, setActivePage] = useState(formattedLinks[0])
 
     // useEffect(() => {console.log(childrenProps)}, [])
 

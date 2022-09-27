@@ -3,11 +3,9 @@ import { useContext, useState } from "react";
 
 import { ErrorToastContext, UserContext } from "../../App";
 import { useEffect } from "react";
-import UserDetails from "./UserDetails";
 import ContactDetails from "./ContactDetails";
 import PasswordSection from "./PasswordSection";
-// import ContactDetails from "./ContactDetails";
-import UploadAndDisplayImage from "../forms/UploadAndDisplayImage";
+import UserDetails from "./UserDetails";
 
 
 const Profil = ({userData, setUserData}) => {

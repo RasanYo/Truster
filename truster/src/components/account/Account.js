@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
 // import PostList from "../PostList";
 
-const Account = () => {
+const Account = ({startPage}) => {
     const {user, isLoggedIn} = useContext(UserContext)
     const [userData,setUserData] = useState("")
     
@@ -23,7 +23,7 @@ const Account = () => {
     return (
          
         <div className="account">
-            <PageWithMenuContainer>
+            <PageWithMenuContainer startPage={startPage}>
                 <MenuItem link="Profile" element={<Profil userData={userData} setUserData={setUserData}/>}/>
                 {/* <MenuItem link="My Posts" element={<PostList />}/> */}
                 <MenuItem link="My Visits" element={<div>My Visits</div>}/>
