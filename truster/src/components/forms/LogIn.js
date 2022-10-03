@@ -50,8 +50,8 @@ const LogIn = () => {
                         type="button" 
                         onClick={e => {
                             e.preventDefault()
-                            user.signupWithGoogle().then(() => {
-                                navigate("complete_signup")
+                            user.signupWithGoogle().then((exists) => {
+                                 navigate(exists ? "/" : "complete_signup")
                             })
                         }}
                     >Log in with <AiOutlineGooglePlus size={16}/></button>

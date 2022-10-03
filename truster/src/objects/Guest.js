@@ -160,7 +160,9 @@ export class Guest extends AbstractUser{
                         }
                         this.#createUser(userObject)
                     }
+                    return exists
                 })
+
             })
     }
 
