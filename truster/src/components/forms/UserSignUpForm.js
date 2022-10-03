@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import Input from "./Input"
 import UploadAndDisplayImage from "./UploadAndDisplayImage"
 import { AiOutlineArrowRight } from "react-icons/ai"
@@ -26,10 +26,6 @@ const UserSignUpForm = ({
         newUser[field] = e.target.value
         setUser(newUser)
     }
-
-    useEffect(() => {
-        console.log("USER", user)
-    }, [])
 
     const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])([0-9a-zA-Z]{8,32})$/
     function validate(password){

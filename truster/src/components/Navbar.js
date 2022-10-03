@@ -4,7 +4,7 @@ import { UserContext } from "../App";
 import '../styles/navbar.css'
 import MenuDropdown from "./forms/MenuDropdown"
 
-const Navbar = () => {
+const Navbar = ({setFirstPage}) => {
 
     const {user, isLoggedIn} = useContext(UserContext)
     const navigate = useNavigate()
@@ -34,9 +34,9 @@ const Navbar = () => {
                 {!isLoggedIn && <Link className="signup-button" to="/signup">Sign Up</Link>}
                 {isLoggedIn && <MenuDropdown>
                         <Link to="" onClick={handleLogout}>Sign out</Link>
-                        <Link to="/account">Profile</Link>
-                        <Link to="/account">My Posts</Link>
-                        <Link to="/account">My Visits</Link>
+                        <Link to="/account" >Profile</Link>
+                        <Link to="/account" >My Posts</Link>
+                        <Link to="/account" >My Visits</Link>
                     </MenuDropdown>}
             </div>
         </nav>

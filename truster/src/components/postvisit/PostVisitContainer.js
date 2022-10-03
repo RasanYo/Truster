@@ -23,7 +23,6 @@ const PostVisitContainer = () => {
     }
 
     function getAdressCoords(adress) {
-        
         return geocodeByAddress(stringifyAdress(adress)).then(res => {return getLatLng(res[0])})
     }
 

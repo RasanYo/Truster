@@ -14,6 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PostVisitContainer from './components/postvisit/PostVisitContainer';
 import Account from './components/account/Account';
+import ComplementaryInfo from './components/signup/ComplementaryInfo';
 
 
 export const UserContext = createContext(null)
@@ -89,10 +90,11 @@ function App() {
                 <Routes>
                   <Route exact path="/" element={<Home />}/>
                   {!isLoggedIn && <Route path="/login" element={<LogIn />} />}
+                  <Route path="/login/complete_signup" element={<ComplementaryInfo />}/>
                   {!isLoggedIn && <Route path="/signup" element={<SignUp />} />}
                   {isLoggedIn && <Route path="/profile" element={<Profil/>}/>}
                   {isLoggedIn && <Route path="/post" element={<PostVisitContainer />} />}
-                  {isLoggedIn && <Route path="/account" element={<Account startPage={firstPage}/>}/>}
+                  {isLoggedIn && <Route path="/account" element={<Account />}/>}
                   <Route path="*" element={<div>Not found...</div>}/>
                 </Routes>
               </div>

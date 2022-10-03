@@ -1,94 +1,89 @@
-import {useEffect, useState } from "react";
+import { useContext } from "react";
+import {useState } from "react";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from "react-places-autocomplete";
+import { ErrorToastContext } from "../App";
 
-export default function Autocomplete({textObj, setStreet, setCity, setNpa, setCountry, setFullAdress, searchOptions, setNumber, setLocation, setLat,setLng}) {
-  const [address, setAddress] = useState("");
+const AutoComplete2 = ({
+    setAddress,
+    inputProps={},
+    searchOptions={types: ['street_number', 'route', 'locality', 'postal_code', 'country']},
+    neccessaryDetails=['route', 'locality', 'country'],
+    className = "dropdown"
+}) => {
 
-  
-  const handleSelect = (val) => {
-      setAddress(val)
-      setFullAdress(val)
-      if(searchOptions === undefined){
-        
-        
+    const [displayAddress, setDisplayAddress] = useState("")
+    const displayErrorToast = useContext(ErrorToastContext)
 
-        geocodeByAddress(val).then(results => {
-          getLatLng(results[0]).then(x => {
-            setLocation([val,x.lat,x.lng])
-          })
+    const handleSelect = async value => {
+        const results = await geocodeByAddress(value)
+        var city
+        var country
+        var givenInputs = []
+        console.log(results[0])
+        results[0]
+            .address_components
+            .forEach(component => {
+                givenInputs.push(component.types[0])
+                if (component.types[0] === 'locality') city = component.long_name
+                if (component.types[0] === 'country') country = component.long_name
+            })
+
+        if (!neccessaryDetails.every(necessity => givenInputs.includes(necessity))) {
+            displayErrorToast(`You need to give at least the following information: ${neccessaryDetails.join(', ')}`)
+            return false
+        }
+
+        setDisplayAddress(results[0].formatted_address)
+        getLatLng(results[0]).then(latLng => {
+            setAddress({
+                address: results[0].formatted_address,
+                city: city,
+                country: country,
+                lat: latLng.lat,
+                lng: latLng.lng
+            })
         })
         
-        setNumber(null)
-        setStreet(null)
-        setCity(null)
-        setCountry(null)
-        setNpa(null)
-      } 
-      
-      geocodeByAddress(val).then(x => {
-        console.log(x[0].address_components)
-        x[0].address_components.forEach(y => {
-          if(y.types[0] === "route"){
-            setStreet(y.long_name)
-            // console.log("route")
-          }else if(y.types[0] === "country"){
-            setCountry(y.long_name)
-            // console.log("country")
-          }else if(y.types[0] === "locality"){
-            setCity(y.long_name)
-            // console.log("locality")
-          }else if(y.types[0] === "postal_code"){
-            setNpa(y.long_name)
-            // console.log("postal_code")
-          }else if(y.types[0] === "street_number"){
-            setNumber(y.long_name)
-            // console.log("street_number")
-          }
-        })
-      })
-      
-      //geocodeByAddress(val).then(x => setCity(x[0].address_components[0]))
-      
-      
-  }
+    }
 
-  return (
-    <div className="inputBox">
-      <PlacesAutocomplete
-        value={address}
-        onChange={setAddress}
-        onSelect={handleSelect}
-        searchOptions={searchOptions}
-      >
-        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div className="autocomplete-block">
-            <input {...getInputProps({ placeholder: textObj.text,className: 'location-search-input'})} />
+    return ( 
+        <div className="autocomplete">
+            <PlacesAutocomplete
+                value={displayAddress}
+                onChange={setDisplayAddress}
+                onSelect={handleSelect}
+                searchOptions={searchOptions}
+            >
+                {({getInputProps, suggestions, getSuggestionItemProps, loading}) => (
+                    <div>
+                        <input {...getInputProps(inputProps)} />
 
-            <div className="autocomplete-dropdown-container">
-              {/* {loading ? <div>...loading</div> : null} */}
+                        <div className={className}>
+                            {suggestions.map((suggestion, index) => {
+                                const style = {
+                                    backgroundColor: suggestion.active ? "#b6d6cc" : "#cef8eb",
+                                    marginLeft: "4px",
+                                    width: "100%",
+                                    padding : "10px 10px 10px 38px",
+                                    fontSize: "13px",
+                                };
 
-            
-              {suggestions.map((suggestion, index) => {
-                const style = {
-                  backgroundColor: suggestion.active ? "#b6d6cc" : "#cef8eb",
-                  padding : "10px 10px 10px 38px",
-                  borderRadius : suggestion.active ? "5px" : "0px",
-                  fontSize: "13px"
-                };
+                                return (
+                                    <div {...getSuggestionItemProps(suggestion, { style })} key={index}>
+                                        {suggestion.description}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
+                )}
+            </PlacesAutocomplete>
 
-                return (
-                  <div {...getSuggestionItemProps(suggestion, { style })} key={index} >
-                    {suggestion.description}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-      </PlacesAutocomplete>
-    </div>
-  );
+        </div>
+     );
 }
+ 
+export default AutoComplete2;

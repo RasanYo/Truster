@@ -1,18 +1,19 @@
 import Input from "../forms/Input"
-import {MdOutlineMailOutline, MdOutlineModeEditOutline} from "react-icons/md"
-import {BsPatchCheckFill, BsFillTelephoneFill} from "react-icons/bs"
+import {MdOutlineMailOutline} from "react-icons/md"
 import "../../styles/contactDetails.css" 
 import 'intl-tel-input/build/css/intlTelInput.css';
 import 'react-phone-number-input/style.css'
-import PhoneInput,{isValidPhoneNumber,isPossiblePhoneNumber } from 'react-phone-number-input'
-import { useState } from "react";
+import PhoneInput,{isValidPhoneNumber } from 'react-phone-number-input'
+import { useContext, useState } from "react";
+import { ErrorToastContext } from "../../App";
 
 
 const ContactDetails = (
     // {gender,firstName, lastName,birthdate,email,password, passwordConfirmation,handleSubmit}
-    {data, user, setData, onSubmit,displayError}
+    {data, user, setData, onSubmit}
     ) => {
 
+    const displayError = useContext(ErrorToastContext)
     const [value, setValue] = useState(data.phone)
     const [error, setError] = useState()
         
@@ -25,19 +26,6 @@ const ContactDetails = (
         setData(newData)
         console.log(data)
     }
-
-    // const changePhone = e =>{
-    //     console.log(e)
-
-    //     if(!isValidPhoneNumber(e) && !error) {setError(true)}
-    //     if(isValidPhoneNumber(e) && error) {setError(false)}
-    //     console.log(error)
-    //     setValue(e)
-    //     let newData = data
-    //     newData["phone"] = e
-    //     setData(newData)
-    //     console.log(data)
-    // }
 
     const submitChanges = () => {
         if(!isValidPhoneNumber(value)){

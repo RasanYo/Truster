@@ -29,10 +29,6 @@ body {
   width: 100%;
 }
 
-.login {
-  z-index: 1;
-}
-
 .page {
   z-index: 2;
   height: 100%;

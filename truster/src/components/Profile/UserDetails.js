@@ -1,15 +1,17 @@
 import Input from "../forms/Input"
-import {MdOutlineMailOutline, MdOutlineModeEditOutline} from "react-icons/md"
 import {BsPatchCheckFill, BsFillTelephoneFill} from "react-icons/bs"
 import "../../styles/userdetails.css" 
-import { deleteUser, getAuth } from "firebase/auth"
 import {useNavigate } from "react-router-dom"
+import { useContext } from "react"
+import { ErrorToastContext } from "../../App"
 
 const UserDetails = (
     // {gender,firstName, lastName,birthdate,email,password, passwordConfirmation,handleSubmit}
-    {data, user, setData, onSubmit, displayError, displaySuccess}
+    {data, user, setData, onSubmit}
     ) => {
 
+    const displayError = useContext(ErrorToastContext)
+    const displaySuccess = useContext(ErrorToastContext)
     const navigate = useNavigate()
 
     const handleChange = e => {
@@ -116,14 +118,14 @@ return (
                                 <BsPatchCheckFill size={20}/>
                             </div>
                             
-                            {4 == 4 ? "Verify your identity" : "Verified"}
+                            {true ? "Verify your identity" : "Verified"}
                         </div>
                         <div className="phone-confirmed">
                             <div className="logo">
                                 <BsFillTelephoneFill size={20}/>
                             </div>
                         
-                            {4 == 4 ? "Add your phone number" : "Phone number : ..."}
+                            {true ? "Add your phone number" : "Phone number : ..."}
                         </div>
 
                     </div>
@@ -139,7 +141,7 @@ return (
             
 
 
-        <div className="address-section">
+        {data.adress && <div className="address-section">
             <h2>Address</h2>
             <div className="row-container">
                     <Input 
@@ -195,7 +197,7 @@ return (
                     />   
             </div>
             
-        </div>
+        </div>}
         <div className="save-delete-div">
             <div >
                 <button type="button" onClick={onSubmit} className="save-button">

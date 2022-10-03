@@ -1,11 +1,11 @@
 import { useState } from "react";
-import InputField from "./forms/InputField";
 import InputLocation from "./forms/InputLocation"
 import { IoMdMap } from "react-icons/io"
 import { BsCalendar3 } from "react-icons/bs"
 import { AiOutlineArrowRight } from "react-icons/ai"
 import "../styles/home.css"
 import city from "../res/city drawing.png"
+import Input from "./forms/Input";
 
 const Home = () => {
 
@@ -39,12 +39,13 @@ const Home = () => {
                         placeholder="What adress are you moving to ?"
                         logo={<IoMdMap size={34} />}
                     />
-                    <InputField
-                        id="date"
-                        value={date} 
-                        setValue={setDate} 
-                        inputType="date"
+                    <Input 
+                        name="date"
                         title="Starting from"
+                        value={date}
+                        onChange={e => setDate(e.target.value)}
+                        inputProps={{type: 'date', requires: 'true'}}
+                        className="fit-width space-right row-container"
                         logo={<BsCalendar3 size={34} />}
                     />
                     <div className="button">

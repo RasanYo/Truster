@@ -4,10 +4,9 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../App";
 import "../../styles/login.css"
-import FormInput from "./FormInput";
 import { AiOutlineGooglePlus } from "react-icons/ai"
 
-const LogIn = ({toggleLogin}) => {
+const LogIn = () => {
 
     const {user, isLoggedIn} = useContext(UserContext)
     const navigate = useNavigate()
@@ -32,20 +31,18 @@ const LogIn = ({toggleLogin}) => {
         <div className="login">
             <form onSubmit={handleSubmit}>
                 <h1>Log in</h1>
-                <FormInput 
-                    title="Email adress"
+                <input 
                     value={email}
-                    setValue={setEmail}
-                    inputType="email"
+                    onChange={e => setEmail(e.target.value)}
+                    type="email"
                 />
-                <FormInput 
-                    title="Password"
+                <input 
                     value={password}
-                    setValue={setPassword}
-                    inputType="password"
+                    onChange={e => setPassword(e.target.value)}
+                    type="password"
                 />
                 {!isGoodPassword && <div>Sorry, your password was incorrect. Please double-check your password.</div>
-                }
+    }
                 <div className="buttons">
                     <button>Log in</button>
                     <button 
@@ -53,9 +50,8 @@ const LogIn = ({toggleLogin}) => {
                         type="button" 
                         onClick={e => {
                             e.preventDefault()
-                            user.loginWithGoogle().then(userCred => {
-                                console.log(userCred.user)
-                                navigate("/")
+                            user.signupWithGoogle().then(() => {
+                                navigate("complete_signup")
                             })
                         }}
                     >Log in with <AiOutlineGooglePlus size={16}/></button>
