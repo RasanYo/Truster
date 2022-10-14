@@ -124,7 +124,13 @@ export class AbstractUser {
     userExists(uid) {
         const userCollectionRef = collection(this.db, COLLECTIONS.REGULAR_USERS)
         const userDocRef = doc(userCollectionRef, uid)
-        return getDoc(userDocRef).then(doc => {return doc.data() ? true : false})
+        return getDoc(userDocRef).then(doc => {return doc.data() ? uid : null})
+    }
+
+    userComplete(uid) {
+        const userCollectionRef = collection(this.db, COLLECTIONS.REGULAR_USERS)
+        const userDocRef = doc(userCollectionRef, uid)
+        return getDoc(userDocRef).then(doc => {return doc.data().dob ? true : false}) 
     }
    
 }

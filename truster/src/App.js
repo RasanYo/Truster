@@ -52,8 +52,7 @@ function App() {
     if (u) { 
       setUser(new User(u.uid, u)); 
       // console.log(user);
-    }
-    else setUser(new Guest())
+    } else setUser(new Guest())
   })
 
   const isLoggedIn = useMemo(() => user.isLoggedIn(), [user])

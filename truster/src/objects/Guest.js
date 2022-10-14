@@ -145,8 +145,8 @@ export class Guest extends AbstractUser{
         return signInWithPopup(getAuth(), provider)
             .then(userCred => {
                 console.log(userCred)
-                return this.userExists(userCred.user.uid).then(exists => {
-                    if (!exists) {
+                return this.userExists(userCred.user.uid).then(uid => {
+                    if (!uid) {
                         console.log(userCred)
                         const userData = userCred._tokenResponse
                         const userObject = {
@@ -160,7 +160,7 @@ export class Guest extends AbstractUser{
                         }
                         this.#createUser(userObject)
                     }
-                    return exists
+                    return uid
                 })
 
             })

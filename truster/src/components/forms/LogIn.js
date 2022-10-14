@@ -26,6 +26,7 @@ const LogIn = () => {
             })
     }
 
+
     
     return ( 
         <div className="login">
@@ -50,8 +51,16 @@ const LogIn = () => {
                         type="button" 
                         onClick={e => {
                             e.preventDefault()
-                            user.signupWithGoogle().then((exists) => {
-                                 navigate(exists ? "/" : "complete_signup")
+                            user.signupWithGoogle().then((exists) => { 
+                                console.log("exists ?", exists)
+                                if (exists) {
+                                    console.log("isLoggedIn", user.isLoggedIn())
+                                    user.userComplete(exists).then(isComplete => {
+                                        console.log("isComplete ?", isComplete)
+                                        navigate(isComplete ? "/" : "complete_signup")
+                                    })
+                                } else navigate("complete_signup")
+                                 
                             })
                         }}
                     >Log in with <AiOutlineGooglePlus size={16}/></button>
