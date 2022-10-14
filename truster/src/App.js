@@ -1,4 +1,4 @@
-import { createContext, useMemo, useState } from 'react';
+import { createContext, useState } from 'react';
 import Navbar from './components/Navbar';
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
@@ -47,15 +47,12 @@ function App() {
 
   const auth = getAuth()
   const [user, setUser] = useState(new Guest())
-  const [login, setLogin] = useState(false)
   auth.onAuthStateChanged(u => {
     if (u) { 
       setUser(new User(u.uid, u)); 
       // console.log(user);
     } else setUser(new Guest())
   })
-
-  const isLoggedIn = useMemo(() => user.isLoggedIn(), [user])
 
   const showToastMessage = (type="error", message) => {
     if(type === "error"){
@@ -78,7 +75,7 @@ function App() {
     <div className="app">
       <Router>
         <ErrorToastContext.Provider value={showToastMessage}>
-          <UserContext.Provider value={{user, isLoggedIn}} >
+          <UserContext.Provider value={{user}} >
             {/* {login && <LogIn toggleLogin={toggleLogin}/>} */}
             <div className="page column-container">
               <Navbar 
@@ -88,12 +85,12 @@ function App() {
                 <ToastContainer />
                 <Routes>
                   <Route exact path="/" element={<Home />}/>
-                  {!isLoggedIn && <Route path="/login" element={<LogIn />} />}
+                  {!user.isLoggedIn() && <Route path="/login" element={<LogIn />} />}
                   <Route path="/login/complete_signup" element={<ComplementaryInfo />}/>
-                  {!isLoggedIn && <Route path="/signup" element={<SignUp />} />}
-                  {isLoggedIn && <Route path="/profile" element={<Profil/>}/>}
-                  {isLoggedIn && <Route path="/post" element={<PostVisitContainer />} />}
-                  {isLoggedIn && <Route path="/account" element={<Account />}/>}
+                  {!user.isLoggedIn() && <Route path="/signup" element={<SignUp />} />}
+                  {user.isLoggedIn() && <Route path="/profile" element={<Profil/>}/>}
+                  {user.isLoggedIn() && <Route path="/post" element={<PostVisitContainer />} />}
+                  {user.isLoggedIn() && <Route path="/account" element={<Account />}/>}
                   <Route path="*" element={<div>Not found...</div>}/>
                 </Routes>
               </div>

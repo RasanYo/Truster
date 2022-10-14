@@ -10,7 +10,7 @@ export const ErrorContext = createContext(null)
 
 const PostVisitContainer = () => {
 
-    const { user, isLoggedIn } = useContext(UserContext)
+    const { user } = useContext(UserContext)
 
     function stringifyAdress(adress) {
         var res = ""

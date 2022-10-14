@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
 
 const Account = ({startPage}) => {
-    const {user, isLoggedIn} = useContext(UserContext)
+    const {user} = useContext(UserContext)
     const [userData,setUserData] = useState("")
     
     useEffect(()=>{

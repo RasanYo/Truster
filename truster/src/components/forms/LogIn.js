@@ -8,7 +8,7 @@ import { AiOutlineGooglePlus } from "react-icons/ai"
 
 const LogIn = () => {
 
-    const {user, isLoggedIn} = useContext(UserContext)
+    const {user} = useContext(UserContext)
     const navigate = useNavigate()
 
     const [email, setEmail] = useState("")
