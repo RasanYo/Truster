@@ -22,7 +22,7 @@ export const ErrorToastContext = createContext(null)
 
 function App() {
 
-  //AVANT CHANGEMENT DES STYLES CSS
+  //AVANT CHANGEMENT DES STYLES CSS 15.10.2022
 
   /**
    * @throws {Error} when 2 different React versions are present
