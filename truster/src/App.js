@@ -22,6 +22,8 @@ export const ErrorToastContext = createContext(null)
 
 function App() {
 
+  //AVANT CHANGEMENT DES STYLES CSS
+
   /**
    * @throws {Error} when 2 different React versions are present
    * Can be cause for error "Invalid hook call"
