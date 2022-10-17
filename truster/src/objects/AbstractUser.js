@@ -1,4 +1,5 @@
-import { getFirestore } from "firebase/firestore";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 import {
     collection, 
     getDocs, 
@@ -118,6 +119,18 @@ export class AbstractUser {
             throw e
         }
         return getDownloadURL(storageRef).then(url => {return url})
+    }
+
+    userExists(uid) {
+        const userCollectionRef = collection(this.db, COLLECTIONS.REGULAR_USERS)
+        const userDocRef = doc(userCollectionRef, uid)
+        return getDoc(userDocRef).then(doc => {return doc.data() ? uid : null})
+    }
+
+    userComplete(uid) {
+        const userCollectionRef = collection(this.db, COLLECTIONS.REGULAR_USERS)
+        const userDocRef = doc(userCollectionRef, uid)
+        return getDoc(userDocRef).then(doc => {return doc.data().dob ? true : false}) 
     }
    
 }

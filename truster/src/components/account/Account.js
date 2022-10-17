@@ -5,8 +5,8 @@ import Profil from "../profile/Profil.js"
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
 
-const Account = () => {
-    const {user, isLoggedIn} = useContext(UserContext)
+const Account = ({startPage}) => {
+    const {user} = useContext(UserContext)
     const [userData,setUserData] = useState("")
     
     useEffect(()=>{
@@ -22,7 +22,7 @@ const Account = () => {
     return (
          
         <div className="account">
-            <PageWithMenuContainer>
+            <PageWithMenuContainer startPage={startPage}>
                 <MenuItem link="Profile" element={<Profil userData={userData} setUserData={setUserData}/>}/>
                 {/* <MenuItem link="My Posts" element={<PostList />}/> */}
                 <MenuItem link="My Visits" element={<div>My Visits</div>}/>

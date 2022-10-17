@@ -2,7 +2,7 @@ import Input from '../forms/Input'
 import {AiOutlinePlusSquare} from 'react-icons/ai'
 import { useContext } from 'react';
 import { ErrorContext } from './PostVisitContainer';
-import AutoComplete2 from '../AutoComplete';
+import AutoComplete from '../AutoComplete';
 
 const PostVisit = ({
     address, setAddress,
@@ -19,7 +19,7 @@ const PostVisit = ({
             <div className="input space-bottom">
                 <div className="container max-width ">
                     <h5>Address</h5>
-                    <AutoComplete2 
+                    <AutoComplete 
                         setAddress={setAddress}
                         inputProps={{placeholder: "Type address", className: 'location-search-input max-width', required: true}}
                     />

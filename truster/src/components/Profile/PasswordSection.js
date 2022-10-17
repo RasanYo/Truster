@@ -63,6 +63,7 @@ return (
                         onChange={handleChange}
                         error={!validate(userState.password)}
                         inputProps={{ required:true, type:"password" }}
+                        className="space-right"
                     />
                     <Input
                         name="passwordConfirmation"

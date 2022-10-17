@@ -75,7 +75,7 @@ export class User extends AbstractUser{
     }
 
     updatePersonalInformation(newUserInformation){
-        return updateDoc(doc(getFirestore(),COLLECTIONS.REGULAR_USERS,this.#uid),newUserInformation)
+        return updateDoc(doc(getFirestore(),COLLECTIONS.REGULAR_USERS,this.#uid), newUserInformation)
     }
 
     updateCurrentPasswordWithCredentials(currEmail, oldPassword, newPassword){

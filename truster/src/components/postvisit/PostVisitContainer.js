@@ -10,7 +10,7 @@ export const ErrorContext = createContext(null)
 
 const PostVisitContainer = () => {
 
-    const { user, isLoggedIn } = useContext(UserContext)
+    const { user } = useContext(UserContext)
 
     function stringifyAdress(adress) {
         var res = ""
@@ -23,7 +23,6 @@ const PostVisitContainer = () => {
     }
 
     function getAdressCoords(adress) {
-        
         return geocodeByAddress(stringifyAdress(adress)).then(res => {return getLatLng(res[0])})
     }
 

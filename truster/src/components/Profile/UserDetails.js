@@ -118,14 +118,14 @@ return (
                                 <BsPatchCheckFill size={20}/>
                             </div>
                             
-                            {4 == 4 ? "Verify your identity" : "Verified"}
+                            {true ? "Verify your identity" : "Verified"}
                         </div>
                         <div className="phone-confirmed">
                             <div className="logo">
                                 <BsFillTelephoneFill size={20}/>
                             </div>
                         
-                            {4 == 4 ? "Add your phone number" : "Phone number : ..."}
+                            {true ? "Add your phone number" : "Phone number : ..."}
                         </div>
 
                     </div>
@@ -141,7 +141,7 @@ return (
             
 
 
-        <div className="address-section">
+        {data.adress && <div className="address-section">
             <h2>Address</h2>
             <div className="row-container">
                     <Input 
@@ -197,7 +197,7 @@ return (
                     />   
             </div>
             
-        </div>
+        </div>}
         <div className="save-delete-div">
             <div >
                 <button type="button" onClick={onSubmit} className="save-button">

@@ -2,15 +2,14 @@ import "../../styles/profile.css"
 import { useContext, useState } from "react";
 
 import { ErrorToastContext, UserContext } from "../../App";
-import { useEffect } from "react";
-import UserDetails from "./UserDetails";
 import ContactDetails from "./ContactDetails";
 import PasswordSection from "./PasswordSection";
+import UserDetails from "./UserDetails";
 
 
 const Profil = ({userData, setUserData}) => {
 
-    const {user, isLoggedIn} = useContext(UserContext)
+    const {user} = useContext(UserContext)
     const displayError = useContext(ErrorToastContext)
     const displaySuccess = useContext(ErrorToastContext)
 
@@ -18,13 +17,6 @@ const Profil = ({userData, setUserData}) => {
         password: "",
         passwordConfirmation: "",
     })
-
-    useEffect(() => {
-        if(userData.imgUrl) {
-            setProfilePicture(userData.imgUrl)
-        }
-
-    },[userData.imgUrl])
 
     const [profile_picture,setProfilePicture] = useState()
     
@@ -113,9 +105,9 @@ const Profil = ({userData, setUserData}) => {
                     <div className="postsSection" onClick={() => changeStyleAndCurrentPage(2,'.postsSection','.visitsSection','.profileSection')}><p>Password</p></div>
                 </div>
                 {/* {console.log(userData)} */}
-                {userData && pageNumber==0 && <UserDetails data={userData} user={user} setData={setUserData} onSubmit={submit}/>}
-                {userData && pageNumber==1 && <ContactDetails data={userData} user={user} setData={setUserData} onSubmit={submit}/>}
-                {userData && pageNumber==2 && <PasswordSection userState={userState} setUserState={setUserState} onSubmit={submitPassword} user={user}/>}
+                {userData && pageNumber===0 && <UserDetails data={userData} user={user} setData={setUserData} onSubmit={submit}/>}
+                {userData && pageNumber===1 && <ContactDetails data={userData} user={user} setData={setUserData} onSubmit={submit}/>}
+                {userData && pageNumber===2 && <PasswordSection userState={userState} setUserState={setUserState} onSubmit={submitPassword} user={user}/>}
 
                 {/* {userData && pageNumber==1 && <ContactDetails data={userData} user={user} setData={setUserData} onSubmit={submit}/>} */}
             </div>

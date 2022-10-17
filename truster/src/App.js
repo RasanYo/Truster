@@ -1,4 +1,4 @@
-import { createContext, useMemo, useState } from 'react';
+import { createContext, useState } from 'react';
 import Navbar from './components/Navbar';
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
@@ -14,12 +14,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PostVisitContainer from './components/postvisit/PostVisitContainer';
 import Account from './components/account/Account';
+import ComplementaryInfo from './components/signup/ComplementaryInfo';
 
 
 export const UserContext = createContext(null)
 export const ErrorToastContext = createContext(null)
 
 function App() {
+
+  //AVANT CHANGEMENT DES STYLES CSS 15.10.2022
 
   /**
    * @throws {Error} when 2 different React versions are present
@@ -46,16 +49,12 @@ function App() {
 
   const auth = getAuth()
   const [user, setUser] = useState(new Guest())
-  const [login, setLogin] = useState(false)
   auth.onAuthStateChanged(u => {
     if (u) { 
       setUser(new User(u.uid, u)); 
       // console.log(user);
-    }
-    else setUser(new Guest())
+    } else setUser(new Guest())
   })
-
-  const isLoggedIn = useMemo(() => user.isLoggedIn(), [user])
 
   const showToastMessage = (type="error", message) => {
     if(type === "error"){
@@ -72,27 +71,28 @@ function App() {
     
   };
 
-  // const [firstPage, setFirstPage] = useState(null)
+  const [firstPage, setFirstPage] = useState(null)
 
   return (
     <div className="app">
       <Router>
         <ErrorToastContext.Provider value={showToastMessage}>
-          <UserContext.Provider value={{user, isLoggedIn}} >
+          <UserContext.Provider value={{user}} >
             {/* {login && <LogIn toggleLogin={toggleLogin}/>} */}
             <div className="page column-container">
               <Navbar 
-                // setFirstPage={setFirstPage}
+                setFirstPage={setFirstPage}
               />
               <div className="content">
                 <ToastContainer />
                 <Routes>
                   <Route exact path="/" element={<Home />}/>
-                  {!isLoggedIn && <Route path="/login" element={<LogIn />} />}
-                  {!isLoggedIn && <Route path="/signup" element={<SignUp />} />}
-                  {isLoggedIn && <Route path="/profile" element={<Profil/>}/>}
-                  {isLoggedIn && <Route path="/post" element={<PostVisitContainer />} />}
-                  {isLoggedIn && <Route path="/account" element={<Account />}/>}
+                  {!user.isLoggedIn() && <Route path="/login" element={<LogIn />} />}
+                  <Route path="/login/complete_signup" element={<ComplementaryInfo />}/>
+                  {!user.isLoggedIn() && <Route path="/signup" element={<SignUp />} />}
+                  {user.isLoggedIn() && <Route path="/profile" element={<Profil/>}/>}
+                  {user.isLoggedIn() && <Route path="/post" element={<PostVisitContainer />} />}
+                  {user.isLoggedIn() && <Route path="/account" element={<Account />}/>}
                   <Route path="*" element={<div>Not found...</div>}/>
                 </Routes>
               </div>
