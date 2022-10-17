@@ -1,8 +1,9 @@
 import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import '../styles/navbar.css'
 import MenuDropdown from "./forms/MenuDropdown"
+
 
 const Navbar = ({setFirstPage}) => {
 
@@ -11,7 +12,11 @@ const Navbar = ({setFirstPage}) => {
 
 
     const handleLogout = e => {
-        user.logout()
+        user.logout().then(() => {
+            console.log("User logged out")
+            console.log(user)
+        })
+        
     }
 
     const handleTitle = e => {
@@ -32,8 +37,10 @@ const Navbar = ({setFirstPage}) => {
                 <Link to="/faq">FAQ</Link>
                 {!isLoggedIn && <Link to="/login">Log in</Link>}
                 {!isLoggedIn && <Link className="signup-button" to="/signup">Sign Up</Link>}
+                {isLoggedIn && <Link to="" onClick={handleLogout}>Sign out</Link>}
                 {isLoggedIn && <MenuDropdown>
-                        <Link to="" onClick={handleLogout}>Sign out</Link>
+                        {/* <Link to="/" onClick={handleLogout}>Sign out</Link> */}
+                        <Link to="/" onClick={handleLogout}>Sign out</Link>
                         <Link to="/account" onClick={() => setFirstPage("Profile")}>Profile</Link>
                         <Link to="/account" onClick={() => setFirstPage("My Posts")}>My Posts</Link>
                         <Link to="/account" onClick={() => setFirstPage("My Visits")}>My Visits</Link>

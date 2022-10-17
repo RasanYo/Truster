@@ -19,6 +19,7 @@ const LogIn = ({toggleLogin}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        navigate("/")
         user.login(email, password)
             .then(() => navigate("/"))
             .catch(error => {
