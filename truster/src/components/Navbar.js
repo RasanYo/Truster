@@ -1,8 +1,9 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import '../styles/responsive styles/navbar.css'
 import MenuDropdown from "./forms/MenuDropdown"
+
 
 const Navbar = ({setFirstPage}) => {
 
@@ -18,7 +19,11 @@ const Navbar = ({setFirstPage}) => {
 
 
     const handleLogout = e => {
-        user.logout()
+        user.logout().then(() => {
+            console.log("User logged out")
+            console.log(user)
+        })
+        
     }
 
     const handleTitle = e => {
@@ -42,6 +47,7 @@ const Navbar = ({setFirstPage}) => {
             <div className={`links ${activateMenu ? "active" : ""}`}>
                 <Link to="/about">About</Link>
                 <Link to="/faq">FAQ</Link>
+
                 {!user.isLoggedIn() && <Link to="/login">Log in</Link>}
                 {!user.isLoggedIn() && <Link className="signup-button" to="/signup">Sign Up</Link>}
                 {user.isLoggedIn() && <MenuDropdown>
