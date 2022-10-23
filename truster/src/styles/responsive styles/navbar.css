@@ -1,0 +1,88 @@
+.navbar {
+    width: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+}
+
+.navbar .title {
+    font-size: 1.5rem;
+    margin: .5rem;
+}
+
+.navbar .actions {
+    display: none;
+}
+
+.navbar .links {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.navbar .links.active {
+    display: flex;
+}
+
+
+.navbar a {
+    text-decoration: none;
+    color: black;
+    height: fit-content;
+    text-align: center;
+    padding: .25rem 0;
+}
+
+.toggle-button {
+    position: absolute;
+    top: .75rem;
+    right: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 22px;
+}
+
+.toggle-button .bar {
+    height: 3px;
+    width: 100%;
+    background-color: black;
+    border-radius: 10px;
+}
+
+@media only screen and (min-width: 768px) {
+    .toggle-button {
+        display: none;
+    }
+
+    .navbar {
+        flex-direction: row;
+    }
+
+    .navbar .links {
+        display: flex;
+        flex-direction: row;
+        margin: auto 0;
+        margin-right: 0;
+        width: fit-content;
+    }
+
+    .navbar a {
+        margin: auto 10px;
+        font-size: 14px;
+    }
+
+    .navbar .links .signup-button {
+        margin: 5px 10px;
+        padding: 8px 10px;
+        background: rgba(217, 217, 217, 0.04);
+        background-blend-mode: lighten;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+    }
+}
