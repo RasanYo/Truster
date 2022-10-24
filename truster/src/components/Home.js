@@ -4,6 +4,7 @@ import { IoMdMap } from "react-icons/io"
 import { BsCalendar3 } from "react-icons/bs"
 import { AiOutlineArrowRight } from "react-icons/ai"
 import "../styles/home.css"
+// import "../styles/responsive styles/home.css"
 import city from "../res/city drawing.png"
 import Input from "./forms/Input";
 
@@ -26,6 +27,7 @@ const Home = () => {
             </div>
             <div className="content-container">
                 <img 
+                    className="pc-image"
                     src={city} 
                     alt="city"
                     width={400}
@@ -55,6 +57,7 @@ const Home = () => {
                             strikethroughThickness={2}
                         />
                     </div>
+                    
                 </form>
             </div>
         </div>

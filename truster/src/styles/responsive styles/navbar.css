@@ -14,7 +14,8 @@
 }
 
 .navbar .actions {
-    display: none;
+    /* display: none; */
+    margin: auto 0;
 }
 
 .navbar .links {
@@ -68,7 +69,7 @@
         display: flex;
         flex-direction: row;
         margin: auto 0;
-        margin-right: 0;
+        margin-right: 30px;
         width: fit-content;
     }
 

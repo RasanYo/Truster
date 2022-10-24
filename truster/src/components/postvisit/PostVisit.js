@@ -1,74 +1,46 @@
-import Input from '../forms/Input'
-import {AiOutlinePlusSquare} from 'react-icons/ai'
-import { useContext } from 'react';
-import { ErrorContext } from './PostVisitContainer';
-import AutoComplete from '../AutoComplete';
+import AutoComplete from "../AutoComplete";
+import Input from "../forms/Input";
 
 const PostVisit = ({
-    address, setAddress,
-    timeframe, handleChangeTimeframe,
-    description, handleChangeDescription,
+    setAddress,
+    data, handleChange,
     onSubmit
 }) => {
-
-    const showErrors = useContext(ErrorContext)
-
     return ( 
         <form onSubmit={onSubmit}>
-            <h3>Where is the visit taking place ?</h3>
-            <div className="input space-bottom">
-                <div className="container max-width ">
-                    <h5>Address</h5>
-                    <AutoComplete 
-                        setAddress={setAddress}
-                        inputProps={{placeholder: "Type address", className: 'location-search-input max-width', required: true}}
-                    />
-                </div>
-                <h6 className="err-msg" style={{
-                    opacity: showErrors && !address  ? '1' : '0'
-                }}>*Please enter a valid address</h6>
-            </div>
-            
-            <div className="row-container">
+            <AutoComplete
+                setAddress={setAddress}
+                inputProps={{placeholder: "Type address", className: 'location-search-input max-width', required: true}}
+            />
+            <span>
                 <Input
-                    name="start"
-                    title="Start"
-                    value={timeframe.start}
-                    onChange={handleChangeTimeframe}
-                    error={showErrors && (timeframe.start.length === 0 || new Date(timeframe.start).getTime() > new Date(timeframe.end).getTime())}
-                    inputProps={{ required:true, type: 'date' }}
-                    className="space-right fit-width"
+                    name="start" 
+                    title="Between"
+                    value={data.start}
+                    onChange={handleChange}
+                    inputProps={{type: "date"}}
                 />
                 <Input
-                    name="end"
-                    title="End"
-                    value={timeframe.end}
-                    onChange={handleChangeTimeframe}
-                    error={showErrors && (timeframe.end.length === 0 || new Date(timeframe.start).getTime() > new Date(timeframe.end).getTime())}
-                    inputProps={{ required:true, type: 'date' }}
-                    className="fit-width"
+                    name="end" 
+                    title="And"
+                    value={data.end}
+                    onChange={handleChange}
+                    inputProps={{type: "date"}}
                 />
-            </div>
+            </span>
             <div className="input styled-textarea">
                 <div className="container">
                     <h5>Description</h5>
                     <textarea
                         name="description"
-                        value={description}
+                        value={data.description}
                         rows={10}
-                        onChange={handleChangeDescription}
+                        onChange={handleChange}
                         placeholder="Describe here what you would expect from your trusty"
                     />
                 </div>
-                
             </div>
-
-            <button className="btn">
-                <AiOutlinePlusSquare size={20} />
-                <h6>Post</h6>
-            </button>
-            
-            
+            <button>Post</button>
         </form>
      );
 }
