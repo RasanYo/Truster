@@ -5,6 +5,7 @@ import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import { Post } from "../../objects/Post";
 import { useContext } from "react";
 import { UserContext } from "../../App";
+import useData from "../../hooks/useData";
 
 export const ErrorContext = createContext(null)
 
@@ -30,29 +31,18 @@ const PostVisitContainer = () => {
 
     const [address, setAddress] = useState(null)
 
-    const [timeframe, setTimeframe] = useState({
+    const {data, handleChange} = useData({
         start: "",
-        end: ""
+        end: "",
+        description: "",
     })
-    const handleChangeTimeframe = e => {
-        let field = e.target.name
-        let newTimeframe = timeframe
-        newTimeframe[field] = e.target.value
-        setTimeframe(newTimeframe)
-    }
-
-    const [description, setDescription] = useState("")
-    const handleChangeDescription = e => {
-        e.preventDefault()
-        setDescription(e.target.value)
-    }
 
     const onSubmit = e => {
         e.preventDefault()
         setShowErrors(true)
-        if (!address || new Date(timeframe.start).getTime() > new Date(timeframe.end).getTime()) return false
+        if (!address || new Date(data.start).getTime() > new Date(data.end).getTime()) return false
         else {
-            const post = new Post(address, timeframe, description, user.getUID())
+            const post = new Post(address, {start: data.start, end: data.end}, data.description, user.getUID())
             user.post(post).then(() => console.log("Successfully posted"))
         }
     }
@@ -62,9 +52,9 @@ const PostVisitContainer = () => {
             <h1 className="fit-width">Post a visit</h1>
             <ErrorContext.Provider value={showErrors}>
                 <PostVisit
-                    address={address} setAddress={setAddress}
-                    timeframe={timeframe} handleChangeTimeframe={handleChangeTimeframe}
-                    description={description} handleChangeDescription={handleChangeDescription}
+                    setAddress={setAddress}
+                    data={data}
+                    handleChange={handleChange}
                     onSubmit={onSubmit}
                 />
             </ErrorContext.Provider>

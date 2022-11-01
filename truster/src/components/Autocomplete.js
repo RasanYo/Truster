@@ -6,7 +6,7 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 import { ErrorToastContext } from "../App";
 
-const AutoComplete2 = ({
+const AutoComplete = ({
     setAddress,
     inputProps={},
     searchOptions={types: ['street_number', 'route', 'locality', 'postal_code', 'country']},
@@ -86,4 +86,4 @@ const AutoComplete2 = ({
      );
 }
  
-export default AutoComplete2;
+export default AutoComplete;

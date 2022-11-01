@@ -1,0 +1,35 @@
+.home {
+    max-width: fit-content;
+    margin: auto;
+}
+
+.home .text-container {
+    justify-content: center;
+    padding: 1rem;
+}
+
+.home .text-container h1 {
+    font-size: 28px;
+    font-weight: 550;
+    line-height: 32px;
+}
+
+.home .text-container h2{
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.home .text-container h3{
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.home .content-container form {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+/* .home .content-container form * {
+    width: 100%;
+} */

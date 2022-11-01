@@ -1,4 +1,4 @@
-import { deleteUser, EmailAuthProvider, getAuth, reauthenticateWithCredential, reauthenticateWithPopup, sendEmailVerification, signOut,updateEmail,updatePassword, updateProfile } from "firebase/auth"
+import { deleteUser, EmailAuthProvider, getAuth, reauthenticateWithCredential, sendEmailVerification, signOut,updateEmail,updatePassword, updateProfile } from "firebase/auth"
 import { AbstractUser } from "./AbstractUser"
 import { 
     setDoc, 
@@ -11,13 +11,7 @@ import {
     deleteDoc
 } from "firebase/firestore"
 import { COLLECTIONS } from "../Constants"
-import { 
-    geohashForLocation,
-    geohashQueryBounds,
-    distanceBetween
-} from "geofire-common"
 import { postConverter } from "./Post"
-import { useNavigate } from "react-router-dom"
 
 
 

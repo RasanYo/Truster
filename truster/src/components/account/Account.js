@@ -4,19 +4,16 @@ import "../../styles/account.css"
 import Profil from "../profile/Profil.js"
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
+import PostList from "../displayPosts/PostList";
 
 const Account = ({startPage}) => {
     const {user} = useContext(UserContext)
     const [userData,setUserData] = useState("")
     
     useEffect(()=>{
-        console.log("entering useEffect")
-        console.log(user)
         user.getPersonalInformation().then(snapshot => {
             setUserData(snapshot.data())
-            console.log(snapshot.data())
         })
-        console.log("exiting useEffect")
     }, [])
 
     return (
@@ -25,8 +22,9 @@ const Account = ({startPage}) => {
             <PageWithMenuContainer startPage={startPage}>
                 <MenuItem link="Profile" element={<Profil userData={userData} setUserData={setUserData}/>}/>
                 {/* <MenuItem link="My Posts" element={<PostList />}/> */}
-                <MenuItem link="My Visits" element={<div>My Visits</div>}/>
-                <MenuItem link="Messages" element={<div>Messages</div>}/>
+                <MenuItem link="My Posts" element={<PostList posts={userData.myPosts} />} />
+                <MenuItem link="My Visits" element={<div>My Visits</div>} />
+                <MenuItem link="Messages" element={<div>Messages</div>} />
             </PageWithMenuContainer>
         </div>
      );

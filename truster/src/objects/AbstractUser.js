@@ -1,4 +1,3 @@
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import {
     collection, 

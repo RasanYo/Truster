@@ -94,6 +94,7 @@ function App() {
                   {user.isLoggedIn() && <Route path="/post" element={<PostVisitContainer />} />}
                   {user.isLoggedIn() && <Route path="/account" element={<Account />}/>}
                   <Route path="*" element={<div>Not found...</div>}/>
+                  <Route path="/post" element={<PostVisitContainer />} />
                 </Routes>
               </div>
             </div>
