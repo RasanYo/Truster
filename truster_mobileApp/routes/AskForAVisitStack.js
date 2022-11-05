@@ -35,14 +35,24 @@ function AskForAVisitStack(){
     return (
         // <NavigationContainer>
             <Stack.Navigator screenOptions={{
-                headerShown : false,
-                animation:"slide_from_bottom",
-                presentation:"modal"
-            }}>
+                headerShown : false,}}>
                 <Stack.Screen name="Menu" component={Menu}/>
-                <Stack.Screen name="SignUp" component={SignUp}/>
-                <Stack.Screen name="Login" component={Login}/>
-                <Stack.Screen name="VisitForm" component={VisitForm}/>
+                <Stack.Group screenOptions={{
+                    animation:"slide_from_bottom",
+                    presentation:"modal",
+                    headerShown : true,
+                }}>
+                    
+                    <Stack.Screen name="SignUp" component={SignUp} options={{ title: 'Sign Up or Login' }}/>
+                    <Stack.Screen name="Login" component={Login}/>
+                </Stack.Group>
+
+                <Stack.Group>
+                    {/* <Stack.Screen name="Menu" component={Menu}/> */}
+                    <Stack.Screen name="VisitForm" component={VisitForm}/>
+                </Stack.Group>
+                
+                
             </Stack.Navigator>
         // </NavigationContainer>
         

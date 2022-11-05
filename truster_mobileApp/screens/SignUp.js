@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import { UserContext } from "../App";
 
 export default function SignUp(){
@@ -16,6 +16,10 @@ export default function SignUp(){
         aboutMe: "Pas besoin mec",
         picture: null,
     })
+
+    // loginOrSignUp = (email) => {
+
+    // }
 
     const submitUser = (e) => {
         e.preventDefault()
@@ -75,14 +79,55 @@ export default function SignUp(){
 
     return (
         <View>
-            <Text onPress={submitUser}>
-                Sign up
-            </Text>
-            {/* <TextInput placeholder="firstName" value={userState.firstName} style={{marginLeft:10,fontSize:17}} onChangeText={text => setFirstName(text)}></TextInput>
-            <TextInput placeholder="email" value={userState.email} style={{marginLeft:10,fontSize:17}} onChangeText={text => setEmail(text)}></TextInput>
-            <TextInput placeholder="password" value={userState.password} style={{marginLeft:10,fontSize:17}} onChangeText={text => setPassword(text)}></TextInput>
-            <TextInput placeholder="passwordconfirmation" value={userState.passwordConfirmation} style={{marginLeft:10,fontSize:17}} onChangeText={text => setPasswordConfirmation(text)}></TextInput> */}
+            <View>
+                <View style={styles.componentStyle}>
+                    {/* <TextInput placeholder="firstName" value={userState.firstName} style={{marginLeft:10,fontSize:17}} onChangeText={text => setFirstName(text)}></TextInput> */}
+                    <TextInput placeholder="Adresse email" value={userState.email} style={styles.text} onChangeText={text => setEmail(text)}></TextInput>
+                    {/* <TextInput placeholder="password" value={userState.password} style={{marginLeft:10,fontSize:17}} onChangeText={text => setPassword(text)}></TextInput>
+                    <TextInput placeholder="passwordconfirmation" value={userState.passwordConfirmation} style={{marginLeft:10,fontSize:17}} onChangeText={text => setPasswordConfirmation(text)}></TextInput> */}
+                </View>
+                <View style={[styles.componentStyle,{backgroundColor: userState.email.length == 0 ? "#c4c4c4" : "#FFCB66",}]}>
+                    <Text onPress={submitUser} style={{textAlign:"center",fontSize:17,}}>
+                        Continue
+                    </Text>
+                </View>
+                
+            </View>
+            <View style={{marginTop:50,}}>
+                    <Text>
+                        Continue with : 
+                    </Text>
+                <View style={styles.componentStyle}>  
+                    <Text style={{textAlign:"center"}}>Google</Text>
+                </View>
+                <View style={styles.componentStyle}>  
+                    <Text style={{textAlign:"center"}}>Apple</Text>
+                </View>
+                <View style={styles.componentStyle}>  
+                    <Text style={{textAlign:"center"}}>Facebook</Text>
+                </View>
+            
+            </View>
             
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    componentStyle : {
+        marginTop:30,
+        marginHorizontal:20,
+        padding:10,
+        // backgroundColor:"red",
+        borderColor:"gray",
+        borderWidth:1,
+        borderRadius:7,
+        height:50,
+        justifyContent:"center",
+    },
+
+    text : {
+        marginLeft:10,
+        fontSize:17
+    }
+})
