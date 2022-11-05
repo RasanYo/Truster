@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
-import { FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import {FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+// import {FlatList} from 'react-native-gesture-handler'
 import {AntDesign} from "@expo/vector-icons"
 import {FontAwesome} from "@expo/vector-icons"
-import { FontAwesome5 } from '@expo/vector-icons';
+import {FontAwesome5} from '@expo/vector-icons';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 
@@ -116,7 +117,8 @@ export default function VisitForm({navigation}){
                             
                             {item.icon}
                             <Text style={styles.accomodationText}> {item.text}</Text>
-                        </TouchableOpacity>)}
+                        </TouchableOpacity>
+                        )}
                 />
             </View>
 
