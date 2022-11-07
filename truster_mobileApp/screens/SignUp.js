@@ -5,15 +5,17 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Ionicons } from '@expo/vector-icons';
 import { FirebaseError } from "firebase/app";
 
-export default function SignUp({emailGiven,navigation}){
+export default function SignUp({navigation,parameters}){
     const {user} = useContext(UserContext)
+
+    const {emailGiven} = parameters.params
 
     const [userState, setUserState] = useState({
         gender: "Others",
         firstName: "",
         lastName: "",
         birthdate: "",
-        email: emailGiven,
+        email: emailGiven.params,
         password: "",
         passwordConfirmation: "",
         aboutMe: "Pas besoin mec",
