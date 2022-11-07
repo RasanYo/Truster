@@ -1,7 +1,7 @@
 import Menu from "../screens/Menu";
 import VisitForm from "../screens/VisitForm";
-import Login from "../screens/Login";
 import SignUp from "../screens/SignUp";
+import LoginMenu from "../screens/LoginMenu";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from '@react-navigation/native';
@@ -42,9 +42,14 @@ function AskForAVisitStack(){
                     presentation:"modal",
                     headerShown : true,
                 }}>
-                    
-                    <Stack.Screen name="SignUp" component={SignUp} options={{ title: 'Sign Up or Login' }}/>
-                    <Stack.Screen name="Login" component={Login}/>
+                    <Stack.Screen name="LoginMenu" component={LoginMenu} options={{ title: 'Sign Up or Login' }}/>
+                </Stack.Group>
+
+                <Stack.Group screenOptions={{
+                    presentation:"modal",
+                    headerShown : true,
+                }}>
+                    <Stack.Screen name="SignUp" component={SignUp}/>
                 </Stack.Group>
 
                 <Stack.Group>

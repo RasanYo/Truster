@@ -168,7 +168,7 @@ export class Guest extends AbstractUser{
     }
 
     isEmailRegistered(email) {
-
+        
     }
 
     

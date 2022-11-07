@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { doc, getDoc, getFirestore, where } from "firebase/firestore";
 import {
     collection, 
     getDocs, 
@@ -125,6 +125,12 @@ export class AbstractUser {
         const userCollectionRef = collection(this.db, COLLECTIONS.REGULAR_USERS)
         const userDocRef = doc(userCollectionRef, uid)
         return getDoc(userDocRef).then(doc => {return doc.data() ? uid : null})
+    }
+
+    userExistsByEmail(email) {
+        const q = query(collection(this.db,COLLECTIONS.REGULAR_USERS), where("email","==",email))
+        return getDocs(q).then(snapshot => {
+            return snapshot.docs.length != 0} )
     }
 
     userComplete(uid) {
