@@ -41,7 +41,7 @@ const Navbar = ({setFirstPage}) => {
                 <span className="bar"></span>
             </div>
             <div className="actions">
-                <Link to="/login">Make a visit</Link>
+                <Link to="/search">Make a visit</Link>
                 <Link to="/post">Post a visit</Link>
             </div>
             <div className={`links ${activateMenu ? "active" : ""}`}>

@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import PostVisitContainer from './components/postvisit/PostVisitContainer';
 import Account from './components/account/Account';
 import ComplementaryInfo from './components/signup/ComplementaryInfo';
+import MakeVisit from './components/makevisit/MakeVisit';
 
 
 export const UserContext = createContext(null)
@@ -93,8 +94,9 @@ function App() {
                   {user.isLoggedIn() && <Route path="/profile" element={<Profil/>}/>}
                   {user.isLoggedIn() && <Route path="/post" element={<PostVisitContainer />} />}
                   {user.isLoggedIn() && <Route path="/account" element={<Account />}/>}
+                  <Route path="/search" element={<MakeVisit />}/>
                   <Route path="*" element={<div>Not found...</div>}/>
-                  <Route path="/post" element={<PostVisitContainer />} />
+    
                 </Routes>
               </div>
             </div>

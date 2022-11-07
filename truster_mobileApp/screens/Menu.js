@@ -23,7 +23,9 @@ export default function Menu({navigation}) {
 
             </View>
             
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={() => {
+                navigation.navigate("VisitAppartments")
+            }}>
                 <View style={styles.button}>
                     <Text style={styles.buttonTitle}>Make a Visit</Text>
                     <Text style={styles.buttonDescription}>You want to visit an apartment ?</Text>
@@ -31,9 +33,8 @@ export default function Menu({navigation}) {
             </TouchableWithoutFeedback>
 
             <TouchableWithoutFeedback onPress={() => {
-                
-                navigation.navigate("VisitForm")}
-                } >
+                navigation.navigate("VisitForm")
+            }}>
                 <View style={styles.button}>
                     <Text style={styles.buttonTitle}>Ask for a Visit</Text>
                     <Text style={styles.buttonDescription}>You're looking for someone to trust with your visit ?</Text>

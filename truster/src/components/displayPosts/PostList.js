@@ -4,7 +4,7 @@ import PostContainer from "./PostContainer";
 
 const PostList = ({
     posts=null,
-    defaultChunkSize=3
+    defaultChunkSize=1
 }) => {
 
     const [chunkSize, setChunkSize] = useState(defaultChunkSize)
