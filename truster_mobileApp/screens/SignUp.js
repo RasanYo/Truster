@@ -8,14 +8,14 @@ import { FirebaseError } from "firebase/app";
 export default function SignUp({navigation,parameters}){
     const {user} = useContext(UserContext)
 
-    const {emailGiven} = parameters.params
+    // const {emailGiven} = parameters.params
 
     const [userState, setUserState] = useState({
         gender: "Others",
         firstName: "",
         lastName: "",
         birthdate: "",
-        email: emailGiven.params,
+        email: "",
         password: "",
         passwordConfirmation: "",
         aboutMe: "Pas besoin mec",
