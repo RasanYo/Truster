@@ -1,4 +1,4 @@
-import AutoComplete from "../AutoComplete";
+import AutoComplete from "../Autocomplete";
 import Input from "../forms/Input";
 
 const PostVisit = ({

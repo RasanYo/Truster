@@ -7,7 +7,7 @@ export default function Menu({navigation}) {
 
     useEffect(() => {
         if(!user.isLoggedIn()){
-            navigation.navigate("Login")
+            navigation.navigate("VisitForm")
         }
     },[])
 

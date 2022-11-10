@@ -5,6 +5,8 @@ import {AntDesign} from "@expo/vector-icons"
 import {FontAwesome} from "@expo/vector-icons"
 import {FontAwesome5} from '@expo/vector-icons';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import AutoComplete2 from "../objects/autocomplete/Autocomplete2";
+import Autocomplete3 from "../objects/autocomplete/Autocomplete3";
 
 
 
@@ -106,8 +108,13 @@ export default function VisitForm({navigation}){
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Where is the visit taking place ?</Text>
                 <View style={styles.adressInput}>
-                    <AntDesign name="search1" size={20}/>
-                    <TextInput placeholder="Type adress" value={adress} onChangeText={setAdress} style={{marginLeft:10,fontSize:17}}></TextInput>
+                    <AntDesign name="search1" size={20} style={{marginTop:13}}/>
+                    {/* <TextInput placeholder="Type adress" value={adress} onChangeText={setAdress} style={{marginLeft:10,fontSize:17}}></TextInput> */}
+                    {/* <AutoComplete2 setAddress={setAdress} 
+                                   neccessaryDetails={['locality','country']}
+                                   inputProps={{placeholder:"Type adress",required:true}} 
+                                   searchOptions={{types : ['locality','country']}}></AutoComplete2> */}
+                    <Autocomplete3></Autocomplete3>
                 </View>
                 
                 <FlatList data={accomodationOption} horizontal={true}
@@ -184,12 +191,12 @@ const styles = StyleSheet.create({
     },
 
     adressInput : {
-        padding:15,
+        padding:10,
         borderColor : "solid",
         borderStyle:"solid",
         borderWidth:1,
         borderRadius:10,
-        marginTop:20,
+        marginTop:10,
         flexDirection:"row",
 
     },

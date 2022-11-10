@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "../../styles/inputField.css"
-import AutoComplete from "../AutoComplete";
-
+import AutoComplete from "../Autocomplete";
 
 const InputLocation = ({ 
     id=null,

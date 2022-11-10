@@ -1,14 +1,14 @@
 import { Text, View, StyleSheet } from "react-native";
 import PostList from "../components/PostList";
-import { useFonts } from 'expo-font';
+// import { useFonts } from 'expo-font';
 import Autocomplete from "../objects/autocomplete/Autocomplete";
 
 
 export default function VisitAppartments({navigation}){
 
-    const [fontsLoaded] = useFonts({
-        'NTR': require('../assets/fonts/NTR-Regular.ttf')
-      });
+    // const [fontsLoaded] = useFonts({
+    //     'NTR': require('../assets/fonts/NTR-Regular.ttf')
+    //   });
 
     const posts = [
         {
@@ -52,12 +52,12 @@ export default function VisitAppartments({navigation}){
 
     return ( 
         <View style={styles.mainContainer}>
-            <View style={{margin: '2rem'}}>
+            <View style={{margin: 30}}>
                 <Text style={styles.title}>Visit appartments,</Text>
                 <Text style={styles.title2}>Make Money</Text>
             </View>
             <View>
-                <AutoComplete />
+                {/* <AutoComplete /> */}
             </View>
             <Text onPress={() => navigation.navigate("Menu")}>go back</Text>
             <PostList posts={posts}/>
@@ -71,15 +71,15 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontFamily: 'NTR',
-        fontSize: '45px',
-        lineHeight: '1.25'
+        // fontFamily: 'NTR',
+        fontSize: 45,
+        lineHeight: 1.25
     },
 
     title2: {
-        fontFamily: 'NTR',
-        fontSize: '45px',
-        lineHeight: '1.25',
+        // fontFamily: 'NTR',
+        fontSize: 45,
+        lineHeight: 1.25,
         color: '#00D394'
     }
 })

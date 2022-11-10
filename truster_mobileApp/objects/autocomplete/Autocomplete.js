@@ -1,8 +1,8 @@
 import React from "react";
 import { ScrollView, TextInput, View, StyleSheet, Text, SafeAreaView } from "react-native";
-import { GoogleAutoComplete } from "react-native-google-autocomplete";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import LocationItem from "./LocationItem";
+// import { GoogleAutoComplete } from "react-native-google-autocomplete";
+// import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+// import LocationItem from "./LocationItem";
 
 
 const Autocomplete = () => {
@@ -110,8 +110,8 @@ const styles = StyleSheet.create({
     },
 
     textInput: {
-        height: '40px',
-        width: '300px',
+        height: 40,
+        width: 300,
         borderWidth: 1
     }
 })

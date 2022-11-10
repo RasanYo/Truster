@@ -4,12 +4,12 @@ import { useFonts } from 'expo-font';
 
 const PostContainer = ({post=null}) => {
 
-    const [fontsLoaded] = useFonts({
-        'NTR': require('../assets/fonts/NTR-Regular.ttf'),
-        'Inter-Bold' : require('../assets/fonts/Inter-Bold.ttf'),
-        'Inter-SemiBold' : require('../assets/fonts/Inter-SemiBold.ttf'),
-        'Inter' : require('../assets/fonts/Inter-Regular.ttf')
-      });
+    // const [fontsLoaded] = useFonts({
+    //     'NTR': require('../assets/fonts/NTR-Regular.ttf'),
+    //     'Inter-Bold' : require('../assets/fonts/Inter-Bold.ttf'),
+    //     'Inter-SemiBold' : require('../assets/fonts/Inter-SemiBold.ttf'),
+    //     'Inter' : require('../assets/fonts/Inter-Regular.ttf')
+    //   });
 
     const styles = StyleSheet.create({
 
@@ -17,8 +17,8 @@ const PostContainer = ({post=null}) => {
             backgroundColor: 'white',
             display: "flex",
             flexDirection: "row",
-            paddingLeft: '2rem',
-            paddingRight: '2rem',
+            paddingLeft: 20,
+            paddingRight: 20,
             borderStyle: "solid",
             borderColor: "#CACACA",
             borderWidth: 1,
@@ -30,48 +30,48 @@ const PostContainer = ({post=null}) => {
         leftContainer: {
             textAlign: "left",
             flex: '3',
-            marginTop: '2rem',
-            marginBottom: '2rem'
+            marginTop: 20,
+            marginBottom: 20
 
         },
         rightContainer: {
             textAlign: "right",
             flex: '2',
-            marginTop: '1rem',
-            marginBottom: '1rem'
+            marginTop: 10,
+            marginBottom: 10
         },
 
 
         neighborhood: {
-            fontFamily: 'NTR',
-            fontSize: '24px',
+            // fontFamily: 'NTR',
+            fontSize: 24,
             lineHeight: '0.5'
         },
 
         city: {
-            fontFamily: 'NTR',
-            fontSize: '16px',
+            // fontFamily: 'NTR',
+            fontSize: 16,
             color: '#939393',
             lineHeight: '2'
         },
 
         timeframe: {
-            fontFamily: 'Inter-SemiBold',
-            fontSize: '14px',
+            // fontFamily: 'Inter-SemiBold',
+            fontSize: 14,
             opacity: '0.85',
             lineHeight: '0.5'
         },
 
         price: {
-            fontFamily: 'Inter-SemiBold',
-            fontSize: '20px',
+            // fontFamily: 'Inter-SemiBold',
+            fontSize: 20,
             fontWeight: 'bold',
-            marginTop: '4px',
-            marginBottom: '7px'
+            marginTop: 4,
+            marginBottom: 7,
         },
 
         houseType: {
-            fontFamily: 'Inter-SemiBold',
+            // fontFamily: 'Inter-SemiBold',
             color: '#968E8E',
             opacity: '0.74',
             lineHeight: '1'
