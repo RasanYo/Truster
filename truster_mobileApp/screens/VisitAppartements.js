@@ -2,7 +2,6 @@ import { Text, View, StyleSheet } from "react-native";
 import PostList from "../components/PostList";
 import { useFonts } from 'expo-font';
 import Autocomplete from "../objects/autocomplete/Autocomplete";
-// import AutoComplete from "../components/AutoComplete";
 
 
 const VisitAppartments = ({navigation}) => {
@@ -57,7 +56,9 @@ const VisitAppartments = ({navigation}) => {
                 <Text style={styles.title}>Visit appartments,</Text>
                 <Text style={styles.title2}>Make Money</Text>
             </View>
-            <Autocomplete />
+            <View>
+                <AutoComplete />
+            </View>
             <Text onPress={() => navigation.navigate("Menu")}>go back</Text>
             <PostList posts={posts}/>
         </View>
