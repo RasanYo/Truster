@@ -21,6 +21,9 @@ export default function LoginMenu({navigation}){
     const loginOrSignUp = (email) => {
         user.userExistsByEmail(email).then(bool => {
             //Si un compte existe déjà, log in
+            if(isLoggingIn == true){
+                login(email,userState.password)
+            }
             if(bool){
                 setIsLoggingIn(true)
             }
@@ -32,41 +35,14 @@ export default function LoginMenu({navigation}){
 
     }
 
-    const submitUser = (e) => {
-        e.preventDefault()
-        if (userState.password === userState.passwordConfirmation) {
-            user.signup(userState)
-                .then(() => {
-                    console.log("Account created")
-                })
-                .catch(err => {
-                    if (err instanceof FirebaseError) {
-                        if (err.code === "auth/email-already-in-use") {
-                            console.log("there is already someone with this email adress")
-                        }
-                    } else {
-                        console.log(err)
-                    }
+    const login = (email,password) => {
+        user.login(email, password)
+            .then(() => navigate("/"))
+            .catch(error => {
+                console.log(error.message)
             })
-        } else {
-            return false
-        }
     }
-
-    const handleChange = ( text,name) => {
-        console.log(text)
-        console.log(name)
-        let newUser = userState
-        newUser[name] = text
-        setUserState(newUser)
-    }
-
-    const setFirstName = text => {
-        setUserState(existingValues => ({
-            ...existingValues,
-            firstName : text
-        }))
-    }
+    
 
     const setEmail = text => {
         setUserState(existingValues => ({
@@ -82,13 +58,6 @@ export default function LoginMenu({navigation}){
         }))
     }
 
-    const setPasswordConfirmation = text => {
-        setUserState(existingValues => ({
-            ...existingValues,
-            passwordConfirmation : text
-        }))
-    }
-
     return (
         <View>
             <View>
@@ -98,9 +67,6 @@ export default function LoginMenu({navigation}){
                 </View>
                 {isLoggingIn && <View style={styles.componentStyle}>
                     <TextInput placeholder="password" value={userState.password} style={{marginLeft:10,fontSize:17}} onChangeText={text => setPassword(text)} autoCapitalize="none" autoCorrect={false}></TextInput>
-                </View>}
-                {isLoggingIn && <View style={styles.componentStyle}>
-                    <TextInput placeholder="passwordconfirmation" value={userState.passwordConfirmation} style={{marginLeft:10,fontSize:17}} onChangeText={text => setPasswordConfirmation(text)} autoCapitalize="none" autoCorrect={false}></TextInput>
                 </View>}
                 <View style={[styles.componentStyle,{backgroundColor: userState.email.length == 0 ? "#c4c4c4" : "#FFCB66",}]}>
                     <Text style={{textAlign:"center",fontSize:17,}} onPress={() => loginOrSignUp(userState.email)}>

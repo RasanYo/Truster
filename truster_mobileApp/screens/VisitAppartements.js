@@ -4,7 +4,7 @@ import { useFonts } from 'expo-font';
 // import AutoComplete from "../components/AutoComplete";
 
 
-const VisitAppartments = ({navigation}) => {
+export default function VisitAppartments({navigation}){
 
     const [fontsLoaded] = useFonts({
         'NTR': require('../assets/fonts/NTR-Regular.ttf')
@@ -84,4 +84,3 @@ const styles = StyleSheet.create({
     }
 })
  
-export default VisitAppartments;

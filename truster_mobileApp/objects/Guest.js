@@ -20,6 +20,14 @@ export class Guest extends AbstractUser{
         return signInWithPopup(getAuth(), provider)
     }
 
+    login() {
+        user.login(email, password)
+            .then(() => navigation.navigate("Menu"))
+            .catch(error => {
+                console.log(error.message)
+                // setIsGoodPassword(false) 
+            })
+    }
 
     /**
      * 
