@@ -13,7 +13,6 @@ export default function Login(){
         <View>
             <Text>
                 Login Page
-
             </Text>
         </View>
     )
