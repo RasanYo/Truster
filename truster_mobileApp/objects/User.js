@@ -66,7 +66,9 @@ export class User extends AbstractUser{
         setDoc(postRef, post)
         const userRef = doc(getFirestore(), COLLECTIONS.REGULAR_USERS, this.#uid)
         
-        return updateDoc(userRef, {myPosts : arrayUnion(post.asDataObject())})
+        return updateDoc(userRef, {myPosts : arrayUnion(post.asDataObject())}).catch(err => {
+            return setDoc(userRef, {myPosts : arrayUnion(post.asDataObject())})
+        })
     }
 
 

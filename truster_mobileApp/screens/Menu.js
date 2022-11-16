@@ -1,15 +1,31 @@
+import { useNavigation } from "@react-navigation/native";
 import { useContext, useEffect } from "react";
 import { TouchableWithoutFeedback, View, Text, StyleSheet, Image } from "react-native";
 import { UserContext } from "../App";
+import { auth } from '../firebase';
+import { Guest } from "../objects/Guest";
 
 export default function Menu({navigation}) {
-    const { user } = useContext(UserContext)
+
+    const {user,setUser} = useContext(UserContext)
+    // const navigation = useNavigation()
 
     useEffect(() => {
-        if(!user.isLoggedIn()){
-            navigation.navigate("VisitForm")
-        }
-    },[])
+        const unsuscribe = auth.onAuthStateChanged(u => {
+          if (u) { 
+            console.log("User is already logged in")
+            setUser(new User(u.uid, u)); 
+          } 
+          else {
+            console.log("User is not logged in")
+            setUser(new Guest())
+            navigation.navigate('LoginMenu');
+            // navigation.navigate("LoginMenu")
+          }
+        })
+    
+        return unsuscribe
+      },[])
 
     return (
         <View style={styles.container}>

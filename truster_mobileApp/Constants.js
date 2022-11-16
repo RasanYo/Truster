@@ -6,7 +6,7 @@ export const COLLECTIONS = {
     users: (country, city) => `coutries/${country}/cities/${city}/users`,
     user: (country, city, uid) => `${COLLECTIONS.users(country, city)}/${uid}`,
 
-    posts: (country, city) => `coutries/${country}/cities/${city}/posts`,
+    posts: (country, city) => `countries/${country}/cities/${city}/posts`,
     post: (country, city, id) => `${COLLECTIONS.posts(country, city)}/${id}`,
 
     PROFILE_PICTURES: "images/profile_pictures",

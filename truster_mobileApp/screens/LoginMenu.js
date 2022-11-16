@@ -1,6 +1,9 @@
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useContext, useState } from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { UserContext } from "../App";
+import { auth } from "../firebase";
+
 
 export default function LoginMenu({navigation}){
     const {user} = useContext(UserContext)
@@ -36,7 +39,8 @@ export default function LoginMenu({navigation}){
     }
 
     const login = (email,password) => {
-        user.login(email, password)
+        // console.log(user)
+        user.login(email, password).then(() => console.log("logged in"))
             .then(() => navigate("/"))
             .catch(error => {
                 console.log(error.message)
@@ -56,6 +60,15 @@ export default function LoginMenu({navigation}){
             ...existingValues,
             password : text
         }))
+    }
+
+    const handleSignUp = () => {
+        createUserWithEmailAndPassword(auth,"meneliknouvellon.pro@gmail.com","Mene4485")
+        .then(userCredentials => {
+            const user = userCredentials.user
+            console.log(user)
+        })
+        .catch(err => alert(err.message))
     }
 
     return (

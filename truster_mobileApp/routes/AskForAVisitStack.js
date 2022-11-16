@@ -38,30 +38,25 @@ function AskForAVisitStack(){
             <Stack.Navigator screenOptions={{
                 headerShown : false,}}>
                 <Stack.Screen name="Menu" component={Menu}/>
-                <Stack.Group screenOptions={{
+                
+                
+                <Stack.Screen options={{
                     animation:"slide_from_bottom",
                     presentation:"modal",
                     headerShown : true,
-                }}>
-                    <Stack.Screen name="LoginMenu" component={LoginMenu} options={{ title: 'Sign Up or Login' }}/>
-                </Stack.Group>
+                    title: 'Sign Up or Login'
+                }} name="LoginMenu" component={LoginMenu}/>
 
-                <Stack.Group screenOptions={{
+                
+                <Stack.Screen name="SignUp" component={SignUp} options={{
                     presentation:"modal",
                     headerShown : true,
-                }}>
-                    <Stack.Screen name="SignUp" component={SignUp}/>
-                </Stack.Group>
+                }}/>
 
-                <Stack.Group>
-                    {/* <Stack.Screen name="Menu" component={Menu}/> */}
-                    <Stack.Screen name="VisitForm" component={VisitForm}/>
-                </Stack.Group>
-
-                <Stack.Group>
-                    {/* <Stack.Screen name="Menu" component={Menu}/> */}
-                    <Stack.Screen name="VisitAppartments" component={VisitAppartments}/>
-                </Stack.Group>
+                
+                <Stack.Screen name="VisitForm" component={VisitForm}/>
+                
+                <Stack.Screen name="VisitAppartments" component={VisitAppartments}/>
                 
                 
             </Stack.Navigator>

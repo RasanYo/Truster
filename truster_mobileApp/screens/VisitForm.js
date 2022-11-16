@@ -1,23 +1,26 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import {FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 // import {FlatList} from 'react-native-gesture-handler'
 import {AntDesign} from "@expo/vector-icons"
 import {FontAwesome} from "@expo/vector-icons"
 import {FontAwesome5} from '@expo/vector-icons';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import AutoComplete2 from "../objects/autocomplete/Autocomplete2";
 import Autocomplete3 from "../objects/autocomplete/Autocomplete3";
+import { UserContext } from "../App";
+import { Post } from "../objects/Post";
 
 
 
 export default function VisitForm({navigation}){
-    const [adress,setAdress] = useState("")
+    const { user } = useContext(UserContext)
+    const [address,setAddress] = useState("")
     const [accomodationSelected,setAccomodationSelected] = useState(null)
     const [tomorrow, setTomorrow] = useState('');
     const [inTwoDays, setInTwoDays] = useState('');
     const [inThreeDays, setInThreeDays] = useState('');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [selectedDate, setSelectedDate] = useState();
+    const [description,setDescription] = useState("")
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
@@ -74,16 +77,6 @@ export default function VisitForm({navigation}){
         setInThreeDays(dateInThreeDays);
     }, []);
 
-    // const onSubmit = e => {
-    //     e.preventDefault()
-    //     setShowErrors(true)
-    //     if (!address || new Date(timeframe.start).getTime() > new Date(timeframe.end).getTime()) return false
-    //     else {
-    //         const post = new Post(address, timeframe, description, user.getUID())
-    //         user.post(post).then(() => console.log("Successfully posted"))
-    //     }
-    // }
-
     const accomodationOption = [
         {
             icon: <AntDesign name="home" size={20} style={styles.icon}/>,
@@ -98,6 +91,23 @@ export default function VisitForm({navigation}){
             text : "Local"
         }
     ]
+
+    const onSubmit = e => {
+        e.preventDefault()
+        // setShowErrors(true)
+        console.log("pas prevent default")
+        if (!address) return false
+        else {
+            if(!user.isLoggedIn()){
+                navigation.navigate("VisitForm")
+            }else{
+                console.log("connecté")
+            }
+            console.log(address.city)
+            const post = new Post(address, {start: selectedDate, end: selectedDate}, description, user.getUID())
+            user.post(post).then(() => console.log("Successfully posted"))
+        }
+    }
 
     return(
         
@@ -114,7 +124,7 @@ export default function VisitForm({navigation}){
                                    neccessaryDetails={['locality','country']}
                                    inputProps={{placeholder:"Type adress",required:true}} 
                                    searchOptions={{types : ['locality','country']}}></AutoComplete2> */}
-                    <Autocomplete3></Autocomplete3>
+                    <Autocomplete3 setAddress={setAddress}></Autocomplete3>
                 </View>
                 
                 <FlatList data={accomodationOption} horizontal={true}
@@ -163,6 +173,16 @@ export default function VisitForm({navigation}){
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Description</Text>
                 <TextInput placeholder="Describe here what you would expect from your trusty"></TextInput>
+            </View>
+
+            {/* Post Block */}
+            <View>
+                <View style={styles.postButton} >
+                        <Text style={{fontSize:20}} onPress={onSubmit}>
+                            Post
+                        </Text>
+                </View>
+                {/* <Text></Text> */}
             </View>
         </View>
         
@@ -230,5 +250,12 @@ const styles = StyleSheet.create({
         flexDirection:"column",
         marginRight:20,
         height:50
-    }
+    },
+
+    postButton : {
+        backgroundColor : "orange",
+        borderRadius : 10,
+        padding : 10,
+
+    },
 })
