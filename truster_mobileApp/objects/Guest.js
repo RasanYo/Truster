@@ -14,7 +14,8 @@ export class Guest extends AbstractUser{
      * @returns {Promise<UserCredential>} promise with user credentials
      */
     login(email, password) {
-        return signInWithEmailAndPassword(getAuth(), email, password)
+        console.log(email)
+        return signInWithEmailAndPassword(getAuth(), email, password).catch(err => console.log(err))
     }
 
     loginWithGoogle() {
@@ -22,14 +23,15 @@ export class Guest extends AbstractUser{
         return signInWithPopup(getAuth(), provider)
     }
 
-    login() {
-        user.login(email, password)
-            .then(() => navigation.navigate("Menu"))
-            .catch(error => {
-                console.log(error.message)
-                // setIsGoodPassword(false) 
-            })
-    }
+    // login() {
+    //     console.log("using the second login")
+    //     return this.login(email, password)
+    //         .then(() => navigation.pop())
+    //         .catch(error => {
+    //             console.log(error.message)
+    //             // setIsGoodPassword(false) 
+    //         })
+    // }
 
     /**
      * 

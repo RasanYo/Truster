@@ -5,9 +5,9 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Ionicons } from '@expo/vector-icons';
 import { FirebaseError } from "firebase/app";
 
-export default function SignUp({navigation,parameters}){
+export default function SignUp({navigation,route}){
     const {user} = useContext(UserContext)
-
+    const { emailGiven } = route.params;
     // const {emailGiven} = parameters.params
 
     const [userState, setUserState] = useState({
@@ -15,7 +15,7 @@ export default function SignUp({navigation,parameters}){
         firstName: "",
         lastName: "",
         birthdate: "",
-        email: "",
+        email: {emailGiven},
         password: "",
         passwordConfirmation: "",
         aboutMe: "Pas besoin mec",
@@ -28,7 +28,8 @@ export default function SignUp({navigation,parameters}){
     const [showPasswordConfirmation,setShowPasswordConfirmation] = useState(false)
 
     useEffect(() => {
-
+        console.log(emailGiven)
+        setEmail(emailGiven)
     },[])
 
     const showDatePicker = () => {
@@ -120,7 +121,7 @@ export default function SignUp({navigation,parameters}){
                 <View style={{height:"100%",width:"100%",backgroundColor:"beige",padding:10}}>
                     <View style={styles.componentStyle}>
                         {/* <TextInput placeholder="firstName" value={userState.firstName} style={{marginLeft:10,fontSize:17}} onChangeText={text => setFirstName(text)}></TextInput> */}
-                        <TextInput placeholder="Adresse email" value={userState.email} style={styles.text} onChangeText={text => setEmail(text)} autoCapitalize="none" autoCorrect={false}></TextInput>
+                        <TextInput placeholder="Adresse email" value={userState.email} style={styles.text} autoCapitalize="none" autoCorrect={false}></TextInput>
                     </View>
                     <View style={{flexDirection:"row"}}>
                         <View style={[styles.componentStyle,{marginRight:5,flex:1}]}>

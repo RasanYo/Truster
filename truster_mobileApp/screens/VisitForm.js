@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState } from "react"
-import {FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import {FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
 // import {FlatList} from 'react-native-gesture-handler'
 import {AntDesign} from "@expo/vector-icons"
 import {FontAwesome} from "@expo/vector-icons"
 import {FontAwesome5} from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Autocomplete3 from "../objects/autocomplete/Autocomplete3";
 import { UserContext } from "../App";
@@ -21,6 +23,12 @@ export default function VisitForm({navigation}){
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [selectedDate, setSelectedDate] = useState();
     const [description,setDescription] = useState("")
+
+    const [isErasingAll,setIsErasingAll] = useState(false)
+
+    useEffect(() => {
+        setIsErasingAll(false)
+    },[address,accomodationSelected,selectedDate,description])
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
@@ -109,39 +117,42 @@ export default function VisitForm({navigation}){
         }
     }
 
+    const eraseAll = () => {
+        setIsErasingAll(true)
+        setAccomodationSelected(null)
+        setSelectedDate(tomorrow)
+        setDescription("")
+    }
+
     return(
         
         <View style={styles.container}>
-            <Text onPress={() => navigation.navigate("Menu")} style={{marginTop:50}}>go back</Text>
-           
-            {/* First block */}
-            <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Where is the visit taking place ?</Text>
-                <View style={styles.adressInput}>
-                    <AntDesign name="search1" size={20} style={{marginTop:13}}/>
-                    {/* <TextInput placeholder="Type adress" value={adress} onChangeText={setAdress} style={{marginLeft:10,fontSize:17}}></TextInput> */}
-                    {/* <AutoComplete2 setAddress={setAdress} 
-                                   neccessaryDetails={['locality','country']}
-                                   inputProps={{placeholder:"Type adress",required:true}} 
-                                   searchOptions={{types : ['locality','country']}}></AutoComplete2> */}
-                    <Autocomplete3 setAddress={setAddress}></Autocomplete3>
+            <ScrollView>
+                <Text onPress={() => navigation.navigate("Menu")} style={{marginTop:50}}>go back</Text>
+            
+                {/* First block */}
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Where is the visit taking place ?</Text>
+                    <View style={styles.adressInput}>
+                        <AntDesign name="search1" size={20} style={{marginTop:13}}/>
+                        <Autocomplete3 setAddress={setAddress} isErasingAll={isErasingAll}></Autocomplete3>
+                    </View>
+                    
+                    <FlatList data={accomodationOption} horizontal={true}
+                        renderItem={({item}) => (
+                            <TouchableOpacity style={[styles.accomodationType,{borderColor : accomodationSelected == item.text ? "blue":"black", backgroundColor :accomodationSelected == item.text ? "#2acced":"white" }]} 
+                                            onPressIn={() => handleAccommodationSelected(item.text)} on>
+                                
+                                {item.icon}
+                                <Text style={styles.accomodationText}> {item.text}</Text>
+                            </TouchableOpacity>
+                            )}
+                    />
                 </View>
-                
-                <FlatList data={accomodationOption} horizontal={true}
-                    renderItem={({item}) => (
-                        <TouchableOpacity style={[styles.accomodationType,{borderColor : accomodationSelected == item.text ? "blue":"black", backgroundColor :accomodationSelected == item.text ? "#2acced":"white" }]} 
-                                        onPressIn={() => handleAccommodationSelected(item.text)} on>
-                            
-                            {item.icon}
-                            <Text style={styles.accomodationText}> {item.text}</Text>
-                        </TouchableOpacity>
-                        )}
-                />
-            </View>
 
 
-            {/* Second block */}
-            {selectedDate && <View style={styles.section}>
+                {/* Second block */}
+                {selectedDate && <View style={styles.section}>
                 <Text style={styles.sectionTitle}>When do you need information ?</Text>
                 <View style={{flexDirection:"row"}}>
                     <TouchableOpacity onPress={() => handleTomorrow(1)}>
@@ -165,29 +176,49 @@ export default function VisitForm({navigation}){
                         minimumDate={inThreeDays}
                     />
                     
+                    </View>
+                </View>}
+
+
+                {/* Third Block */}
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Description</Text>
+                    <TextInput placeholder="Describe here what you would expect from your trusty" value={description} onChangeText={setDescription}></TextInput>
                 </View>
-            </View>}
 
-
-            {/* Third Block */}
-            <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Description</Text>
-                <TextInput placeholder="Describe here what you would expect from your trusty"></TextInput>
-            </View>
-
-            {/* Post Block */}
-            <View>
-                <View style={styles.postButton} >
-                        <Text style={{fontSize:20}} onPress={onSubmit}>
-                            Post
-                        </Text>
-                </View>
-                {/* <Text></Text> */}
-            </View>
+                {/* Post Block */}
+                {/* <View>
+                    <View style={styles.postButton} >
+                            <Text style={{fontSize:20}} onPress={onSubmit}>
+                                Post
+                            </Text>
+                    </View>
+                </View> */}
+            </ScrollView>
+            
+            {selectedDate ? <Footer eraseAll={eraseAll} navigation={navigation} addressInfo={address} date={dateToString(selectedDate)} description={description}></Footer> : null}
         </View>
         
         
 
+    )
+}
+
+export function Footer(props){
+    return(
+        <View style={styles.footer}>
+            <Text style={styles.footerEraseAll} onPress={props.eraseAll}>
+                Erase all
+            </Text>
+            <TouchableWithoutFeedback onPress={() => props.navigation.navigate("Post",{postInformation : props.addressInfo, date: props.date,
+                                                                                        description : props.description, isJustPreview : true})}>
+                <View style={styles.footerPreview} >
+                    <MaterialIcons name="preview" size={24} color="black" />
+                    <Text style={{fontSize:"20",marginLeft:5}}>Preview</Text>
+                </View>
+            </TouchableWithoutFeedback>
+            
+        </View>
     )
 }
 
@@ -258,4 +289,33 @@ const styles = StyleSheet.create({
         padding : 10,
 
     },
+
+    footer : {
+        backgroundColor : "white",
+        flexDirection : "row",
+        padding : 10,
+        justifyContent:"space-between",
+        height:90,
+        position:"relative",
+        bottom:0,
+        alignItems:"center"
+    },
+
+    footerPreview : {
+        flexDirection:"row", 
+        backgroundColor:"#FFCB66",
+        padding:10,
+        borderRadius:10,
+        marginRight:20,
+        marginBottom:20,
+    },
+
+    footerEraseAll : {
+        marginRight:20,
+        marginBottom:20,
+        fontSize:"20", 
+        textDecorationLine:"underline",
+
+    },
+
 })

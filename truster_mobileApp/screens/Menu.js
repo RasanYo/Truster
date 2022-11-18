@@ -4,6 +4,7 @@ import { TouchableWithoutFeedback, View, Text, StyleSheet, Image } from "react-n
 import { UserContext } from "../App";
 import { auth } from '../firebase';
 import { Guest } from "../objects/Guest";
+import { User } from "../objects/User";
 
 export default function Menu({navigation}) {
 
@@ -56,6 +57,7 @@ export default function Menu({navigation}) {
                     <Text style={styles.buttonDescription}>You're looking for someone to trust with your visit ?</Text>
                 </View>
             </TouchableWithoutFeedback>
+            <Text onPress={() => user.logout()}> Logout</Text>
         </View>
     );
 }

@@ -1,9 +1,10 @@
+import { useEffect, useRef } from 'react';
 import { Text, View } from 'react-native';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 
 
-export default function Autocomplete3({setAddress}){
-
+export default function Autocomplete3({setAddress,isErasingAll}){
+    const ref = useRef()
     // const [newAdress, setNewAdress] = useState("")
     const handleSelection = (data,details) => {
         var geo = details.geometry.location
@@ -36,8 +37,17 @@ export default function Autocomplete3({setAddress}){
         }
         }
 
+    useEffect(() => {
+        if(isErasingAll){
+            console.log("should erase everything")
+            ref.current.clear()
+
+        }
+    },[isErasingAll])
+
     return (
           <GooglePlacesAutocomplete
+            ref={ref}
             placeholder="Type address"
             query={{key: "AIzaSyDESnQJUVxDZRs9_3gsMV9W_arspyJFrj4"}}
             fetchDetails={true}

@@ -25,14 +25,19 @@ export default function LoginMenu({navigation}){
         user.userExistsByEmail(email).then(bool => {
             //Si un compte existe déjà, log in
             if(isLoggingIn == true){
-                login(email,userState.password)
+                // console.log(email)
+                console.log("logging in the user")
+                // console.log(user)
+                user.login(email,userState.password).then(() => {
+                    navigation.pop()
+                })
             }
             if(bool){
                 setIsLoggingIn(true)
             }
             //Sinon sign up
             else{
-                navigation.navigate("SignUp",{emailGiven : "email"})
+                navigation.navigate("SignUp",{emailGiven : email})
             }
         })
 

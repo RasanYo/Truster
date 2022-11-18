@@ -1,6 +1,5 @@
 import { NavigationContainer} from '@react-navigation/native';
 import { RecyclerViewBackedScrollViewComponent, StyleSheet, Text, View } from 'react-native';
-import AskForAVisitStack from './routes/AskForAVisitStack';
 import { useNavigation } from '@react-navigation/native';
 
 import { navigationRef } from './';
@@ -14,13 +13,13 @@ import { User } from './objects/User';
 import { createContext, useEffect, useState } from 'react';
 
 
-import {navigate} from "./RootNavigation"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginMenu from './screens/LoginMenu';
 import Menu from './screens/Menu';
 import VisitForm from './screens/VisitForm';
 import VisitAppartments from './screens/VisitAppartements';
 import SignUp from './screens/SignUp';
+import Post from './screens/Post';
 
 export const UserContext = createContext(null)
 
@@ -40,6 +39,8 @@ export default function App() {
                 title: 'Sign Up or Login'}} name="LoginMenu" component={LoginMenu}/>
                 
                 <Stack.Screen name="SignUp" component={SignUp} options={{presentation:"modal",headerShown : true,}}/>
+
+                <Stack.Screen name="Post" component={Post}/>
 
                 <Stack.Screen name="VisitForm" component={VisitForm}/>
                       
