@@ -3,13 +3,16 @@ import { Text, View } from 'react-native';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 
 
-export default function Autocomplete3({setAddress,isErasingAll}){
+export default function Autocomplete3({setAddress,isErasingAll,setIsCity,setIsStreetName,setIsStreetNumber}){
     const ref = useRef()
     // const [newAdress, setNewAdress] = useState("")
     const handleSelection = (data,details) => {
+        setIsCity(false)
+        setIsStreetName(false)
+        setIsStreetNumber(false)
         var geo = details.geometry.location
         var t = details.address_components
-        // console.log(t)
+        console.log(t)
         var newAdress = {}
 
         newAdress.lat = geo.lat
@@ -19,14 +22,17 @@ export default function Autocomplete3({setAddress,isErasingAll}){
         t.forEach(x => {
             if(x.types.includes("street_number")){
                 newAdress.number = x.long_name
+                setIsStreetNumber(true)
             }else if(x.types.includes("route")){
                 newAdress.street = x.long_name
+                setIsStreetName(true)
             }else if(x.types.includes("postal_code")){
                 newAdress.npa = x.long_name
             }else if(x.types.includes("country")){
                 newAdress.country = x.long_name
             }else if(x.types.includes("locality")){
                 newAdress.city = x.long_name
+                setIsCity(true)
             }
         })
         console.log(newAdress)
@@ -41,7 +47,10 @@ export default function Autocomplete3({setAddress,isErasingAll}){
         if(isErasingAll){
             console.log("should erase everything")
             ref.current.clear()
-
+            setIsCity(false)
+            setIsStreetName(false)
+            setIsStreetNumber(false)
+            setAddress(null)
         }
     },[isErasingAll])
 

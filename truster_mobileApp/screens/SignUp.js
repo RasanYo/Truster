@@ -96,7 +96,7 @@ export default function SignUp({navigation,route}){
             user.signup(userState)
                 .then(() => {
                     console.log("Account created")
-                    navigation.navigate("Menu")
+                    navigation.pop()
                 })
                 .catch(err => {
                     if (err instanceof FirebaseError) {

@@ -19,7 +19,7 @@ import Menu from './screens/Menu';
 import VisitForm from './screens/VisitForm';
 import VisitAppartments from './screens/VisitAppartements';
 import SignUp from './screens/SignUp';
-import Post from './screens/Post';
+import PostPreview from './screens/PostPreview';
 
 export const UserContext = createContext(null)
 
@@ -40,7 +40,7 @@ export default function App() {
                 
                 <Stack.Screen name="SignUp" component={SignUp} options={{presentation:"modal",headerShown : true,}}/>
 
-                <Stack.Screen name="Post" component={Post}/>
+                <Stack.Screen name="PostPreview" component={PostPreview}/>
 
                 <Stack.Screen name="VisitForm" component={VisitForm}/>
                       

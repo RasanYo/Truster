@@ -12,7 +12,7 @@ import { UserContext } from "../App";
 import { Post } from "../objects/Post";
 
 
-
+// Ce quil manque à faire c'est d'inclure les types d'accomodation dans les posts information
 export default function VisitForm({navigation}){
     const { user } = useContext(UserContext)
     const [address,setAddress] = useState("")
@@ -22,7 +22,10 @@ export default function VisitForm({navigation}){
     const [inThreeDays, setInThreeDays] = useState('');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [selectedDate, setSelectedDate] = useState();
-    const [description,setDescription] = useState("")
+    const [description,setDescription] = useState("");
+    const [isCity,setIsCity] = useState(false)
+    const [isStreetNumber,setIsStreetNumber] = useState(false)
+    const [isStreetName,setIsStreetName] = useState(false)
 
     const [isErasingAll,setIsErasingAll] = useState(false)
 
@@ -83,6 +86,13 @@ export default function VisitForm({navigation}){
         var dateInThreeDays = new Date();
         dateInThreeDays.setDate(today.getDate() + 3);
         setInThreeDays(dateInThreeDays);
+
+        //-----
+
+        setIsCity(true)
+        setIsStreetName(true)
+        setIsStreetNumber(true)
+
     }, []);
 
     const accomodationOption = [
@@ -99,23 +109,6 @@ export default function VisitForm({navigation}){
             text : "Local"
         }
     ]
-
-    const onSubmit = e => {
-        e.preventDefault()
-        // setShowErrors(true)
-        console.log("pas prevent default")
-        if (!address) return false
-        else {
-            if(!user.isLoggedIn()){
-                navigation.navigate("VisitForm")
-            }else{
-                console.log("connecté")
-            }
-            console.log(address.city)
-            const post = new Post(address, {start: selectedDate, end: selectedDate}, description, user.getUID())
-            user.post(post).then(() => console.log("Successfully posted"))
-        }
-    }
 
     const eraseAll = () => {
         setIsErasingAll(true)
@@ -135,7 +128,14 @@ export default function VisitForm({navigation}){
                     <Text style={styles.sectionTitle}>Where is the visit taking place ?</Text>
                     <View style={styles.adressInput}>
                         <AntDesign name="search1" size={20} style={{marginTop:13}}/>
-                        <Autocomplete3 setAddress={setAddress} isErasingAll={isErasingAll}></Autocomplete3>
+                        <Autocomplete3 setAddress={setAddress} isErasingAll={isErasingAll} setIsCity={setIsCity} 
+                        setIsStreetName={setIsStreetName} setIsStreetNumber={setIsStreetNumber}></Autocomplete3>
+                    </View>
+                    <View style={{marginTop:4}}>
+                        {(!isCity || !isStreetName || !isStreetNumber) && <Text style={styles.necessaryInfoText}>Please Provide :</Text>}
+                        {!isCity && <Text style={styles.necessaryInfoText}>City</Text>}
+                        {!isStreetName && <Text style={styles.necessaryInfoText}>Street Name</Text>}
+                        {!isStreetNumber && <Text style={styles.necessaryInfoText}>Street Number</Text>}
                     </View>
                     
                     <FlatList data={accomodationOption} horizontal={true}
@@ -204,14 +204,20 @@ export default function VisitForm({navigation}){
     )
 }
 
-export function Footer(props){
+function Footer(props){
     return(
         <View style={styles.footer}>
             <Text style={styles.footerEraseAll} onPress={props.eraseAll}>
                 Erase all
             </Text>
-            <TouchableWithoutFeedback onPress={() => props.navigation.navigate("Post",{postInformation : props.addressInfo, date: props.date,
-                                                                                        description : props.description, isJustPreview : true})}>
+            <TouchableWithoutFeedback onPress={() => {
+                console.log(props.date)
+                if(props.addressInfo && props.date){
+                    props.navigation.navigate("PostPreview",{postInformation : props.addressInfo, date: props.date,
+                                                    description : props.description, isJustPreview : true})
+                }
+                
+                }}>
                 <View style={styles.footerPreview} >
                     <MaterialIcons name="preview" size={24} color="black" />
                     <Text style={{fontSize:"20",marginLeft:5}}>Preview</Text>
@@ -316,6 +322,11 @@ const styles = StyleSheet.create({
         fontSize:"20", 
         textDecorationLine:"underline",
 
+    },
+
+    necessaryInfoText : {
+        color:"red",
+        fontSize:10
     },
 
 })
