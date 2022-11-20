@@ -15,7 +15,7 @@ export class Guest extends AbstractUser{
      */
     login(email, password) {
         console.log(email)
-        return signInWithEmailAndPassword(getAuth(), email, password).catch(err => console.log(err))
+        return signInWithEmailAndPassword(getAuth(), email, password)
     }
 
     loginWithGoogle() {

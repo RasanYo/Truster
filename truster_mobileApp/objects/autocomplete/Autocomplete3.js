@@ -61,7 +61,7 @@ export default function Autocomplete3({setAddress,isErasingAll,setIsCity,setIsSt
             query={{key: "AIzaSyDESnQJUVxDZRs9_3gsMV9W_arspyJFrj4"}}
             fetchDetails={true}
             onPress={handleSelection}
-
+            // disableScroll={true}
             onFail={error => console.log(error)}
             onNotFound={() => console.log('no results')}
             listEmptyComponent={() => (

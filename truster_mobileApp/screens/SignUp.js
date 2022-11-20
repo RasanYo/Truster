@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { UserContext } from "../App";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Ionicons } from '@expo/vector-icons';
@@ -96,7 +96,7 @@ export default function SignUp({navigation,route}){
             user.signup(userState)
                 .then(() => {
                     console.log("Account created")
-                    navigation.pop()
+                    navigation.navigate("Menu")
                 })
                 .catch(err => {
                     if (err instanceof FirebaseError) {
@@ -160,11 +160,11 @@ export default function SignUp({navigation,route}){
                             // minimumDate={inThreeDays}
                         />
                     </View>
-                    <View style={[styles.componentStyle,{backgroundColor: "#FFCB66",}]}>
-                        <Text style={{textAlign:"center",fontSize:17,}} onPress={submitUser}>
+                    <TouchableOpacity style={[styles.componentStyle,{backgroundColor: "#FFCB66",}]} onPress={submitUser}>
+                        <Text style={{textAlign:"center",fontSize:17,}} >
                             Create account
                         </Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
         </View>
     )

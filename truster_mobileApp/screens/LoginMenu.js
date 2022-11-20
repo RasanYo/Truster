@@ -1,6 +1,6 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useContext, useState } from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import { UserContext } from "../App";
 import { auth } from "../firebase";
 
@@ -8,6 +8,7 @@ import { auth } from "../firebase";
 export default function LoginMenu({navigation}){
     const {user} = useContext(UserContext)
     const [isLoggingIn,setIsLoggingIn] = useState(false)
+    const [isWrongPassword,setIsWrongPassword] = useState(false)
 
     const [userState, setUserState] = useState({
         gender: "Others",
@@ -22,14 +23,24 @@ export default function LoginMenu({navigation}){
     })
 
     const loginOrSignUp = (email) => {
+
+
+
         user.userExistsByEmail(email).then(bool => {
             //Si un compte existe déjà, log in
             if(isLoggingIn == true){
                 // console.log(email)
                 console.log("logging in the user")
                 // console.log(user)
-                user.login(email,userState.password).then(() => {
+                user.login(email,userState.password)
+                .then(() => {
                     navigation.pop()
+                }).catch(err => {
+                    console.log(err.code)
+                    if(err.code === "auth/wrong-password"){
+                        setIsWrongPassword(true)
+                        setPassword("")
+                    }
                 })
             }
             if(bool){
@@ -83,14 +94,17 @@ export default function LoginMenu({navigation}){
                     {/* <TextInput placeholder="firstName" value={userState.firstName} style={{marginLeft:10,fontSize:17}} onChangeText={text => setFirstName(text)}></TextInput> */}
                     <TextInput placeholder="Adresse email" value={userState.email} style={styles.text} onChangeText={text => setEmail(text)} autoCapitalize="none" autoCorrect={false} onChange={() => setIsLoggingIn(false)} autoComplete="email" keyboardType="email-address" textContentType="emailAddress"></TextInput>
                 </View>
-                {isLoggingIn && <View style={styles.componentStyle}>
+                {isLoggingIn && 
+                <View style={styles.componentStyle}>
                     <TextInput placeholder="password" value={userState.password} style={{marginLeft:10,fontSize:17}} onChangeText={text => setPassword(text)} autoCapitalize="none" autoCorrect={false}></TextInput>
+                    {isWrongPassword && <Text style={{color:"red", fontSize:10}}>Wrong Password</Text>}
                 </View>}
-                <View style={[styles.componentStyle,{backgroundColor: userState.email.length == 0 ? "#c4c4c4" : "#FFCB66",}]}>
-                    <Text style={{textAlign:"center",fontSize:17,}} onPress={() => loginOrSignUp(userState.email)}>
+                <TouchableOpacity style={[styles.componentStyle,{backgroundColor: userState.email.length == 0 ? "#c4c4c4" : "#FFCB66",}]}
+                onPress={() => loginOrSignUp(userState.email)}>
+                    <Text style={{textAlign:"center",fontSize:17,}}>
                         Continue
                     </Text>
-                </View>
+                </TouchableOpacity>
                 
             </View>
             <View style={{marginTop:50,}}>

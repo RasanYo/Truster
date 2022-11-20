@@ -120,7 +120,10 @@ export default function VisitForm({navigation}){
     return(
         
         <View style={styles.container}>
-            <ScrollView>
+            <ScrollView
+   nestedScrollEnabled={true}
+   keyboardShouldPersistTaps='handled'
+   contentContainerStyle={{ flexGrow: 1 }}>
                 <Text onPress={() => navigation.navigate("Menu")} style={{marginTop:50}}>go back</Text>
             
                 {/* First block */}
@@ -211,7 +214,7 @@ function Footer(props){
                 Erase all
             </Text>
             <TouchableWithoutFeedback onPress={() => {
-                console.log(props.date)
+                console.log(props.addressInfo)
                 if(props.addressInfo && props.date){
                     props.navigation.navigate("PostPreview",{postInformation : props.addressInfo, date: props.date,
                                                     description : props.description, isJustPreview : true})
