@@ -1,8 +1,8 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { useContext, useState } from "react";
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import { UserContext } from "../App";
-import { auth } from "../firebase";
+// import { auth } from "../firebase";
 
 
 export default function LoginMenu({navigation}){
@@ -79,7 +79,7 @@ export default function LoginMenu({navigation}){
     }
 
     const handleSignUp = () => {
-        createUserWithEmailAndPassword(auth,"meneliknouvellon.pro@gmail.com","Mene4485")
+        createUserWithEmailAndPassword(getAuth(),"meneliknouvellon.pro@gmail.com","Mene4485")
         .then(userCredentials => {
             const user = userCredentials.user
             console.log(user)

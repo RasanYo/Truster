@@ -2,7 +2,7 @@ import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, sendEmailV
 import { setDoc, doc, Timestamp, collection, getFirestore } from "firebase/firestore";
 import { COLLECTIONS } from "../Constants";
 import { AbstractUser } from "./AbstractUser";
-import {auth} from "../firebase"
+// import {auth} from "../firebase"
 
 export class Guest extends AbstractUser{
 

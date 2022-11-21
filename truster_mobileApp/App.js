@@ -25,6 +25,10 @@ export const UserContext = createContext(null)
 
 
 export default function App() {
+
+
+  initializeApp(firebaseConfig)
+
   const [user, setUser] = useState(new Guest())
 
   const Stack = createNativeStackNavigator();
