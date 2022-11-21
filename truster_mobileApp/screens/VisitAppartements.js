@@ -1,4 +1,6 @@
+import { useContext, useEffect, useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
+import { UserContext } from "../App";
 import PostList from "../components/PostList";
 // import { useFonts } from 'expo-font';
 import Autocomplete from "../objects/autocomplete/Autocomplete";
@@ -10,44 +12,56 @@ export default function VisitAppartments({navigation}){
     //     'NTR': require('../assets/fonts/NTR-Regular.ttf')
     //   });
 
-    const posts = [
-        {
-            address: {
-                address: '12345 Testbourg, Testland'
-            },
-            timeframe: {
-                start: "24/06/2023",
-                end: "01/09/2023"
-            }
-        },
-        {
-            address: {
-                address: '12345 Testbourg, Testland'
-            },
-            timeframe: {
-                start: "24/06/2023",
-                end: "01/09/2023"
-            }
-        },
-        {
-            address: {
-                address: '12345 Testbourg, Testland'
-            },
-            timeframe: {
-                start: "24/06/2023",
-                end: "01/09/2023"
-            }
-        },
-        {
-            address: {
-                address: '12345 Testbourg, Testland'
-            },
-            timeframe: {
-                start: "24/06/2023",
-                end: "01/09/2023"
-            }
-        }
-    ]
+    const {user} = useContext(UserContext)
+
+    // const posts = [
+    //     {
+    //         address: {
+    //             address: '12345 Testbourg, Testland'
+    //         },
+    //         timeframe: {
+    //             start: "24/06/2023",
+    //             end: "01/09/2023"
+    //         }
+    //     },
+    //     {
+    //         address: {
+    //             address: '12345 Testbourg, Testland'
+    //         },
+    //         timeframe: {
+    //             start: "24/06/2023",
+    //             end: "01/09/2023"
+    //         }
+    //     },
+    //     {
+    //         address: {
+    //             address: '12345 Testbourg, Testland'
+    //         },
+    //         timeframe: {
+    //             start: "24/06/2023",
+    //             end: "01/09/2023"
+    //         }
+    //     },
+    //     {
+    //         address: {
+    //             address: '12345 Testbourg, Testland'
+    //         },
+    //         timeframe: {
+    //             start: "24/06/2023",
+    //             end: "01/09/2023"
+    //         }
+    //     }
+    // ]
+    const [posts, setPosts] = useState(null)
+    useEffect(() => {
+        user
+            .getPostsFrom("France", "Strasbourg")
+            .then(docs => {
+                setPosts(docs)
+                console.log(posts)
+            })
+    }, [user])
+    
 
 
     return ( 
@@ -60,7 +74,7 @@ export default function VisitAppartments({navigation}){
                 {/* <AutoComplete /> */}
             </View>
             <Text onPress={() => navigation.navigate("Menu")}>go back</Text>
-            <PostList posts={posts}/>
+            {posts && <PostList posts={posts}/>}
         </View>
      );
 }

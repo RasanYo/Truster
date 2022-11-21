@@ -5,7 +5,6 @@ import {AntDesign} from "@expo/vector-icons"
 import {FontAwesome} from "@expo/vector-icons"
 import {FontAwesome5} from '@expo/vector-icons';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import AutoComplete2 from "../objects/autocomplete/Autocomplete2";
 import Autocomplete3 from "../objects/autocomplete/Autocomplete3";
 
 

@@ -53,23 +53,23 @@ export default function App() {
   },[currUser])
 
   return (
-    
-    <UserContext.Provider value={{user}}>
-      {user && <NavigationContainer>
-          {console.log(user)}
-          <AskForAVisitStack />
-      </NavigationContainer>}
-    </UserContext.Provider>
+    <View>
+      <UserContext.Provider value={{user}}>
+        {user && <NavigationContainer>
+            <AskForAVisitStack />
+        </NavigationContainer>}
+      </UserContext.Provider>
+    </View>
     
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'stretch',
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#fff',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//     alignSelf: 'stretch',
+//   },
+// });
