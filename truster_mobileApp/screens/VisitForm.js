@@ -1,22 +1,37 @@
-import { useEffect, useState } from "react"
-import {FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { useContext, useEffect, useState } from "react"
+import {FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
 // import {FlatList} from 'react-native-gesture-handler'
 import {AntDesign} from "@expo/vector-icons"
 import {FontAwesome} from "@expo/vector-icons"
 import {FontAwesome5} from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Autocomplete3 from "../objects/autocomplete/Autocomplete3";
+import { UserContext } from "../App";
+import { Post } from "../objects/Post";
 
 
-
+// Ce quil manque à faire c'est d'inclure les types d'accomodation dans les posts information
 export default function VisitForm({navigation}){
-    const [adress,setAdress] = useState("")
+    const { user } = useContext(UserContext)
+    const [address,setAddress] = useState("")
     const [accomodationSelected,setAccomodationSelected] = useState(null)
     const [tomorrow, setTomorrow] = useState('');
     const [inTwoDays, setInTwoDays] = useState('');
     const [inThreeDays, setInThreeDays] = useState('');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [selectedDate, setSelectedDate] = useState();
+    const [description,setDescription] = useState("");
+    const [isCity,setIsCity] = useState(false)
+    const [isStreetNumber,setIsStreetNumber] = useState(false)
+    const [isStreetName,setIsStreetName] = useState(false)
+
+    const [isErasingAll,setIsErasingAll] = useState(false)
+
+    useEffect(() => {
+        setIsErasingAll(false)
+    },[address,accomodationSelected,selectedDate,description])
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
@@ -71,17 +86,14 @@ export default function VisitForm({navigation}){
         var dateInThreeDays = new Date();
         dateInThreeDays.setDate(today.getDate() + 3);
         setInThreeDays(dateInThreeDays);
-    }, []);
 
-    // const onSubmit = e => {
-    //     e.preventDefault()
-    //     setShowErrors(true)
-    //     if (!address || new Date(timeframe.start).getTime() > new Date(timeframe.end).getTime()) return false
-    //     else {
-    //         const post = new Post(address, timeframe, description, user.getUID())
-    //         user.post(post).then(() => console.log("Successfully posted"))
-    //     }
-    // }
+        //-----
+
+        setIsCity(true)
+        setIsStreetName(true)
+        setIsStreetNumber(true)
+
+    }, []);
 
     const accomodationOption = [
         {
@@ -98,39 +110,52 @@ export default function VisitForm({navigation}){
         }
     ]
 
+    const eraseAll = () => {
+        setIsErasingAll(true)
+        setAccomodationSelected(null)
+        setSelectedDate(tomorrow)
+        setDescription("")
+    }
+
     return(
         
         <View style={styles.container}>
-            <Text onPress={() => navigation.navigate("Menu")} style={{marginTop:50}}>go back</Text>
-           
-            {/* First block */}
-            <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Where is the visit taking place ?</Text>
-                <View style={styles.adressInput}>
-                    <AntDesign name="search1" size={20} style={{marginTop:13}}/>
-                    {/* <TextInput placeholder="Type adress" value={adress} onChangeText={setAdress} style={{marginLeft:10,fontSize:17}}></TextInput> */}
-                    {/* <AutoComplete2 setAddress={setAdress} 
-                                   neccessaryDetails={['locality','country']}
-                                   inputProps={{placeholder:"Type adress",required:true}} 
-                                   searchOptions={{types : ['locality','country']}}></AutoComplete2> */}
-                    <Autocomplete3></Autocomplete3>
+            <ScrollView
+   nestedScrollEnabled={true}
+   keyboardShouldPersistTaps='handled'
+   contentContainerStyle={{ flexGrow: 1 }}>
+                <Text onPress={() => navigation.navigate("Menu")} style={{marginTop:50}}>go back</Text>
+            
+                {/* First block */}
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Where is the visit taking place ?</Text>
+                    <View style={styles.adressInput}>
+                        <AntDesign name="search1" size={20} style={{marginTop:13}}/>
+                        <Autocomplete3 setAddress={setAddress} isErasingAll={isErasingAll} setIsCity={setIsCity} 
+                        setIsStreetName={setIsStreetName} setIsStreetNumber={setIsStreetNumber}></Autocomplete3>
+                    </View>
+                    <View style={{marginTop:4}}>
+                        {(!isCity || !isStreetName || !isStreetNumber) && <Text style={styles.necessaryInfoText}>Please Provide :</Text>}
+                        {!isCity && <Text style={styles.necessaryInfoText}>City</Text>}
+                        {!isStreetName && <Text style={styles.necessaryInfoText}>Street Name</Text>}
+                        {!isStreetNumber && <Text style={styles.necessaryInfoText}>Street Number</Text>}
+                    </View>
+                    
+                    <FlatList data={accomodationOption} horizontal={true}
+                        renderItem={({item}) => (
+                            <TouchableOpacity style={[styles.accomodationType,{borderColor : accomodationSelected == item.text ? "blue":"black", backgroundColor :accomodationSelected == item.text ? "#2acced":"white" }]} 
+                                            onPressIn={() => handleAccommodationSelected(item.text)} on>
+                                
+                                {item.icon}
+                                <Text style={styles.accomodationText}> {item.text}</Text>
+                            </TouchableOpacity>
+                            )}
+                    />
                 </View>
-                
-                <FlatList data={accomodationOption} horizontal={true}
-                    renderItem={({item}) => (
-                        <TouchableOpacity style={[styles.accomodationType,{borderColor : accomodationSelected == item.text ? "blue":"black", backgroundColor :accomodationSelected == item.text ? "#2acced":"white" }]} 
-                                        onPressIn={() => handleAccommodationSelected(item.text)} on>
-                            
-                            {item.icon}
-                            <Text style={styles.accomodationText}> {item.text}</Text>
-                        </TouchableOpacity>
-                        )}
-                />
-            </View>
 
 
-            {/* Second block */}
-            {selectedDate && <View style={styles.section}>
+                {/* Second block */}
+                {selectedDate && <View style={styles.section}>
                 <Text style={styles.sectionTitle}>When do you need information ?</Text>
                 <View style={{flexDirection:"row"}}>
                     <TouchableOpacity onPress={() => handleTomorrow(1)}>
@@ -154,19 +179,55 @@ export default function VisitForm({navigation}){
                         minimumDate={inThreeDays}
                     />
                     
+                    </View>
+                </View>}
+
+
+                {/* Third Block */}
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Description</Text>
+                    <TextInput placeholder="Describe here what you would expect from your trusty" value={description} onChangeText={setDescription}></TextInput>
                 </View>
-            </View>}
 
-
-            {/* Third Block */}
-            <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Description</Text>
-                <TextInput placeholder="Describe here what you would expect from your trusty"></TextInput>
-            </View>
+                {/* Post Block */}
+                {/* <View>
+                    <View style={styles.postButton} >
+                            <Text style={{fontSize:20}} onPress={onSubmit}>
+                                Post
+                            </Text>
+                    </View>
+                </View> */}
+            </ScrollView>
+            
+            {selectedDate ? <Footer eraseAll={eraseAll} navigation={navigation} addressInfo={address} date={dateToString(selectedDate)} description={description}></Footer> : null}
         </View>
         
         
 
+    )
+}
+
+function Footer(props){
+    return(
+        <View style={styles.footer}>
+            <Text style={styles.footerEraseAll} onPress={props.eraseAll}>
+                Erase all
+            </Text>
+            <TouchableWithoutFeedback onPress={() => {
+                console.log(props.addressInfo)
+                if(props.addressInfo && props.date){
+                    props.navigation.navigate("PostPreview",{postInformation : props.addressInfo, date: props.date,
+                                                    description : props.description, isJustPreview : true})
+                }
+                
+                }}>
+                <View style={styles.footerPreview} >
+                    <MaterialIcons name="preview" size={24} color="black" />
+                    <Text style={{fontSize:"20",marginLeft:5}}>Preview</Text>
+                </View>
+            </TouchableWithoutFeedback>
+            
+        </View>
     )
 }
 
@@ -229,5 +290,46 @@ const styles = StyleSheet.create({
         flexDirection:"column",
         marginRight:20,
         height:50
-    }
+    },
+
+    postButton : {
+        backgroundColor : "orange",
+        borderRadius : 10,
+        padding : 10,
+
+    },
+
+    footer : {
+        backgroundColor : "white",
+        flexDirection : "row",
+        padding : 10,
+        justifyContent:"space-between",
+        height:90,
+        position:"relative",
+        bottom:0,
+        alignItems:"center"
+    },
+
+    footerPreview : {
+        flexDirection:"row", 
+        backgroundColor:"#FFCB66",
+        padding:10,
+        borderRadius:10,
+        marginRight:20,
+        marginBottom:20,
+    },
+
+    footerEraseAll : {
+        marginRight:20,
+        marginBottom:20,
+        fontSize:"20", 
+        textDecorationLine:"underline",
+
+    },
+
+    necessaryInfoText : {
+        color:"red",
+        fontSize:10
+    },
+
 })

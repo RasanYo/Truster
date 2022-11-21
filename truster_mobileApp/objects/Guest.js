@@ -2,8 +2,10 @@ import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, sendEmailV
 import { setDoc, doc, Timestamp, collection, getFirestore } from "firebase/firestore";
 import { COLLECTIONS } from "../Constants";
 import { AbstractUser } from "./AbstractUser";
+import {auth} from "../firebase"
 
 export class Guest extends AbstractUser{
+
 
     /**
      * 
@@ -12,6 +14,7 @@ export class Guest extends AbstractUser{
      * @returns {Promise<UserCredential>} promise with user credentials
      */
     login(email, password) {
+        console.log(email)
         return signInWithEmailAndPassword(getAuth(), email, password)
     }
 
@@ -20,14 +23,15 @@ export class Guest extends AbstractUser{
         return signInWithPopup(getAuth(), provider)
     }
 
-    login() {
-        user.login(email, password)
-            .then(() => navigation.navigate("Menu"))
-            .catch(error => {
-                console.log(error.message)
-                // setIsGoodPassword(false) 
-            })
-    }
+    // login() {
+    //     console.log("using the second login")
+    //     return this.login(email, password)
+    //         .then(() => navigation.pop())
+    //         .catch(error => {
+    //             console.log(error.message)
+    //             // setIsGoodPassword(false) 
+    //         })
+    // }
 
     /**
      * 

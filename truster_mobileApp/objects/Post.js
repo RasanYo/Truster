@@ -90,6 +90,12 @@ export class Post {
     }
 
     getLocation() {
-        return COLLECTIONS.posts(this.#address.country, this.#address.city)
+        const r = COLLECTIONS.posts(this.#address.country, this.#address.city)
+        console.log(r)
+        return r
+    }
+
+    print() {
+        return "address" + this.getAddress()
     }
 }

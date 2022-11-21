@@ -1,7 +1,8 @@
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer} from '@react-navigation/native';
 import { RecyclerViewBackedScrollViewComponent, StyleSheet, Text, View } from 'react-native';
-import AskForAVisitStack from './routes/AskForAVisitStack';
+import { useNavigation } from '@react-navigation/native';
 
+import { navigationRef } from './';
 
 // import * as firebase from 'firebase';
 import { initializeApp } from 'firebase/app'
@@ -12,55 +13,42 @@ import { User } from './objects/User';
 import { createContext, useEffect, useState } from 'react';
 
 
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import LoginMenu from './screens/LoginMenu';
+import Menu from './screens/Menu';
+import VisitForm from './screens/VisitForm';
+import VisitAppartments from './screens/VisitAppartements';
+import SignUp from './screens/SignUp';
+import PostPreview from './screens/PostPreview';
+
 export const UserContext = createContext(null)
 
+
 export default function App() {
-  const firebaseConfig = {
-    apiKey: "AIzaSyC1KOsIQvb-1dqRzefWggoYm5gertAiEhQ",
-    authDomain: "scamna-b0b94.firebaseapp.com",
-    projectId: "scamna-b0b94",
-    storageBucket: "scamna-b0b94.appspot.com",
-    messagingSenderId: "220971708276",
-    appId: "1:220971708276:web:97a5af4c5858003baa8621",
-    measurementId: "G-W8HKDF4HHW"
-  }
-
-  initializeApp(firebaseConfig);
-  
-
-  const auth = getAuth()
   const [user, setUser] = useState(new Guest())
-  const currUser = auth.currentUser
 
-  useEffect(() => {
-    console.log(auth)
-    setUser(new Guest())
-  }, [])
-
-  // auth.onAuthStateChanged(u => {
-  //   if (u) { 
-  //     setUser(new User(u.uid, u)); 
-  //     // console.log(user);
-  //   } else setUser(new Guest())
-  // })
-
-  useEffect(() => {
-    if (currUser) { 
-          setUser(new User(currUser.uid, currUser)); 
-          // console.log(user);
-    } else setUser(new Guest())
-  
-  },[currUser])
+  const Stack = createNativeStackNavigator();
 
   return (
-    <View>
-      <UserContext.Provider value={{user}}>
-        {user && <NavigationContainer>
-            <AskForAVisitStack />
-        </NavigationContainer>}
-      </UserContext.Provider>
-    </View>
-    
+    <NavigationContainer>
+      <UserContext.Provider value={{user,setUser}}>
+            <Stack.Navigator screenOptions={{headerShown : false,}}>
+                <Stack.Screen name="Menu" component={Menu}/>
+                      
+                <Stack.Screen options={{ animation:"slide_from_bottom", presentation:"modal",headerShown : true, 
+                title: 'Sign Up or Login'}} name="LoginMenu" component={LoginMenu}/>
+                
+                <Stack.Screen name="SignUp" component={SignUp} options={{presentation:"modal",headerShown : true,}}/>
+
+                <Stack.Screen name="PostPreview" component={PostPreview}/>
+
+                <Stack.Screen name="VisitForm" component={VisitForm}/>
+                      
+                <Stack.Screen name="VisitAppartments" component={VisitAppartments}/>
+                        
+            </Stack.Navigator>
+      </UserContext.Provider> 
+    </NavigationContainer>
   );
 }
 
