@@ -39,7 +39,7 @@ export default function App() {
                 title: 'Sign Up or Login'}} name="LoginMenu" component={LoginMenu}/>
                 
                 <Stack.Screen name="SignUp" component={SignUp} options={{presentation:"modal",headerShown : true,}}/>
-
+                 
                 <Stack.Screen name="PostPreview" component={PostPreview}/>
 
                 <Stack.Screen name="VisitForm" component={VisitForm}/>
