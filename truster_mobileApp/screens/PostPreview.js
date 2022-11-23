@@ -69,7 +69,7 @@ export default function PostPreview({navigation,route}){
                         description={"marker.description"}
                         pinColor="#29ECB1"
                         />
-                </MapView>
+            </MapView>
             <View style={styles.posterInfo}>
                 {/* Profile Picture  */}
                 <View>

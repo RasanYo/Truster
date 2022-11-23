@@ -20,6 +20,7 @@ import VisitForm from './screens/VisitForm';
 import VisitAppartments from './screens/VisitAppartements';
 import SignUp from './screens/SignUp';
 import PostPreview from './screens/PostPreview';
+import MapSearchVisit from './screens/MapSearchVisit';
 
 export const UserContext = createContext(null)
 
@@ -44,7 +45,8 @@ export default function App() {
 
                 <Stack.Screen name="VisitForm" component={VisitForm}/>
                       
-                <Stack.Screen name="VisitAppartments" component={VisitAppartments}/>
+                {/* <Stack.Screen name="VisitAppartments" component={VisitAppartments}/> */}
+                <Stack.Screen name="MapSearchVisit" component={MapSearchVisit}/>
                         
             </Stack.Navigator>
       </UserContext.Provider> 

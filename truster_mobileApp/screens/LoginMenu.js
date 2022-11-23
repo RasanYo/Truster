@@ -92,7 +92,7 @@ export default function LoginMenu({navigation}){
             <View>
                 <View style={styles.componentStyle}>
                     {/* <TextInput placeholder="firstName" value={userState.firstName} style={{marginLeft:10,fontSize:17}} onChangeText={text => setFirstName(text)}></TextInput> */}
-                    <TextInput placeholder="Adresse email" value={userState.email} style={styles.text} onChangeText={text => setEmail(text)} autoCapitalize="none" autoCorrect={false} onChange={() => setIsLoggingIn(false)} autoComplete="email" keyboardType="email-address" textContentType="emailAddress"></TextInput>
+                    <TextInput placeholder="Adresse email" value={userState.email} style={styles.text} onChangeText={text => setEmail(text)} autoCapitalize="none" autoCorrect={false} onChange={() => {setIsLoggingIn(false);setIsWrongPassword(false) }} autoComplete="email" keyboardType="email-address" textContentType="emailAddress"></TextInput>
                 </View>
                 {isLoggingIn && 
                 <View style={styles.componentStyle}>
