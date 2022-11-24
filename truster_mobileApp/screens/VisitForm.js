@@ -16,7 +16,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 // Ce quil manque à faire c'est d'inclure les types d'accomodation dans les posts information
 export default function VisitForm({navigation}){
-    const { user } = useContext(UserContext)
     const [address,setAddress] = useState("")
     const [accomodationSelected,setAccomodationSelected] = useState(null)
     const [tomorrow, setTomorrow] = useState('');

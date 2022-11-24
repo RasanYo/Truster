@@ -42,37 +42,36 @@ export class AbstractUser {
 
     //center c'est sensé être soit la position du mec qu'on lui aura demandé 
     //ou bien s'il veut pas la lat/lng de la ville
-   getPublicPosts(country, city, {radiusInKm, center} , sortByPrice, ...queryConstraints) {
+   getPublicPosts(country, city, {radiusInKm, center} , sortByPrice, setResult, ...queryConstraints) {
+    console.log("getting public posts")
     if(radiusInKm === 0 ){
         const q = query(collection(this.db,`${COLLECTIONS.AVAILABLE_VISITS}/${country}/cities/${city}/posts`), ...queryConstraints)
         return getDocs(q).then(snapshot => {
             return snapshot.docs
         })
     }else{
-
         const bounds = geohashQueryBounds(center, radiusInKm*1000);
-
         const promises = [];
         for (const b of bounds) {
             const q = query(collection(this.db,`${COLLECTIONS.AVAILABLE_VISITS}/${country}/cities/${city}/posts`), ...queryConstraints, orderBy("geohash"),startAt(b[0]),endAt(b[1]))
             promises.push(getDocs(q));
         }
-
+        const matchingDocs = [];
         Promise.all(promises).then((snapshots) => {
-            const matchingDocs = [];
-
+            
+            // console.log(snapshots)
             for (const snap of snapshots) {
               for (const doc of snap.docs) {
-                const lat = doc.get('lat');
-                const lng = doc.get('lng');
-          
+                const lat = doc.get('address').lat;
+                const lng = doc.get('address').lng;
+
                 const distanceInKm = distanceBetween([lat, lng], center);
                 if (distanceInKm <= radiusInKm) {
                   matchingDocs.push(doc);
                 }
               }
             }
-          
+            // console.log(matchingDocs)
             return matchingDocs;
           }).then((matchingDocs) => {
             //que si le filtre sortByPrice est appliqué
@@ -86,9 +85,11 @@ export class AbstractUser {
                 })
             }
             
-            matchingDocs.forEach(x => {
-                console.log(x.data())
-            })
+            // matchingDocs.forEach(x => {
+            //     console.log(x.data())
+            // })
+            // console.log(matchingDocs)
+            setResult(matchingDocs)
             return matchingDocs
           });
     }
