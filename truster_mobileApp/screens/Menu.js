@@ -41,7 +41,7 @@ export default function Menu({navigation}) {
             </View>
             
             <TouchableWithoutFeedback onPress={() => {
-                navigation.navigate("VisitAppartments")
+                navigation.navigate("MapSearchVisit")
             }}>
                 <View style={styles.button}>
                     <Text style={styles.buttonTitle}>Make a Visit</Text>

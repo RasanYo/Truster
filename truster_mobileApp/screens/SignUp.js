@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { UserContext } from "../App";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Ionicons } from '@expo/vector-icons';
@@ -144,20 +144,21 @@ export default function SignUp({navigation,route}){
 
     return (
         <View>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} style={{zIndex:-1}}>
                 <View style={{height:"100%",width:"100%",backgroundColor:"beige",padding:10}}>
                     <View style={styles.componentStyle}>
                         {/* <TextInput placeholder="firstName" value={userState.firstName} style={{marginLeft:10,fontSize:17}} onChangeText={text => setFirstName(text)}></TextInput> */}
-                        <TextInput placeholder="Adresse email" value={userState.email} style={styles.text} autoCapitalize="none" autoCorrect={false}></TextInput>
+                        <TextInput placeholderTextColor={"gray"} placeholder="Adresse email" value={userState.email} style={styles.text} autoCapitalize="none" autoCorrect={false}></TextInput>
                     </View>
                     <View style={{flexDirection:"row"}}>
                         <View style={[styles.componentStyle,{marginRight:5,flex:1}]}>
                             {/* <TextInput placeholder="firstName" value={userState.firstName} style={{marginLeft:10,fontSize:17}} onChangeText={text => setFirstName(text)}></TextInput> */}
-                            <TextInput placeholder="First Name" value={userState.firstName} style={styles.text} onChangeText={text => setFirstName(text)} autoCorrect={false}></TextInput>
+                            <TextInput placeholderTextColor={"gray"} placeholder="First Name" value={userState.firstName} style={styles.text} onChangeText={text => setFirstName(text)} autoCorrect={false}></TextInput>
                             {!isFirstName && <Text style={styles.warningStyles}>Write your first name please</Text>} 
                         </View>
                         <View style={[styles.componentStyle,{marginRight:0,flex:1}]}>
                             {/* <TextInput placeholder="firstName" value={userState.firstName} style={{marginLeft:10,fontSize:17}} onChangeText={text => setFirstName(text)}></TextInput> */}
-                            <TextInput placeholder="Last Name" value={userState.lastName} style={styles.text} onChangeText={text => setLastName(text)} autoCorrect={false}></TextInput>
+                            <TextInput placeholderTextColor={"gray"} placeholder="Last Name" value={userState.lastName} style={styles.text} onChangeText={text => setLastName(text)} autoCorrect={false}></TextInput>
                             {!isLastName && <Text style={styles.warningStyles}>Write your last name please</Text>}
                         </View>
                     </View>
@@ -165,7 +166,7 @@ export default function SignUp({navigation,route}){
                     <View style={styles.componentStyle}>
                         <View style={[{flexDirection:"row",justifyContent:"space-between"}]}>
                             {console.log(userState.password)}
-                            <TextInput clearTextOnFocus={false} placeholder="Password" value={userState.password} style={{marginLeft:10,fontSize:17}} onChangeText={text => setPassword(text)} secureTextEntry={showPassword} autoCapitalize="none" autoCorrect={false}></TextInput>
+                            <TextInput placeholderTextColor={"gray"} clearTextOnFocus={false} placeholder="Password" value={userState.password} style={{marginLeft:10,fontSize:17}} onChangeText={text => setPassword(text)} secureTextEntry={showPassword} autoCapitalize="none" autoCorrect={false}></TextInput>
                             {showPassword ? 
                             <Ionicons name="ios-eye-off-outline" size={24} color="black" onPress={() => {setShowPassword(false)}}/> : 
                             <Ionicons name="eye-outline" size={24} color="black" onPress={() => setShowPassword(true)}/>}
@@ -177,7 +178,7 @@ export default function SignUp({navigation,route}){
                     
                     <View style={styles.componentStyle}>
                         <View style={[{flexDirection:"row",justifyContent:"space-between"}]}>
-                            <TextInput placeholder="Password Confirmation" value={userState.passwordConfirmation} style={{marginLeft:10,fontSize:17}} onChangeText={text => setPasswordConfirmation(text)} autoCapitalize="none" autoCorrect={false} secureTextEntry={showPasswordConfirmation}></TextInput>
+                            <TextInput placeholderTextColor={"gray"} placeholder="Password Confirmation" value={userState.passwordConfirmation} style={{marginLeft:10,fontSize:17}} onChangeText={text => setPasswordConfirmation(text)} autoCapitalize="none" autoCorrect={false} secureTextEntry={showPasswordConfirmation}></TextInput>
                             {showPasswordConfirmation ? 
                             <Ionicons name="ios-eye-off-outline" size={24} color="black" onPress={() => setShowPasswordConfirmation(false)}/> :
                             <Ionicons name="eye-outline" size={24} color="black" onPress={() => setShowPasswordConfirmation(true)}/>}
@@ -207,6 +208,7 @@ export default function SignUp({navigation,route}){
                         </Text>
                     </TouchableOpacity>
                 </View>
+            </TouchableWithoutFeedback>
         </View>
     )
 }
