@@ -1,18 +1,18 @@
 import { useNavigation } from "@react-navigation/native";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useContext, useEffect } from "react";
 import { TouchableWithoutFeedback, View, Text, StyleSheet, Image } from "react-native";
 import { UserContext } from "../App";
-// import { auth } from '../firebase';
+import { auth } from '../firebase';
 import { Guest } from "../objects/Guest";
 import { User } from "../objects/User";
 
 export default function Menu({navigation}) {
+
     const {user,setUser} = useContext(UserContext)
     // const navigation = useNavigation()
-    onAuthStateChanged
+
     useEffect(() => {
-        const unsuscribe = onAuthStateChanged(getAuth(), u => {
+        const unsuscribe = auth.onAuthStateChanged(u => {
           if (u) { 
             console.log("User is already logged in")
             setUser(new User(u.uid, u)); 
