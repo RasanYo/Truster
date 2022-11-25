@@ -7,7 +7,7 @@ import { Guest } from './objects/Guest';
 import { useEffect, useState } from 'react';
 
 
-import Navigator from './routes/homeStack'
+// import Navigator from './routes/homeStack'
 import { UserContext } from './context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginMenu from './screens/LoginMenu';
