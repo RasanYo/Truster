@@ -1,29 +1,23 @@
-import { NavigationContainer} from '@react-navigation/native';
-import { RecyclerViewBackedScrollViewComponent, StyleSheet, Text, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
-import { navigationRef } from './';
 
 // import * as firebase from 'firebase';
-import { initializeApp } from 'firebase/app'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+
 
 import { Guest } from './objects/Guest';
-import { User } from './objects/User';
-import { createContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
+import Navigator from './routes/homeStack'
+import { UserContext } from './context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginMenu from './screens/LoginMenu';
 import Menu from './screens/Menu';
-import VisitForm from './screens/VisitForm';
-import VisitAppartments from './screens/VisitAppartements';
 import SignUp from './screens/SignUp';
 import PostPreview from './screens/PostPreview';
+import VisitForm from './screens/VisitForm';
 import MapSearchVisit from './screens/MapSearchVisit';
-
-export const UserContext = createContext(null)
-
+import { NavigationContainer } from '@react-navigation/native';
+import VisitAppartments from './screens/VisitAppartements';
 
 export default function App() {
 
@@ -32,7 +26,6 @@ export default function App() {
   const [user, setUser] = useState(new Guest())
 
   const Stack = createNativeStackNavigator();
-
   return (
     <NavigationContainer>
       <UserContext.Provider value={{user,setUser}}>
@@ -48,12 +41,18 @@ export default function App() {
 
                 <Stack.Screen name="VisitForm" component={VisitForm}/>
                       
-                {/* <Stack.Screen name="VisitAppartments" component={VisitAppartments}/> */}
-                <Stack.Screen name="MapSearchVisit" component={MapSearchVisit}/>
+                <Stack.Screen name="MapSearchVisit" component={VisitAppartments}/>
+                {/* <Stack.Screen name="MapSearchVisit" component={MapSearchVisit}/> */}
                         
             </Stack.Navigator>
       </UserContext.Provider> 
     </NavigationContainer>
+
+    // <UserContext.Provider value={user}>
+    //   <Navigator />
+    // </UserContext.Provider>
+
+    
   );
 }
 

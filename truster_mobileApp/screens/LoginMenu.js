@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
-import { UserContext } from "../App";
+import { UserContext } from "../context";
 import { auth } from "../firebase";
 
 
@@ -21,6 +21,7 @@ export default function LoginMenu({navigation}){
         aboutMe: "Pas besoin mec",
         picture: null,
     })
+
 
     const loginOrSignUp = (email) => {
 

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from "react-native";
-import { UserContext } from "../App";
+import { UserContext } from "../context";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Ionicons } from '@expo/vector-icons';
 import { FirebaseError } from "firebase/app";
@@ -148,7 +148,14 @@ export default function SignUp({navigation,route}){
                 <View style={{height:"100%",width:"100%",backgroundColor:"beige",padding:10}}>
                     <View style={styles.componentStyle}>
                         {/* <TextInput placeholder="firstName" value={userState.firstName} style={{marginLeft:10,fontSize:17}} onChangeText={text => setFirstName(text)}></TextInput> */}
-                        <TextInput placeholderTextColor={"gray"} placeholder="Adresse email" value={userState.email} style={styles.text} autoCapitalize="none" autoCorrect={false}></TextInput>
+                        <TextInput 
+                            placeholderTextColor={"gray"} 
+                            placeholder="Adresse email" 
+                            value={userState.email} 
+                            style={styles.text} 
+                            autoCapitalize="none" 
+                            autoCorrect={false} 
+                            onChange={val => setEmail(val)}/>
                     </View>
                     <View style={{flexDirection:"row"}}>
                         <View style={[styles.componentStyle,{marginRight:5,flex:1}]}>

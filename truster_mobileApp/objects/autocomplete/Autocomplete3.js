@@ -41,16 +41,16 @@ export default function Autocomplete3({setAddress,isErasingAll,setIsCity,setIsSt
                 autoFocus:isFocus,
             }}
             styles={{
-                // listView : {
-                    // marginLeft:-30,
-                // }
-                // listViewContainer: {
-                //     position: 'absolute',
-                //     zIndex: 100,
-                //     elevation: 3,
-                //     top: 30,
-                //     paddingHorizontal: 15,
-                // },
+                listView : {
+                    marginLeft:-30,
+                },
+                listViewContainer: {
+                    position: 'absolute',
+                    zIndex: 100,
+                    elevation: 3,
+                    top: 30,
+                    paddingHorizontal: 15,
+                },
 
             }}
           />

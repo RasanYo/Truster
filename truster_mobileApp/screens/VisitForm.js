@@ -9,7 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Autocomplete3 from "../objects/autocomplete/Autocomplete3";
-import { UserContext } from "../App";
+import { UserContext } from "../context";
 import { Post } from "../objects/Post";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 

@@ -18,10 +18,10 @@ const PostContainer = ({post=null}) => {
             <View style={styles.rowContainer}>
                 <View style={styles.leftContainer}>
                     <Text style={styles.neighborhood}>
-                        La Marne
+                        {post.address.city}
                     </Text>
                     <Text style={styles.city}>
-                        {post.address.address}
+                        {post.address.fullAdress}
                     </Text>
                     <Text style={styles.timeframe}>
                         {post.timeframe.start} - {post.timeframe.end}
@@ -65,37 +65,38 @@ const styles = StyleSheet.create({
 
     leftContainer: {
         textAlign: "left",
-        flex: '3',
-        marginTop: 20,
-        marginBottom: 20
+        flex: 3,
+        justifyContent: 'center',
+        marginVertical: 10
 
     },
     rightContainer: {
         textAlign: "right",
-        flex: '2',
-        marginTop: 10,
-        marginBottom: 10
+        flex: 1,
+        justifyContent: 'center'
     },
 
 
     neighborhood: {
         // fontFamily: 'NTR',
         fontSize: 24,
-        lineHeight: '0.5'
+        marginBottom: 5
+        // lineHeight: '0.5'
     },
 
     city: {
         // fontFamily: 'NTR',
         fontSize: 16,
         color: '#939393',
-        lineHeight: '2'
+        marginBottom: 3
+        // lineHeight: '2'
     },
 
     timeframe: {
         // fontFamily: 'Inter-SemiBold',
         fontSize: 14,
-        opacity: '0.85',
-        lineHeight: '0.5'
+        opacity: 0.85,
+        // lineHeight: '0.5'
     },
 
     price: {
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
     houseType: {
         // fontFamily: 'Inter-SemiBold',
         color: '#968E8E',
-        opacity: '0.74',
-        lineHeight: '1'
+        opacity: 0.74,
+        // lineHeight: '1'
     }
 })

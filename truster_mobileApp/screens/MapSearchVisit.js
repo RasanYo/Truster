@@ -61,7 +61,7 @@ export default function MapSearchVisit(){
             {isInputClicked ? 
                 <View style={styles.searchBarContainer}>
                     <Autocomplete3 setAddress={() => {}} isErasingAll={() => {}} setIsCity={() => {}}
-                            setIsStreetName={() => {}} setIsStreetNumber={() => {}} placeholder="" isFocus={true} handleSelection={handleSelection}></Autocomplete3>
+                            setIsStreetName={() => {}} setIsStreetNumber={() => {}} placeholder="" isFocus={true} handleSelection={handleSelection}/>
                 </View> :  
                 <TouchableWithoutFeedback onPress={() => setIsInputClicked(true)} >
                     <View>

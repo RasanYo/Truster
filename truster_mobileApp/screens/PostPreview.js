@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback } from "react-native";
 import MapView from 'react-native-maps';
 import { Marker } from 'react-native-maps';
-import { UserContext } from "../App";
+import { UserContext } from "../context";
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { TextInput } from "react-native-gesture-handler";
@@ -10,7 +10,7 @@ import { Post } from "../objects/Post";
 
 
 export default function PostPreview({navigation,route}){
-    const { user,setUser } = useContext(UserContext)
+    const { user } = useContext(UserContext)
     const [userData,setUserData] = useState()
 
     useEffect(()=>{

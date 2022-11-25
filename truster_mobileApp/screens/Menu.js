@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { useContext, useEffect } from "react";
 import { TouchableWithoutFeedback, View, Text, StyleSheet, Image } from "react-native";
-import { UserContext } from "../App";
+import { UserContext } from "../context";
 import { auth } from '../firebase';
 import { Guest } from "../objects/Guest";
 import { User } from "../objects/User";
@@ -11,33 +11,33 @@ export default function Menu({navigation}) {
     const {user,setUser} = useContext(UserContext)
     // const navigation = useNavigation()
 
+    
+
     useEffect(() => {
         const unsuscribe = auth.onAuthStateChanged(u => {
-          if (u) { 
-            console.log("User is already logged in")
-            setUser(new User(u.uid, u)); 
-          } 
-          else {
-            console.log("User is not logged in")
-            setUser(new Guest())
-            navigation.navigate('LoginMenu');
-            // navigation.navigate("LoginMenu")
-          }
+            if (u) { 
+                console.log("User is already logged in")
+                setUser(new User(u.uid, u)); 
+            } 
+            else {
+                console.log("User is not logged in")
+                setUser(new Guest())
+                navigation.navigate('LoginMenu');
+                // navigation.navigate("LoginMenu")
+            }
+            unsuscribe()
         })
-    
-        return unsuscribe
-      },[])
+    }, [])
 
     return (
         <View style={styles.container}>
             <View>
-                <Image source={require("../assets/logo.png")} style={{
+                {/* <Image style={{
                     display:"block",
                     marginLeft:"auto",
                     marginRight:"auto",
                     marginBottom:50,
-                }}/>
-
+                }}/> */}
             </View>
             
             <TouchableWithoutFeedback onPress={() => {
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
         height:150,
         margin:20,
         borderRadius:20,
-        shadowOffset: {width: -2, height: 2},  
+        // shadowOffset: {width: -2, height: 2},  
         shadowColor: '#171717',  
         shadowOpacity: 0.2,  
         shadowRadius: 3,  
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
 
     buttonDescription : {
         color:"#7c7c7c",
-        lineHeight:"25%",
+        // lineHeight:"25%",
         textAlign:"center",
         fontSize:16,
     }

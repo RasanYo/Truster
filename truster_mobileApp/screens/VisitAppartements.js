@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
-import { UserContext } from "../App";
+import { UserContext } from "../context";
 import PostList from "../components/PostList";
 // import { useFonts } from 'expo-font';
 import Autocomplete from "../objects/autocomplete/Autocomplete";
+import AddressInput from "../components/AddressInput";
 
 
 export default function VisitAppartments({navigation}){
@@ -13,88 +14,72 @@ export default function VisitAppartments({navigation}){
     //   });
 
     const {user} = useContext(UserContext)
+    const [inputClicked, setInputClicked] = useState(false)
 
-    // const posts = [
-    //     {
-    //         address: {
-    //             address: '12345 Testbourg, Testland'
-    //         },
-    //         timeframe: {
-    //             start: "24/06/2023",
-    //             end: "01/09/2023"
-    //         }
-    //     },
-    //     {
-    //         address: {
-    //             address: '12345 Testbourg, Testland'
-    //         },
-    //         timeframe: {
-    //             start: "24/06/2023",
-    //             end: "01/09/2023"
-    //         }
-    //     },
-    //     {
-    //         address: {
-    //             address: '12345 Testbourg, Testland'
-    //         },
-    //         timeframe: {
-    //             start: "24/06/2023",
-    //             end: "01/09/2023"
-    //         }
-    //     },
-    //     {
-    //         address: {
-    //             address: '12345 Testbourg, Testland'
-    //         },
-    //         timeframe: {
-    //             start: "24/06/2023",
-    //             end: "01/09/2023"
-    //         }
-    //     }
-    // ]
+    
     const [posts, setPosts] = useState(null)
     useEffect(() => {
         user
-            .getPostsFrom("France", "Strasbourg")
+            .getPostsFrom("Germany", "Berlin")
             .then(docs => {
                 setPosts(docs)
-                console.log(posts)
             })
     }, [user])
+
+    const handleSelection = (data,details) => {
+        var geo = details.geometry.location
+        console.log(details)
+        setInputClicked(false)
+    }
     
 
 
     return ( 
         <View style={styles.mainContainer}>
-            <View style={{margin: 30}}>
+            <View style={styles.titleContainer}>
                 <Text style={styles.title}>Visit appartments,</Text>
-                <Text style={styles.title2}>Make Money</Text>
+                <Text style={styles.title2}>Become a Trusty</Text>
             </View>
-            <View>
-                {/* <AutoComplete /> */}
+            <View style={styles.searchBarContainer}>
+                <AddressInput 
+                    isInputClicked={inputClicked} setIsInputClicked={setInputClicked}
+                    handleSelection={handleSelection}
+                />
             </View>
-            <Text onPress={() => navigation.navigate("Menu")}>go back</Text>
-            {posts && <PostList posts={posts}/>}
+            {/* <Text onPress={() => navigation.navigate("Menu")}>go back</Text> */}
+            {/* {posts && <PostList posts={posts}/>} */}
         </View>
      );
 }
 
 const styles = StyleSheet.create({
     mainContainer: {
-        color: '#EBEBEB'
+        color: '#EBEBEB',
+        flexDirection: "column"
+    },
+
+    titleContainer: {
+        marginLeft: 15
     },
 
     title: {
         // fontFamily: 'NTR',
-        fontSize: 45,
-        lineHeight: 1.25
+        fontSize: 40,
+        marginTop: 30
+        // lineHeight: 1.25
     },
 
     title2: {
         // fontFamily: 'NTR',
-        fontSize: 45,
-        lineHeight: 1.25,
+        fontSize: 40,
+        marginTop: 15,
+        marginBottom: 30,
+        // lineHeight: 1.25,
         color: '#00D394'
+    },
+    searchBarContainer: {
+        alignItems: 'center',
+        marginBottom: 20
     }
 })
  
