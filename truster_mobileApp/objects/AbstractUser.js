@@ -72,10 +72,10 @@ export class AbstractUser {
                     }
                 }
               }
-            }
+            
             // console.log(matchingDocs)
             return matchingDocs;
-          }).then((matchingDocs) => {
+        }).then((matchingDocs) => {
             //que si le filtre sortByPrice est appliqué
             if(sortByPrice){
                 matchingDocs.sort((x,y) => {
@@ -95,6 +95,7 @@ export class AbstractUser {
             return matchingDocs
           });
     }
+}
 
     getPostsFrom(country, city) {
         const col = collection(getFirestore(), COLLECTIONS.posts(country, city))
