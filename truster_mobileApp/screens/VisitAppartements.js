@@ -46,8 +46,8 @@ export default function VisitAppartments({navigation}){
                     handleSelection={handleSelection}
                 />
             </View>
-            {/* <Text onPress={() => navigation.navigate("Menu")}>go back</Text> */}
-            {/* {posts && <PostList posts={posts}/>} */}
+            <Text onPress={() => navigation.navigate("Menu")}>go back</Text>
+            {posts && <PostList posts={posts}/>}
         </View>
      );
 }
