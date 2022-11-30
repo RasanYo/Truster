@@ -18,12 +18,20 @@ import VisitForm from './screens/VisitForm';
 import MapSearchVisit from './screens/MapSearchVisit';
 import { NavigationContainer } from '@react-navigation/native';
 import VisitAppartments from './screens/VisitAppartements';
+import { 
+  geohashQueryBounds, 
+  distanceBetween 
+} from "geofire-common"
 
 export default function App() {
 
 
 
   const [user, setUser] = useState(new Guest())
+
+  // useEffect(() => {
+  //     console.log(geohashQueryBounds([48.57311010, 8.08595896], 10*1000))
+  // },[])
 
   const Stack = createNativeStackNavigator();
   return (
