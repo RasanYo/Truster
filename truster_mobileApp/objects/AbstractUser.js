@@ -44,13 +44,9 @@ export class AbstractUser {
     //ou bien s'il veut pas la lat/lng de la ville
    getPublicPosts(country, city, radiusInKm, center, sortByPrice, setResult, ...queryConstraints) {
         console.log("getting public posts")
-<<<<<<< HEAD
         if(radiusInKm === 0 ){
             const q = query(collection(this.db, COLLECTIONS.posts(country, city)), ...queryConstraints)
-=======
-    if(radiusInKm === 0 ){
-            const q = query(collection(this.db, COLLECTIONS.AVAILABLE_VISITS), ...queryConstraints)
->>>>>>> 44d8e3350a1e6110de6842f35605a0f9b4d49fbc
+
             return getDocs(q).then(snapshot => {
                 console.log(snapshot.docs)
                 return snapshot.docs
