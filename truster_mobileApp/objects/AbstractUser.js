@@ -44,8 +44,13 @@ export class AbstractUser {
     //ou bien s'il veut pas la lat/lng de la ville
    getPublicPosts(country, city, radiusInKm, center, sortByPrice, setResult, ...queryConstraints) {
         console.log("getting public posts")
+<<<<<<< HEAD
         if(radiusInKm === 0 ){
             const q = query(collection(this.db, COLLECTIONS.posts(country, city)), ...queryConstraints)
+=======
+    if(radiusInKm === 0 ){
+            const q = query(collection(this.db, COLLECTIONS.AVAILABLE_VISITS), ...queryConstraints)
+>>>>>>> 44d8e3350a1e6110de6842f35605a0f9b4d49fbc
             return getDocs(q).then(snapshot => {
                 console.log(snapshot.docs)
                 return snapshot.docs
@@ -54,7 +59,7 @@ export class AbstractUser {
             const bounds = geohashQueryBounds(center, radiusInKm*1000);
             const promises = [];
             for (const b of bounds) {
-                const q = query(collection(this.db,`${COLLECTIONS.AVAILABLE_VISITS}/${country}/cities/${city}/posts`), ...queryConstraints, orderBy("geohash"),startAt(b[0]),endAt(b[1]))
+                const q = query(collection(this.db, COLLECTIONS.AVAILABLE_VISITS), ...queryConstraints, orderBy("geohash"),startAt(b[0]),endAt(b[1]))
                 promises.push(getDocs(q));
             }
         const matchingDocs = [];
@@ -98,7 +103,7 @@ export class AbstractUser {
 }
 
     getPostsFrom(country, city) {
-        const col = collection(getFirestore(), COLLECTIONS.posts(country, city))
+        const col = collection(getFirestore(), COLLECTIONS.AVAILABLE_VISITS))
         return getDocs(col).then(snapshot => {
             // snapshot.docs.forEach(doc => console.log(doc.data()))
             const retArray = []

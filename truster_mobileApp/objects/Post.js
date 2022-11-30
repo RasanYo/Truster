@@ -90,7 +90,7 @@ export class Post {
     }
 
     getLocation() {
-        const r = COLLECTIONS.posts(this.#address.country, this.#address.city)
+        const r = COLLECTIONS.AVAILABLE_VISITS
         console.log(r)
         return r
     }

@@ -14,7 +14,7 @@ const PostVisit = ({
             />
             <span>
                 <Input
-                    name="start" 
+                    name="start"
                     title="Between"
                     value={data.start}
                     onChange={handleChange}
