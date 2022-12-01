@@ -1,10 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import { useContext, useEffect } from "react";
-import { TouchableWithoutFeedback, View, Text, StyleSheet, Image } from "react-native";
+import { TouchableWithoutFeedback, View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import { UserContext } from "../context";
 import { auth } from '../firebase';
 import { Guest } from "../objects/Guest";
 import { User } from "../objects/User";
+import Card from "../components/Card";
+import Animated from "react-native-reanimated";
 
 export default function Menu({navigation}) {
 
@@ -32,6 +34,8 @@ export default function Menu({navigation}) {
     return (
         <View style={styles.container}>
             <View>
+                
+                
                 {/* <Image style={{
                     display:"block",
                     marginLeft:"auto",

@@ -42,10 +42,10 @@ export class AbstractUser {
 
     //center c'est sensé être soit la position du mec qu'on lui aura demandé 
     //ou bien s'il veut pas la lat/lng de la ville
-   getPublicPosts(country, city, radiusInKm, center, sortByPrice, setResult, ...queryConstraints) {
+   getPublicPosts(radiusInKm, center, sortByPrice, setResult, ...queryConstraints) {
         console.log("getting public posts")
         if(radiusInKm === 0 ){
-            const q = query(collection(this.db, COLLECTIONS.posts(country, city)), ...queryConstraints)
+            const q = query(collection(this.db, COLLECTIONS.AVAILABLE_VISITS), ...queryConstraints)
 
             return getDocs(q).then(snapshot => {
                 console.log(snapshot.docs)
@@ -66,6 +66,7 @@ export class AbstractUser {
                 for (const doc of snap.docs) {
                     const lat = doc.get('address').lat;
                     const lng = doc.get('address').lng;
+                    console.log(lat,lng)
   
                     const distanceInKm = distanceBetween([lat, lng], center);
                     if (distanceInKm <= radiusInKm) {
@@ -99,7 +100,7 @@ export class AbstractUser {
 }
 
     getPostsFrom(country, city) {
-        const col = collection(getFirestore(), COLLECTIONS.AVAILABLE_VISITS))
+        const col = collection(getFirestore(), COLLECTIONS.AVAILABLE_VISITS)
         return getDocs(col).then(snapshot => {
             // snapshot.docs.forEach(doc => console.log(doc.data()))
             const retArray = []

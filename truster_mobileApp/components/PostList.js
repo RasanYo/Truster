@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import PostContainer from "./PostContainer";
 
 const PostList = ({
@@ -7,12 +7,12 @@ const PostList = ({
 
 
     return ( 
-        <View className="post-list column-container">
+        <ScrollView className="post-list column-container">
             {posts && posts.map((post, index) => {
                     return <PostContainer post={post} key={index}/>
                 })
             }
-        </View>
+        </ScrollView>
      );
 }
  
