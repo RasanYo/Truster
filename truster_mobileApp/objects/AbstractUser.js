@@ -44,60 +44,57 @@ export class AbstractUser {
     //ou bien s'il veut pas la lat/lng de la ville
    getPublicPosts(radiusInKm, center, sortByPrice, setResult, ...queryConstraints) {
         console.log("getting public posts")
-        if(radiusInKm === 0 ){
+        if(radiusInKm === 0 ) {
             const q = query(collection(this.db, COLLECTIONS.AVAILABLE_VISITS), ...queryConstraints)
 
             return getDocs(q).then(snapshot => {
                 console.log(snapshot.docs)
                 return snapshot.docs
             })
-        } else{
+        } else {
             const bounds = geohashQueryBounds(center, radiusInKm*1000);
             const promises = [];
             for (const b of bounds) {
                 const q = query(collection(this.db, COLLECTIONS.AVAILABLE_VISITS), ...queryConstraints, orderBy("geohash"),startAt(b[0]),endAt(b[1]))
                 promises.push(getDocs(q));
             }
-        const matchingDocs = [];
-            Promise.all(promises).then((snapshots) => {
+            const matchingDocs = [];
+            return Promise.all(promises).then((snapshots) => {
                 
-                // console.log(snapshots)
-            for (const snap of snapshots) {
-                for (const doc of snap.docs) {
-                    const lat = doc.get('address').lat;
-                    const lng = doc.get('address').lng;
-                    console.log(lat,lng)
-  
-                    const distanceInKm = distanceBetween([lat, lng], center);
-                    if (distanceInKm <= radiusInKm) {
-                    matchingDocs.push(doc);
+                for (const snap of snapshots) {
+                    for (const doc of snap.docs) {
+                        const lat = doc.get('address').lat;
+                        const lng = doc.get('address').lng;
+
+                        const distanceInKm = distanceBetween([lat, lng], center);
+                        if (distanceInKm <= radiusInKm) {
+                        matchingDocs.push(doc);
+                        }
                     }
+                    }
+                return matchingDocs;
+
+            }).then((docs) => {
+                //que si le filtre sortByPrice est appliqué
+                if(sortByPrice){
+                    docs.sort((x,y) => {
+                        if( x.data().value < y.data().value){
+                            return -1
+                        } else if(x.data().value > y.data().value){
+                            return 1
+                        } return 0
+                    })
                 }
-              }
-            
-            // console.log(matchingDocs)
-            return matchingDocs;
-        }).then((matchingDocs) => {
-            //que si le filtre sortByPrice est appliqué
-            if(sortByPrice){
-                matchingDocs.sort((x,y) => {
-                    if( x.data().value < y.data().value){
-                        return -1
-                    } else if(x.data().value > y.data().value){
-                        return 1
-                    } return 0
-                })
-            }
-            
-            // matchingDocs.forEach(x => {
-            //     console.log(x.data())
-            // })
-            // console.log(matchingDocs)
-            setResult(matchingDocs)
-            return matchingDocs
-          });
+                
+                // docs.forEach(x => {
+                //     console.log(x.data())
+                // })
+                // console.log(docs)
+                // setResult(docs)
+                return docs
+            });
+        }
     }
-}
 
     getPostsFrom(country, city) {
         const col = collection(getFirestore(), COLLECTIONS.AVAILABLE_VISITS)

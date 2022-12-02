@@ -18,18 +18,21 @@ export default function VisitAppartments({navigation}){
 
     
     const [posts, setPosts] = useState(null)
-    useEffect(() => {
-        user
-            .getPostsFrom("Germany", "Berlin")
-            .then(docs => {
-                setPosts(docs)
-            })
-    }, [user])
+    // useEffect(() => {
+    //     user
+    //         .getPostsFrom("Germany", "Berlin")
+    //         .then(docs => {
+    //             setPosts(docs)
+    //         })
+    // }, [user])
 
     const handleSelection = (data,details) => {
         var geo = details.geometry.location
-        console.log(details)
-        setInputClicked(false)
+        user.getPublicPosts(5000, [geo.lat, geo.lng], false).then(res => {
+            const data = res.map(resDoc => {return resDoc.data()})
+            setPosts(data)
+            console.log(posts)
+        })
     }
     
 
@@ -48,7 +51,7 @@ export default function VisitAppartments({navigation}){
                 />
             </View>
             
-            <View style={{marginTop:80}}>
+            <View style={{marginTop:80, flex: 1}}>
                 {posts && <PostList posts={posts}/>}
             </View>
             
@@ -59,7 +62,8 @@ export default function VisitAppartments({navigation}){
 const styles = StyleSheet.create({
     mainContainer: {
         color: '#EBEBEB',
-        flexDirection: "column"
+        flexDirection: "column",
+        flex: 1
     },
 
     titleContainer: {

@@ -45,10 +45,10 @@ const styles = StyleSheet.create({
     },
 
     searchBarContainer: {
-        position: "relative",
-        zIndex: 100,
-        // top: 13,
-        // left : 40,
-        width: 270,
+        position: "absolute",
+        zIndex:100,
+        top: 13,
+        left : 40,
+        width:270,
       },
 })
