@@ -40,14 +40,18 @@ export default function VisitAppartments({navigation}){
                 <Text style={styles.title}>Visit appartments,</Text>
                 <Text style={styles.title2}>Become a Trusty</Text>
             </View>
+            <Text onPress={() => navigation.navigate("Menu")}>go back</Text>
             <View style={styles.searchBarContainer}>
                 <AddressInput 
                     isInputClicked={inputClicked} setIsInputClicked={setInputClicked}
                     handleSelection={handleSelection}
                 />
             </View>
-            <Text onPress={() => navigation.navigate("Menu")}>go back</Text>
-            {posts && <PostList posts={posts}/>}
+            
+            <View style={{marginTop:80}}>
+                {posts && <PostList posts={posts}/>}
+            </View>
+            
         </View>
      );
 }

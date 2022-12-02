@@ -229,7 +229,6 @@ export default function VisitForm({navigation}){
 
 
                 {/* Third Block */}
-                
                     <View style={styles.section}>
                         <Text style={styles.sectionTitle}>Description</Text>
                         <TextInput placeholder="Describe here what you would expect from your trusty" placeholderTextColor={"gray"} value={description} onChangeText={setDescription} multiline></TextInput>
