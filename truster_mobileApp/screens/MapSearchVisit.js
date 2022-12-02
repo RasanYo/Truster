@@ -10,7 +10,7 @@ import { UserContext } from "../context";
 import * as Location from 'expo-location';
 import { LocationAccuracy } from "expo-location";
 
-// import Card from "../components/Card";
+import Card from "../components/Card";
 
 
 export default function MapSearchVisit({navigation}){
@@ -231,11 +231,11 @@ export default function MapSearchVisit({navigation}){
                                 {useNativeDriver: true}
                                 )}
                             >
-                            {/* { result && result.map((info,index) => {
+                            { result && result.map((info,index) => {
                                 return <Card itemData={{title : info.data().address.fullAdress,description : info.data().description, time : info.data().timeframe.end}}></Card>
                                 
                                     
-                            })} */}
+                            })}
                 </Animated.ScrollView>}
                 
                 
