@@ -99,7 +99,7 @@ export class AbstractUser {
 }
 
     getPostsFrom(country, city) {
-        const col = collection(getFirestore(), COLLECTIONS.AVAILABLE_VISITS))
+        const col = collection(getFirestore(), COLLECTIONS.AVAILABLE_VISITS)
         return getDocs(col).then(snapshot => {
             // snapshot.docs.forEach(doc => console.log(doc.data()))
             const retArray = []

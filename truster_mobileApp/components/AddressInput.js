@@ -16,7 +16,7 @@ export default function AddressInput({
             {isInputClicked ? 
                 <View style={styles.searchBarContainer}>
                     <Autocomplete3 setAddress={() => {}} isErasingAll={() => {}} setIsCity={() => {}}
-                            setIsStreetName={() => {}} setIsStreetNumber={() => {}} placeholder="" isFocus={true} handleSelection={handleSelection}></Autocomplete3>
+                        setIsStreetName={() => {}} setIsStreetNumber={() => {}} placeholder="" isFocus={true} handleSelection={handleSelection}></Autocomplete3>
                 </View> :  
                 <TouchableWithoutFeedback onPress={() => setIsInputClicked(true)}>
                     <View>
@@ -33,22 +33,22 @@ export default function AddressInput({
 
 const styles = StyleSheet.create({
     searchBar : {
-        position:"absolute",
-        backgroundColor:"white",
-        width:350,
-        height:"auto",
-        padding:10,
+        position: "relative",
+        backgroundColor: "white",
+        width: 350,
+        height: "auto",
+        padding: 10,
         borderRadius : 30,
-        flexDirection:"row",
-        justifyContent:"space-between",
-        alignItems:"center",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
     },
 
     searchBarContainer: {
         position: "relative",
-        zIndex:100,
+        zIndex: 100,
         // top: 13,
         // left : 40,
-        width:270,
+        width: 270,
       },
 })
