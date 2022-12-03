@@ -42,7 +42,7 @@ export class AbstractUser {
 
     //center c'est sensé être soit la position du mec qu'on lui aura demandé 
     //ou bien s'il veut pas la lat/lng de la ville
-   getPublicPosts(radiusInKm, center, sortByPrice, setResult, ...queryConstraints) {
+   getPublicPosts(radiusInKm, center, sortByPrice, ...queryConstraints) {
         console.log("getting public posts")
         if(radiusInKm === 0 ) {
             const q = query(collection(this.db, COLLECTIONS.AVAILABLE_VISITS), ...queryConstraints)
@@ -55,7 +55,7 @@ export class AbstractUser {
             const bounds = geohashQueryBounds(center, radiusInKm*1000);
             const promises = [];
             for (const b of bounds) {
-                const q = query(collection(this.db, COLLECTIONS.AVAILABLE_VISITS), ...queryConstraints, orderBy("geohash"),startAt(b[0]),endAt(b[1]))
+                const q = query(collection(this.db, COLLECTIONS.AVAILABLE_VISITS), orderBy("geohash"),...queryConstraints, startAt(b[0]), endAt(b[1]))
                 promises.push(getDocs(q));
             }
             const matchingDocs = [];

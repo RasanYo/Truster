@@ -87,7 +87,7 @@ export default function MapSearchVisit({navigation}){
             latitudeDelta: 0.08,
             longitudeDelta: 0.08,
           })
-          user.getPublicPosts(radius, [lat,lng] , false, setResult)
+          user.getPublicPosts(radius, [lat,lng] , false).then(docs => setResult(docs))
         })();
       }, []);
 

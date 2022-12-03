@@ -22,9 +22,9 @@ import {
   geohashQueryBounds, 
   distanceBetween 
 } from "geofire-common"
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
 export default function App() {
-
 
 
   const [user, setUser] = useState(new Guest())
@@ -35,26 +35,28 @@ export default function App() {
 
   const Stack = createNativeStackNavigator();
   return (
-    <NavigationContainer>
-      <UserContext.Provider value={{user,setUser}}>
-            <Stack.Navigator screenOptions={{headerShown : false,}}>
-                <Stack.Screen name="Menu" component={Menu}/>
-                      
-                <Stack.Screen options={{ animation:"slide_from_bottom", presentation:"modal",headerShown : true, 
-                title: 'Sign Up or Login'}} name="LoginMenu" component={LoginMenu}/>
-                
-                <Stack.Screen name="SignUp" component={SignUp} options={{presentation:"modal",headerShown : true,}}/>
-                 
-                <Stack.Screen name="PostPreview" component={PostPreview}/>
-
-                <Stack.Screen name="VisitForm" component={VisitForm}/>
-                      
-                <Stack.Screen name="MapSearchVisit" component={VisitAppartments}/>
-                {/* <Stack.Screen name="MapSearchVisit" component={MapSearchVisit}/> */}
+    <ActionSheetProvider>
+      <NavigationContainer>
+        <UserContext.Provider value={{user,setUser}}>
+              <Stack.Navigator screenOptions={{headerShown : false,}}>
+                  <Stack.Screen name="Menu" component={Menu}/>
                         
-            </Stack.Navigator>
-      </UserContext.Provider> 
-    </NavigationContainer>
+                  <Stack.Screen options={{ animation:"slide_from_bottom", presentation:"modal",headerShown : true, 
+                  title: 'Sign Up or Login'}} name="LoginMenu" component={LoginMenu}/>
+                  
+                  <Stack.Screen name="SignUp" component={SignUp} options={{presentation:"modal",headerShown : true,}}/>
+                  
+                  <Stack.Screen name="PostPreview" component={PostPreview}/>
+
+                  <Stack.Screen name="VisitForm" component={VisitForm}/>
+                        
+                  <Stack.Screen name="MapSearchVisit" component={VisitAppartments}/>
+                  {/* <Stack.Screen name="MapSearchVisit" component={MapSearchVisit}/> */}
+                          
+              </Stack.Navigator>
+        </UserContext.Provider> 
+      </NavigationContainer>
+    </ActionSheetProvider>
 
     // <UserContext.Provider value={user}>
     //   <Navigator />
