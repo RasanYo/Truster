@@ -2,7 +2,7 @@ import { Text, View, StyleSheet } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useFonts } from 'expo-font';
 
-const PostContainer = ({post=null}) => {
+const PostContainer = ({post}) => {
 
     // const [fontsLoaded] = useFonts({
     //     'NTR': require('../assets/fonts/NTR-Regular.ttf'),

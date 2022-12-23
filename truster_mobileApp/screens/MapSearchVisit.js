@@ -4,7 +4,6 @@ import {AntDesign} from "@expo/vector-icons";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useContext, useEffect, useRef, useState } from "react";
 import Autocomplete3 from "../objects/autocomplete/Autocomplete3";
-import { set } from "firebase/database";
 import { Ionicons } from '@expo/vector-icons';
 import { UserContext } from "../context";
 
@@ -88,7 +87,7 @@ export default function MapSearchVisit({navigation}){
             latitudeDelta: 0.08,
             longitudeDelta: 0.08,
           })
-          user.getPublicPosts(radius, [lat,lng] , false, setResult)
+          user.getPublicPosts(radius, [lat,lng] , false).then(docs => setResult(docs))
         })();
       }, []);
 

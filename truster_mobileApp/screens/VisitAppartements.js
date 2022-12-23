@@ -1,10 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { UserContext } from "../context";
 import PostList from "../components/PostList";
 // import { useFonts } from 'expo-font';
 import Autocomplete from "../objects/autocomplete/Autocomplete";
 import AddressInput from "../components/AddressInput";
+import { limit, startAfter } from "firebase/firestore";
 
 
 export default function VisitAppartments({navigation}){
@@ -16,20 +17,77 @@ export default function VisitAppartments({navigation}){
     const {user} = useContext(UserContext)
     const [inputClicked, setInputClicked] = useState(false)
 
-    
-    const [posts, setPosts] = useState(null)
-    useEffect(() => {
-        user
-            .getPostsFrom("Germany", "Berlin")
-            .then(docs => {
-                setPosts(docs)
-            })
-    }, [user])
+    const [geoCoords, setGeoCoords] = useState({
+        lat: null,
+        lng: null
+    })
+    const [queryState, setQueryState] = useState({
+        posts: [],
+        limit: 5,
+        lastVisible: null,
+        loading: false,
+        refreshing: false
+    })
+    // useEffect(() => {
+    //     user
+    //         .getPostsFrom("Germany", "Berlin")
+    //         .then(docs => {
+    //             setPosts(docs)
+    //         })
+    // }, [user])
 
     const handleSelection = (data,details) => {
         var geo = details.geometry.location
-        console.log(details)
-        setInputClicked(false)
+        setGeoCoords({
+            lat: geo.lat,
+            lng: geo.lng
+        })
+        user.getPublicPosts(5000, [geo.lat, geo.lng], false, limit(queryState.limit)).then(res => {
+            let data = res.map(resDoc => {return resDoc.data()})
+            let lastVisible = data[data.length -1].geohash
+            console.log("LAST_VISIBLE", lastVisible)
+            setQueryState({
+                posts: data,
+                lastVisible: lastVisible,
+                loading: false
+            })
+        })
+    }
+
+    const retrieveMore = () => {
+        console.log("RETRIEVING MORE")
+        setQueryState({
+            ... queryState,
+            refreshing: true
+        })
+        try {
+            user.getPublicPosts(
+                5000, 
+                [geoCoords.lat, geoCoords.lng], 
+                false, 
+                startAfter(queryState.lastVisible), limit(queryState.limit)
+            ).then(res => {
+            let data = res.map(resDoc => {return resDoc.data()})
+            if (data.length) {
+                let lastVisible = data[data.length -1].id
+                setQueryState({
+                    posts: data,
+                    lastVisible: lastVisible,
+                    loading: false
+                })
+            } else {
+                console.log("REACHED THE END")
+            }
+                
+            })
+        } catch (err) {
+            setQueryState({
+                refreshing: false
+            })
+            console.log("REACHED THE END")
+        }
+        
+        
     }
     
 
@@ -48,8 +106,8 @@ export default function VisitAppartments({navigation}){
                 />
             </View>
             
-            <View style={{marginTop:80}}>
-                {posts && <PostList posts={posts}/>}
+            <View style={{marginTop:80, flex: 1}}>
+                <PostList query={queryState} retrieveMore={retrieveMore}/>
             </View>
             
         </View>
@@ -59,7 +117,8 @@ export default function VisitAppartments({navigation}){
 const styles = StyleSheet.create({
     mainContainer: {
         color: '#EBEBEB',
-        flexDirection: "column"
+        flexDirection: "column",
+        flex: 1
     },
 
     titleContainer: {

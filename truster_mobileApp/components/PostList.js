@@ -1,18 +1,20 @@
-import { ScrollView, View } from "react-native";
+import { FlatList } from "react-native";
 import PostContainer from "./PostContainer";
 
 const PostList = ({
-    posts=null
+    query,
+    retrieveMore
 }) => {
 
 
+
     return ( 
-        <ScrollView className="post-list column-container">
-            {posts && posts.map((post, index) => {
-                    return <PostContainer post={post} key={index}/>
-                })
-            }
-        </ScrollView>
+        <FlatList 
+            data={query.posts}
+            renderItem={({ item }) => (<PostContainer post={item} />)}
+            keyExtractor={post => post.id}
+            onEndReached={retrieveMore}
+        />
      );
 }
  

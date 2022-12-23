@@ -5,8 +5,6 @@ import { UserContext } from "../context";
 import { auth } from '../firebase';
 import { Guest } from "../objects/Guest";
 import { User } from "../objects/User";
-import Card from "../components/Card";
-import Animated from "react-native-reanimated";
 
 export default function Menu({navigation}) {
 
