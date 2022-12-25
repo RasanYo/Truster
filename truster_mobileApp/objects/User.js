@@ -8,7 +8,8 @@ import {
     getDoc,
     getFirestore,
     collection,
-    deleteDoc
+    deleteDoc,
+    Timestamp
 } from "firebase/firestore"
 import { COLLECTIONS } from "../Constants"
 // import { 
@@ -68,6 +69,31 @@ export class User extends AbstractUser{
         
         return updateDoc(userRef, {myPosts : arrayUnion(post.asDataObject())}).catch(err => {
             return setDoc(userRef, {myPosts : arrayUnion(post.asDataObject())})
+        })
+    }
+
+    requestVisit(postID) {
+        const postCol = collection(getFirestore(), COLLECTIONS.AVAILABLE_VISITS)
+        const userCol = collection(getFirestore(), COLLECTIONS.REGULAR_USERS)
+
+        const postRef = doc(postCol, postID)
+        const userRef = doc(userCol, this.getUID())
+
+        const requestedAt = Timestamp.now() 
+
+        return updateDoc(postRef, {
+            requesters: arrayUnion({
+                uid: this.getUID(),
+                requestedAt: requestedAt 
+            })
+        })
+        .then(() => {
+            return updateDoc(userRef, {
+                myVisitRequests: arrayUnion({
+                    postID: postID,
+                    requestedAt: requestedAt
+                })
+            })
         })
     }
 
