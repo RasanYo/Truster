@@ -5,7 +5,7 @@ import PostList from "../components/PostList";
 // import { useFonts } from 'expo-font';
 import Autocomplete from "../objects/autocomplete/Autocomplete";
 import AddressInput from "../components/AddressInput";
-import { limit, startAfter } from "firebase/firestore";
+import { limit, orderBy, startAfter } from "firebase/firestore";
 
 
 export default function VisitAppartments({navigation}){
@@ -28,13 +28,7 @@ export default function VisitAppartments({navigation}){
         loading: false,
         refreshing: false
     })
-    // useEffect(() => {
-    //     user
-    //         .getPostsFrom("Germany", "Berlin")
-    //         .then(docs => {
-    //             setPosts(docs)
-    //         })
-    // }, [user])
+
 
     const handleSelection = (data,details) => {
         var geo = details.geometry.location
@@ -42,7 +36,7 @@ export default function VisitAppartments({navigation}){
             lat: geo.lat,
             lng: geo.lng
         })
-        user.getPublicPosts(5000, [geo.lat, geo.lng], false, limit(queryState.limit)).then(res => {
+        user.getPublicPosts(5000, [geo.lat, geo.lng], true, limit(queryState.limit)).then(res => {
             let data = res.map(resDoc => {return resDoc.data()})
             let lastVisible = data[data.length -1].geohash
             console.log("LAST_VISIBLE", lastVisible)
@@ -52,7 +46,11 @@ export default function VisitAppartments({navigation}){
                 loading: false
             })
         })
+        .catch(err => {
+            console.log(err)
+        })
     }
+
 
     const retrieveMore = () => {
         console.log("RETRIEVING MORE")
@@ -64,7 +62,7 @@ export default function VisitAppartments({navigation}){
             user.getPublicPosts(
                 5000, 
                 [geoCoords.lat, geoCoords.lng], 
-                false, 
+                true, 
                 startAfter(queryState.lastVisible), limit(queryState.limit)
             ).then(res => {
             let data = res.map(resDoc => {return resDoc.data()})
@@ -86,8 +84,6 @@ export default function VisitAppartments({navigation}){
             })
             console.log("REACHED THE END")
         }
-        
-        
     }
     
 
@@ -107,7 +103,7 @@ export default function VisitAppartments({navigation}){
             </View>
             
             <View style={{marginTop:80, flex: 1}}>
-                <PostList query={queryState} retrieveMore={retrieveMore}/>
+                <PostList query={queryState} retrieveMore={retrieveMore} nav={navigation}/>
             </View>
             
         </View>
