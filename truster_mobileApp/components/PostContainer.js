@@ -1,8 +1,8 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useFonts } from 'expo-font';
 
-const PostContainer = ({post}) => {
+const PostContainer = ({post, navigation}) => {
 
     // const [fontsLoaded] = useFonts({
     //     'NTR': require('../assets/fonts/NTR-Regular.ttf'),
@@ -13,35 +13,40 @@ const PostContainer = ({post}) => {
 
 
     return ( 
-        <View style={{width: '100%'}}>
-            {post && 
-            <View style={styles.rowContainer}>
-                <View style={styles.leftContainer}>
-                    <Text style={styles.neighborhood}>
-                        {post.address.city}
-                    </Text>
-                    <Text style={styles.city}>
-                        {post.address.fullAdress}
-                    </Text>
-                    <Text style={styles.timeframe}>
-                        {post.timeframe.start} - {post.timeframe.end}
-                    </Text>
-                </View>
-                <View style={styles.rightContainer}>
-                    <MaterialCommunityIcons 
-                        name="cards-heart-outline"
-                        size={20}
-                        color='#979797'
-                        // style={{
-                        //     lineHeight: '0'
-                        // }}
-                    />
-                    <Text style={styles.price}>20 €</Text>
-                    <Text style={styles.houseType}>Appartment</Text>
-                </View>
-                
-            </View>}
-        </View>
+        <TouchableWithoutFeedback onPress={() => {
+            console.log("CHECK")
+            navigation.navigate('Post', {post: post})
+        }}>
+            <View style={{width: '100%'}}>
+                {post && 
+                <View style={styles.rowContainer}>
+                    <View style={styles.leftContainer}>
+                        <Text style={styles.neighborhood}>
+                            {post.address.city}
+                        </Text>
+                        <Text style={styles.city}>
+                            {post.address.fullAdress}
+                        </Text>
+                        <Text style={styles.timeframe}>
+                            {post.timeframe.start} - {post.timeframe.end}
+                        </Text>
+                    </View>
+                    <View style={styles.rightContainer}>
+                        <MaterialCommunityIcons 
+                            name="cards-heart-outline"
+                            size={20}
+                            color='#979797'
+                            // style={{
+                            //     lineHeight: '0'
+                            // }}
+                        />
+                        <Text style={styles.price}>{post.price} €</Text>
+                        <Text style={styles.houseType}>Appartment</Text>
+                    </View>
+                    
+                </View>}
+            </View>
+        </TouchableWithoutFeedback>
      );
 }
  

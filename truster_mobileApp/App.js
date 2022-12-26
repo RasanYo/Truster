@@ -23,6 +23,7 @@ import {
   distanceBetween 
 } from "geofire-common"
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
+import PostScreen from './components/PostScreen';
 
 export default function App() {
 
@@ -52,6 +53,8 @@ export default function App() {
                         
                   <Stack.Screen name="MapSearchVisit" component={VisitAppartments}/>
                   {/* <Stack.Screen name="MapSearchVisit" component={MapSearchVisit}/> */}
+
+                  <Stack.Screen name="Post" component={PostScreen}/>
                           
               </Stack.Navigator>
         </UserContext.Provider> 

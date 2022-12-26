@@ -78,12 +78,14 @@ export class AbstractUser {
                 //que si le filtre sortByPrice est appliqué
                 if(sortByPrice){
                     docs.sort((x,y) => {
-                        if( x.data().value < y.data().value){
+                        if( x.data().price < y.data().price){
                             return -1
-                        } else if(x.data().value > y.data().value){
+                        } else if(x.data().price > y.data().rpice){
                             return 1
                         } return 0
                     })
+
+                    console.log([1, 2, "Test", 5])
                 }
                 
                 // docs.forEach(x => {
@@ -148,6 +150,14 @@ export class AbstractUser {
         const userCollectionRef = collection(this.db, COLLECTIONS.REGULAR_USERS)
         const userDocRef = doc(userCollectionRef, uid)
         return getDoc(userDocRef).then(doc => {return doc.data().dob ? true : false}) 
+    }
+
+    getUser(uid) {
+        const userCollectionRef = collection(this.db, COLLECTIONS.REGULAR_USERS)
+        const userDocRef = doc(userCollectionRef, uid)
+        return getDoc(userDocRef).then(doc => {
+            return doc.data()
+        })
     }
    
 }

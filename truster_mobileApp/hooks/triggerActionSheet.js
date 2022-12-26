@@ -9,12 +9,12 @@ export default function triggerActionSheet(options) {
         const cancelButtonIndex = 2;
         const title = "Filter by"
     
-        showActionSheetWithOptions({
-          options,
-          cancelButtonIndex,
-          destructiveButtonIndex,
-          title,
-        });
+        showActionSheetWithOptions(
+          {
+            options,
+            title
+          }
+        );
       }
 
     return (onPress)

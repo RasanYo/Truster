@@ -9,33 +9,28 @@ import { TextInput } from "react-native-gesture-handler";
 import { Post } from "../objects/Post";
 
 
-export default function PostPreview({navigation,route}){
-    const { user } = useContext(UserContext)
-    const [userData,setUserData] = useState()
+export default function PostPreview(props){
 
-    useEffect(()=>{
-        if(user.isLoggedIn()){
-            user.getPersonalInformation().then(snapshot => {
-                setUserData(snapshot.data())
-            }).then(() => {
-                console.log(userData)
-                console.log(postInformation)
-                console.log(description)
-            })
-        }else {
-            setUserData({
-                firstName : "You",
-                lastName : "X"
-            })
-        }
-        
+    const navigation = props.navigation
+    const post = props.route.params.post
+
+    const { user } = useContext(UserContext)
+    const [poster, setPoster] = useState()
+    const [userData, setUserData] = useState()
+
+    useEffect(() => {
+        user.getUser(post.creatorUID).then(data => {
+            setPoster(data)
+            console.log("POST", post)
+        })
     }, [])
 
-    const { postInformation, date, description, isJustPreview } = route.params;
     const coordinate = {
-        latitude : postInformation.lat,
-        longitude : postInformation.lng
+        latitude : post.address.lat,
+        longitude : post.address.lng
     }
+
+    const isJustPreview = false
 
     const onSubmit = e => {
         // e.preventDefault()
@@ -45,8 +40,8 @@ export default function PostPreview({navigation,route}){
             navigation.navigate("LoginMenu")
         }else{
             console.log("connecté")
-            const post = new Post(postInformation, {start: date, end: date}, description, user.getUID())
-            user.post(post).then(() => navigation.navigate("Menu")).then(() => console.log("Successfully posted"))
+            const post = new Post(post.address, post.timeframe, post.description, user.getUID())
+            user.post(post).then(() => navigation.goBack(null)).then(() => console.log("Successfully posted"))
         }
         
     }
@@ -65,7 +60,7 @@ export default function PostPreview({navigation,route}){
                     <Marker
                         // key={index}
                         coordinate={coordinate}
-                        title={postInformation.fullAdress}
+                        title={post.address.fullAdress}
                         description={"marker.description"}
                         pinColor="#29ECB1"
                         />
@@ -74,7 +69,7 @@ export default function PostPreview({navigation,route}){
                 {/* Profile Picture  */}
                 <View>
                     <Text style={{color:"gray"}}>Poster</Text>
-                    {userData ? <Text style={{fontSize:20, width:140}}>{userData.firstName} {userData.lastName.charAt(0)}. </Text> : null}                
+                    {userData ? <Text style={{fontSize:20, width:140}}>{poster.firstName} {poster.lastName.charAt(0)}. </Text> : null}                
                 </View>
                 <View style={{flexDirection:"row",alignItems:"center"}}>
                     <AntDesign name="staro" size={24} color="yellow" />
@@ -86,13 +81,13 @@ export default function PostPreview({navigation,route}){
             </View>
 
             <View style={{marginLeft:20, marginTop:20}}>
-                <Text style={{fontSize:25,letterSpacing:0.5}}>{postInformation.street}</Text>
-                <Text style={{marginTop:7,color:"gray",letterSpacing:1}}>{postInformation.npa} {postInformation.city}, {postInformation.country}</Text>
-                <Text style={{marginTop:15,letterSpacing:1,fontSize:20}}>{date}</Text>
+                <Text style={{fontSize:25,letterSpacing:0.5}}>{post.address.city}</Text>
+                <Text style={{marginTop:7,color:"gray",letterSpacing:1}}>{post.address.npa} {post.address.city}, {post.address.country}</Text>
+                <Text style={{marginTop:15,letterSpacing:1,fontSize:20}}>{post.timeframe.start}  -  {post.timeframe.end}</Text>
             </View>
             <View style={{margin:20}}>
                 <Text style={{fontSize:20}}>Description</Text>
-                {description ? <Text style={styles.descriptionText}>{description}</Text> : <Text style={styles.descriptionText}>No description</Text>}
+                {post.description ? <Text style={styles.descriptionText}>{post.description}</Text> : <Text style={styles.descriptionText}>No description</Text>}
             </View>
 
             <View style={{margin:20,opacity: isJustPreview ? 0.5 : 1}}>
@@ -116,7 +111,7 @@ function Footer(props){
             <TouchableWithoutFeedback onPress={props.onSubmit}>
                 <View style={styles.footerPreview} >
                     <MaterialIcons name="add-to-photos" size={24} color="black" />
-                    <Text style={{fontSize:"20",marginLeft:5}}>Post</Text>
+                    <Text style={{fontSize:20,marginLeft:5}}>Post</Text>
                 </View>
             </TouchableWithoutFeedback>
             
@@ -184,7 +179,7 @@ const styles = StyleSheet.create({
     footerEraseAll : {
         marginRight:20,
         marginBottom:20,
-        fontSize:"20", 
+        fontSize:20, 
         textDecorationLine:"underline",
 
     },

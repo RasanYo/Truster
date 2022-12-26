@@ -10,7 +10,12 @@ export default function AddressInput({
     isInputClicked, setIsInputClicked
 }) {
 
-    const showMenu = triggerActionSheet(['Distance down', 'Distance up', 'Price up', 'Price down'])
+   
+    const showMenu = triggerActionSheet(
+        ['Distance down', 'Distance up', 'Price up', 'Price down']
+    )
+
+
 
     return (
         <View style={styles.searchBar}>
