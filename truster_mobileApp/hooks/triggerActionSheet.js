@@ -11,10 +11,12 @@ export default function triggerActionSheet(options) {
     
         showActionSheetWithOptions({
           options,
-          title
+          cancelButtonIndex,
+          destructiveButtonIndex,
+          title,
         });
       }
 
-      return (onPress)
+    return (onPress)
 
 }
