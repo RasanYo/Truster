@@ -3,7 +3,7 @@ import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableWithoutFeedbac
 import MapView, { Marker } from "react-native-maps";
 import { UserContext } from "../context";
 import { Post } from "../objects/Post";
-import defaultPic from "../assets/pictures/no-profile-pic.png";
+// import defaultPic from "../assets/pictures/no-profile-pic.png";
 import { AntDesign } from '@expo/vector-icons';
 
 // import { MaterialIcons } from '@expo/vector-icons';
