@@ -24,6 +24,8 @@ import {
 } from "geofire-common"
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import PostScreen from './components/PostScreen';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { color } from 'react-native-reanimated';
 
 export default function App() {
 
@@ -35,28 +37,30 @@ export default function App() {
   // },[])
 
   const Stack = createNativeStackNavigator();
+
   return (
     <ActionSheetProvider>
       <NavigationContainer>
         <UserContext.Provider value={{user,setUser}}>
               <Stack.Navigator screenOptions={{headerShown : false,}}>
-                  <Stack.Screen name="Menu" component={Menu}/>
+                  {/* <Stack.Screen name="Menu" component={Menu}/> */}
                         
-                  <Stack.Screen options={{ animation:"slide_from_bottom", presentation:"modal",headerShown : true, 
-                  title: 'Sign Up or Login'}} name="LoginMenu" component={LoginMenu}/>
+                  {/* <Stack.Screen options={{ animation:"slide_from_bottom", presentation:"modal",headerShown : true, 
+                  title: 'Sign Up or Login'}} name="LoginMenu" component={LoginMenu}/> */}
                   
-                  <Stack.Screen name="SignUp" component={SignUp} options={{presentation:"modal",headerShown : true,}}/>
+                  {/* <Stack.Screen name="SignUp" component={SignUp} options={{presentation:"modal",headerShown : true,}}/> */}
                   
-                  <Stack.Screen name="PostPreview" component={PostPreview}/>
+                  {/* <Stack.Screen name="PostPreview" component={PostPreview}/> */}
 
-                  <Stack.Screen name="VisitForm" component={VisitForm}/>
+                  {/* <Stack.Screen name="VisitForm" component={VisitForm}/> */}
                         
                   {/* <Stack.Screen name="MapSearchVisit" component={VisitAppartments}/> */}
-                  <Stack.Screen name="MapSearchVisit" component={MapSearchVisit}/>
-
+                  {/* <Stack.Screen name="MapSearchVisit" component={MapSearchVisit}/> */}
+                  <Stack.Screen name="Tabs" component={Tabs}/>
                   <Stack.Screen name="Post" component={PostScreen}/>
                           
               </Stack.Navigator>
+              
         </UserContext.Provider> 
       </NavigationContainer>
     </ActionSheetProvider>
@@ -67,6 +71,26 @@ export default function App() {
 
     
   );
+}
+
+function Tabs() {
+  const Tab = createBottomTabNavigator();
+  return ( 
+    <Tab.Navigator screenOptions={{headerShown : false,}}>
+      <Tab.Screen name="Menu" component={Menu}/>
+              
+      <Tab.Screen options={{ animation:"slide_from_bottom", presentation:"modal",headerShown : true, 
+      title: 'Sign Up or Login'}} name="LoginMenu" component={LoginMenu}/>
+      
+      <Tab.Screen name="SignUp" component={SignUp} options={{presentation:"modal",headerShown : true,}}/>
+      
+      <Tab.Screen name="VisitForm" component={VisitForm}/>
+            
+      <Tab.Screen name="MapSearchVisit" component={VisitAppartments}/>
+      {/* <Tab.Screen name="MapSearchVisit" component={MapSearchVisit}/> */}
+
+    </Tab.Navigator>
+  )
 }
 
 // const styles = StyleSheet.create({

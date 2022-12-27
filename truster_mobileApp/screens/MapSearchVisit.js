@@ -157,12 +157,6 @@ export default function MapSearchVisit({navigation}){
         scrollview.current.scrollTo({x: x, y: 0, animated: true});
     }
 
-    
-
-
-
-
-
     return (
         <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss;setShowCards(false)}} accessible={false}>
         <View style={styles.container} >

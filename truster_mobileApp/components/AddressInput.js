@@ -22,8 +22,16 @@ export default function AddressInput({
             <AntDesign name="search1" size={24} style={{alignSelf:"flex-start",marginTop:10}}/>
             {isInputClicked ? 
                 <View style={styles.searchBarContainer}>
-                    <Autocomplete3 setAddress={() => {}} isErasingAll={() => {}} setIsCity={() => {}}
-                        setIsStreetName={() => {}} setIsStreetNumber={() => {}} placeholder="" isFocus={true} handleSelection={handleSelection}></Autocomplete3>
+                    <Autocomplete3 
+                        setAddress={() => {}} 
+                        isErasingAll={() => {}} 
+                        setIsCity={() => {}}
+                        setIsStreetName={() => {}} 
+                        setIsStreetNumber={() => {}} 
+                        placeholder="" 
+                        isFocus={true} 
+                        handleSelection={handleSelection}>
+                    </Autocomplete3>
                 </View> :  
                 <TouchableWithoutFeedback onPress={() => setIsInputClicked(true)}>
                     <View>

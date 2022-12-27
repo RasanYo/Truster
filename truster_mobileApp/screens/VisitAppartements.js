@@ -96,7 +96,6 @@ export default function VisitAppartments({navigation}){
             </View>
             <Text onPress={() => navigation.navigate("Menu")}>go back</Text>
             <View style={styles.searchBarContainer}>
-                
                 <AddressInput 
                     isInputClicked={inputClicked} setIsInputClicked={setInputClicked}
                     handleSelection={handleSelection}
