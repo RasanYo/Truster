@@ -260,7 +260,7 @@ function Footer(props){
                 }}>
                 <View style={styles.footerPreview} >
                     <MaterialIcons name="preview" size={24} color="black" />
-                    <Text style={{fontSize:"20",marginLeft:5}}>Preview</Text>
+                    <Text style={{fontSize:20,marginLeft:5}}>Preview</Text>
                 </View>
             </TouchableWithoutFeedback>
             
@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
     footerEraseAll : {
         marginRight:20,
         marginBottom:20,
-        fontSize:"20", 
+        fontSize:20, 
         textDecorationLine:"underline",
 
     },

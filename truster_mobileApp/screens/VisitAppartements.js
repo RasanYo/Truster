@@ -3,7 +3,6 @@ import { Text, View, StyleSheet } from "react-native";
 import { UserContext } from "../context";
 import PostList from "../components/PostList";
 // import { useFonts } from 'expo-font';
-import Autocomplete from "../objects/autocomplete/Autocomplete";
 import AddressInput from "../components/AddressInput";
 import { limit, orderBy, startAfter } from "firebase/firestore";
 
@@ -21,6 +20,7 @@ export default function VisitAppartments({navigation}){
         lat: null,
         lng: null
     })
+
     const [queryState, setQueryState] = useState({
         posts: [],
         limit: 5,
@@ -36,7 +36,7 @@ export default function VisitAppartments({navigation}){
             lat: geo.lat,
             lng: geo.lng
         })
-        user.getPublicPosts(5000, [geo.lat, geo.lng], true, limit(queryState.limit)).then(res => {
+        user.getPublicPosts(500, [geo.lat, geo.lng], true, limit(queryState.limit)).then(res => {
             let data = res.map(resDoc => {return resDoc.data()})
             let lastVisible = data[data.length -1].geohash
             console.log("LAST_VISIBLE", lastVisible)
@@ -96,13 +96,14 @@ export default function VisitAppartments({navigation}){
             </View>
             <Text onPress={() => navigation.navigate("Menu")}>go back</Text>
             <View style={styles.searchBarContainer}>
+                
                 <AddressInput 
                     isInputClicked={inputClicked} setIsInputClicked={setInputClicked}
                     handleSelection={handleSelection}
                 />
             </View>
             
-            <View style={{marginTop:80, flex: 1}}>
+            <View style={{marginTop:20, flex: 1}}>
                 <PostList query={queryState} retrieveMore={retrieveMore} nav={navigation}/>
             </View>
             
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
     },
     searchBarContainer: {
         alignItems: 'center',
-        marginBottom: 20
+        // marginBottom: 20
     }
 })
  

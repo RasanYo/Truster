@@ -51,8 +51,8 @@ export default function App() {
 
                   <Stack.Screen name="VisitForm" component={VisitForm}/>
                         
-                  <Stack.Screen name="MapSearchVisit" component={VisitAppartments}/>
-                  {/* <Stack.Screen name="MapSearchVisit" component={MapSearchVisit}/> */}
+                  {/* <Stack.Screen name="MapSearchVisit" component={VisitAppartments}/> */}
+                  <Stack.Screen name="MapSearchVisit" component={MapSearchVisit}/>
 
                   <Stack.Screen name="Post" component={PostScreen}/>
                           
