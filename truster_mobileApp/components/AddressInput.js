@@ -19,7 +19,7 @@ export default function AddressInput({
 
     return (
         <View style={styles.searchBar}>
-            <AntDesign name="search1" size={24} style={{alignSelf:"flex-start",marginTop:10}}/>
+            <AntDesign name="search1" size={24} style={{alignSelf:"flex-start",marginTop:7}}/>
             {isInputClicked ? 
                 <View style={styles.searchBarContainer}>
                     <Autocomplete3 
@@ -39,7 +39,7 @@ export default function AddressInput({
                         <Text style={{color:"gray"}}>Look for visits in your area</Text>
                     </View>
                 </TouchableWithoutFeedback>}
-            <TouchableOpacity style={{alignSelf:"flex-start",marginTop:10}} onPress={() => {
+            <TouchableOpacity style={{alignSelf:"flex-start",marginTop:7}} onPress={() => {
                 console.log("CHECK")
                 showMenu()
             }}>

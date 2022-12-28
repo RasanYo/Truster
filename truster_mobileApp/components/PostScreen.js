@@ -15,6 +15,8 @@ const PostScreen = (props) => {
     const {user} = useContext(UserContext)
     const post = props.route.params.post
 
+    console.log(post)
+
     const [poster, setPoster] = useState()
     const [profilePic, setProfilePic] = useState(null)
 
@@ -54,7 +56,7 @@ const PostScreen = (props) => {
 
     return ( 
         <View>
-            {poster && <ScrollView style={styles.container}>
+            {poster && <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 <View style={styles.mapContainer}>
                     <MapView style={styles.map} initialRegion={{
                         latitude: coordinate.latitude,
@@ -70,7 +72,7 @@ const PostScreen = (props) => {
                         <Marker
                             // key={index}
                             coordinate={coordinate}
-                            title={post.address.fullAdress}
+                            title={post.address.fullAddress}
                             description={"marker.description"}
                             pinColor="#29ECB1"
                         />
@@ -220,5 +222,6 @@ const styles = StyleSheet.create({
         borderWidth:1,
         textAlignVertical: "top",
         padding:8,
+        marginBottom:100
     },
 })

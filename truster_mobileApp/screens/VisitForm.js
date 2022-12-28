@@ -52,13 +52,13 @@ export default function VisitForm({navigation}){
         var aux = new Date()
         aux.setDate(today.getDate() + nbDays)
         setSelectedDate(aux)
-        console.log(aux)
+        // console.log(aux)
     }
 
     const handleAccommodationSelected = (val) => {
         console.log(val)
         setAccomodationSelected(val)
-        console.log(selectedDate)
+        // console.log(selectedDate)
     }
 
     const dateToString = (date) => {
@@ -73,7 +73,6 @@ export default function VisitForm({navigation}){
     }
 
     useEffect(() => {
-        console.log(1)
         var today = new Date();
         var dateInTwoDays = new Date();
         dateInTwoDays.setDate(today.getDate() + 2);
@@ -125,33 +124,33 @@ export default function VisitForm({navigation}){
         var geo = details.geometry.location
         var t = details.address_components
         console.log(t)
-        var newAdress = {}
+        var newAddress = {}
 
-        newAdress.lat = geo.lat
-        newAdress.lng = geo.lng
-        newAdress.fullAdress = details.formatted_address
+        newAddress.lat = geo.lat
+        newAddress.lng = geo.lng
+        newAddress.fullAddress = details.formatted_address
 
         t.forEach(x => {
             if(x.types.includes("street_number")){
-                newAdress.number = x.long_name
+                newAddress.number = x.long_name
                 setIsStreetNumber(true)
             }else if(x.types.includes("route")){
-                newAdress.street = x.long_name
+                newAddress.street = x.long_name
                 setIsStreetName(true)
             }else if(x.types.includes("postal_code")){
-                newAdress.npa = x.long_name
+                newAddress.npa = x.long_name
             }else if(x.types.includes("country")){
-                newAdress.country = x.long_name
+                newAddress.country = x.long_name
             }else if(x.types.includes("locality")){
-                newAdress.city = x.long_name
+                newAddress.city = x.long_name
                 setIsCity(true)
             }
         })
-        console.log(newAdress)
-        if(Object.getOwnPropertyNames(newAdress).length != 8){
+        console.log(newAddress)
+        if(Object.getOwnPropertyNames(newAddress).length != 8){
             console.log("Information missing")
         }else{
-            setAddress(newAdress)
+            setAddress(newAddress)
         }
         }
 
@@ -174,7 +173,7 @@ export default function VisitForm({navigation}){
                 {/* First block */}
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Where is the visit taking place ?</Text>
-                    <View style={styles.adressInput}>
+                    <View style={styles.addressInput}>
                         <AntDesign name="search1" size={20} style={{marginTop:13}}/>
                         <Autocomplete3 setAddress={setAddress} isErasingAll={isErasingAll} setIsCity={setIsCity} 
                         setIsStreetName={setIsStreetName} setIsStreetNumber={setIsStreetNumber} handleSelection={handleSelection}></Autocomplete3>
@@ -244,6 +243,35 @@ export default function VisitForm({navigation}){
     )
 }
 
+// function Footer(props){
+//     return(
+//         <View style={styles.footer}>
+//             <Text style={styles.footerEraseAll} onPress={props.eraseAll}>
+//                 Erase all
+//             </Text>
+//             <TouchableWithoutFeedback onPress={() => {
+//                 // console.log(props.addressInfo)
+//                 if(props.addressInfo && props.date){
+//                     const post = {
+//                         address : props.addressInfo,
+//                         timeframe : {start : props.date, end : props.date},
+//                         description : props.description
+//                     }
+//                     console.log(post)
+//                     props.navigation.navigate("Post",{post:post})
+//                 }
+                
+//                 }}>
+//                 <View style={styles.footerPreview} >
+//                     <MaterialIcons name="preview" size={24} color="black" />
+//                     <Text style={{fontSize:20,marginLeft:5}}>Preview</Text>
+//                 </View>
+//             </TouchableWithoutFeedback>
+            
+//         </View>
+//     )
+// }
+
 function Footer(props){
     return(
         <View style={styles.footer}>
@@ -256,14 +284,14 @@ function Footer(props){
                     props.navigation.navigate("PostPreview",{postInformation : props.addressInfo, date: props.date,
                                                     description : props.description, isJustPreview : true})
                 }
-                
+
                 }}>
                 <View style={styles.footerPreview} >
                     <MaterialIcons name="preview" size={24} color="black" />
                     <Text style={{fontSize:20,marginLeft:5}}>Preview</Text>
                 </View>
             </TouchableWithoutFeedback>
-            
+
         </View>
     )
 }
@@ -287,7 +315,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
 
-    adressInput : {
+    addressInput : {
         padding:10,
         borderColor : "solid",
         borderStyle:"solid",

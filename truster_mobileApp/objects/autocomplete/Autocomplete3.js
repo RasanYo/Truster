@@ -41,7 +41,17 @@ export default function Autocomplete3({setAddress,isErasingAll,setIsCity,setIsSt
                 autoFocus:isFocus,
             }}
             styles={{
+                textInputContainer: {
+                    // backgroundColor: 'red',
+                    // marginTop:-13,
+                },
+                textInput: {
+                    // backgroundColor: 'blue',
+                    // marginTop:5,
+                },
+
                 listView : {
+                    marginTop:-10,
                     marginLeft:-30,
                 },
                 listViewContainer: {

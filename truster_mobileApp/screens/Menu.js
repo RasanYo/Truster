@@ -3,6 +3,7 @@ import { useContext, useEffect } from "react";
 import { TouchableWithoutFeedback, View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import { UserContext } from "../context";
 import { auth } from '../firebase';
+import useSharedEffect from "../hooks/useSharedEffect";
 import { Guest } from "../objects/Guest";
 import { User } from "../objects/User";
 
@@ -11,23 +12,7 @@ export default function Menu({navigation}) {
     const {user,setUser} = useContext(UserContext)
     // const navigation = useNavigation()
 
-    
-
-    useEffect(() => {
-        const unsuscribe = auth.onAuthStateChanged(u => {
-            if (u) { 
-                console.log("User is already logged in")
-                setUser(new User(u.uid, u)); 
-            } 
-            else {
-                console.log("User is not logged in")
-                setUser(new Guest())
-                navigation.navigate('LoginMenu');
-                // navigation.navigate("LoginMenu")
-            }
-            unsuscribe()
-        })
-    }, [])
+    useSharedEffect(setUser,navigation)
 
     return (
         <View style={styles.container}>

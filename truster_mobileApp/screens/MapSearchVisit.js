@@ -28,6 +28,221 @@ export default function MapSearchVisit({navigation}){
     const scrollview = useRef(null)
     const [radius,setRadius] = useState(5)
     const [markers,setMarkers] = useState()
+    const mapStyle = [
+      {
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#ebe3cd"
+          }
+        ]
+      },
+      {
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#523735"
+          }
+        ]
+      },
+      {
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#f5f1e6"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#c9b2a6"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.land_parcel",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#dcd2be"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.land_parcel",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#ae9e90"
+          }
+        ]
+      },
+      {
+        "featureType": "landscape.natural",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#dfd2ae"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#dfd2ae"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#93817c"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#a5b076"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#447530"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#f5f1e6"
+          }
+        ]
+      },
+      {
+        "featureType": "road.arterial",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#fdfcf8"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#f8c967"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#e9bc62"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway.controlled_access",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#e98d58"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway.controlled_access",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#db8555"
+          }
+        ]
+      },
+      {
+        "featureType": "road.local",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#806b63"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.line",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#dfd2ae"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.line",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#8f7d77"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.line",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#ebe3cd"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.station",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#dfd2ae"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#b9d3c2"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#92998d"
+          }
+        ]
+      }
+    ]
     const [interpolations, setInterpolations] = useState()
 
     const [showCards, setShowCards] = useState(false)
@@ -117,12 +332,12 @@ export default function MapSearchVisit({navigation}){
     },[result])
 
     const changeViewMap = (lat,lng,latDelta,lngDelta) => {
-        var newAdress = {}
-        newAdress.latitude = lat
-        newAdress.longitude = lng
-        newAdress.latitudeDelta = latDelta*0.02
-        newAdress.longitudeDelta = lngDelta*0.02
-        mapRef.current.animateToRegion(newAdress,1000)
+        var newAddress = {}
+        newAddress.latitude = lat
+        newAddress.longitude = lng
+        newAddress.latitudeDelta = latDelta*0.02
+        newAddress.longitudeDelta = lngDelta*0.02
+        mapRef.current.animateToRegion(newAddress,1000)
     
     }
 
@@ -142,7 +357,12 @@ export default function MapSearchVisit({navigation}){
         })
 
         // console.log(country,city,radius,geo.lat,geo.lng)
-        user.getPublicPosts(radius, [geo.lat,geo.lng] , false, setResult)
+        // console.log(user.getPublicPosts(radius, [geo.lat,geo.lng] , false))
+        var e = user.getPublicPosts(radius, [geo.lat,geo.lng] , false)
+        e.then(y => {
+          setResult(y)
+        })
+        
         setIsInputClicked(false)
     }
 
@@ -157,11 +377,21 @@ export default function MapSearchVisit({navigation}){
         scrollview.current.scrollTo({x: x, y: 0, animated: true});
     }
 
+    //create a onCardPress function to handle the press on a card
+    const onCardPress = (post) => {
+        navigation.navigate('Post', {post: post})
+    }
+
+
     return (
         <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss;setShowCards(false)}} accessible={false}>
         <View style={styles.container} >
             {coordinate && 
-                    <MapView style={styles.map} initialRegion={coordinate} ref={mapRef} annotations={markers}>
+                    <MapView showsMyLocationButton={true} showsUserLocation={true} customMapStyle={mapStyle}
+                    style={styles.map} initialRegion={coordinate} ref={mapRef} annotations={markers} onRegionChangeComplete={(region) => {
+                      console.log(region)
+                      setCoordinate(region)}
+                      }>
                         {(result && markers) && <PinData pinsData={result} markers={markers} onMarkerPress={onMarkerPress} interpolations={interpolations}></PinData>}
                         {console.log(markers)}
                     </MapView>}
@@ -172,14 +402,14 @@ export default function MapSearchVisit({navigation}){
                 </TouchableWithoutFeedback>
 
                 <View style={styles.searchBar}>
-                    <AntDesign name="search1" size={24} style={{alignSelf:"flex-start",marginTop:10}}/>
+                    <AntDesign name="search1" size={24} style={{alignSelf:"flex-start",marginTop:13}}/>
                     {isInputClicked ? 
                         <View style={styles.searchBarContainer}>
                             <Autocomplete3 setAddress={() => {}} isErasingAll={() => {}} setIsCity={() => {}}
                                     setIsStreetName={() => {}} setIsStreetNumber={() => {}} placeholder="" isFocus={true} handleSelection={handleSelection}/>
                         </View> :  
                         <TouchableWithoutFeedback onPress={() => setIsInputClicked(true)} >
-                            <View>
+                            <View style={{marginVertical:6}}>
                                 <Text style={{fontSize:17}}>Where do you live</Text>
                                 <Text style={{color:"gray"}}>Look for visits in your area</Text>
                             </View>
@@ -226,7 +456,7 @@ export default function MapSearchVisit({navigation}){
                                 )}
                             >
                             { result && result.map((info,index) => {
-                                return <Card itemData={{title : info.data().address.fullAdress,description : info.data().description, time : info.data().timeframe.end}}></Card>
+                                return <Card itemData={{title : info.data().address.fullAddress,description : info.data().description, time : info.data().timeframe.end}} onPress={() => onCardPress(info.data())}></Card>
                                 
                                     
                             })}
@@ -253,18 +483,16 @@ export const PinData = ({ pinsData,markers,onMarkerPress,interpolations}) => {
         //       },
         //     ],
         //   };
-        
+        console.log(pin.data())
         var coordinate = {
             latitude: pin.data().address.lat,
             longitude: pin.data().address.lng,
         }
         markers[index] = coordinate
-        console.log(markers)
         return <Marker key={index} coordinate={coordinate} onPress={(e) => onMarkerPress(e)}>
             <Animated.View style={[styles.markerWrap]}>
                 <Animated.Image
                   source={require('../assets/map_marker.png')}
-                //   style={[styles.marker, scaleStyle]}
                   style={[styles.marker]}
                   resizeMode="cover"
                 />
@@ -289,7 +517,7 @@ const styles = StyleSheet.create({
         top : 100,
         left : 35,
         backgroundColor:"white",
-        width:350,
+        width:330,
         height:"auto",
         padding:10,
         borderRadius : 30,
@@ -306,7 +534,7 @@ const styles = StyleSheet.create({
         width:270,
       },
 
-    adressInput : {
+    addressInput : {
         borderWidth:1,
         borderRadius:10,
         flexDirection:"row",
