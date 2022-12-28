@@ -43,11 +43,11 @@ export default function Autocomplete3({setAddress,isErasingAll,setIsCity,setIsSt
             styles={{
                 textInputContainer: {
                     // backgroundColor: 'red',
-                    marginTop:-13,
+                    // marginTop:-13,
                 },
                 textInput: {
                     // backgroundColor: 'blue',
-                    marginTop:5,
+                    // marginTop:5,
                 },
 
                 listView : {

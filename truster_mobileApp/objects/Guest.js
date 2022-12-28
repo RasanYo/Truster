@@ -15,12 +15,12 @@ export class Guest extends AbstractUser{
      */
     login(email, password) {
         console.log(email)
-        return signInWithEmailAndPassword(getAuth(), email, password)
+        return signInWithEmailAndPassword(auth, email, password)
     }
 
     loginWithGoogle() {
         let provider = new GoogleAuthProvider()
-        return signInWithPopup(getAuth(), provider)
+        return signInWithPopup(auth, provider)
     }
 
     // login() {

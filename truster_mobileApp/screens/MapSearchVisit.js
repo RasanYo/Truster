@@ -28,6 +28,221 @@ export default function MapSearchVisit({navigation}){
     const scrollview = useRef(null)
     const [radius,setRadius] = useState(5)
     const [markers,setMarkers] = useState()
+    const mapStyle = [
+      {
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#ebe3cd"
+          }
+        ]
+      },
+      {
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#523735"
+          }
+        ]
+      },
+      {
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#f5f1e6"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#c9b2a6"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.land_parcel",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#dcd2be"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.land_parcel",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#ae9e90"
+          }
+        ]
+      },
+      {
+        "featureType": "landscape.natural",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#dfd2ae"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#dfd2ae"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#93817c"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#a5b076"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#447530"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#f5f1e6"
+          }
+        ]
+      },
+      {
+        "featureType": "road.arterial",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#fdfcf8"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#f8c967"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#e9bc62"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway.controlled_access",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#e98d58"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway.controlled_access",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#db8555"
+          }
+        ]
+      },
+      {
+        "featureType": "road.local",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#806b63"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.line",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#dfd2ae"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.line",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#8f7d77"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.line",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#ebe3cd"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.station",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#dfd2ae"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#b9d3c2"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#92998d"
+          }
+        ]
+      }
+    ]
     const [interpolations, setInterpolations] = useState()
 
     const [showCards, setShowCards] = useState(false)
@@ -168,14 +383,15 @@ export default function MapSearchVisit({navigation}){
     }
 
 
-
-
-
     return (
         <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss;setShowCards(false)}} accessible={false}>
         <View style={styles.container} >
             {coordinate && 
-                    <MapView style={styles.map} initialRegion={coordinate} ref={mapRef} annotations={markers}>
+                    <MapView showsMyLocationButton={true} showsUserLocation={true} customMapStyle={mapStyle}
+                    style={styles.map} initialRegion={coordinate} ref={mapRef} annotations={markers} onRegionChangeComplete={(region) => {
+                      console.log(region)
+                      setCoordinate(region)}
+                      }>
                         {(result && markers) && <PinData pinsData={result} markers={markers} onMarkerPress={onMarkerPress} interpolations={interpolations}></PinData>}
                         {console.log(markers)}
                     </MapView>}
@@ -186,14 +402,14 @@ export default function MapSearchVisit({navigation}){
                 </TouchableWithoutFeedback>
 
                 <View style={styles.searchBar}>
-                    <AntDesign name="search1" size={24} style={{alignSelf:"flex-start",marginTop:10}}/>
+                    <AntDesign name="search1" size={24} style={{alignSelf:"flex-start",marginTop:13}}/>
                     {isInputClicked ? 
                         <View style={styles.searchBarContainer}>
                             <Autocomplete3 setAddress={() => {}} isErasingAll={() => {}} setIsCity={() => {}}
                                     setIsStreetName={() => {}} setIsStreetNumber={() => {}} placeholder="" isFocus={true} handleSelection={handleSelection}/>
                         </View> :  
                         <TouchableWithoutFeedback onPress={() => setIsInputClicked(true)} >
-                            <View>
+                            <View style={{marginVertical:6}}>
                                 <Text style={{fontSize:17}}>Where do you live</Text>
                                 <Text style={{color:"gray"}}>Look for visits in your area</Text>
                             </View>
@@ -301,7 +517,7 @@ const styles = StyleSheet.create({
         top : 100,
         left : 35,
         backgroundColor:"white",
-        width:350,
+        width:330,
         height:"auto",
         padding:10,
         borderRadius : 30,

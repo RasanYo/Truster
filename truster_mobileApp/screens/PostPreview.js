@@ -194,11 +194,14 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { TextInput } from "react-native-gesture-handler";
 import { Post } from "../objects/Post";
+import useSharedEffect from "../hooks/useSharedEffect";
 
 
 export default function PostPreview({navigation,route}){
-    const { user } = useContext(UserContext)
+    const { user, setUser } = useContext(UserContext)
     const [userData,setUserData] = useState()
+
+    useSharedEffect(setUser,navigation)
 
     useEffect(()=>{
         if(user.isLoggedIn()){

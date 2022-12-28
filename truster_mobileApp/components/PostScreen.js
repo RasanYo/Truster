@@ -56,7 +56,7 @@ const PostScreen = (props) => {
 
     return ( 
         <View>
-            {poster && <ScrollView style={styles.container}>
+            {poster && <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 <View style={styles.mapContainer}>
                     <MapView style={styles.map} initialRegion={{
                         latitude: coordinate.latitude,
@@ -222,5 +222,6 @@ const styles = StyleSheet.create({
         borderWidth:1,
         textAlignVertical: "top",
         padding:8,
+        marginBottom:100
     },
 })

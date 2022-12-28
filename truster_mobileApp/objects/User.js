@@ -19,6 +19,7 @@ import { COLLECTIONS } from "../Constants"
 // } from "geofire-common"
 import { postConverter } from "./Post"
 // import { useNavigate } from "react-router-dom"
+import { auth } from "../firebase"
 
 
 
@@ -50,7 +51,7 @@ export class User extends AbstractUser{
      * @returns {Promise<void>} empty promise
      */
     logout() { 
-        return signOut(getAuth())
+        return signOut(auth)
     }
 
     getImgUrl() {return this.user.imgUrl}
