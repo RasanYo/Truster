@@ -3,7 +3,7 @@ import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableWithoutFeedbac
 import MapView, { Marker } from "react-native-maps";
 import { UserContext } from "../context";
 import { Post } from "../objects/Post";
-// import defaultPic from "../assets/pictures/no-profile-pic.png";
+import defaultPic from "../assets/pictures/no-profile-pic.png";
 import { AntDesign } from '@expo/vector-icons';
 
 // import { MaterialIcons } from '@expo/vector-icons';
@@ -14,6 +14,8 @@ const PostScreen = (props) => {
     const navigation = props.navigation
     const {user} = useContext(UserContext)
     const post = props.route.params.post
+
+    console.log(post)
 
     const [poster, setPoster] = useState()
     const [profilePic, setProfilePic] = useState(null)
@@ -70,7 +72,7 @@ const PostScreen = (props) => {
                         <Marker
                             // key={index}
                             coordinate={coordinate}
-                            title={post.address.fullAdress}
+                            title={post.address.fullAddress}
                             description={"marker.description"}
                             pinColor="#29ECB1"
                         />

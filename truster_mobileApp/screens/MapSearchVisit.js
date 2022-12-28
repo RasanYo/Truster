@@ -117,12 +117,12 @@ export default function MapSearchVisit({navigation}){
     },[result])
 
     const changeViewMap = (lat,lng,latDelta,lngDelta) => {
-        var newAdress = {}
-        newAdress.latitude = lat
-        newAdress.longitude = lng
-        newAdress.latitudeDelta = latDelta*0.02
-        newAdress.longitudeDelta = lngDelta*0.02
-        mapRef.current.animateToRegion(newAdress,1000)
+        var newAddress = {}
+        newAddress.latitude = lat
+        newAddress.longitude = lng
+        newAddress.latitudeDelta = latDelta*0.02
+        newAddress.longitudeDelta = lngDelta*0.02
+        mapRef.current.animateToRegion(newAddress,1000)
     
     }
 
@@ -142,7 +142,12 @@ export default function MapSearchVisit({navigation}){
         })
 
         // console.log(country,city,radius,geo.lat,geo.lng)
-        user.getPublicPosts(radius, [geo.lat,geo.lng] , false, setResult)
+        // console.log(user.getPublicPosts(radius, [geo.lat,geo.lng] , false))
+        var e = user.getPublicPosts(radius, [geo.lat,geo.lng] , false)
+        e.then(y => {
+          setResult(y)
+        })
+        
         setIsInputClicked(false)
     }
 
@@ -157,7 +162,10 @@ export default function MapSearchVisit({navigation}){
         scrollview.current.scrollTo({x: x, y: 0, animated: true});
     }
 
-    
+    //create a onCardPress function to handle the press on a card
+    const onCardPress = (post) => {
+        navigation.navigate('Post', {post: post})
+    }
 
 
 
@@ -232,7 +240,7 @@ export default function MapSearchVisit({navigation}){
                                 )}
                             >
                             { result && result.map((info,index) => {
-                                return <Card itemData={{title : info.data().address.fullAdress,description : info.data().description, time : info.data().timeframe.end}}></Card>
+                                return <Card itemData={{title : info.data().address.fullAddress,description : info.data().description, time : info.data().timeframe.end}} onPress={() => onCardPress(info.data())}></Card>
                                 
                                     
                             })}
@@ -259,18 +267,16 @@ export const PinData = ({ pinsData,markers,onMarkerPress,interpolations}) => {
         //       },
         //     ],
         //   };
-        
+        console.log(pin.data())
         var coordinate = {
             latitude: pin.data().address.lat,
             longitude: pin.data().address.lng,
         }
         markers[index] = coordinate
-        console.log(markers)
         return <Marker key={index} coordinate={coordinate} onPress={(e) => onMarkerPress(e)}>
             <Animated.View style={[styles.markerWrap]}>
                 <Animated.Image
                   source={require('../assets/map_marker.png')}
-                //   style={[styles.marker, scaleStyle]}
                   style={[styles.marker]}
                   resizeMode="cover"
                 />
@@ -312,7 +318,7 @@ const styles = StyleSheet.create({
         width:270,
       },
 
-    adressInput : {
+    addressInput : {
         borderWidth:1,
         borderRadius:10,
         flexDirection:"row",
