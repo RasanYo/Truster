@@ -1,7 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { UserContext } from "../../context";
+import Footer from "../Footer";
+import Header from "../Header";
 import MessageList from "./MessageList";
+import defaultPic from "../../assets/pictures/no-profile-pic.png";
 
 const Chat = ({
     navigation,
@@ -10,6 +13,8 @@ const Chat = ({
 
     const { receiverID } = route.params
     const {user} = useContext(UserContext)
+    const [receiver, setReceiver] = useState(null)
+    const [profilePic, setProfilePic] = useState(null)
     const [chatData, setChatData] = useState(null)
     const [message, setMessage] = useState(null)
 
@@ -48,6 +53,12 @@ const Chat = ({
 
     useEffect(() => {
         getChat()
+        user.getUser(receiverID).then(data => {
+            setReceiver(data)
+        })
+        user.getProfilePictureURL(receiverID).then(url => {
+            setProfilePic(url)
+        })
     }, [])
 
     const handleSendMessage = () => {
@@ -60,28 +71,75 @@ const Chat = ({
     }
 
     return ( 
-        <View>
-            <View>
-                <Text>HEADER</Text>
-            </View>
+        <View style={{flex: 1}}>
+            <Header 
+                style={{
+                    paddingTop: 20, 
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}
+            >
+                <Text 
+                    onPress={() => navigation.pop()}
+                    style={{marginRight: 'auto'}}
+                >
+                    Go back
+                </Text>
+                <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>  
+                    <Image 
+                        style={{height: 40, width: 40, borderRadius: 50, marginRight: 10,}} 
+                        source={profilePic ? {uri: profilePic} : defaultPic}
+                    />
+                    {receiver && <Text>{receiver.firstName} {receiver.lastName.charAt(0)}.</Text>}
+                </View>
+                
+            </Header>
             <View>
                 {chatData ? 
                     <MessageList messages={chatData.messages}/> :
                     <Text>Write a message to open the chat</Text>}
             </View>
-            
-            <View>
+              
+            <Footer 
+                style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent:"space-between",
+
+                }}
+            >
                 <TextInput 
                     placeholder="Write a message here" 
                     value={message} 
                     onChangeText={text => setMessage(text)} 
                     autoCapitalize="none" 
                     autoCorrect={false} 
+                    multiline={true}
+                    style={{
+                        flex: 5,
+                        borderStyle: 'solid',
+                        borderRadius: 50,
+                        borderColor: '#00D394',
+                        minHeight: 40,
+                        paddingHorizontal: 10,
+                        marginRight: 5
+                    }}
                 />
-                <TouchableOpacity onPress={handleSendMessage}>
-                    <Text>Send</Text>
+                <TouchableOpacity 
+                    onPress={handleSendMessage} 
+                    style={{
+                        backgroundColor: "#00D394",
+                        minHeight: 40,
+                        flex: 1,
+                        borderRadius: 50,
+                        justifyContent: "center",
+                        alignItems: "center"
+                    }}
+                >
+                    <Text style={{color: "white",}}>Send</Text>
                 </TouchableOpacity>
-            </View>
+            </Footer>
+            
         </View>
      );
 }
