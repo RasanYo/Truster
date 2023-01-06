@@ -281,8 +281,30 @@ function Footer(props){
             <TouchableWithoutFeedback onPress={() => {
                 console.log(props.addressInfo)
                 if(props.addressInfo && props.date){
-                    props.navigation.navigate("PostPreview",{postInformation : props.addressInfo, date: props.date,
-                                                    description : props.description, isJustPreview : true})
+                    props.navigation.navigate("PostPreview",{
+                        post : {
+                            address: props.addressInfo,
+                            description: props.description,
+                            timeframe: {
+                                start: props.date,
+                                end: props.date
+                            }
+                        },
+                        isJustPreview : true})
+                    // props.navigation.navigate("Tabs",{
+                    //     screen: 'PostPreview',
+                    //     params: {
+                    //         post : {
+                    //             address: props.addressInfo,
+                    //             description: props.description,
+                    //             timeframe: {
+                    //                 start: props.date,
+                    //                 end: props.date
+                    //             }
+                    //         },
+                    //         isJustPreview : true
+                    //     }
+                    // })
                 }
 
                 }}>

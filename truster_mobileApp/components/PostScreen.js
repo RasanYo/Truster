@@ -13,22 +13,48 @@ const PostScreen = (props) => {
 
     const navigation = props.navigation
     const {user} = useContext(UserContext)
-    const post = props.route.params.post
+    const {post, isJustPreview} = props.route.params
 
     console.log(post)
 
-    const [poster, setPoster] = useState()
+    const [poster, setPoster] = useState({
+        firstName: "Trustable",
+        lastName: "Trustee"
+    })
     const [profilePic, setProfilePic] = useState(null)
+    const [userData, setUserData] = useState()
 
     useEffect(() => {
-        user.getUser(post.creatorUID).then(data => {
-            setPoster(data)
-        })
-        user.getProfilePictureURL(post.creatorUID).then(url => {
-            setProfilePic(url)
-            console.log("PP", profilePic)
-        })
-        .catch(err => console.log(err))
+        console.log("BIG CHECK")
+        if (isJustPreview) {
+            if(user.isLoggedIn()){
+                user.getPersonalInformation().then(snapshot => {
+                    setUserData(snapshot.data())
+                }).then(() => {
+                    console.log("USER", userData)
+                    console.log("ADDRESS", post.address)
+                    console.log("DESCRIPTION", post.description)
+                })
+                .catch(err => {
+                    console.log("ERROR: ", err)
+                })
+            }else {
+                setUserData({
+                    firstName : "You",
+                    lastName : "X"
+                })
+            }
+        } else {
+            user.getUser(post.creatorUID).then(data => {
+                setPoster(data)
+            })
+            user.getProfilePictureURL(post.creatorUID).then(url => {
+                setProfilePic(url)
+                console.log("PP", profilePic)
+            })
+            .catch(err => console.log(err))
+        }
+        
     }, [])
 
     const coordinate = {
@@ -36,7 +62,7 @@ const PostScreen = (props) => {
         longitude : post.address.lng
     } 
 
-    const onSubmit = e => {
+    const onRequest = e => {
         // e.preventDefault()
         // setShowErrors(true)
         console.log("pas prevent default")
@@ -54,8 +80,19 @@ const PostScreen = (props) => {
         
     }
 
+    const onPost = () => {
+        console.log("pas prevent default")
+        if(!user.isLoggedIn()){
+            navigation.navigate("LoginMenu")
+        }else{
+            console.log("connecté")
+            const post = new Post(post.address, {start: post.timeframe, end: post.timeframe}, post.description, user.getUID())
+            user.post(post).then(() => navigation.navigate("Menu")).then(() => console.log("Successfully posted"))
+        }
+    }
+
     return ( 
-        <View>
+        <View style={{flex: 1}}>
             {poster && <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 <View style={styles.mapContainer}>
                     <MapView style={styles.map} initialRegion={{
@@ -105,10 +142,10 @@ const PostScreen = (props) => {
                     <Text style={{fontSize: 20, marginBottom: 10}}>Description</Text>
                     <Text style={{marginBottom: 20}}>{post.description || "No description"}</Text>
                     <Text style={{fontSize: 22}}>Send Request</Text>
-                    <TextInput placeholder="Additional information" style={styles.sendRequestText} multiline={true}></TextInput>
+                    {!isJustPreview && <TextInput placeholder="Additional information" style={styles.sendRequestText} multiline={true}></TextInput>}
                 </View>
             </ScrollView>}
-            <Footer navigation={navigation} onSubmit={onSubmit}></Footer>
+            <Footer navigation={navigation} onSubmit={isJustPreview ? onPost : onRequest} isJustPreview={isJustPreview}></Footer>
         </View>
      );
 }
@@ -124,7 +161,7 @@ function Footer(props){
             <TouchableWithoutFeedback onPress={props.onSubmit}>
                 <View style={styles.footerPreview} >
                     {/* <Material name="add-to-photos" size={24} color="black" /> */}
-                    <Text style={{fontSize: 20,marginLeft:5, justifyContent: 'center'}}>Request<AntDesign name="right" size={20} color="black"/></Text>
+                    <Text style={{fontSize: 20,marginLeft:5, justifyContent: 'center'}}>{props.isJustPreview? "Post" : "Request"}<AntDesign name="right" size={20} color="black"/></Text>
                 </View>
             </TouchableWithoutFeedback>
             

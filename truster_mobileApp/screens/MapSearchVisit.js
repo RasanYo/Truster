@@ -199,7 +199,11 @@ export default function MapSearchVisit({navigation}){
 
     //create a onCardPress function to handle the press on a card
     const onCardPress = (post) => {
-        navigation.navigate('Post', {post: post})
+        navigation.navigate('PostPreview', {post: post, isJustPreview: false})
+        // navigation.navigate("Tabs", {
+        //   screen : "PostPreview",
+        //   params:{post: post, isJustPreview: false}
+        // })
     }
 
 
