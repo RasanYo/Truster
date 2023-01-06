@@ -26,6 +26,7 @@ import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import PostScreen from './components/PostScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { color } from 'react-native-reanimated';
+import Chat from './components/chat/Chat';
 
 export default function App() {
 
@@ -53,7 +54,8 @@ export default function App() {
 
                   {/* <Stack.Screen name="VisitForm" component={VisitForm}/> */}
 
-                  {/* <Stack.Screen name="PostPreview" component={PostPreview}/> */}
+                  <Stack.Screen name="PostPreview" component={PostPreview}/>
+                  <Stack.Screen name="Chat" component={Chat}/>
                         
                   {/* <Stack.Screen name="MapSearchVisit" component={VisitAppartments}/> */}
                   {/* <Stack.Screen name="MapSearchVisit" component={MapSearchVisit}/> */}

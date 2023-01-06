@@ -145,4 +145,47 @@ export class User extends AbstractUser{
 
     }
 
+
+    openChat(receiverID) {
+        const docRef = doc(getFirestore(), COLLECTIONS.chat(this.#uid, receiverID))
+        const users = []
+
+        this.getUser(receiverID).then(data => {
+            users.push({
+                uid: receiverID,
+                name: data.firstName
+            })
+        })
+
+        this.getUser(this.#uid).then(data => {
+            users.push({
+                uid: this.#uid,
+                name: data.firstName
+            })
+        })
+        
+        return setDoc(docRef, {
+            users: users,
+            openedAt: Timestamp.now(),
+            messages: []
+        })
+    }
+
+    sendMessage(receiverID, message) {
+        const docRef = doc(getFirestore(), COLLECTIONS.chat(this.#uid, receiverID))
+        const msg = {
+            from: this.#uid,
+            sentAt: Timestamp.now(),
+            message: message
+        }
+        return updateDoc(docRef, {
+            messages: arrayUnion(msg)
+        })
+    }
+
+    getChatWith(receiverID) {
+        const docRef = doc(getFirestore(), COLLECTIONS.chat(this.#uid, receiverID))
+        return getDoc(doc).then(doc => {return doc.data()})
+    }
+
 }

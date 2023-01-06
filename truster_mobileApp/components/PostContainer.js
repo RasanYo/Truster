@@ -25,7 +25,7 @@ const PostContainer = ({post, navigation}) => {
                             {post.address.city}
                         </Text>
                         <Text style={styles.city}>
-                            {post.address.fullAdress}
+                            {post.address.fullAddress}
                         </Text>
                         <Text style={styles.timeframe}>
                             {post.timeframe.start} - {post.timeframe.end}

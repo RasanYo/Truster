@@ -8,7 +8,11 @@ export const COLLECTIONS = {
     user: (country, city, uid) => `${COLLECTIONS.users(country, city)}/${uid}`,
 
     PROFILE_PICTURES: "images/profile_pictures",
-    profile_picture: (imgUrl) => `${COLLECTIONS.PROFILE_PICTURES}/${imgUrl}`
+    profile_picture: (imgUrl) => `${COLLECTIONS.PROFILE_PICTURES}/${imgUrl}`,
+
+    chat: (from, to) => {
+        return from < to ? `chats/${from}_${to}` : `chats/${to}_${from}`
+    }
     // profile_picture_URL: (uid) => {
     //     const supportedTypes = ['jpg', 'png', 'jpeg']
     //     for (let supportedType in supportedTypes) {

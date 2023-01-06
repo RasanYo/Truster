@@ -197,7 +197,7 @@ import { Post } from "../objects/Post";
 import useSharedEffect from "../hooks/useSharedEffect";
 
 
-export default function PostPreview({navigation,route}){
+export default function PostPreview({route, navigation}){
     const { user, setUser } = useContext(UserContext)
     const [userData,setUserData] = useState()
 
@@ -222,6 +222,8 @@ export default function PostPreview({navigation,route}){
     }, [])
 
     const { postInformation, date, description, isJustPreview } = route.params;
+
+    {post, isJustPreview}
     const coordinate = {
         latitude : postInformation.lat,
         longitude : postInformation.lng
@@ -238,7 +240,6 @@ export default function PostPreview({navigation,route}){
             const post = new Post(postInformation, {start: date, end: date}, description, user.getUID())
             user.post(post).then(() => navigation.navigate("Menu")).then(() => console.log("Successfully posted"))
         }
-
     }
 
 
@@ -260,20 +261,23 @@ export default function PostPreview({navigation,route}){
                         pinColor="#29ECB1"
                         />
             </MapView>
-            <View style={styles.posterInfo}>
-                {/* Profile Picture  */}
-                <View>
-                    <Text style={{color:"gray"}}>Poster</Text>
-                    {userData ? <Text style={{fontSize:20, width:140}}>{userData.firstName} {userData.lastName.charAt(0)}. </Text> : null}                
+            <TouchableWithoutFeedback onPress={() => navigation.navigate("Chat", {receiverID: userData.uid})}>
+                <View style={styles.posterInfo}>
+                    {/* Profile Picture  */}
+                    <View>
+                        <Text style={{color:"gray"}}>Poster</Text>
+                        {userData ? <Text style={{fontSize:20, width:140}}>{userData.firstName} {userData.lastName.charAt(0)}. </Text> : null}                
+                    </View>
+                    <View style={{flexDirection:"row",alignItems:"center"}}>
+                        <AntDesign name="staro" size={24} color="yellow" />
+                        <AntDesign name="staro" size={24} color="yellow" />
+                        <AntDesign name="staro" size={24} color="yellow" />
+                        <AntDesign name="staro" size={24} color="yellow" />
+                        <AntDesign name="staro" size={24} color="yellow" />
+                    </View>
                 </View>
-                <View style={{flexDirection:"row",alignItems:"center"}}>
-                    <AntDesign name="staro" size={24} color="yellow" />
-                    <AntDesign name="staro" size={24} color="yellow" />
-                    <AntDesign name="staro" size={24} color="yellow" />
-                    <AntDesign name="staro" size={24} color="yellow" />
-                    <AntDesign name="staro" size={24} color="yellow" />
-                </View>
-            </View>
+            </TouchableWithoutFeedback>
+            
 
             <View style={{marginLeft:20, marginTop:20}}>
                 <Text style={{fontSize:25,letterSpacing:0.5}}>{postInformation.street}</Text>
