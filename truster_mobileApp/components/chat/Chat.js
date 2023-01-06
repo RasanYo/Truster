@@ -94,7 +94,7 @@ const Chat = ({
                 </View>
                 
             </Header>
-            <View>
+            <View style={{marginTop: 10}}>
                 {chatData ? 
                     <MessageList messages={chatData.messages}/> :
                     <Text>Write a message to open the chat</Text>}
