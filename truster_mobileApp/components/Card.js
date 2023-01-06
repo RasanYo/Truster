@@ -2,9 +2,10 @@ import React from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 
 
-const Card = ({itemData, onPress}) => {
+const Card = ({itemData, onPress, index}) => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} key={index}>
+    {/* {console.log("index "+index)} */}
       <View style={styles.card}>
         <View style={styles.cardImgWrapper}>
           {/* <Image
