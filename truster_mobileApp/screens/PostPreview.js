@@ -40,7 +40,7 @@
 //             navigation.navigate("LoginMenu")
 //         }else{
 //             console.log("connecté")
-//             const post = new Post(post.address, post.timeframe, post.description, user.getUID())
+//             const post = new Post(post.address, post.timeframe, post.post.description, user.getUID())
 //             user.post(post).then(() => navigation.goBack(null)).then(() => console.log("Successfully posted"))
 //         }
         
@@ -61,7 +61,7 @@
 //                         // key={index}
 //                         coordinate={coordinate}
 //                         title={post.address.fullAdress}
-//                         description={"marker.description"}
+//                         post.description={"marker.post.description"}
 //                         pinColor="#29ECB1"
 //                         />
 //             </MapView>
@@ -86,8 +86,8 @@
 //                 <Text style={{marginTop:15,letterSpacing:1,fontSize:20}}>{post.timeframe.start}  -  {post.timeframe.end}</Text>
 //             </View>
 //             <View style={{margin:20}}>
-//                 <Text style={{fontSize:20}}>Description</Text>
-//                 {post.description ? <Text style={styles.descriptionText}>{post.description}</Text> : <Text style={styles.descriptionText}>No description</Text>}
+//                 <Text style={{fontSize:20}}>post.description</Text>
+//                 {post.post.description ? <Text style={styles.post.descriptionText}>{post.post.description}</Text> : <Text style={styles.post.descriptionText}>No post.description</Text>}
 //             </View>
 
 //             <View style={{margin:20,opacity: isJustPreview ? 0.5 : 1}}>
@@ -142,7 +142,7 @@
 //         justifyContent:"space-between"
 //     },
 
-//     descriptionText : {
+//     post.descriptionText : {
 //         marginTop:15,
 //     },
 
@@ -197,20 +197,24 @@ import { Post } from "../objects/Post";
 import useSharedEffect from "../hooks/useSharedEffect";
 
 
-export default function PostPreview({navigation,route}){
+export default function PostPreview({route, navigation}){
     const { user, setUser } = useContext(UserContext)
-    const [userData,setUserData] = useState()
+    const [userData, setUserData] = useState()
 
     useSharedEffect(setUser,navigation)
 
     useEffect(()=>{
+        console.log("ROUTE", route)
         if(user.isLoggedIn()){
             user.getPersonalInformation().then(snapshot => {
                 setUserData(snapshot.data())
             }).then(() => {
                 console.log(userData)
-                console.log(postInformation)
-                console.log(description)
+                console.log(post.address)
+                console.log(post.description)
+            })
+            .catch(err => {
+                console.log("ERROR: ", err)
             })
         }else {
             setUserData({
@@ -221,79 +225,85 @@ export default function PostPreview({navigation,route}){
 
     }, [])
 
-    const { postInformation, date, description, isJustPreview } = route.params;
-    const coordinate = {
-        latitude : postInformation.lat,
-        longitude : postInformation.lng
-    }
+    const { post, isJustPreview } = route.params;
+    return (<View></View>)
 
-    const onSubmit = e => {
-        // e.preventDefault()
-        // setShowErrors(true)
-        console.log("pas prevent default")
-        if(!user.isLoggedIn()){
-            navigation.navigate("LoginMenu")
-        }else{
-            console.log("connecté")
-            const post = new Post(postInformation, {start: date, end: date}, description, user.getUID())
-            user.post(post).then(() => navigation.navigate("Menu")).then(() => console.log("Successfully posted"))
-        }
+    
 
-    }
+    // const coordinate = {
+    //     latitude : post.address.lat,
+    //     longitude : post.address.lng
+    // }
+
+    // const onSubmit = e => {
+    //     // e.preventDefault()
+    //     // setShowErrors(true)
+    //     console.log("pas prevent default")
+    //     if(!user.isLoggedIn()){
+    //         navigation.navigate("LoginMenu")
+    //     }else{
+    //         console.log("connecté")
+    //         const post = new Post(post.address, {start: post.timeframe, end: post.timeframe}, post.description, user.getUID())
+    //         user.post(post).then(() => navigation.navigate("Menu")).then(() => console.log("Successfully posted"))
+    //     }
+    // }
 
 
-    return (
-        <View style={styles.container}  >
-        <ScrollView >
-            <MapView style={styles.map} initialRegion={{
-                latitude: coordinate.latitude,
-                longitude: coordinate.longitude,
-                latitudeDelta: 0.008,
-                longitudeDelta: 0.008,
-                }}
-                >
-                    <Marker
-                        // key={index}
-                        coordinate={coordinate}
-                        title={postInformation.fullAdress}
-                        description={"marker.description"}
-                        pinColor="#29ECB1"
-                        />
-            </MapView>
-            <View style={styles.posterInfo}>
-                {/* Profile Picture  */}
-                <View>
-                    <Text style={{color:"gray"}}>Poster</Text>
-                    {userData ? <Text style={{fontSize:20, width:140}}>{userData.firstName} {userData.lastName.charAt(0)}. </Text> : null}                
-                </View>
-                <View style={{flexDirection:"row",alignItems:"center"}}>
-                    <AntDesign name="staro" size={24} color="yellow" />
-                    <AntDesign name="staro" size={24} color="yellow" />
-                    <AntDesign name="staro" size={24} color="yellow" />
-                    <AntDesign name="staro" size={24} color="yellow" />
-                    <AntDesign name="staro" size={24} color="yellow" />
-                </View>
-            </View>
+    // return (
+    //     <View style={styles.container}  >
+    //     <ScrollView >
+    //         <MapView style={styles.map} initialRegion={{
+    //             latitude: coordinate.latitude,
+    //             longitude: coordinate.longitude,
+    //             latitudeDelta: 0.008,
+    //             longitudeDelta: 0.008,
+    //             }}
+    //             >
+    //                 <Marker
+    //                     // key={index}
+    //                     coordinate={coordinate}
+    //                     title={post.address.fullAdress}
+    //                     description={"marker.description"}
+    //                     pinColor="#29ECB1"
+    //                     />
+    //         </MapView>
+    //         <TouchableWithoutFeedback onPress={() => navigation.navigate("Chat", {receiverID: userData.uid})}>
+    //             <View style={styles.posterInfo}>
+    //                 {/* Profile Picture  */}
+    //                 <View>
+    //                     <Text style={{color:"gray"}}>Poster</Text>
+    //                     {userData ? <Text style={{fontSize:20, width:140}}>{userData.firstName} {userData.lastName.charAt(0)}. </Text> : null}                
+    //                 </View>
+    //                 <View style={{flexDirection:"row",alignItems:"center"}}>
+    //                     <AntDesign name="staro" size={24} color="yellow" />
+    //                     <AntDesign name="staro" size={24} color="yellow" />
+    //                     <AntDesign name="staro" size={24} color="yellow" />
+    //                     <AntDesign name="staro" size={24} color="yellow" />
+    //                     <AntDesign name="staro" size={24} color="yellow" />
+    //                 </View>
+    //             </View>
+    //         </TouchableWithoutFeedback>
+            
 
-            <View style={{marginLeft:20, marginTop:20}}>
-                <Text style={{fontSize:25,letterSpacing:0.5}}>{postInformation.street}</Text>
-                <Text style={{marginTop:7,color:"gray",letterSpacing:1}}>{postInformation.npa} {postInformation.city}, {postInformation.country}</Text>
-                <Text style={{marginTop:15,letterSpacing:1,fontSize:20}}>{date}</Text>
-            </View>
-            <View style={{margin:20}}>
-                <Text style={{fontSize:20}}>Description</Text>
-                {description ? <Text style={styles.descriptionText}>{description}</Text> : <Text style={styles.descriptionText}>No description</Text>}
-            </View>
+    //         <View style={{marginLeft:20, marginTop:20}}>
+    //             <Text style={{fontSize:25,letterSpacing:0.5}}>{post.address.street}</Text>
+    //             <Text style={{marginTop:7,color:"gray",letterSpacing:1}}>{post.address.npa} {post.address.city}, {post.address.country}</Text>
+    //             <Text style={{marginTop:15,letterSpacing:1,fontSize:20}}>{post.timeframe}</Text>
+    //         </View>
+    //         <View style={{margin:20}}>
+    //             <Text style={{fontSize:20}}>post.description</Text>
+    //             {post.description ? <Text style={styles.descriptionText}>{post.description}</Text> : <Text style={styles.descriptionText}>No post.description</Text>}
+    //         </View>
 
-            <View style={{margin:20,opacity: isJustPreview ? 0.5 : 1}}>
-                <Text style={{fontSize:20}}>Send Request</Text>
-                {isJustPreview ? <Text style={styles.sendRequestText}>Additional information</Text>: <TextInput placeholder="Additional information" style={styles.sendRequestText} multiline={true}></TextInput>}
-            </View>
-        </ScrollView>
-        <Footer navigation={navigation} onSubmit={onSubmit}></Footer>
-        </View>
+    //         <View style={{margin:20,opacity: isJustPreview ? 0.5 : 1}}>
+    //             <Text style={{fontSize:20}}>Send Request</Text>
+    //             {isJustPreview ? <Text style={styles.sendRequestText}>Additional information</Text>: <TextInput placeholder="Additional information" style={styles.sendRequestText} multiline={true}></TextInput>}
+    //         </View>
+    //     </ScrollView>
+    //     <Footer navigation={navigation} onSubmit={onSubmit}></Footer>
+    //     </View>
 
-    )
+    // )
 
 }
 

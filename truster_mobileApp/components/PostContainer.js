@@ -15,7 +15,11 @@ const PostContainer = ({post, navigation}) => {
     return ( 
         <TouchableWithoutFeedback onPress={() => {
             console.log("CHECK")
-            navigation.navigate('Post', {post: post})
+            navigation.navigate('PostPreview', {post: post, isJustPreview: false})
+            // navigation.navigate("Tabs", {
+            //     screen : "PostPreview",
+            //     params:{post: post, isJustPreview: false}
+            // })
         }}>
             <View style={{width: '100%'}}>
                 {post && 
@@ -25,7 +29,7 @@ const PostContainer = ({post, navigation}) => {
                             {post.address.city}
                         </Text>
                         <Text style={styles.city}>
-                            {post.address.fullAdress}
+                            {post.address.fullAddress}
                         </Text>
                         <Text style={styles.timeframe}>
                             {post.timeframe.start} - {post.timeframe.end}

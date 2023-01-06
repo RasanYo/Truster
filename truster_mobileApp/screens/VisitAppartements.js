@@ -36,6 +36,7 @@ export default function VisitAppartments({navigation}){
             lat: geo.lat,
             lng: geo.lng
         })
+        console.log("COORDS", geoCoords)
         user.getPublicPosts(500, [geo.lat, geo.lng], true, limit(queryState.limit)).then(res => {
             let data = res.map(resDoc => {return resDoc.data()})
             let lastVisible = data[data.length -1].geohash
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
     },
     searchBarContainer: {
         alignItems: 'center',
-        // marginBottom: 20
+        marginBottom: 5,
     }
 })
  
