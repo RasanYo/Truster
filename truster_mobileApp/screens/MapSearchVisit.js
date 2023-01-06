@@ -10,6 +10,8 @@ import { UserContext } from "../context";
 import * as Location from 'expo-location';
 import { LocationAccuracy } from "expo-location";
 
+import {where} from "firebase/firestore"
+
 import Card from "../components/Card";
 
 
@@ -28,227 +30,13 @@ export default function MapSearchVisit({navigation}){
     const scrollview = useRef(null)
     const [radius,setRadius] = useState(5)
     const [markers,setMarkers] = useState()
-    const mapStyle = [
-      {
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#ebe3cd"
-          }
-        ]
-      },
-      {
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#523735"
-          }
-        ]
-      },
-      {
-        "elementType": "labels.text.stroke",
-        "stylers": [
-          {
-            "color": "#f5f1e6"
-          }
-        ]
-      },
-      {
-        "featureType": "administrative",
-        "elementType": "geometry.stroke",
-        "stylers": [
-          {
-            "color": "#c9b2a6"
-          }
-        ]
-      },
-      {
-        "featureType": "administrative.land_parcel",
-        "elementType": "geometry.stroke",
-        "stylers": [
-          {
-            "color": "#dcd2be"
-          }
-        ]
-      },
-      {
-        "featureType": "administrative.land_parcel",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#ae9e90"
-          }
-        ]
-      },
-      {
-        "featureType": "landscape.natural",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#dfd2ae"
-          }
-        ]
-      },
-      {
-        "featureType": "poi",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#dfd2ae"
-          }
-        ]
-      },
-      {
-        "featureType": "poi",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#93817c"
-          }
-        ]
-      },
-      {
-        "featureType": "poi.park",
-        "elementType": "geometry.fill",
-        "stylers": [
-          {
-            "color": "#a5b076"
-          }
-        ]
-      },
-      {
-        "featureType": "poi.park",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#447530"
-          }
-        ]
-      },
-      {
-        "featureType": "road",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#f5f1e6"
-          }
-        ]
-      },
-      {
-        "featureType": "road.arterial",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#fdfcf8"
-          }
-        ]
-      },
-      {
-        "featureType": "road.highway",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#f8c967"
-          }
-        ]
-      },
-      {
-        "featureType": "road.highway",
-        "elementType": "geometry.stroke",
-        "stylers": [
-          {
-            "color": "#e9bc62"
-          }
-        ]
-      },
-      {
-        "featureType": "road.highway.controlled_access",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#e98d58"
-          }
-        ]
-      },
-      {
-        "featureType": "road.highway.controlled_access",
-        "elementType": "geometry.stroke",
-        "stylers": [
-          {
-            "color": "#db8555"
-          }
-        ]
-      },
-      {
-        "featureType": "road.local",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#806b63"
-          }
-        ]
-      },
-      {
-        "featureType": "transit.line",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#dfd2ae"
-          }
-        ]
-      },
-      {
-        "featureType": "transit.line",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#8f7d77"
-          }
-        ]
-      },
-      {
-        "featureType": "transit.line",
-        "elementType": "labels.text.stroke",
-        "stylers": [
-          {
-            "color": "#ebe3cd"
-          }
-        ]
-      },
-      {
-        "featureType": "transit.station",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#dfd2ae"
-          }
-        ]
-      },
-      {
-        "featureType": "water",
-        "elementType": "geometry.fill",
-        "stylers": [
-          {
-            "color": "#b9d3c2"
-          }
-        ]
-      },
-      {
-        "featureType": "water",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#92998d"
-          }
-        ]
-      }
-    ]
     const [interpolations, setInterpolations] = useState()
 
     const [showCards, setShowCards] = useState(false)
-
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
+
+    const [geoCache,setGeoCache] = useState([])
 
     const {width,height} = Dimensions.get("window")
     const CARD_WIDTH = width * 0.8
@@ -274,7 +62,7 @@ export default function MapSearchVisit({navigation}){
                   if( mapIndex !== index ) {
                     mapIndex = index;
                     const  coordinate  = markers[index];
-                    changeViewMap(coordinate.latitude,coordinate.longitude,radius/4,radius/4)
+                    changeViewMap(coordinate.latitude,coordinate.longitude,radius*3/5,radius*3/5)
                   }
                 }, 10);
               });
@@ -302,7 +90,10 @@ export default function MapSearchVisit({navigation}){
             latitudeDelta: 0.08,
             longitudeDelta: 0.08,
           })
-          user.getPublicPosts(radius, [lat,lng] , false).then(docs => setResult(docs))
+          user.getPublicPosts(radius, [lat,lng] , false).then(docs => {
+            setResult(docs)
+            // console.log(docs)
+          })
         })();
       }, []);
 
@@ -310,24 +101,24 @@ export default function MapSearchVisit({navigation}){
         if(result){
             // console.log(result.length)
             const r = new Array(result.length).fill(0)
-            // console.log(r)
+            console.log("number of markers " + r.length)
             setMarkers(r)
 
-            // setInterpolations(r.map((marker, index) => {
-            //     const inputRange = [
-            //       (index - 1) * CARD_WIDTH,
-            //       index * CARD_WIDTH,
-            //       ((index + 1) * CARD_WIDTH),
-            //     ];
+            setInterpolations(r.map((marker, index) => {
+                const inputRange = [
+                  (index - 1) * CARD_WIDTH,
+                  index * CARD_WIDTH,
+                  ((index + 1) * CARD_WIDTH),
+                ];
             
-            //     const scale = mapAnimation.interpolate({
-            //       inputRange,
-            //       outputRange: [1, 1.5, 1],
-            //       extrapolate: "clamp"
-            //     });
+                const scale = mapAnimation.interpolate({
+                  inputRange,
+                  outputRange: [1, 1.5, 1],
+                  extrapolate: "clamp"
+                });
             
-            //     return { scale };
-            //   }));
+                return { scale };
+              }));
         }
     },[result])
 
@@ -337,13 +128,14 @@ export default function MapSearchVisit({navigation}){
         newAddress.longitude = lng
         newAddress.latitudeDelta = latDelta*0.02
         newAddress.longitudeDelta = lngDelta*0.02
+        // setCoordinate(newAddress)
         mapRef.current.animateToRegion(newAddress,1000)
     
     }
 
     const handleSelection = (data,details) => {
         var geo = details.geometry.location
-        changeViewMap(geo.lat,geo.lng,radius,radius)
+        changeViewMap(geo.lat,geo.lng,5,5)
 
         var country = "Italy"
         var city = "Milano"
@@ -361,9 +153,37 @@ export default function MapSearchVisit({navigation}){
         var e = user.getPublicPosts(radius, [geo.lat,geo.lng] , false)
         e.then(y => {
           setResult(y)
+          setGeoCache(y.map(x => x.data().geohash))
         })
         
         setIsInputClicked(false)
+    }
+
+    const onRegionChangeComplete = (region) => {
+      var radiusAux = region.latitudeDelta*111.32/2
+      setRadius(radiusAux)
+      
+      //elements that are not in the region get kicked out
+      if(result){
+
+        const r = result.filter(x => user.isPointInRegion(x.data().address.lat,x.data().address.lng,region))
+        var aux = r.map(x => x.data().geohash)
+
+        aux.length == 0 ? user.getPublicPosts(radiusAux, [region.latitude,region.longitude] , false).then(docs => {
+          setResult(r.concat(docs))
+          setGeoCache(aux.concat(docs.map(x => x.data().geohash)))
+        }) : user.getPublicPosts(radiusAux, [region.latitude,region.longitude] , false, where("geohash", "not-in",aux)).then(docs => {
+          setResult(r.concat(docs))
+          setGeoCache(aux.concat(docs.map(x => x.data().geohash)))
+        })
+      }
+
+      
+      
+      
+      
+
+      // user.getPublicPosts()
     }
 
     const onMarkerPress = (mapEventData) => {
@@ -387,13 +207,10 @@ export default function MapSearchVisit({navigation}){
         <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss;setShowCards(false)}} accessible={false}>
         <View style={styles.container} >
             {coordinate && 
-                    <MapView showsMyLocationButton={true} showsUserLocation={true} customMapStyle={mapStyle}
-                    style={styles.map} initialRegion={coordinate} ref={mapRef} annotations={markers} onRegionChangeComplete={(region) => {
-                      console.log(region)
-                      setCoordinate(region)}
-                      }>
+                    <MapView showsMyLocationButton={true} showsUserLocation={true} 
+                    style={styles.map} initialRegion={coordinate} ref={mapRef} annotations={markers} onRegionChangeComplete={onRegionChangeComplete}>
                         {(result && markers) && <PinData pinsData={result} markers={markers} onMarkerPress={onMarkerPress} interpolations={interpolations}></PinData>}
-                        {console.log(markers)}
+                        {/* {console.log(markers)} */}
                     </MapView>}
                 <TouchableWithoutFeedback onPress={() => navigation.navigate("Menu")} >
                             <View style={{marginTop:50,marginLeft:15,width:35,position:"absolute"}}>
@@ -456,9 +273,7 @@ export default function MapSearchVisit({navigation}){
                                 )}
                             >
                             { result && result.map((info,index) => {
-                                return <Card itemData={{title : info.data().address.fullAddress,description : info.data().description, time : info.data().timeframe.end}} onPress={() => onCardPress(info.data())}></Card>
-                                
-                                    
+                                return <Card itemData={{title : info.data().address.fullAddress,description : info.data().description, time : info.data().timeframe.end}} onPress={() => onCardPress(info.data())} key={index}></Card>
                             })}
                 </Animated.ScrollView>}
                 
@@ -483,7 +298,7 @@ export const PinData = ({ pinsData,markers,onMarkerPress,interpolations}) => {
         //       },
         //     ],
         //   };
-        console.log(pin.data())
+        // console.log(pin.data())
         var coordinate = {
             latitude: pin.data().address.lat,
             longitude: pin.data().address.lng,

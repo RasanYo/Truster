@@ -33,13 +33,6 @@ export class AbstractUser {
     }
 
 
-    // CEST POUR DEMANDER LA LOCALISATION 
-    // navigator.geolocation.getCurrentPosition(position =>{
-    //     console.log("latitude : " ,position.coords.latitude)
-    //     console.log("longitude : " , position.coords.longitude)
-    // })
-
-
     //center c'est sensé être soit la position du mec qu'on lui aura demandé 
     //ou bien s'il veut pas la lat/lng de la ville
    getPublicPosts(radiusInKm, center, sortByPrice, ...queryConstraints) {
@@ -53,6 +46,7 @@ export class AbstractUser {
             })
         } else {
             const bounds = geohashQueryBounds(center, radiusInKm*1000);
+            // console.log(bounds)
             const promises = [];
             for (const b of bounds) {
                 const q = query(collection(this.db, COLLECTIONS.AVAILABLE_VISITS), orderBy("geohash"),...queryConstraints, startAt(b[0]), endAt(b[1]))
@@ -93,9 +87,18 @@ export class AbstractUser {
                 // })
                 // console.log(docs)
                 // setResult(docs)
+                //print the number of docs saying that the query was successful with the number of docs
+                console.log("added " + docs.length + " docs to the list")
                 return docs
             });
         }
+    }
+
+    isPointInRegion(lat,lng, region) {
+
+        const radiusInKmOfRegion = Math.max(region.latitudeDelta,region.longitudeDelta)*111.32
+        const distanceInKmFromCenter = 2*distanceBetween([lat, lng], [region.latitude,region.longitude]);
+        return distanceInKmFromCenter < radiusInKmOfRegion;
     }
 
     getPostsFrom(country, city) {
