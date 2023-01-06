@@ -199,6 +199,7 @@ export default function MapSearchVisit({navigation}){
 
     //create a onCardPress function to handle the press on a card
     const onCardPress = (post) => {
+        console.log(post)
         navigation.navigate('Post', {post: post})
     }
 

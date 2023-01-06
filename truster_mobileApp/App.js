@@ -87,8 +87,8 @@ function Tabs() {
       
       <Tab.Screen name="VisitForm" component={VisitForm}/>
             
-      <Tab.Screen name="MapSearchVisit" component={VisitAppartments}/>
-      {/* <Tab.Screen name="MapSearchVisit" component={MapSearchVisit}/> */}
+      {/* <Tab.Screen name="MapSearchVisit" component={VisitAppartments}/> */}
+      <Tab.Screen name="MapSearchVisit" component={MapSearchVisit}/>
 
     </Tab.Navigator>
   )
