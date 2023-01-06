@@ -11,7 +11,7 @@ export const COLLECTIONS = {
     profile_picture: (imgUrl) => `${COLLECTIONS.PROFILE_PICTURES}/${imgUrl}`,
 
     chat: (from, to) => {
-        return from < to ? `chats/${from}_${to}` : `chats/${to}_${from}`
+        return from < to ? `chats/${from}_${to}` : `chats/${to}_${from}` 
     }
     // profile_picture_URL: (uid) => {
     //     const supportedTypes = ['jpg', 'png', 'jpeg']

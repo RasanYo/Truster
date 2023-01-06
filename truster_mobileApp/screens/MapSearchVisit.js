@@ -47,25 +47,28 @@ export default function MapSearchVisit({navigation}){
 
     //useEffect pour l'animation lorsque qu'on passe d'un marker à un autre
     useEffect(() => {
-            mapAnimation.addListener(({ value }) => {
-                let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
-                if (index >= markers.length) {
-                  index = markers.length - 1;
-                }
-                if (index <= 0) {
-                  index = 0;
-                }
-          
-                clearTimeout(regionTimeout);
-          
-                const regionTimeout = setTimeout(() => {
-                  if( mapIndex !== index ) {
-                    mapIndex = index;
-                    const  coordinate  = markers[index];
-                    changeViewMap(coordinate.latitude,coordinate.longitude,radius*3/5,radius*3/5)
-                  }
-                }, 10);
-              });
+      if (markers) {
+        mapAnimation.addListener(({ value }) => {
+          let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
+          if (index >= markers.length) {
+            index = markers.length - 1;
+          }
+          if (index <= 0) {
+            index = 0;
+          }
+    
+          clearTimeout(regionTimeout);
+    
+          const regionTimeout = setTimeout(() => {
+            if( mapIndex !== index ) {
+              mapIndex = index;
+              const  coordinate  = markers[index];
+              changeViewMap(coordinate.latitude,coordinate.longitude,radius*3/5,radius*3/5)
+            }
+          }, 10);
+        });
+      }
+        
     
   },[markers]);
 

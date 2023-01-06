@@ -147,6 +147,7 @@ export class User extends AbstractUser{
 
 
     openChat(receiverID) {
+        console.log("openChat")
         const docRef = doc(getFirestore(), COLLECTIONS.chat(this.#uid, receiverID))
         const users = []
 
@@ -172,6 +173,7 @@ export class User extends AbstractUser{
     }
 
     sendMessage(receiverID, message) {
+        console.log("sendMessage")
         const docRef = doc(getFirestore(), COLLECTIONS.chat(this.#uid, receiverID))
         const msg = {
             from: this.#uid,
@@ -184,8 +186,9 @@ export class User extends AbstractUser{
     }
 
     getChatWith(receiverID) {
+        console.log("getChatWith")
         const docRef = doc(getFirestore(), COLLECTIONS.chat(this.#uid, receiverID))
-        return getDoc(doc).then(doc => {return doc.data()})
+        return getDoc(docRef).then(doc => {return doc.data()})
     }
 
 }
