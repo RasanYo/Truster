@@ -91,6 +91,10 @@ const PostScreen = (props) => {
         }
     }
 
+    const handleChat = () => {
+        navigation.navigate('Chat', {receiverID: poster.uid})
+    }
+
     return ( 
         <View style={{flex: 1}}>
             {poster && <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -103,8 +107,7 @@ const PostScreen = (props) => {
                         }}
                         scrollEnabled={false}
                         rotateEnabled={false}
-                        zoomEnabled={false}
-                        
+                        zoomEnabled={false}                        
                     >
                         <Marker
                             // key={index}
@@ -134,7 +137,9 @@ const PostScreen = (props) => {
                         </View>
                     </View>                                                             
                 </View>
-                
+                <TouchableWithoutFeedback onPress={handleChat}>
+                    <Text>Chat</Text>
+                </TouchableWithoutFeedback>
                 <View style={styles.infoContainer}>
                     <Text style={{fontSize: 24}}>{post.address.city}</Text>
                     <Text style={{fontSize: 18, color: '#bfbfbfbf', marginBottom: 15}}>{post.address.npa} {post.address.city}, {post.address.country}</Text>
@@ -144,6 +149,7 @@ const PostScreen = (props) => {
                     <Text style={{fontSize: 22}}>Send Request</Text>
                     {!isJustPreview && <TextInput placeholder="Additional information" style={styles.sendRequestText} multiline={true}></TextInput>}
                 </View>
+                
             </ScrollView>}
             <Footer navigation={navigation} onSubmit={isJustPreview ? onPost : onRequest} isJustPreview={isJustPreview}></Footer>
         </View>

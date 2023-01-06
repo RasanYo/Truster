@@ -5,6 +5,7 @@ import PostList from "../components/PostList";
 // import { useFonts } from 'expo-font';
 import AddressInput from "../components/AddressInput";
 import { limit, orderBy, startAfter } from "firebase/firestore";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 
 export default function VisitAppartments({navigation}){
@@ -90,24 +91,39 @@ export default function VisitAppartments({navigation}){
 
 
     return ( 
-        <View style={styles.mainContainer}>
-            <View style={styles.titleContainer}>
-                <Text style={styles.title}>Visit appartments,</Text>
-                <Text style={styles.title2}>Become a Trusty</Text>
+        <View style={{flex: 1}}>
+            <View style={styles.mainContainer}>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}>Visit appartments,</Text>
+                    <Text style={styles.title2}>Become a Trusty</Text>
+                </View>
+                <Text onPress={() => navigation.navigate("Menu")}>go back</Text>
+                <View style={styles.searchBarContainer}>
+                    <AddressInput 
+                        isInputClicked={inputClicked} setIsInputClicked={setInputClicked}
+                        handleSelection={handleSelection}
+                    />
+                </View>
+                
+                <View style={{marginTop:20, flex: 1}}>
+                    <PostList query={queryState} retrieveMore={retrieveMore} nav={navigation}/>
+                </View>
+                
             </View>
-            <Text onPress={() => navigation.navigate("Menu")}>go back</Text>
-            <View style={styles.searchBarContainer}>
-                <AddressInput 
-                    isInputClicked={inputClicked} setIsInputClicked={setInputClicked}
-                    handleSelection={handleSelection}
-                />
-            </View>
-            
-            <View style={{marginTop:20, flex: 1}}>
-                <PostList query={queryState} retrieveMore={retrieveMore} nav={navigation}/>
-            </View>
-            
+            <TouchableOpacity 
+                onPress={() => navigation.navigate("Map")}
+                style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    color: "black",
+                    
+                }}
+            >
+                <Text style={{color: "white"}}>Map</Text>
+            </TouchableOpacity>
         </View>
+        
      );
 }
 

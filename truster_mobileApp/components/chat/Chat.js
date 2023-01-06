@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { UserContext } from "../../context";
 import MessageList from "./MessageList";
 
@@ -8,16 +8,42 @@ const Chat = ({
     route
 }) => {
 
-    const receiverID = route.params.receiverID
+    const { receiverID } = route.params
     const {user} = useContext(UserContext)
     const [chatData, setChatData] = useState(null)
     const [message, setMessage] = useState(null)
 
     const getChat = () => {
-        user.getChatWith(receiverID).then(data => {
-            setChatData(data)
-            console.log("CHAT_DATA", chatData)
-        })
+        user
+            .getChatWith(receiverID).then(data => {
+                if (!data) {
+                    console.log("OPENING NEW CHAT WITH UID:", receiverID)
+                    user.openChat(receiverID).then(() => {return true})
+                } else {
+                    setChatData(data)
+                    console.log("CHAT_DATA", chatData)
+                }
+                
+            })
+            .then(openedChat => {
+                if (openedChat) {
+                    user.getChatWith(receiverID).then(data => {
+                        setChatData(data)
+                        console.log("CHAT_DATA", chatData)
+                    })
+                }
+            })
+            .catch(err => {
+                console.log("ERROR: ", err.message)
+                // console.log("OPENING NEW CHAT WITH UID:", receiverID)
+                // user.openChat(receiverID).then(() => {
+                //     getChatWith(receiverID).then(data => {
+                //         setChatData(data)
+                //         console.log("CHAT_DATA", chatData)
+                //     })
+                // })
+            })
+            
     }
 
     useEffect(() => {
@@ -30,6 +56,7 @@ const Chat = ({
                 getChat()
                 setMessage(null)
             })
+            .catch(err => console.error("ERROR IN SEND MESSAGE:", err.message))
     }
 
     return ( 
@@ -38,7 +65,7 @@ const Chat = ({
                 <Text>HEADER</Text>
             </View>
             <View>
-                {chatData.messages.length ? 
+                {chatData ? 
                     <MessageList messages={chatData.messages}/> :
                     <Text>Write a message to open the chat</Text>}
             </View>
@@ -50,7 +77,6 @@ const Chat = ({
                     onChangeText={text => setMessage(text)} 
                     autoCapitalize="none" 
                     autoCorrect={false} 
-                    onChange={() => {setIsLoggingIn(false);setIsWrongPassword(false) }} 
                 />
                 <TouchableOpacity onPress={handleSendMessage}>
                     <Text>Send</Text>

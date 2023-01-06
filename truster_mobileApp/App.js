@@ -55,12 +55,14 @@ export default function App() {
                   {/* <Stack.Screen name="VisitForm" component={VisitForm}/> */}
 
                   {/* <Stack.Screen name="PostPreview" component={PostPreview}/> */}
-                  {/* <Stack.Screen name="Chat" component={Chat}/> */}
+                  
                         
                   {/* <Stack.Screen name="MapSearchVisit" component={VisitAppartments}/> */}
-                  {/* <Stack.Screen name="MapSearchVisit" component={MapSearchVisit}/> */}
+                  
                   <Stack.Screen name="Tabs" component={Tabs}/>
                   <Stack.Screen name="PostPreview" component={PostScreen}/>
+                  <Stack.Screen name="Map" component={MapSearchVisit}/>
+                  <Stack.Screen name="Chat" component={Chat}/>
                           
               </Stack.Navigator>
               
