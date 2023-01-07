@@ -14,12 +14,7 @@ const PostContainer = ({post, navigation}) => {
 
     return ( 
         <TouchableWithoutFeedback onPress={() => {
-            console.log("CHECK")
             navigation.navigate('PostPreview', {post: post, isJustPreview: false})
-            // navigation.navigate("Tabs", {
-            //     screen : "PostPreview",
-            //     params:{post: post, isJustPreview: false}
-            // })
         }}>
             <View style={{width: '100%'}}>
                 {post && 
