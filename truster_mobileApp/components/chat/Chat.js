@@ -5,6 +5,7 @@ import Footer from "../Footer";
 import Header from "../Header";
 import MessageList from "./MessageList";
 import defaultPic from "../../assets/pictures/no-profile-pic.png";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const Chat = ({
     navigation,
@@ -99,7 +100,10 @@ const Chat = ({
                     <MessageList messages={chatData.messages}/> :
                     <Text>Write a message to open the chat</Text>}
             </View>
-              
+            
+            <KeyboardAwareScrollView nestedScrollEnabled={true}
+                keyboardShouldPersistTaps='handled'
+                contentContainerStyle={{ flexGrow: 1 }}>
             <Footer 
                 style={{
                     flexDirection: 'row',
@@ -138,8 +142,9 @@ const Chat = ({
                 >
                     <Text style={{color: "white",}}>Send</Text>
                 </TouchableOpacity>
+
             </Footer>
-            
+            </KeyboardAwareScrollView>
         </View>
      );
 }
