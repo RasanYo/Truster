@@ -16,7 +16,7 @@ import SignUp from './screens/SignUp';
 import PostPreview from './screens/PostPreview';
 import VisitForm from './screens/VisitForm';
 import MapSearchVisit from './screens/MapSearchVisit';
-import { NavigationContainer } from '@react-navigation/native';
+import { getFocusedRouteNameFromRoute, NavigationContainer } from '@react-navigation/native';
 import VisitAppartments from './screens/VisitAppartements';
 import { 
   geohashQueryBounds, 
@@ -27,76 +27,120 @@ import PostScreen from './components/PostScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { color } from 'react-native-reanimated';
 import Chat from './components/chat/Chat';
+import Favorites from './screens/Favorites';
+import Reservations from './screens/Reservations';
+
+import { AntDesign } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Profile from './screens/Profile';
+
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
 
-
   const [user, setUser] = useState(new Guest())
-
-  // useEffect(() => {
-  //     console.log(geohashQueryBounds([48.57311010, 8.08595896], 10*1000))
-  // },[])
-
-  const Stack = createNativeStackNavigator();
 
   return (
     <ActionSheetProvider>
       <NavigationContainer>
         <UserContext.Provider value={{user,setUser}}>
-              <Stack.Navigator screenOptions={{headerShown : false,}}>
-                  {/* <Stack.Screen name="Menu" component={Menu}/> */}
-                        
-                  {/* <Stack.Screen options={{ animation:"slide_from_bottom", presentation:"modal",headerShown : true, 
-                  title: 'Sign Up or Login'}} name="LoginMenu" component={LoginMenu}/> */}
-                  
-                  {/* <Stack.Screen name="SignUp" component={SignUp} options={{presentation:"modal",headerShown : true,}}/> */}
-                
-
-                  {/* <Stack.Screen name="VisitForm" component={VisitForm}/> */}
-
-                  {/* <Stack.Screen name="PostPreview" component={PostPreview}/> */}
-                  
-                        
-                  {/* <Stack.Screen name="MapSearchVisit" component={VisitAppartments}/> */}
-                  
-                  <Stack.Screen name="Tabs" component={Tabs}/>
-                  <Stack.Screen name="PostPreview" component={PostScreen}/>
-                  <Stack.Screen name="Map" component={MapSearchVisit}/>
-                  <Stack.Screen name="Chat" component={Chat}/>
-                          
-              </Stack.Navigator>
-              
+              <Tabs></Tabs>
         </UserContext.Provider> 
       </NavigationContainer>
     </ActionSheetProvider>
-
-    // <UserContext.Provider value={user}>
-    //   <Navigator />
-    // </UserContext.Provider>
-
-    
   );
 }
 
 function Tabs() {
-  const Tab = createBottomTabNavigator();
+
+
   return ( 
-    <Tab.Navigator screenOptions={{headerShown : false,}}>
-      <Tab.Screen name="Menu" component={Menu}/>
-              
-      <Tab.Screen options={{ animation:"slide_from_bottom", presentation:"modal",headerShown : true, 
-      title: 'Sign Up or Login'}} name="LoginMenu" component={LoginMenu}/>
-      
-      <Tab.Screen name="SignUp" component={SignUp} options={{presentation:"modal",headerShown : true,}}/>
-      
-      <Tab.Screen name="VisitForm" component={VisitForm}/>
-            
-      {/* <Tab.Screen name="MapSearchVisit" component={VisitAppartments}/> */}
-      <Tab.Screen name="MapSearchVisit" component={MapSearchVisit}/>
+    <Tab.Navigator screenOptions={{
+      headerShown : false,
+      tabBarStyle : {
+        shadowOffset : 2,
+        shadowColor : "black",
+        borderRadius : 10,
+        borderColor : "black",
+        backgroundColor : "red",
+      }, 
+      }}>
+
+
+      <Tab.Screen name="Explore" component={MakeAVisitStack} 
+        options={({ route }) => ({
+          tabBarStyle: {
+            display: getTabBarVisibility(route),
+          },
+          tabBarIcon: ({color, size}) => (
+            <AntDesign name="search1" size={size} color={color} />
+          ),
+        })}
+      />
+
+      <Tab.Screen name="Favorites" component={Favorites}
+        options={({ route }) => ({
+          tabBarIcon: ({color, size}) => (
+            <MaterialIcons name="favorite-border" size={size} color={color} />
+          ),
+        })}
+      />
+
+      <Tab.Screen name="Reservations" component={Reservations}
+        options={({ route }) => ({
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons name="greenhouse" size={size} color={color} />
+          ),
+        })}
+      />
+
+      <Tab.Screen name="Messages" component={MapSearchVisit}
+        options={({ route }) => ({
+          tabBarIcon: ({color, size}) => (
+            <AntDesign name="message1" size={size} color={color} />
+          ),
+        })}
+      />
+
+      <Tab.Screen name="Profile" component={Profile}
+        options={({ route }) => ({
+          tabBarIcon: ({color, size}) => (
+            <AntDesign name="user" size={size} color={color} />
+          ),
+        })}
+      />
 
     </Tab.Navigator>
   )
 }
+
+const getTabBarVisibility = route => {
+  const routeName = getFocusedRouteNameFromRoute(route) ?? 'Feed';
+
+  if( routeName == 'MapSearchVisit' || routeName == 'VisitForm' || routeName == 'PostPreview' || routeName == 'SignUp' || routeName == 'LoginMenu') {
+    return 'none';
+  }
+  return 'flex';
+};
+
+const MakeAVisitStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{headerShown : false,}}>
+      <Stack.Screen name="Menu" component={Menu}/>
+      <Stack.Screen name="MapSearchVisit" component={MapSearchVisit}/>
+      <Stack.Screen name="ListSearchVisit" component={VisitAppartments} options={{ animation:"slide_from_bottom"}}/>
+      <Stack.Screen name="VisitForm" component={VisitForm}/>
+      <Stack.Screen name="SignUp" component={SignUp} options={{presentation:"modal",headerShown : true,}}/>
+      <Stack.Screen options={{ animation:"slide_from_bottom", presentation:"modal",headerShown : true, 
+      title: 'Sign Up or Login'}} name="LoginMenu" component={LoginMenu}/>
+      <Stack.Screen name="PostPreview" component={PostScreen}/>
+   </Stack.Navigator>
+  )
+}
+
+
 
 // const styles = StyleSheet.create({
 //   container: {

@@ -1,14 +1,14 @@
 import { useContext, useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { UserContext } from "../context";
 import PostList from "../components/PostList";
 // import { useFonts } from 'expo-font';
 import AddressInput from "../components/AddressInput";
 import { limit, orderBy, startAfter } from "firebase/firestore";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-
-export default function VisitAppartments({navigation}){
+export default function VisitAppartments({navigation,route}){
 
     // const [fontsLoaded] = useFonts({
     //     'NTR': require('../assets/fonts/NTR-Regular.ttf')
@@ -47,6 +47,7 @@ export default function VisitAppartments({navigation}){
                 lastVisible: lastVisible,
                 loading: false
             })
+            console.log("data from query", data)
         })
         .catch(err => {
             console.log(err)
@@ -97,7 +98,7 @@ export default function VisitAppartments({navigation}){
                     <Text style={styles.title}>Visit appartments,</Text>
                     <Text style={styles.title2}>Become a Trusty</Text>
                 </View>
-                <Text onPress={() => navigation.navigate("Menu")}>go back</Text>
+                {/* <Text onPress={() => navigation.pop()}>go back</Text> */}
                 <View style={styles.searchBarContainer}>
                     <AddressInput 
                         isInputClicked={inputClicked} setIsInputClicked={setInputClicked}
@@ -110,18 +111,28 @@ export default function VisitAppartments({navigation}){
                 </View>
                 
             </View>
-            <TouchableOpacity 
-                onPress={() => navigation.navigate("Map")}
-                style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    color: "black",
-                    
-                }}
+            <TouchableWithoutFeedback 
+                onPress={() => navigation.pop()}
             >
-                <Text style={{color: "white"}}>Map</Text>
-            </TouchableOpacity>
+                <View style={{
+                        position: "absolute",
+                        bottom: 80,
+                        left: 150,
+                        backgroundColor: "black",
+                        width:100,
+                        height: "auto",
+                        borderRadius: 15,
+                        flexDirection: "row",
+                        padding:10,
+                        justifyContent: "space-around",
+                        opacity: 0.7,
+                        zIndex: 100
+                    }}>
+                    <MaterialCommunityIcons name="map" size={22} color="white" />
+                    <Text style={{color: "white",fontSize:16}}>Map</Text>
+                </View>
+                
+            </TouchableWithoutFeedback>
         </View>
         
      );
