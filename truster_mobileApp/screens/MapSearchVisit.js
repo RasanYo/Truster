@@ -15,7 +15,7 @@ import {where} from "firebase/firestore"
 import Card from "../components/Card";
 
 
-export default function MapSearchVisit({navigation}){
+export default function MapSearchVisit({navigation,route}){
     const { user } = useContext(UserContext)
     const [isInputClicked,setIsInputClicked] = useState(false)
     // const coordinate = {
@@ -212,80 +212,92 @@ export default function MapSearchVisit({navigation}){
 
     return (
         <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss;setShowCards(false)}} accessible={false}>
-        <View style={styles.container} >
-            {coordinate && 
-                    <MapView showsMyLocationButton={true} showsUserLocation={true} 
-                    style={styles.map} initialRegion={coordinate} ref={mapRef} annotations={markers} onRegionChangeComplete={onRegionChangeComplete}>
-                        {(result && markers) && <PinData pinsData={result} markers={markers} onMarkerPress={onMarkerPress} interpolations={interpolations}></PinData>}
-                        {/* {console.log(markers)} */}
-                    </MapView>}
-                <TouchableWithoutFeedback onPress={() => navigation.navigate("Menu")} >
-                            <View style={{marginTop:50,marginLeft:15,width:35,position:"absolute"}}>
-                            <Ionicons name="caret-back-circle-outline" size={30} color="white" />
-                            </View>
-                </TouchableWithoutFeedback>
+          <View style={styles.container} >
+              {coordinate && 
+                      <MapView showsMyLocationButton={true} showsUserLocation={true} 
+                      style={styles.map} initialRegion={coordinate} ref={mapRef} annotations={markers} onRegionChangeComplete={onRegionChangeComplete}>
+                          {(result && markers) && <PinData pinsData={result} markers={markers} onMarkerPress={onMarkerPress} interpolations={interpolations}></PinData>}
+                          {/* {console.log(markers)} */}
+                      </MapView>}
+                  <TouchableWithoutFeedback onPress={() => navigation.navigate("Menu")} >
+                              <View style={{marginTop:50,marginLeft:15,width:35,position:"absolute"}}>
+                              <Ionicons name="caret-back-circle-outline" size={30} color="white" />
+                              </View>
+                  </TouchableWithoutFeedback>
 
-                <View style={styles.searchBar}>
-                    <AntDesign name="search1" size={24} style={{alignSelf:"flex-start",marginTop:13}}/>
-                    {isInputClicked ? 
-                        <View style={styles.searchBarContainer}>
-                            <Autocomplete3 setAddress={() => {}} isErasingAll={() => {}} setIsCity={() => {}}
-                                    setIsStreetName={() => {}} setIsStreetNumber={() => {}} placeholder="" isFocus={true} handleSelection={handleSelection}/>
-                        </View> :  
-                        <TouchableWithoutFeedback onPress={() => setIsInputClicked(true)} >
-                            <View style={{marginVertical:6}}>
-                                <Text style={{fontSize:17}}>Where do you live</Text>
-                                <Text style={{color:"gray"}}>Look for visits in your area</Text>
-                            </View>
-                        </TouchableWithoutFeedback>}
+                  <View style={styles.searchBar}>
+                      <AntDesign name="search1" size={24} style={{alignSelf:"flex-start",marginTop:13}}/>
+                      {isInputClicked ? 
+                          <View style={styles.searchBarContainer}>
+                              <Autocomplete3 setAddress={() => {}} isErasingAll={() => {}} setIsCity={() => {}}
+                                      setIsStreetName={() => {}} setIsStreetNumber={() => {}} placeholder="" isFocus={true} handleSelection={handleSelection}/>
+                          </View> :  
+                          <TouchableWithoutFeedback onPress={() => setIsInputClicked(true)} >
+                              <View style={{marginVertical:6}}>
+                                  <Text style={{fontSize:17}}>Where do you live</Text>
+                                  <Text style={{color:"gray"}}>Look for visits in your area</Text>
+                              </View>
+                          </TouchableWithoutFeedback>}
 
-                    <MaterialCommunityIcons name="filter-menu" size={24} color="black" style={{alignSelf:"flex-start",marginTop:10}}/>
-                </View>
-                { <Animated.ScrollView 
-                            ref={scrollview}
-                            showsVerticalScrollIndicator={false}
-                            horizontal
-                            scrollEventThrottle={1}
-                            showsHorizontalScrollIndicator={false}
-                            style={{
-                                position: "absolute",
-                                bottom: 30,
-                                left: 0,
-                                right: 0,
-                                paddingVertical: 10,
-                            }}
-                            pagingEnabled
-                            snapToInterval={CARD_WIDTH+10}
-                            snapToAlignment="center"
-                            // contentInset={{
-                            //     top:0,
-                            //     left : SPACING_FOR_CARD_INSET,
-                            //     bottom : 0,
-                            //     right : SPACING_FOR_CARD_INSET
-                            // }}
-                            contentContainerStyle={{
-                                paddingHorizontal : Platform.OS == "android" ? SPACING_FOR_CARD_INSET : 0
-                            }}
-                            onScroll={Animated.event(
-                                [
-                                    {
-                                    nativeEvent: {
-                                        contentOffset: {
-                                        x: mapAnimation,
-                                        }
-                                    },
-                                    },
-                                ],
-                                {useNativeDriver: true}
-                                )}
-                            >
-                            { result && result.map((info,index) => {
-                                return <Card itemData={{title : info.data().address.fullAddress,description : info.data().description, time : info.data().timeframe.end}} onPress={() => onCardPress(info.data())} key={index}></Card>
-                            })}
-                </Animated.ScrollView>}
-                
-                
-        </View>
+                      <MaterialCommunityIcons name="filter-menu" size={24} color="black" style={{alignSelf:"flex-start",marginTop:10}}/>
+                  </View>
+                  { <Animated.ScrollView 
+                              ref={scrollview}
+                              showsVerticalScrollIndicator={false}
+                              horizontal
+                              scrollEventThrottle={1}
+                              showsHorizontalScrollIndicator={false}
+                              style={{
+                                  position: "absolute",
+                                  bottom: 70,
+                                  left: 0,
+                                  right: 0,
+                                  paddingVertical: 10,
+                              }}
+                              pagingEnabled
+                              snapToInterval={CARD_WIDTH+10}
+                              snapToAlignment="center"
+                              // contentInset={{
+                              //     top:0,
+                              //     left : SPACING_FOR_CARD_INSET,
+                              //     bottom : 0,
+                              //     right : SPACING_FOR_CARD_INSET
+                              // }}
+                              contentContainerStyle={{
+                                  paddingHorizontal : Platform.OS == "android" ? SPACING_FOR_CARD_INSET : 0
+                              }}
+                              onScroll={Animated.event(
+                                  [
+                                      {
+                                      nativeEvent: {
+                                          contentOffset: {
+                                          x: mapAnimation,
+                                          }
+                                      },
+                                      },
+                                  ],
+                                  {useNativeDriver: true}
+                                  )}
+                              >
+                              { result && result.map((info,index) => {
+                                  return <Card itemData={{title : info.data().address.fullAddress,description : info.data().description, time : info.data().timeframe.end}} onPress={() => onCardPress(info.data())} key={index}></Card>
+                              })}
+                  </Animated.ScrollView>}
+                  
+                  {result && 
+                  <TouchableWithoutFeedback onPress={() => navigation.navigate("ListSearchVisit")}>
+                    <View style={styles.footer} onPress={() => navigation.navigate("ListSearchVisit")}>
+                          <Text style={{
+                                    marginTop: 5,
+                                    fontSize: 20,
+                                    textDecorationLine: "underline",
+                          }}> 
+                            {result.length} visits found
+                          </Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+                  }
+          </View>
         </TouchableWithoutFeedback>
     
     
@@ -297,15 +309,6 @@ export const PinData = ({ pinsData,markers,onMarkerPress,interpolations}) => {
 
     
     return pinsData.map((pin,index) => {
-        // console.log(interpolations)
-        // const scaleStyle = {
-        //     transform: [
-        //       {
-        //         scale: interpolations[index].scale,
-        //       },
-        //     ],
-        //   };
-        // console.log(pin.data())
         var coordinate = {
             latitude: pin.data().address.lat,
             longitude: pin.data().address.lng,
@@ -331,7 +334,7 @@ const styles = StyleSheet.create({
     map: {
       width: "100%",
       height: "100%",
-      zIndex:-1
+      // zIndex:-1
     },
 
     searchBar : {
@@ -350,7 +353,7 @@ const styles = StyleSheet.create({
 
     searchBarContainer: {
         position: "relative",
-        zIndex:100,
+        // zIndex:100,
         // top: 13,
         // left : 40,
         width:270,
@@ -375,4 +378,17 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
       },
+
+    footer:  {
+      position: "absolute",
+      bottom: 0,
+      left: 0,
+      right: 0,
+      alignItems: "center",
+      justifyContent: "flex-start",
+      width: "100%",
+      height: 70,
+      backgroundColor: "white",
+      borderRadius: 20,
+  }
 })

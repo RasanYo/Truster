@@ -243,35 +243,6 @@ export default function VisitForm({navigation}){
     )
 }
 
-// function Footer(props){
-//     return(
-//         <View style={styles.footer}>
-//             <Text style={styles.footerEraseAll} onPress={props.eraseAll}>
-//                 Erase all
-//             </Text>
-//             <TouchableWithoutFeedback onPress={() => {
-//                 // console.log(props.addressInfo)
-//                 if(props.addressInfo && props.date){
-//                     const post = {
-//                         address : props.addressInfo,
-//                         timeframe : {start : props.date, end : props.date},
-//                         description : props.description
-//                     }
-//                     console.log(post)
-//                     props.navigation.navigate("Post",{post:post})
-//                 }
-                
-//                 }}>
-//                 <View style={styles.footerPreview} >
-//                     <MaterialIcons name="preview" size={24} color="black" />
-//                     <Text style={{fontSize:20,marginLeft:5}}>Preview</Text>
-//                 </View>
-//             </TouchableWithoutFeedback>
-            
-//         </View>
-//     )
-// }
-
 function Footer(props){
     return(
         <View style={styles.footer}>
