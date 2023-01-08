@@ -59,13 +59,6 @@ function Tabs() {
   return ( 
     <Tab.Navigator screenOptions={{
       headerShown : false,
-      tabBarStyle : {
-        shadowOffset : 2,
-        shadowColor : "black",
-        borderRadius : 10,
-        borderColor : "black",
-        backgroundColor : "red",
-      }, 
       }}>
 
 
