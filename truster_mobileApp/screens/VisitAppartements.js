@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Text, View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { UserContext } from "../context";
 import PostList from "../components/PostList";
@@ -7,6 +7,7 @@ import AddressInput from "../components/AddressInput";
 import { limit, orderBy, startAfter } from "firebase/firestore";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Slider } from "@miblanchard/react-native-slider";
 
 export default function VisitAppartments({navigation,route}){
 
@@ -16,19 +17,27 @@ export default function VisitAppartments({navigation,route}){
 
     const {user} = useContext(UserContext)
     const [inputClicked, setInputClicked] = useState(false)
+    const  {result, coords} = route.params ? route.params : []
 
     const [geoCoords, setGeoCoords] = useState({
-        lat: null,
-        lng: null
+        lat: coords.latitude,
+        lng: coords.longitude
     })
+    const [radius, setRadius] = useState(10)
 
     const [queryState, setQueryState] = useState({
-        posts: [],
+        posts: result,
+        // posts: [],
         limit: 5,
-        lastVisible: null,
+        lastVisible: result.length ? result[result.length-1].geohash : null,
+        // lastVisible: null,
         loading: false,
         refreshing: false
     })
+
+    useEffect(() => {
+        console.log("COORDS", geoCoords)
+    }, [])
 
 
     const handleSelection = (data,details) => {
@@ -38,7 +47,7 @@ export default function VisitAppartments({navigation,route}){
             lng: geo.lng
         })
         console.log("COORDS", geoCoords)
-        user.getPublicPosts(500, [geo.lat, geo.lng], true, limit(queryState.limit)).then(res => {
+        user.getPublicPosts(radius, [geo.lat, geo.lng], false, limit(queryState.limit)).then(res => {
             let data = res.map(resDoc => {return resDoc.data()})
             let lastVisible = data[data.length -1].geohash
             console.log("LAST_VISIBLE", lastVisible)
@@ -63,9 +72,9 @@ export default function VisitAppartments({navigation,route}){
         })
         try {
             user.getPublicPosts(
-                5000, 
+                radius, 
                 [geoCoords.lat, geoCoords.lng], 
-                true, 
+                false, 
                 startAfter(queryState.lastVisible), limit(queryState.limit)
             ).then(res => {
             let data = res.map(resDoc => {return resDoc.data()})
@@ -100,10 +109,34 @@ export default function VisitAppartments({navigation,route}){
                 </View>
                 {/* <Text onPress={() => navigation.pop()}>go back</Text> */}
                 <View style={styles.searchBarContainer}>
-                    <AddressInput 
-                        isInputClicked={inputClicked} setIsInputClicked={setInputClicked}
-                        handleSelection={handleSelection}
-                    />
+                    <View 
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            // justifyContent: 'center',
+                            paddingHorizontal: 100  
+                        }}
+                    >
+                        <Text style={{marginRight: 10}}>Radius: {radius} km</Text>
+                        <Slider 
+                            value={radius}
+                            onValueChange={value => setRadius(value)}
+                            minimumValue={1}
+                            maximumValue={100}
+                            step={1}
+                            containerStyle={{
+                                width: '100%',
+                            }}
+                        />
+                    </View>
+                    <View style={{zIndex: 1}}>
+                        <AddressInput 
+                            isInputClicked={inputClicked} setIsInputClicked={setInputClicked}
+                            handleSelection={handleSelection}
+                        />
+                    </View>
+                    
+                    
                 </View>
                 
                 <View style={{marginTop:20, flex: 1}}>

@@ -1,6 +1,7 @@
 import { Text, View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useFonts } from 'expo-font';
+import { useEffect } from "react";
 
 const PostContainer = ({post, navigation}) => {
 
@@ -11,15 +12,13 @@ const PostContainer = ({post, navigation}) => {
     //     'Inter' : require('../assets/fonts/Inter-Regular.ttf')
     //   });
 
+    useEffect(() => {
+        console.log("POSTCONTAINER", post)
+    }, [])
 
     return ( 
         <TouchableWithoutFeedback onPress={() => {
-            console.log("CHECK")
             navigation.navigate('PostPreview', {post: post, isJustPreview: false})
-            // navigation.navigate("Tabs", {
-            //     screen : "PostPreview",
-            //     params:{post: post, isJustPreview: false}
-            // })
         }}>
             <View style={{width: '100%'}}>
                 {post && 

@@ -59,7 +59,9 @@ function Tabs() {
   return ( 
     <Tab.Navigator screenOptions={{
       headerShown : false,
+
       }}>
+
 
 
       <Tab.Screen name="Explore" component={MakeAVisitStack} 
