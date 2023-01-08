@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Text, View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { UserContext } from "../context";
 import PostList from "../components/PostList";
@@ -17,20 +17,27 @@ export default function VisitAppartments({navigation,route}){
 
     const {user} = useContext(UserContext)
     const [inputClicked, setInputClicked] = useState(false)
+    const  {result, coords} = route.params ? route.params : []
 
     const [geoCoords, setGeoCoords] = useState({
-        lat: null,
-        lng: null
+        lat: coords.latitude,
+        lng: coords.longitude
     })
     const [radius, setRadius] = useState(10)
 
     const [queryState, setQueryState] = useState({
-        posts: [],
+        posts: result,
+        // posts: [],
         limit: 5,
-        lastVisible: null,
+        lastVisible: result.length ? result[result.length-1].geohash : null,
+        // lastVisible: null,
         loading: false,
         refreshing: false
     })
+
+    useEffect(() => {
+        console.log("COORDS", geoCoords)
+    }, [])
 
 
     const handleSelection = (data,details) => {

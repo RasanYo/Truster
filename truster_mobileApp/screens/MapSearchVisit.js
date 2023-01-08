@@ -131,7 +131,7 @@ export default function MapSearchVisit({navigation,route}){
         newAddress.longitude = lng
         newAddress.latitudeDelta = latDelta*0.02
         newAddress.longitudeDelta = lngDelta*0.02
-        // setCoordinate(newAddress)
+        setCoordinate(newAddress)
         mapRef.current.animateToRegion(newAddress,1000)
     
     }
@@ -285,8 +285,8 @@ export default function MapSearchVisit({navigation,route}){
                   </Animated.ScrollView>}
                   
                   {result && 
-                  <TouchableWithoutFeedback onPress={() => navigation.navigate("ListSearchVisit")}>
-                    <View style={styles.footer} onPress={() => navigation.navigate("ListSearchVisit")}>
+                  <TouchableWithoutFeedback onPress={() => navigation.navigate("ListSearchVisit", {result: result.map(info => {return info.data()}), coords: coordinate})}>
+                    <View style={styles.footer} onPress={() => navigation.navigate("ListSearchVisit", {result: result.map(info => {return info.data()}), coords: coordinate})}>
                           <Text style={{
                                     marginTop: 5,
                                     fontSize: 20,

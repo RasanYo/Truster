@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { FlatList } from "react-native";
 import PostContainer from "./PostContainer";
 
@@ -7,7 +8,9 @@ const PostList = ({
     nav
 }) => {
 
-
+    useEffect(() => {
+        console.log("POSTLIST", query.posts)
+    }, [])
 
     return ( 
         <FlatList 
