@@ -64,9 +64,9 @@ function Tabs() {
         shadowColor : "black",
         borderRadius : 10,
         borderColor : "black",
-        backgroundColor : "red",
+        // backgroundColor : "red",
       }, 
-      }}>
+    }}>
 
 
       <Tab.Screen name="Explore" component={MakeAVisitStack} 

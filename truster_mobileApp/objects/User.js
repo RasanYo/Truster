@@ -64,12 +64,11 @@ export class User extends AbstractUser{
      post(post) {
         const col = collection(getFirestore(), post.getLocation())
         const postRef = doc(col, post.getId()).withConverter(postConverter)
-        console.log("CHECK")
         setDoc(postRef, post)
         const userRef = doc(getFirestore(), COLLECTIONS.REGULAR_USERS, this.#uid)
         
         return updateDoc(userRef, {myPosts : arrayUnion(post.asDataObject())}).catch(err => {
-            return setDoc(userRef, {myPosts : arrayUnion(post.asDataObject())})
+            console.log("[POST_ERROR]", err.message)
         })
     }
 

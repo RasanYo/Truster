@@ -86,8 +86,8 @@ const PostScreen = (props) => {
             navigation.navigate("LoginMenu")
         }else{
             console.log("connecté")
-            const post = new Post(post.address, {start: post.timeframe, end: post.timeframe}, post.description, user.getUID())
-            user.post(post).then(() => navigation.navigate("Menu")).then(() => console.log("Successfully posted"))
+            const p = new Post(post.address, post.timeframe, post.description, user.getUID())
+            user.post(p).then(() => navigation.navigate("Menu")).then(() => console.log("Successfully posted"))
         }
     }
 
