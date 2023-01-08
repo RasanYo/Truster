@@ -6,7 +6,9 @@ import { Post } from "../objects/Post";
 import defaultPic from "../assets/pictures/no-profile-pic.png";
 import { AntDesign } from '@expo/vector-icons';
 
-// import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { KeyboardAvoidingView } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 
 const PostScreen = (props) => {
@@ -46,6 +48,7 @@ const PostScreen = (props) => {
             }
         } else {
             user.getUser(post.creatorUID).then(data => {
+                console.log("DATA : ", data)
                 setPoster(data)
             })
             user.getProfilePictureURL(post.creatorUID).then(url => {
@@ -97,7 +100,16 @@ const PostScreen = (props) => {
 
     return ( 
         <View style={{flex: 1}}>
-            {poster && <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+            {poster && 
+            <KeyboardAvoidingView>
+
+            <KeyboardAwareScrollView
+                nestedScrollEnabled={true}
+                keyboardShouldPersistTaps='handled'
+                contentContainerStyle={{ flexGrow: 1 }}
+                style={styles.container} showsVerticalScrollIndicator={false}>
+
+            {/* <ScrollView style={styles.container} showsVerticalScrollIndicator={false}> */}
                 <View style={styles.mapContainer}>
                     <MapView style={styles.map} initialRegion={{
                         latitude: coordinate.latitude,
@@ -137,20 +149,31 @@ const PostScreen = (props) => {
                         </View>
                     </View>                                                             
                 </View>
-                <TouchableWithoutFeedback onPress={handleChat}>
+                {/* <TouchableWithoutFeedback onPress={handleChat}>
                     <Text>Chat</Text>
-                </TouchableWithoutFeedback>
+                </TouchableWithoutFeedback> */}
                 <View style={styles.infoContainer}>
                     <Text style={{fontSize: 24}}>{post.address.city}</Text>
                     <Text style={{fontSize: 18, color: '#bfbfbfbf', marginBottom: 15}}>{post.address.npa} {post.address.city}, {post.address.country}</Text>
                     <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 20}}>{post.timeframe.start}  -  {post.timeframe.end}</Text>
                     <Text style={{fontSize: 20, marginBottom: 10}}>Description</Text>
                     <Text style={{marginBottom: 20}}>{post.description || "No description"}</Text>
-                    <Text style={{fontSize: 22}}>Send Request</Text>
-                    {!isJustPreview && <TextInput placeholder="Additional information" style={styles.sendRequestText} multiline={true}></TextInput>}
+                    {/* <Text style={{fontSize: 22}}>Send Request</Text> */}
+                    {/* {!isJustPreview && <TextInput placeholder="Additional information" style={styles.sendRequestText} multiline={true}></TextInput>} */}
+                    
                 </View>
                 
-            </ScrollView>}
+                    <View style={{margin:20,opacity: isJustPreview ? 0.5 : 1}}>
+                            <Text style={{fontSize:20}}>Send Request</Text>
+                            {isJustPreview ? <Text style={styles.sendRequestText}>Additional information</Text>: <TextInput placeholder="Additional information" style={styles.sendRequestText} multiline={true}></TextInput>}
+                    </View>
+                
+                
+                
+            {/* </ScrollView> */}
+            </KeyboardAwareScrollView>
+            </KeyboardAvoidingView>
+            }
             <Footer navigation={navigation} onSubmit={isJustPreview ? onPost : onRequest} isJustPreview={isJustPreview}></Footer>
         </View>
      );
@@ -166,7 +189,7 @@ function Footer(props){
             </Text>
             <TouchableWithoutFeedback onPress={props.onSubmit}>
                 <View style={styles.footerPreview} >
-                    {/* <Material name="add-to-photos" size={24} color="black" /> */}
+                    {props.isJustPreview && <MaterialIcons name="add-to-photos" size={24} color="black" />}
                     <Text style={{fontSize: 20,marginLeft:5, justifyContent: 'center'}}>{props.isJustPreview? "Post" : "Request"}<AntDesign name="right" size={20} color="black"/></Text>
                 </View>
             </TouchableWithoutFeedback>

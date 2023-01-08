@@ -160,6 +160,7 @@ export default function VisitForm({navigation}){
             <KeyboardAwareScrollView
                 nestedScrollEnabled={true}
                 keyboardShouldPersistTaps='handled'
+                keyboardOpeningTime={10}
                 contentContainerStyle={{ flexGrow: 1 }}>
                 
                 {/* <Text onPress={() => navigation.navigate("Menu")} style={{marginTop:50}}>go back</Text> */}
@@ -174,7 +175,7 @@ export default function VisitForm({navigation}){
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Where is the visit taking place ?</Text>
                     <View style={styles.addressInput}>
-                        <AntDesign name="search1" size={20} style={{marginTop:13}}/>
+                        <AntDesign name="search1" size={20} style={{marginTop:17}}/>
                         <Autocomplete3 setAddress={setAddress} isErasingAll={isErasingAll} setIsCity={setIsCity} 
                         setIsStreetName={setIsStreetName} setIsStreetNumber={setIsStreetNumber} handleSelection={handleSelection}></Autocomplete3>
                     </View>

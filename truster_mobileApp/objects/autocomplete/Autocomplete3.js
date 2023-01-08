@@ -43,7 +43,7 @@ export default function Autocomplete3({setAddress,isErasingAll,setIsCity,setIsSt
             styles={{
                 textInputContainer: {
                     // backgroundColor: 'red',
-                    marginTop:-13,
+                    marginTop:0,
                 },
                 textInput: {
                     // backgroundColor: 'blue',
