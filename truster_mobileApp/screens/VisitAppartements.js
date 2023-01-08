@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import { Text, View, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { Text, View, StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { UserContext } from "../context";
 import PostList from "../components/PostList";
 // import { useFonts } from 'expo-font';
 import AddressInput from "../components/AddressInput";
 import { limit, orderBy, startAfter } from "firebase/firestore";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Slider } from "@miblanchard/react-native-slider";
+import Autocomplete3 from "../objects/autocomplete/Autocomplete3";
 
 export default function VisitAppartments({navigation,route}){
 
@@ -37,6 +38,7 @@ export default function VisitAppartments({navigation,route}){
 
     useEffect(() => {
         console.log("COORDS", geoCoords)
+        setInputClicked(false)
     }, [])
 
 
@@ -61,6 +63,8 @@ export default function VisitAppartments({navigation,route}){
         .catch(err => {
             console.log(err)
         })
+
+        setInputClicked(false)
     }
 
 
@@ -101,14 +105,14 @@ export default function VisitAppartments({navigation,route}){
 
 
     return ( 
-        <View style={{flex: 1}}>
-            <View style={styles.mainContainer}>
-                <View style={styles.titleContainer}>
+        <View style={{flex: 1}} onPress={() => setInputClicked(false)}>
+            <View style={styles.mainContainer} onPress={() => {Keyboard.dismiss; setInputClicked(false)}}>
+                <View style={styles.titleContainer} onPress={() => {Keyboard.dismiss; setInputClicked(false)}}>
                     <Text style={styles.title}>Visit appartments,</Text>
                     <Text style={styles.title2}>Become a Trusty</Text>
                 </View>
                 {/* <Text onPress={() => navigation.pop()}>go back</Text> */}
-                <View style={styles.searchBarContainer}>
+                <View style={styles.slideAndSearchBar}>
                     <View 
                         style={{
                             flexDirection: 'row',
@@ -129,17 +133,34 @@ export default function VisitAppartments({navigation,route}){
                             }}
                         />
                     </View>
-                    <View style={{zIndex: 1}}>
-                        <AddressInput 
-                            isInputClicked={inputClicked} setIsInputClicked={setInputClicked}
-                            handleSelection={handleSelection}
-                        />
-                    </View>
+                    <View style={styles.searchBar}>
+                        <AntDesign name="search1" size={24} style={{alignSelf:"flex-start",marginTop:15}}/>
+                        {inputClicked ? 
+                            <View style={styles.searchBarContainer}>
+                                <Autocomplete3 
+                                    setAddress={() => {}} 
+                                    isErasingAll={() => {}} 
+                                    setIsCity={() => {}}
+                                    setIsStreetName={() => {}} 
+                                    setIsStreetNumber={() => {}} 
+                                    placeholder="" 
+                                    isFocus={true} 
+                                    handleSelection={handleSelection}>
+                                </Autocomplete3>
+                            </View> :  
+                            <TouchableWithoutFeedback onPress={() => setInputClicked(true)}>
+                                <View style={{marginVertical:4,marginHorizontal:40}}>
+                                    <Text style={{fontSize:17}}>Where do you live</Text>
+                                    <Text style={{color:"gray"}}>Look for visits in your area</Text>
+                                </View>
+                            </TouchableWithoutFeedback>}
+                        
+                        </View>
                     
                     
                 </View>
                 
-                <View style={{marginTop:20, flex: 1}}>
+                <View style={{marginTop:20, flex: 1, zIndex:-100}} onPress={() => {Keyboard.dismiss; setInputClicked(false)}}>
                     <PostList query={queryState} retrieveMore={retrieveMore} nav={navigation}/>
                 </View>
                 
@@ -197,9 +218,29 @@ const styles = StyleSheet.create({
         // lineHeight: 1.25,
         color: '#00D394'
     },
-    searchBarContainer: {
+    slideAndSearchBar: {
         alignItems: 'center',
         marginBottom: 5,
-    }
+    },
+
+    searchBar : {
+        position: "relative",
+        backgroundColor: "white",
+        width: 350,
+        height: 70,
+        padding: 10,
+        borderRadius : 30,
+        flexDirection: "row",
+        // justifyContent: "space-between",
+        alignItems: "center",
+    },
+
+    searchBarContainer: {
+        position: "absolute",
+        zIndex:100,
+        top: 11,
+        left : 40,
+        width:305,
+      },
 })
  
