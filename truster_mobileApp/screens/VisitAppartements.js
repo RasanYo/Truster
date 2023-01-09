@@ -23,6 +23,7 @@ export default function VisitAppartments({navigation,route}){
         lat: coords.latitude,
         lng: coords.longitude
     })
+    const [mapResults, setMapResults] = useState()
     const [radius, setRadius] = useState(10)
 
     const [queryState, setQueryState] = useState({
@@ -48,6 +49,7 @@ export default function VisitAppartments({navigation,route}){
         })
         console.log("COORDS", geoCoords)
         user.getPublicPosts(radius, [geo.lat, geo.lng], false, limit(queryState.limit)).then(res => {
+            setMapResults(res)
             let data = res.map(resDoc => {return resDoc.data()})
             let lastVisible = data[data.length -1].geohash
             console.log("LAST_VISIBLE", lastVisible)
@@ -77,17 +79,18 @@ export default function VisitAppartments({navigation,route}){
                 false, 
                 startAfter(queryState.lastVisible), limit(queryState.limit)
             ).then(res => {
-            let data = res.map(resDoc => {return resDoc.data()})
-            if (data.length) {
-                let lastVisible = data[data.length -1].id
-                setQueryState({
-                    posts: data,
-                    lastVisible: lastVisible,
-                    loading: false
-                })
-            } else {
-                console.log("REACHED THE END")
-            }
+                setMapResults(mapResults.concat(res))
+                let data = res.map(resDoc => {return resDoc.data()})
+                if (data.length) {
+                    let lastVisible = data[data.length -1].id
+                    setQueryState({
+                        posts: data,
+                        lastVisible: lastVisible,
+                        loading: false
+                    })
+                } else {
+                    console.log("REACHED THE END")
+                }
                 
             })
         } catch (err) {
@@ -145,7 +148,7 @@ export default function VisitAppartments({navigation,route}){
                 
             </View>
             <TouchableWithoutFeedback 
-                onPress={() => navigation.pop()}
+                onPress={() => navigation.navigate('MapSearchVisit', {queryResults: mapResults, coords: geoCoords})}
             >
                 <View style={{
                         position: "absolute",

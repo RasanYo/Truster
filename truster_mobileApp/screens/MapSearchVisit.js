@@ -24,6 +24,10 @@ export default function MapSearchVisit({navigation,route}){
     //     latitudeDelta: 0.008,
     //     longitudeDelta: 0.008,
     // }
+    const {queryResults, coords} = route.params ? route.params : [] 
+    useEffect(() => {
+      console.log("ARGS", queryResults, coords)
+    }, [])
     const [coordinate,setCoordinate] = useState()
     const [result,setResult] = useState()
     const mapRef = useRef(null);
@@ -74,30 +78,32 @@ export default function MapSearchVisit({navigation,route}){
 
     // Use effect to ask for user location + retrieve pins near him at radius of 5 kms
     useEffect(() => {
-        (async () => {
+        if (!queryResults && !coords) {
+          (async () => {
           
-          let { status } = await Location.requestForegroundPermissionsAsync();
-          if (status !== 'granted') {
-            setErrorMsg('Permission to access location was denied');
-            return;
-          }
-    
-          let location = await Location.getCurrentPositionAsync({accuracy : LocationAccuracy.Lowest});
-          setLocation(location);
-          
-          const lat = location.coords.latitude
-          const lng = location.coords.longitude
-          setCoordinate({
-            latitude : lat,
-            longitude : lng,
-            latitudeDelta: 0.08,
-            longitudeDelta: 0.08,
-          })
-          user.getPublicPosts(radius, [lat,lng] , false).then(docs => {
-            setResult(docs)
-            // console.log(docs)
-          })
-        })();
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+              setErrorMsg('Permission to access location was denied');
+              return;
+            }
+      
+            let location = await Location.getCurrentPositionAsync({accuracy : LocationAccuracy.Lowest});
+            setLocation(location);
+            
+            const lat = location.coords.latitude
+            const lng = location.coords.longitude
+            setCoordinate({
+              latitude : lat,
+              longitude : lng,
+              latitudeDelta: 0.08,
+              longitudeDelta: 0.08,
+            })
+            user.getPublicPosts(radius, [lat,lng] , false).then(docs => {
+              setResult(docs)
+              // console.log(docs)
+            })
+          })();
+        }
       }, []);
 
     useEffect(() => {

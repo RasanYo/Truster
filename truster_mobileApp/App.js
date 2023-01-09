@@ -34,6 +34,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Profile from './screens/Profile';
+import MyPosts from './screens/profile_screens/MyPosts';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -136,6 +137,7 @@ const MakeAVisitStack = () => {
       <Stack.Screen options={{ animation:"slide_from_bottom", presentation:"modal",headerShown : true, 
       title: 'Sign Up or Login'}} name="LoginMenu" component={LoginMenu}/>
       <Stack.Screen name="PostPreview" component={PostScreen}/>
+      <Stack.Screen name="MyPosts" component={MyPosts}/>
    </Stack.Navigator>
   )
 }

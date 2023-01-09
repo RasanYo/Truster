@@ -9,7 +9,9 @@ import {
     getFirestore,
     collection,
     deleteDoc,
-    Timestamp
+    Timestamp,
+    getDocs,
+    where
 } from "firebase/firestore"
 import { COLLECTIONS } from "../Constants"
 // import { 
@@ -20,6 +22,7 @@ import { COLLECTIONS } from "../Constants"
 import { postConverter } from "./Post"
 // import { useNavigate } from "react-router-dom"
 import { auth } from "../firebase"
+import { query } from "firebase/database"
 
 
 
@@ -163,11 +166,15 @@ export class User extends AbstractUser{
                 name: data.firstName
             })
         })
-        
+        const id = this.getUID() < receiverID ? `${this.getUID()}_${receiverID}` : `${receiverID}_${this.getUID()}`
+        this.updatePersonalInformation({
+            chats: arrayUnion(id)
+        })
         return setDoc(docRef, {
             users: users,
             openedAt: Timestamp.now(),
-            messages: []
+            messages: [],
+            id: id
         })
     }
 
@@ -188,6 +195,35 @@ export class User extends AbstractUser{
         console.log("getChatWith")
         const docRef = doc(getFirestore(), COLLECTIONS.chat(this.#uid, receiverID))
         return getDoc(docRef).then(doc => {return doc.data()})
+    }
+
+    async getAllChats() {
+        
+        const chats = await this.getPersonalInformation().then(snapshot => {
+            return snapshot.data().chats
+        })
+        if (!chats.length) {
+            return []
+        }
+        const promises = []
+        for (const chatID in chats) {
+            promises.push(getDoc(getFirestore(), `chats/${chatID}`))
+        }
+        return Promise.all(promises).then(snapshots => {
+            return snapshots.map(snapshot => {return snapshot.data()})
+        })
+    }
+
+    getPosts() {
+        return this.getPersonalInformation().then(snapshot => {
+            return snapshot.data().myPosts
+        })
+    }
+
+    getRequests() {
+        return this.getPersonalInformation().then(snapshot => {
+            return snapshot.data().myVisitRequests
+        })
     }
 
 }
