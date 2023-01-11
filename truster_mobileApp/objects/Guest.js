@@ -43,12 +43,12 @@ export class Guest extends AbstractUser{
      * Creates a new user and logs user in after creation.
      * Creation of user in auth service and in database 
      * @param {Object} userObject 
-     * @param {Object} adressObject 
+     * @param {Object} addressObject 
      * @returns {Promise<>} promise
      */
-    signUp(userObject, adressObject) {
+    signUp(userObject, addressObject) {
 
-        if (!userObject || !adressObject) {
+        if (!userObject || !addressObject) {
             throw new Error("Null objects passed as arguments")
         }
         Object.keys(userObject).forEach(key => {
@@ -56,9 +56,9 @@ export class Guest extends AbstractUser{
                 throw new Error(`Detected missing value for ${key}`)
         })
 
-        if (adressObject.country === null || adressObject.country === "") {
+        if (addressObject.country === null || addressObject.country === "") {
             throw new Error(`Detected missing value for country`)
-        } else if (adressObject.city === null || adressObject.city === "") {
+        } else if (addressObject.city === null || addressObject.city === "") {
             throw new Error(`Detected missing value for city`)
         }
 
@@ -82,15 +82,16 @@ export class Guest extends AbstractUser{
                                 createdAt: Timestamp.now(),
                                 dob: userObject.birthdate,
                                 email: userObject.email,
-                                adress: adressObject,
+                                address: addressObject,
                                 firstName: userObject.firstName,
                                 lastName: userObject.lastName,
                                 gender: userObject.gender,
                                 myPosts: [],
                                 myVisitRequests: [],
                                 myVisits: [],
+                                myFavorites: [],
                                 aboutMe: userObject.aboutMe,
-                                imgUrl : result
+                                imgUrl : result,
                             })
                     })
                     .then(() => {
@@ -122,7 +123,7 @@ export class Guest extends AbstractUser{
                         createdAt: Timestamp.now(),
                         dob: userObject.birthdate,
                         email: userObject.email,
-                        adress: null,
+                        address: null,
                         firstName: userObject.firstName,
                         lastName: userObject.lastName,
                         gender: userObject.gender,
@@ -130,7 +131,8 @@ export class Guest extends AbstractUser{
                         myVisitRequests: [],
                         myVisits: [],
                         aboutMe: userObject.aboutMe,
-                        imgUrl : result
+                        imgUrl : result,
+                        myFavorites: [],
                     }
                 )
             })

@@ -6,10 +6,15 @@ import {
     arrayUnion,
     updateDoc,
     getDoc,
+    getDocs,
     getFirestore,
     collection,
     deleteDoc,
-    Timestamp
+    Timestamp,
+    query,
+    where,
+    Firestore,
+    arrayRemove
 } from "firebase/firestore"
 import { COLLECTIONS } from "../Constants"
 // import { 
@@ -97,6 +102,46 @@ export class User extends AbstractUser{
         })
     }
 
+    addToFavorites(postID) {
+        const userCol = collection(getFirestore(), COLLECTIONS.REGULAR_USERS)
+        const userRef = doc(userCol, this.getUID())
+
+        return updateDoc(userRef, {
+            myFavorites: arrayUnion(postID)
+        })
+    }
+
+    removeFromFavorites(postID) {
+        const userCol = collection(getFirestore(), COLLECTIONS.REGULAR_USERS)
+        const userRef = doc(userCol, this.getUID())
+
+        return updateDoc(userRef, {
+            myFavorites: arrayRemove(postID)
+        })
+    }
+
+    getFavoritesId() {
+        const userCol = collection(getFirestore(), COLLECTIONS.REGULAR_USERS)
+        const userRef = doc(userCol, this.getUID())
+
+        return getDoc(userRef).then(doc => {
+            return doc.data().myFavorites
+        })
+    }
+
+    getFavoritesPosts(){
+        return this.getFavoritesId().then(favorites => {
+            const postCol = collection(getFirestore(), COLLECTIONS.AVAILABLE_VISITS)
+            const q = query(postCol, where("id", "in", favorites))
+
+            //return a map of the posts getted from the database from getDocs
+            return getDocs(q).then(snapshot => {
+                return snapshot.docs.map(doc => {
+                    return doc.data()
+                })
+            })
+        })
+    }
 
     getPersonalInformation(){
         return getDoc(doc(getFirestore(), COLLECTIONS.REGULAR_USERS,this.#uid))
