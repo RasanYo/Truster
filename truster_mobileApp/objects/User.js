@@ -36,7 +36,6 @@ export class User extends AbstractUser{
         super()
         this.#uid = uid
         this.user = user
-        // console.log(user)
     }
 
     /**
@@ -108,6 +107,9 @@ export class User extends AbstractUser{
 
         return updateDoc(userRef, {
             myFavorites: arrayUnion(postID)
+        }).then(y => {
+            this.favoritesIDs.push(postID)
+            console.log("added post to fav : " + this.favoritesIDs)
         })
     }
 
@@ -117,22 +119,19 @@ export class User extends AbstractUser{
 
         return updateDoc(userRef, {
             myFavorites: arrayRemove(postID)
+        }).then(y => {
+            this.favoritesIDs = this.favoritesIDs.filter(x => x !== postID)
+            console.log("removed post from fav : " + this.favoritesIDs)
         })
     }
 
-    getFavoritesId() {
-        const userCol = collection(getFirestore(), COLLECTIONS.REGULAR_USERS)
-        const userRef = doc(userCol, this.getUID())
-
-        return getDoc(userRef).then(doc => {
-            return doc.data().myFavorites
-        })
-    }
-
-    getFavoritesPosts(){
-        return this.getFavoritesId().then(favorites => {
+    getFavoritesPosts(favoritesIDs){
             const postCol = collection(getFirestore(), COLLECTIONS.AVAILABLE_VISITS)
-            const q = query(postCol, where("id", "in", favorites))
+            if(favoritesIDs.length == 0){
+                console.log("no favorites")
+                return []
+            }
+            const q = query(postCol, where("id", "in", favoritesIDs))
 
             //return a map of the posts getted from the database from getDocs
             return getDocs(q).then(snapshot => {
@@ -140,8 +139,8 @@ export class User extends AbstractUser{
                     return doc.data()
                 })
             })
-        })
     }
+
 
     getPersonalInformation(){
         return getDoc(doc(getFirestore(), COLLECTIONS.REGULAR_USERS,this.#uid))

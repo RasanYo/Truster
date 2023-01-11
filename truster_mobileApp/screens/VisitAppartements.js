@@ -161,7 +161,7 @@ export default function VisitAppartments({navigation,route}){
                 </View>
                 
                 <View style={{marginTop:20, flex: 1, zIndex:-100}} onPress={() => {Keyboard.dismiss; setInputClicked(false)}}>
-                    <PostList query={queryState} retrieveMore={retrieveMore} nav={navigation}/>
+                    <PostList query={queryState} retrieveMore={retrieveMore} nav={navigation} setIsFavorite={() => {}}/>
                 </View>
                 
             </View>

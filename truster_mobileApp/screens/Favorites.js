@@ -4,18 +4,42 @@ import { useContext } from "react";
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import PostList from "../components/PostList";
 import { UserContext } from "../context";
+import { doc, onSnapshot } from "firebase/firestore";
+import { COLLECTIONS } from "../Constants";
 
+  
 export default function Favorites({navigation}){
 
     const {user} = useContext(UserContext)
-    const [favorites, setFavorites] = useState([])
+    const [favorites,setFavorites] = useState([])
 
     useEffect(() => {
-        console.log("using effeect in Favorites")
-        user.getFavoritesPosts().then(arrayOfFavoritesPosts => {
-            setFavorites(arrayOfFavoritesPosts)
-        })
+        const unsub = onSnapshot(doc(user.db, COLLECTIONS.REGULAR_USERS,user.getUID()), (doc) => {
+            console.log("Current data: ", doc.data());
+            var favoritesIDs = doc.data().myFavorites
+
+            console.log("using effeect in Favorites")
+            if(favoritesIDs.length > 0){
+                user.getFavoritesPosts(favoritesIDs).then(arrayOfFavoritesPosts => {
+                setFavorites(arrayOfFavoritesPosts)
+                })
+            }
+        });
+        
     }, [])
+
+    // const [isFavorite, setIsFavorite] = useState()
+
+    // useEffect(() => {
+    //     console.log("using effeect in Favorites")
+    //     if(user.getFavorites().length > 0){
+    //         user.getFavoritesPosts().then(arrayOfFavoritesPosts => {
+    //             setFavorites(arrayOfFavoritesPosts)
+    //         })
+    //     }
+
+    // }, [user.favoritesIDs])
+
 
     return ( 
         <SafeAreaView style={styles.container}>

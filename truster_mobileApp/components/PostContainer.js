@@ -5,7 +5,9 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context";
 import { useFocusEffect } from "@react-navigation/native";
 
-const PostContainer = ({post, navigation}) => {
+
+
+const PostContainer = ({post, navigation, isFavorite}) => {
 
     const {user} = useContext(UserContext)
     // const [fontsLoaded] = useFonts({
@@ -14,17 +16,6 @@ const PostContainer = ({post, navigation}) => {
     //     'Inter-SemiBold' : require('../assets/fonts/Inter-SemiBold.ttf'),
     //     'Inter' : require('../assets/fonts/Inter-Regular.ttf')
     //   });
-
-    const [isFavorite, setisFavorite] = useState(false)
-
-    useEffect(() => {
-        // console.log("POSTCONTAINER", post)
-        user.getPersonalInformation().then(snap => {
-            setisFavorite(snap.data().myFavorites.includes(post.id))
-        })
-    }, [])
-    
-    
 
     return ( 
         <TouchableWithoutFeedback onPress={() => {
@@ -46,11 +37,11 @@ const PostContainer = ({post, navigation}) => {
                     </View>
                     <View style={styles.rightContainer}>
                         {isFavorite ? 
-                        <TouchableOpacity activeOpacity={1} onPress={() => {setisFavorite(false);user.removeFromFavorites(post.id)}}> 
+                        <TouchableOpacity activeOpacity={1} onPress={() => {user.removeFromFavorites(post.id);}}> 
                             <MaterialCommunityIcons name="heart" size={20} color="black"/>
                         </TouchableOpacity>
                          : 
-                         <TouchableOpacity activeOpacity={1} onPress={() => {setisFavorite(true);user.addToFavorites(post.id)}}>
+                         <TouchableOpacity activeOpacity={1} onPress={() => {user.addToFavorites(post.id);}}>
                             <MaterialCommunityIcons 
                                 name="cards-heart-outline"
                                 size={20}
