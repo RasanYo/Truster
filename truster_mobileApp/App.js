@@ -35,6 +35,10 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Profile from './screens/Profile';
 import MyPosts from './screens/profile_screens/MyPosts';
+import { LogBox } from 'react-native';
+import ChatPage from './screens/ChatPage';
+
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -60,14 +64,9 @@ function Tabs() {
   return ( 
     <Tab.Navigator screenOptions={{
       headerShown : false,
-      tabBarStyle : {
-        shadowOffset : 2,
-        shadowColor : "black",
-        borderRadius : 10,
-        borderColor : "black",
-        // backgroundColor : "red",
-      }, 
-    }}>
+
+      }}>
+
 
 
       <Tab.Screen name="Explore" component={MakeAVisitStack} 
@@ -137,7 +136,9 @@ const MakeAVisitStack = () => {
       <Stack.Screen options={{ animation:"slide_from_bottom", presentation:"modal",headerShown : true, 
       title: 'Sign Up or Login'}} name="LoginMenu" component={LoginMenu}/>
       <Stack.Screen name="PostPreview" component={PostScreen}/>
-      <Stack.Screen name="MyPosts" component={MyPosts}/>
+      <Stack.Screen options={{headerShown : true}} name="My Posts" component={MyPosts}/>
+      <Stack.Screen name="Chat" component={Chat}/>
+      <Stack.Screen name="My Chats" component={ChatPage}/>
    </Stack.Navigator>
   )
 }

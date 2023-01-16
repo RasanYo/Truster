@@ -168,7 +168,16 @@ export class User extends AbstractUser{
         })
         const id = this.getUID() < receiverID ? `${this.getUID()}_${receiverID}` : `${receiverID}_${this.getUID()}`
         this.updatePersonalInformation({
-            chats: arrayUnion(id)
+            chats: arrayUnion({
+                id: id,
+                receiverID: receiverID
+            })
+        })
+        updateDoc(doc(getFirestore(), `users/regular/users/${receiverID}`), {
+            chats: arrayUnion({
+                id: id,
+                receiverID: this.getUID()
+            })
         })
         return setDoc(docRef, {
             users: users,
@@ -197,20 +206,9 @@ export class User extends AbstractUser{
         return getDoc(docRef).then(doc => {return doc.data()})
     }
 
-    async getAllChats() {
-        
-        const chats = await this.getPersonalInformation().then(snapshot => {
-            return snapshot.data().chats
-        })
-        if (!chats.length) {
-            return []
-        }
-        const promises = []
-        for (const chatID in chats) {
-            promises.push(getDoc(getFirestore(), `chats/${chatID}`))
-        }
-        return Promise.all(promises).then(snapshots => {
-            return snapshots.map(snapshot => {return snapshot.data()})
+    getAllChats() {
+        return this.getPersonalInformation().then(snapshot => {
+            return snapshot
         })
     }
 
@@ -224,6 +222,23 @@ export class User extends AbstractUser{
         return this.getPersonalInformation().then(snapshot => {
             return snapshot.data().myVisitRequests
         })
+    }
+
+    getPost(postID) {
+        const postRef = doc(getFirestore(), `COLLECTIONS.AVAILABLE_VISITS/${postID}`)
+        return getDoc(postRef).then(snapshot => {return snapshot.data()})
+    }
+    
+    acceptRequest(postID, requesterID) {
+        const postRef = doc(getFirestore(), `${COLLECTIONS.AVAILABLE_VISITS}/${postID}`)
+        const newPostRef = doc(getFirestore(), `${COLLECTIONS.FINISHED_VISITS}/${postID}`)
+        this.getPost(postID).then(postData => {
+            setDoc(newPostRef, {
+                ...postData,
+                visitorID: requesterID
+            })
+        })
+        
     }
 
 }

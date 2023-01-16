@@ -4,13 +4,17 @@ import ChatPage from "./ChatPage";
 const Profile = ({route, navigation}) => {
 
     return ( 
-        <View>
-            <Text>Profile</Text>
+        <View style={{marginTop: 50}}>
             {/* <ChatPage /> */}
             <TouchableOpacity
-                onPress={() => {navigation.navigate('MyPosts')}}
+                onPress={() => {navigation.navigate('My Posts')}}
             >
                 <Text>My Posts</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => {navigation.navigate('My Chats')}}
+            >
+                <Text>My Chats</Text>
             </TouchableOpacity>
         </View>
      );

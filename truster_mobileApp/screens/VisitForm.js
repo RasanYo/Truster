@@ -12,6 +12,7 @@ import Autocomplete3 from "../objects/autocomplete/Autocomplete3";
 import { UserContext } from "../context";
 import { Post } from "../objects/Post";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import * as Location from 'expo-location';
 
 
 // Ce quil manque à faire c'est d'inclure les types d'accomodation dans les posts information
@@ -123,14 +124,22 @@ export default function VisitForm({navigation}){
         setIsStreetNumber(false)
         var geo = details.geometry.location
         var t = details.address_components
-        console.log(t)
         var newAddress = {}
 
         newAddress.lat = geo.lat
         newAddress.lng = geo.lng
         newAddress.fullAddress = details.formatted_address
 
+        // console.log("geometry : " )
+        // console.log(geo.lat, geo.lng)
+        // Location.reverseGeocodeAsync(geo.lat, geo.lng).then(response => {
+        //     console.log(response)
+        // })
+        getCityName(geo.lat,geo.lng);
+        
+        // console.log("address_components : ")
         t.forEach(x => {
+            // console.log(x)
             if(x.types.includes("street_number")){
                 newAddress.number = x.long_name
                 setIsStreetNumber(true)
@@ -141,18 +150,45 @@ export default function VisitForm({navigation}){
                 newAddress.npa = x.long_name
             }else if(x.types.includes("country")){
                 newAddress.country = x.long_name
-            }else if(x.types.includes("locality")){
-                newAddress.city = x.long_name
-                setIsCity(true)
+            }
+            // else if(x.types.includes("locality")){
+            //     newAddress.city = x.long_name
+            //     setIsCity(true)
+            // }
+        })
+        getCityName(geo.lat,geo.lng).then(response => {
+            newAddress.city = response
+            console.log(newAddress)
+            setIsCity(true)
+            if(Object.getOwnPropertyNames(newAddress).length != 8){
+                console.log(Object.getOwnPropertyNames(newAddress).length)
+                console.log("Information missing")
+            }else{
+                setAddress(newAddress)
             }
         })
-        console.log(newAddress)
-        if(Object.getOwnPropertyNames(newAddress).length != 8){
-            console.log("Information missing")
-        }else{
-            setAddress(newAddress)
+        
+
+        
+
+        
+        
         }
-        }
+
+        //This function is only we can't get the city name from the google api
+        const getCityName = async (LATITUDE,LONGITUDE) => {
+            try {
+                const response = await Location.reverseGeocodeAsync({
+                latitude: LATITUDE,
+                longitude: LONGITUDE
+                });
+
+                console.log(response[0].city);
+                return response[0].city
+            } catch (error) {
+                console.error(error);
+            }
+        };
 
     return(
         
@@ -160,6 +196,7 @@ export default function VisitForm({navigation}){
             <KeyboardAwareScrollView
                 nestedScrollEnabled={true}
                 keyboardShouldPersistTaps='handled'
+                keyboardOpeningTime={10}
                 contentContainerStyle={{ flexGrow: 1 }}>
                 
                 {/* <Text onPress={() => navigation.navigate("Menu")} style={{marginTop:50}}>go back</Text> */}
@@ -174,7 +211,7 @@ export default function VisitForm({navigation}){
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Where is the visit taking place ?</Text>
                     <View style={styles.addressInput}>
-                        <AntDesign name="search1" size={20} style={{marginTop:13}}/>
+                        <AntDesign name="search1" size={20} style={{marginTop:17}}/>
                         <Autocomplete3 setAddress={setAddress} isErasingAll={isErasingAll} setIsCity={setIsCity} 
                         setIsStreetName={setIsStreetName} setIsStreetNumber={setIsStreetNumber} handleSelection={handleSelection}></Autocomplete3>
                     </View>

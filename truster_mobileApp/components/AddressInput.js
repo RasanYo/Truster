@@ -10,16 +10,10 @@ export default function AddressInput({
     isInputClicked, setIsInputClicked
 }) {
 
-   
-    const showMenu = triggerActionSheet(
-        ['Distance down', 'Distance up', 'Price up', 'Price down']
-    )
-
-
 
     return (
         <View style={styles.searchBar}>
-            <AntDesign name="search1" size={24} style={{alignSelf:"flex-start",marginTop:7}}/>
+            <AntDesign name="search1" size={24} style={{alignSelf:"flex-start",marginTop:15}}/>
             {isInputClicked ? 
                 <View style={styles.searchBarContainer}>
                     <Autocomplete3 
@@ -34,17 +28,11 @@ export default function AddressInput({
                     </Autocomplete3>
                 </View> :  
                 <TouchableWithoutFeedback onPress={() => setIsInputClicked(true)}>
-                    <View>
+                    <View style={{marginVertical:4}}>
                         <Text style={{fontSize:17}}>Where do you live</Text>
                         <Text style={{color:"gray"}}>Look for visits in your area</Text>
                     </View>
                 </TouchableWithoutFeedback>}
-            <TouchableOpacity style={{alignSelf:"flex-start",marginTop:7}} onPress={() => {
-                console.log("CHECK")
-                showMenu()
-            }}>
-                <MaterialCommunityIcons name="filter-menu" size={24} color="black" />
-            </TouchableOpacity>
             
         </View>
     )
@@ -56,7 +44,7 @@ const styles = StyleSheet.create({
         position: "relative",
         backgroundColor: "white",
         width: 350,
-        height: "auto",
+        height: 70,
         padding: 10,
         borderRadius : 30,
         flexDirection: "row",
@@ -67,8 +55,8 @@ const styles = StyleSheet.create({
     searchBarContainer: {
         position: "absolute",
         zIndex:100,
-        top: 13,
+        top: 11,
         left : 40,
-        width:270,
+        width:300,
       },
 })

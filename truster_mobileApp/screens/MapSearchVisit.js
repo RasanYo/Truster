@@ -220,7 +220,7 @@ export default function MapSearchVisit({navigation,route}){
         <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss;setShowCards(false)}} accessible={false}>
           <View style={styles.container} >
               {coordinate && 
-                      <MapView showsMyLocationButton={true} showsUserLocation={true} 
+                      <MapView showsMyLocationButton={true} showsUserLocation={true} onPress={() => {Keyboard.dismiss();setIsInputClicked(false)}}
                       style={styles.map} initialRegion={coordinate} ref={mapRef} annotations={markers} onRegionChangeComplete={onRegionChangeComplete}>
                           {(result && markers) && <PinData pinsData={result} markers={markers} onMarkerPress={onMarkerPress} interpolations={interpolations}></PinData>}
                           {/* {console.log(markers)} */}
@@ -239,13 +239,13 @@ export default function MapSearchVisit({navigation,route}){
                                       setIsStreetName={() => {}} setIsStreetNumber={() => {}} placeholder="" isFocus={true} handleSelection={handleSelection}/>
                           </View> :  
                           <TouchableWithoutFeedback onPress={() => setIsInputClicked(true)} >
-                              <View style={{marginVertical:6}}>
+                              <View style={{marginVertical:4}}>
                                   <Text style={{fontSize:17}}>Where do you live</Text>
                                   <Text style={{color:"gray"}}>Look for visits in your area</Text>
                               </View>
                           </TouchableWithoutFeedback>}
 
-                      <MaterialCommunityIcons name="filter-menu" size={24} color="black" style={{alignSelf:"flex-start",marginTop:10}}/>
+                      <MaterialCommunityIcons name="filter-menu" size={24} color="black" style={{alignSelf:"flex-start",marginTop:13}}/>
                   </View>
                   { <Animated.ScrollView 
                               ref={scrollview}
@@ -362,7 +362,7 @@ const styles = StyleSheet.create({
         // zIndex:100,
         // top: 13,
         // left : 40,
-        width:270,
+        width:250,
       },
 
     addressInput : {

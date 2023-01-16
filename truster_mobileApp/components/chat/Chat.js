@@ -41,13 +41,14 @@ const Chat = ({
             })
             .catch(err => {
                 console.log("ERROR: ", err.message)
-                // console.log("OPENING NEW CHAT WITH UID:", receiverID)
-                // user.openChat(receiverID).then(() => {
-                //     getChatWith(receiverID).then(data => {
-                //         setChatData(data)
-                //         console.log("CHAT_DATA", chatData)
-                //     })
-                // })
+
+                console.log("OPENING NEW CHAT WITH UID:", receiverID)
+                user.openChat(receiverID).then(() => {
+                    getChatWith(receiverID).then(data => {
+                        setChatData(data)
+                        console.log("CHAT_DATA", chatData)
+                    })
+                })
             })
             
     }

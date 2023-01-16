@@ -14,7 +14,7 @@ export default function SignUp({navigation,route}){
         gender: "Others",
         firstName: "",
         lastName: "",
-        birthdate: "",
+        birthdate: "2022-09-15",
         email: {emailGiven},
         password: "",
         passwordConfirmation: "",
@@ -118,7 +118,7 @@ export default function SignUp({navigation,route}){
         d ? setIsDate(false): setIsDate(true)
         e ? setIsPassword(false) : setIsPassword(true)
 
-        if(!a && !b && !c && !d && !e) {
+        if(!a && !b && !c && !e) { // MODIF: j'ai enlevé "&& !d"
             user.signup(userState)
                 .then(() => {
                     console.log("Account created")
@@ -195,7 +195,7 @@ export default function SignUp({navigation,route}){
                     </View>
                     
 
-                    <View>
+                    {/* <View>
                         <Text onPress={showDatePicker}>Birth date : </Text>
                         {<Text>{userState.birthdate}</Text>}
                         <DateTimePickerModal
@@ -208,7 +208,7 @@ export default function SignUp({navigation,route}){
                             // minimumDate={inThreeDays}
                         />
                         {!isDate && <Text style={styles.warningStyles}>Please select birth date</Text>}
-                    </View>
+                    </View> */}
                     <TouchableOpacity style={[styles.componentStyle,{backgroundColor: "#FFCB66",}]} onPress={submitUser}>
                         <Text style={{textAlign:"center",fontSize:17,}} >
                             Create account

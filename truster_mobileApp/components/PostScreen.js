@@ -6,7 +6,10 @@ import { Post } from "../objects/Post";
 import defaultPic from "../assets/pictures/no-profile-pic.png";
 import { AntDesign } from '@expo/vector-icons';
 
-// import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { KeyboardAvoidingView } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import RequesterList from "./requester_list/RequesterList";
 
 
 const PostScreen = (props) => {
@@ -14,8 +17,7 @@ const PostScreen = (props) => {
     const navigation = props.navigation
     const {user} = useContext(UserContext)
     const {post, isJustPreview} = props.route.params
-
-    console.log(post)
+    const [isOwnPost, setIsOwnPost] = useState(false)
 
     const [poster, setPoster] = useState({
         firstName: "Trustable",
@@ -25,15 +27,10 @@ const PostScreen = (props) => {
     const [userData, setUserData] = useState()
 
     useEffect(() => {
-        console.log("BIG CHECK")
         if (isJustPreview) {
             if(user.isLoggedIn()){
                 user.getPersonalInformation().then(snapshot => {
                     setUserData(snapshot.data())
-                }).then(() => {
-                    console.log("USER", userData)
-                    console.log("ADDRESS", post.address)
-                    console.log("DESCRIPTION", post.description)
                 })
                 .catch(err => {
                     console.log("ERROR: ", err)
@@ -47,10 +44,14 @@ const PostScreen = (props) => {
         } else {
             user.getUser(post.creatorUID).then(data => {
                 setPoster(data)
+                console.log("POSTER ID", data.uid)
+                console.log("YOUR ID", user.getUID())
+                setIsOwnPost(user.getUID() === poster.uid)
+                console.log("CAN MODIFY ?", isOwnPost)
+
             })
             user.getProfilePictureURL(post.creatorUID).then(url => {
                 setProfilePic(url)
-                console.log("PP", profilePic)
             })
             .catch(err => console.log(err))
         }
@@ -65,7 +66,6 @@ const PostScreen = (props) => {
     const onRequest = e => {
         // e.preventDefault()
         // setShowErrors(true)
-        console.log("pas prevent default")
         if(!user.isLoggedIn()){
             navigation.navigate("LoginMenu")
         }else{
@@ -81,7 +81,6 @@ const PostScreen = (props) => {
     }
 
     const onPost = () => {
-        console.log("pas prevent default")
         if(!user.isLoggedIn()){
             navigation.navigate("LoginMenu")
         }else{
@@ -97,61 +96,88 @@ const PostScreen = (props) => {
 
     return ( 
         <View style={{flex: 1}}>
-            {poster && <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-                <View style={styles.mapContainer}>
-                    <MapView style={styles.map} initialRegion={{
-                        latitude: coordinate.latitude,
-                        longitude: coordinate.longitude,
-                        latitudeDelta: 0.008,
-                        longitudeDelta: 0.008,
-                        }}
-                        scrollEnabled={false}
-                        rotateEnabled={false}
-                        zoomEnabled={false}                        
-                    >
-                        <Marker
-                            // key={index}
-                            coordinate={coordinate}
-                            title={post.address.fullAddress}
-                            description={"marker.description"}
-                            pinColor="#29ECB1"
-                        />
-                    </MapView>
-                    <View style={styles.posterContainer}>
-                        <View>
-                            <Image 
-                                style={{height: 40, width: 40, borderRadius: 50, marginRight: 10}} 
-                                source={profilePic ? {uri: profilePic} : defaultPic}
+            {poster && 
+            <KeyboardAvoidingView>
+
+                <KeyboardAwareScrollView
+                    nestedScrollEnabled={true}
+                    keyboardShouldPersistTaps='handled'
+                    contentContainerStyle={{ flexGrow: 1 }}
+                    style={styles.container} showsVerticalScrollIndicator={false}>
+
+                {/* <ScrollView style={styles.container} showsVerticalScrollIndicator={false}> */}
+                    <View style={styles.mapContainer}>
+                        <MapView style={styles.map} initialRegion={{
+                            latitude: coordinate.latitude,
+                            longitude: coordinate.longitude,
+                            latitudeDelta: 0.008,
+                            longitudeDelta: 0.008,
+                            }}
+                            scrollEnabled={false}
+                            rotateEnabled={false}
+                            zoomEnabled={false}                        
+                        >
+                            <Marker
+                                // key={index}
+                                coordinate={coordinate}
+                                title={post.address.fullAddress}
+                                description={"marker.description"}
+                                pinColor="#29ECB1"
                             />
-                        </View>
-                        <View>
-                            <Text style={{color: '#0400007c', fontSize: 12}}>Poster</Text>
-                            <Text style={{fontSize: 18, marginRight: 15}}>{poster.firstName} {poster.lastName.charAt(0)}.</Text>
-                        </View>
-                        <View style={{flexDirection:"row",alignItems:"center"}}>
-                            <AntDesign name="staro" size={24} color="yellow" />
-                            <AntDesign name="staro" size={24} color="yellow" />
-                            <AntDesign name="staro" size={24} color="yellow" />
-                            <AntDesign name="staro" size={24} color="yellow" />
-                            <AntDesign name="staro" size={24} color="yellow" />
-                        </View>
-                    </View>                                                             
-                </View>
-                <TouchableWithoutFeedback onPress={handleChat}>
-                    <Text>Chat</Text>
-                </TouchableWithoutFeedback>
-                <View style={styles.infoContainer}>
-                    <Text style={{fontSize: 24}}>{post.address.city}</Text>
-                    <Text style={{fontSize: 18, color: '#bfbfbfbf', marginBottom: 15}}>{post.address.npa} {post.address.city}, {post.address.country}</Text>
-                    <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 20}}>{post.timeframe.start}  -  {post.timeframe.end}</Text>
-                    <Text style={{fontSize: 20, marginBottom: 10}}>Description</Text>
-                    <Text style={{marginBottom: 20}}>{post.description || "No description"}</Text>
-                    <Text style={{fontSize: 22}}>Send Request</Text>
-                    {!isJustPreview && <TextInput placeholder="Additional information" style={styles.sendRequestText} multiline={true}></TextInput>}
-                </View>
-                
-            </ScrollView>}
-            <Footer navigation={navigation} onSubmit={isJustPreview ? onPost : onRequest} isJustPreview={isJustPreview}></Footer>
+                        </MapView>
+                        <View style={styles.posterContainer}>
+                            <View>
+                                <Image 
+                                    style={{height: 40, width: 40, borderRadius: 50, marginRight: 10}} 
+                                    source={profilePic ? {uri: profilePic} : defaultPic}
+                                />
+                            </View>
+                            <View>
+                                <Text style={{color: '#0400007c', fontSize: 12}}>Poster</Text>
+                                <Text style={{fontSize: 18, marginRight: 15}}>{poster.firstName} {poster.lastName.charAt(0)}.</Text>
+                            </View>
+                            <View style={{flexDirection:"row",alignItems:"center"}}>
+                                <AntDesign name="staro" size={24} color="yellow" />
+                                <AntDesign name="staro" size={24} color="yellow" />
+                                <AntDesign name="staro" size={24} color="yellow" />
+                                <AntDesign name="staro" size={24} color="yellow" />
+                                <AntDesign name="staro" size={24} color="yellow" />
+                            </View>
+                        </View>                                                             
+                    </View>
+                    <TouchableWithoutFeedback onPress={handleChat}>
+                        <Text>Chat</Text>
+                    </TouchableWithoutFeedback>
+                    <View style={styles.infoContainer}>
+                        <Text style={{fontSize: 24}}>{post.address.city}</Text>
+                        <Text style={{fontSize: 18, color: '#bfbfbfbf', marginBottom: 15}}>{post.address.npa} {post.address.city}, {post.address.country}</Text>
+                        <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 20}}>{post.timeframe.start}  -  {post.timeframe.end}</Text>
+                        <Text style={{fontSize: 20, marginBottom: 10}}>Description</Text>
+                        <Text style={{marginBottom: 20}}>{post.description || "No description"}</Text>
+                        {/* <Text style={{fontSize: 22}}>Send Request</Text> */}
+                        {/* {!isJustPreview && <TextInput placeholder="Additional information" style={styles.sendRequestText} multiline={true}></TextInput>} */}
+                        
+                    </View>
+                    
+                    {!isOwnPost && <View style={{margin:20,opacity: isJustPreview ? 0.5 : 1}}>
+                            <Text style={{fontSize:20}}>Send Request</Text>
+                            {isJustPreview ? <Text style={styles.sendRequestText}>Additional information</Text> : <TextInput placeholder="Additional information" style={styles.sendRequestText} multiline={true}></TextInput>}
+                    </View>}
+                    
+                    {/* <View>
+                        <Text>Requests</Text>
+                        <RequesterList 
+                            requesterIDs={post.requesters.map(request => {return request.uid})}
+                        />
+                    </View>  */}
+                    
+                    
+                    
+                {/* </ScrollView> */}
+                </KeyboardAwareScrollView>
+            </KeyboardAvoidingView>
+            }
+            <Footer navigation={navigation} onSubmit={isJustPreview ? onPost : onRequest} isJustPreview={isJustPreview} isOwnPost={isOwnPost}></Footer>
         </View>
      );
 }
@@ -164,12 +190,12 @@ function Footer(props){
             <Text style={styles.footerEraseAll} onPress={() => props.navigation.pop()}>
                 Go back
             </Text>
-            <TouchableWithoutFeedback onPress={props.onSubmit}>
+            {!props.isOwnPost && <TouchableWithoutFeedback onPress={props.onSubmit}>
                 <View style={styles.footerPreview} >
-                    {/* <Material name="add-to-photos" size={24} color="black" /> */}
+                    {props.isJustPreview && <MaterialIcons name="add-to-photos" size={24} color="black" />}
                     <Text style={{fontSize: 20,marginLeft:5, justifyContent: 'center'}}>{props.isJustPreview? "Post" : "Request"}<AntDesign name="right" size={20} color="black"/></Text>
                 </View>
-            </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>}
             
         </View>
     )
