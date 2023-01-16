@@ -6,12 +6,15 @@ import {
     arrayUnion,
     updateDoc,
     getDoc,
+    getDocs,
     getFirestore,
     collection,
     deleteDoc,
     Timestamp,
-    getDocs,
-    where
+    // query,
+    where,
+    Firestore,
+    arrayRemove
 } from "firebase/firestore"
 import { COLLECTIONS } from "../Constants"
 // import { 
@@ -34,7 +37,6 @@ export class User extends AbstractUser{
         super()
         this.#uid = uid
         this.user = user
-        // console.log(user)
     }
 
     /**
@@ -98,6 +100,46 @@ export class User extends AbstractUser{
                 })
             })
         })
+    }
+
+    addToFavorites(postID) {
+        const userCol = collection(getFirestore(), COLLECTIONS.REGULAR_USERS)
+        const userRef = doc(userCol, this.getUID())
+
+        return updateDoc(userRef, {
+            myFavorites: arrayUnion(postID)
+        }).then(y => {
+            this.favoritesIDs.push(postID)
+            console.log("added post to fav : " + this.favoritesIDs)
+        })
+    }
+
+    removeFromFavorites(postID) {
+        const userCol = collection(getFirestore(), COLLECTIONS.REGULAR_USERS)
+        const userRef = doc(userCol, this.getUID())
+
+        return updateDoc(userRef, {
+            myFavorites: arrayRemove(postID)
+        }).then(y => {
+            this.favoritesIDs = this.favoritesIDs.filter(x => x !== postID)
+            console.log("removed post from fav : " + this.favoritesIDs)
+        })
+    }
+
+    getFavoritesPosts(favoritesIDs){
+            const postCol = collection(getFirestore(), COLLECTIONS.AVAILABLE_VISITS)
+            if(favoritesIDs.length == 0){
+                console.log("no favorites")
+                return []
+            }
+            const q = query(postCol, where("id", "in", favoritesIDs))
+
+            //return a map of the posts getted from the database from getDocs
+            return getDocs(q).then(snapshot => {
+                return snapshot.docs.map(doc => {
+                    return doc.data()
+                })
+            })
     }
 
 
@@ -208,7 +250,7 @@ export class User extends AbstractUser{
 
     getAllChats() {
         return this.getPersonalInformation().then(snapshot => {
-            return snapshot
+            return snapshot.data().chats
         })
     }
 

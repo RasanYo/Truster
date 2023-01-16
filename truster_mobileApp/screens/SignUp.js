@@ -127,7 +127,7 @@ export default function SignUp({navigation,route}){
                 .catch(err => {
                     if (err instanceof FirebaseError) {
                         if (err.code === "auth/email-already-in-use") {
-                            console.log("there is already someone with this email adress")
+                            console.log("there is already someone with this email address")
                         }
                         else{
                             console.log("c'est chaud la frr")
@@ -155,7 +155,9 @@ export default function SignUp({navigation,route}){
                             style={styles.text} 
                             autoCapitalize="none" 
                             autoCorrect={false} 
-                            onChange={val => setEmail(val)}/>
+                            // onChange={val => setEmail(val)}
+
+                            />
                     </View>
                     <View style={{flexDirection:"row"}}>
                         <View style={[styles.componentStyle,{marginRight:5,flex:1}]}>

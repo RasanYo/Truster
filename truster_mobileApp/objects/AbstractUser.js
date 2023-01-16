@@ -117,7 +117,9 @@ export class AbstractUser {
      * @returns {Promise<UploadResult>} promise containing an UploadResult
      */
     uploadProfilePicture(pictureFile, uid) {
-        let storageRef = ref(getStorage(), COLLECTIONS.profile_picture(uid))
+        console.log("PICTURE_FILE", pictureFile)
+        let fileType = pictureFile.split('.')[0]
+        let storageRef = ref(getStorage(), `${COLLECTIONS.profile_picture(uid)}.${type}`)
         return uploadBytes(storageRef, pictureFile)
     }
 
@@ -130,7 +132,7 @@ export class AbstractUser {
     getProfilePictureURL(imgUrl) {
         let storageRef
         try {
-            storageRef = ref(getStorage(), COLLECTIONS.profile_picture(imgUrl))
+            storageRef = ref(getStorage(), `${COLLECTIONS.profile_picture(imgUrl)}`)
         } catch (e) {
             throw e
         }

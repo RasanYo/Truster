@@ -1,20 +1,21 @@
-import { Text, View, StyleSheet, TouchableWithoutFeedback } from "react-native";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Text, View, StyleSheet, TouchableWithoutFeedback, TouchableOpacity } from "react-native";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../context";
+import { useFocusEffect } from "@react-navigation/native";
 
-const PostContainer = ({post, navigation}) => {
 
+
+const PostContainer = ({post, navigation, isFavorite}) => {
+
+    const {user} = useContext(UserContext)
     // const [fontsLoaded] = useFonts({
     //     'NTR': require('../assets/fonts/NTR-Regular.ttf'),
     //     'Inter-Bold' : require('../assets/fonts/Inter-Bold.ttf'),
     //     'Inter-SemiBold' : require('../assets/fonts/Inter-SemiBold.ttf'),
     //     'Inter' : require('../assets/fonts/Inter-Regular.ttf')
     //   });
-
-    useEffect(() => {
-        console.log("POSTCONTAINER", post)
-    }, [])
 
     return ( 
         <TouchableWithoutFeedback onPress={() => {
@@ -35,14 +36,20 @@ const PostContainer = ({post, navigation}) => {
                         </Text>
                     </View>
                     <View style={styles.rightContainer}>
-                        <MaterialCommunityIcons 
-                            name="cards-heart-outline"
-                            size={20}
-                            color='#979797'
-                            // style={{
-                            //     lineHeight: '0'
-                            // }}
-                        />
+                        {isFavorite ? 
+                        <TouchableOpacity activeOpacity={1} onPress={() => {user.removeFromFavorites(post.id);}}> 
+                            <MaterialCommunityIcons name="heart" size={20} color="black"/>
+                        </TouchableOpacity>
+                         : 
+                         <TouchableOpacity activeOpacity={1} onPress={() => {user.addToFavorites(post.id);}}>
+                            <MaterialCommunityIcons 
+                                name="cards-heart-outline"
+                                size={20}
+                                color='#979797'
+                            /> 
+                         </TouchableOpacity>
+                        }
+                        
                         <Text style={styles.price}>{post.price} €</Text>
                         <Text style={styles.houseType}>Appartment</Text>
                     </View>

@@ -138,7 +138,7 @@ const MakeAVisitStack = () => {
       <Stack.Screen name="PostPreview" component={PostScreen}/>
       <Stack.Screen options={{headerShown : true}} name="My Posts" component={MyPosts}/>
       <Stack.Screen name="Chat" component={Chat}/>
-      <Stack.Screen name="My Chats" component={ChatPage}/>
+      <Stack.Screen options={{headerShown : true}} name="My Chats" component={ChatPage}/>
    </Stack.Navigator>
   )
 }

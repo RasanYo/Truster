@@ -43,12 +43,12 @@ export class Guest extends AbstractUser{
      * Creates a new user and logs user in after creation.
      * Creation of user in auth service and in database 
      * @param {Object} userObject 
-     * @param {Object} adressObject 
+     * @param {Object} addressObject 
      * @returns {Promise<>} promise
      */
-    signUp(userObject, adressObject) {
+    signUp(userObject, addressObject) {
 
-        if (!userObject || !adressObject) {
+        if (!userObject || !addressObject) {
             throw new Error("Null objects passed as arguments")
         }
         Object.keys(userObject).forEach(key => {
@@ -56,9 +56,9 @@ export class Guest extends AbstractUser{
                 throw new Error(`Detected missing value for ${key}`)
         })
 
-        if (adressObject.country === null || adressObject.country === "") {
+        if (addressObject.country === null || addressObject.country === "") {
             throw new Error(`Detected missing value for country`)
-        } else if (adressObject.city === null || adressObject.city === "") {
+        } else if (addressObject.city === null || addressObject.city === "") {
             throw new Error(`Detected missing value for city`)
         }
 
@@ -82,15 +82,17 @@ export class Guest extends AbstractUser{
                                 createdAt: Timestamp.now(),
                                 dob: userObject.birthdate,
                                 email: userObject.email,
-                                adress: adressObject,
+                                address: addressObject,
                                 firstName: userObject.firstName,
                                 lastName: userObject.lastName,
                                 gender: userObject.gender,
                                 myPosts: [],
                                 myVisitRequests: [],
                                 myVisits: [],
+                                myFavorites: [],
                                 aboutMe: userObject.aboutMe,
-                                imgUrl : result
+                                imgUrl : result,
+                                chats: []
                             })
                     })
                     .then(() => {
@@ -104,6 +106,9 @@ export class Guest extends AbstractUser{
     #createUser(userObject) {
         let collectionRef = collection(getFirestore(), COLLECTIONS.REGULAR_USERS)
         const userRef = doc(collectionRef, userObject.uid)
+        if (userObject.picture == null) {
+            userObject.picture = "../assets/pictures/no-profile-pic.png"
+        }
         return this.uploadProfilePicture(userObject.picture, userObject.uid)
             .then(() => {
                 console.log("Picture uploaded")
@@ -112,7 +117,9 @@ export class Guest extends AbstractUser{
             })
             .then(result => {
                 console.log("We got the URL and it is : ")
-                if(userObject.picture == null) {result="https://firebasestorage.googleapis.com/v0/b/scamna-b0b94.appspot.com/o/images%2Fprofile_pictures%2Fdummy_profile_pic.png?alt=media&token=573848b9-10ca-447a-a2c8-9062a2b5bd7a"}
+                if(userObject.picture == null) {
+                    result="https://firebasestorage.googleapis.com/v0/b/scamna-b0b94.appspot.com/o/images%2Fprofile_pictures%2Fdummy_profile_pic.png?alt=media&token=573848b9-10ca-447a-a2c8-9062a2b5bd7a"
+                }
                 console.log(result)
 
                 return setDoc(
@@ -122,7 +129,7 @@ export class Guest extends AbstractUser{
                         createdAt: Timestamp.now(),
                         dob: userObject.birthdate,
                         email: userObject.email,
-                        adress: null,
+                        address: null,
                         firstName: userObject.firstName,
                         lastName: userObject.lastName,
                         gender: userObject.gender,
@@ -130,7 +137,9 @@ export class Guest extends AbstractUser{
                         myVisitRequests: [],
                         myVisits: [],
                         aboutMe: userObject.aboutMe,
-                        imgUrl : result
+                        imgUrl : result,
+                        myFavorites: [],
+                        chats: []
                     }
                 )
             })
