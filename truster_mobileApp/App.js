@@ -96,7 +96,7 @@ function Tabs() {
         })}
       />
 
-      <Tab.Screen name="Messages" component={MapSearchVisit}
+      <Tab.Screen name="Messages" component={ChatPage}
         options={({ route }) => ({
           tabBarIcon: ({color, size}) => (
             <AntDesign name="message1" size={size} color={color} />
@@ -138,7 +138,7 @@ const MakeAVisitStack = () => {
       <Stack.Screen name="PostPreview" component={PostScreen}/>
       <Stack.Screen options={{headerShown : true}} name="My Posts" component={MyPosts}/>
       <Stack.Screen name="Chat" component={Chat}/>
-      <Stack.Screen options={{headerShown : true}} name="My Chats" component={ChatPage}/>
+      
    </Stack.Navigator>
   )
 }
