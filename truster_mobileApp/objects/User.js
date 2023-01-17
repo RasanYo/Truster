@@ -260,14 +260,20 @@ export class User extends AbstractUser{
         })
     }
 
-    getRequests() {
+    getRequestsInfo() {
         return this.getPersonalInformation().then(snapshot => {
             return snapshot.data().myVisitRequests
         })
     }
 
+    getVisitsInfo() {
+        return this.getPersonalInformation().then(snapshot => {
+            return snapshot.data().myVisits
+        })
+    }
+
     getPost(postID) {
-        const postRef = doc(getFirestore(), `COLLECTIONS.AVAILABLE_VISITS/${postID}`)
+        const postRef = doc(getFirestore(), `${COLLECTIONS.AVAILABLE_VISITS}/${postID}`)
         return getDoc(postRef).then(snapshot => {return snapshot.data()})
     }
     
@@ -282,5 +288,31 @@ export class User extends AbstractUser{
         })
         
     }
+
+    getRequests() {
+        return this.getRequestsInfo()
+            .then(requests => {
+                const ids = requests.map(req => {return req.postID})
+                const promises = []
+                for (const id of ids) {
+                    promises.push(this.getPost(id))
+                }
+                return Promise.all(promises)
+            })
+    }
+
+    getVisits() {
+        return this.getVisitsInfo()
+            .then(visits => {
+                const ids = visits.map(vis => {return vis.postID})
+                const promises = []
+                for (const id of ids) {
+                    promises.push(this.getPost(id))
+                }
+                return Promise.all(promises)
+            })
+    }
+
+
 
 }
