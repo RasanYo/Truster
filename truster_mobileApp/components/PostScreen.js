@@ -91,7 +91,7 @@ const PostScreen = (props) => {
     }
 
     const handleChat = () => {
-        navigation.navigate('Chat', {receiverID: poster.uid})
+        navigation.navigate('Chat', {receiverID: poster.uid, postID: post.id})
     }
 
     return ( 

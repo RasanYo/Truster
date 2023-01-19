@@ -34,7 +34,7 @@ const PersonalInfo = () => {
             return user.getPersonalInformation()
         }).then(snapshot => {
             setUserData(snapshot.data())
-            toast.show("Update successful")
+            toast.show("Update successful", {type: 'success'})
         })
     }
 
@@ -79,7 +79,7 @@ const InfoSpace = ({
     const toast = useToast()
 
     const noModifyToast = () => {
-        toast.show(`Can't modify ${title}`)
+        toast.show(`Can't modify ${title}`, {type: 'warning'})
     }
 
     return (

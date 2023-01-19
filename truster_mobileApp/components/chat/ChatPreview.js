@@ -19,7 +19,7 @@ const ChatPreview = (props) => {
     }, [])
 
     return ( 
-        <TouchableOpacity onPress={() => props.navigation.navigate("Chat", {receiverID: props.receiverID})}>
+        <TouchableOpacity onPress={() => props.navigation.navigate("Chat", {receiverID: props.receiverID, postID: props.postID})}>
             <View
                 style={{
                     flexDirection: 'row',

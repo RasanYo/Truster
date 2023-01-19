@@ -13,7 +13,7 @@ const ChatPage = ({navigation}) => {
     useEffect(() => {
         user.getAllChats().then(data => {
             setChatInfos(data)
-            // console.log("CHAT_PAGE DATA", data)
+            console.log("CHAT_PAGE DATA", data)
         })
     }, [])
 
@@ -35,7 +35,7 @@ const ChatPage = ({navigation}) => {
                     }}
                     data={chatInfos}
                     renderItem={({ item }) => (
-                        <ChatPreview id={item.id} receiverID={item.receiverID} navigation={navigation}/>
+                        <ChatPreview id={item.id} receiverID={item.receiverID} postID={item.associatedPost} navigation={navigation}/>
                     )}
                 /> :
                 <Text>No open chats yet</Text>

@@ -190,9 +190,9 @@ export class User extends AbstractUser{
     }
 
 
-    openChat(receiverID) {
+    openChat(receiverID, postID) {
         console.log("openChat")
-        const docRef = doc(getFirestore(), COLLECTIONS.chat(this.#uid, receiverID))
+        const docRef = doc(getFirestore(), COLLECTIONS.chat(this.#uid, receiverID, postID))
         const users = []
 
         this.getUser(receiverID).then(data => {
@@ -208,30 +208,33 @@ export class User extends AbstractUser{
                 name: data.firstName
             })
         })
-        const id = this.getUID() < receiverID ? `${this.getUID()}_${receiverID}` : `${receiverID}_${this.getUID()}`
+        const id = this.getUID() < receiverID ? `${this.getUID()}_${receiverID}_${postID}` : `${receiverID}_${this.getUID()}_${postID}`
         this.updatePersonalInformation({
             chats: arrayUnion({
                 id: id,
-                receiverID: receiverID
+                receiverID: receiverID,
+                associatedPost: postID
             })
         })
         updateDoc(doc(getFirestore(), `users/regular/users/${receiverID}`), {
             chats: arrayUnion({
                 id: id,
-                receiverID: this.getUID()
+                receiverID: this.getUID(),
+                associatedPost: postID
             })
         })
         return setDoc(docRef, {
             users: users,
             openedAt: Timestamp.now(),
             messages: [],
-            id: id
+            id: id,
+            associatedPost: postID
         })
     }
 
-    sendMessage(receiverID, message) {
+    sendMessage(receiverID, postID, message) {
         console.log("sendMessage")
-        const docRef = doc(getFirestore(), COLLECTIONS.chat(this.#uid, receiverID))
+        const docRef = doc(getFirestore(), COLLECTIONS.chat(this.#uid, receiverID, postID))
         const msg = {
             from: this.#uid,
             sentAt: Timestamp.now(),
@@ -242,9 +245,9 @@ export class User extends AbstractUser{
         })
     }
 
-    getChatWith(receiverID) {
+    getChatWith(receiverID, postID) {
         console.log("getChatWith")
-        const docRef = doc(getFirestore(), COLLECTIONS.chat(this.#uid, receiverID))
+        const docRef = doc(getFirestore(), COLLECTIONS.chat(this.#uid, receiverID, postID))
         return getDoc(docRef).then(doc => {return doc.data()})
     }
 
