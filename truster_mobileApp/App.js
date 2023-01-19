@@ -39,6 +39,7 @@ import { LogBox } from 'react-native';
 import ChatPage from './screens/ChatPage';
 import MyRequests from './screens/profile_screens/MyRequests';
 import MyVisits from './screens/profile_screens/MyVisits';
+import PersonalInfo from './screens/profile_screens/PersonalInfo';
 
 LogBox.ignoreAllLogs();//Ignore all log notifications
 
@@ -138,6 +139,7 @@ const MakeAVisitStack = () => {
       <Stack.Screen options={{ animation:"slide_from_bottom", presentation:"modal",headerShown : true, 
       title: 'Sign Up or Login'}} name="LoginMenu" component={LoginMenu}/>
       <Stack.Screen name="PostPreview" component={PostScreen}/>
+      <Stack.Screen options={{headerShown : true}} name="Personal Informations" component={PersonalInfo}/>
       <Stack.Screen options={{headerShown : true}} name="My Posts" component={MyPosts}/>
       <Stack.Screen options={{headerShown : true}} name="My Visits" component={MyVisits}/>
       <Stack.Screen options={{headerShown : true}} name="My Requests" component={MyRequests}/>

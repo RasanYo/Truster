@@ -1,9 +1,14 @@
 import { Text, TouchableOpacity, View } from "react-native";
+import Header from "../components/Header"
 
 const Profile = ({route, navigation}) => {
 
     return ( 
-        <View style={{marginTop: 50}}>
+        <View>
+            <Header>
+                <Text style={{fontSize: 24}}>Profile</Text>
+            </Header>
+            <ProfileLink onClick={() => navigation.navigate("Personal Informations")} title="Personal Informations"/>
             <ProfileLink onClick={() => navigation.navigate("My Posts")} title="My Posts"/>
             <ProfileLink onClick={() => navigation.navigate("My Visits")}title="My upcoming Visits"/>
             <ProfileLink onClick={() => navigation.navigate("My Requests")} title="My pending Requests"/>
