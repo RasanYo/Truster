@@ -46,6 +46,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+const ProfileStack = createNativeStackNavigator();
 
 export default function App() {
 
@@ -110,7 +111,7 @@ function Tabs() {
         })}
       />
 
-      <Tab.Screen name="Profile" component={Profile}
+      <Tab.Screen name="Profile" component={ProfileMenu}
         options={({ route }) => ({
           tabBarIcon: ({color, size}) => (
             <AntDesign name="user" size={size} color={color} />
@@ -149,6 +150,20 @@ const MakeAVisitStack = () => {
       <Stack.Screen name="Chat" component={Chat}/>
       
    </Stack.Navigator>
+  )
+}
+
+const ProfileMenu = () => {
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen options={{headerShown : false}} name="Profile" component={Profile}/>
+      <ProfileStack.Screen options={{headerShown : true}} name="Personal Informations" component={PersonalInfo}/>
+      <ProfileStack.Screen options={{headerShown : true}} name="My Posts" component={MyPosts}/>
+      <ProfileStack.Screen options={{headerShown : true}} name="My Visits" component={MyVisits}/>
+      <ProfileStack.Screen options={{headerShown : true}} name="My Requests" component={MyRequests}/>
+      <ProfileStack.Screen name="Chat" component={Chat}/>
+      
+   </ProfileStack.Navigator>
   )
 }
 
