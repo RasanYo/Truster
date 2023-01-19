@@ -161,7 +161,6 @@ const ProfileMenu = () => {
       <ProfileStack.Screen options={{headerShown : true}} name="My Posts" component={MyPosts}/>
       <ProfileStack.Screen options={{headerShown : true}} name="My Visits" component={MyVisits}/>
       <ProfileStack.Screen options={{headerShown : true}} name="My Requests" component={MyRequests}/>
-      <ProfileStack.Screen name="Chat" component={Chat}/>
       
    </ProfileStack.Navigator>
   )
