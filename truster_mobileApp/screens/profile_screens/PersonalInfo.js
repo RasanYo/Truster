@@ -1,12 +1,15 @@
 import { Timestamp } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
-import { ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { useToast } from "react-native-toast-notifications";
 import { UserContext } from "../../context";
 
 const PersonalInfo = () => {
 
     const {user} = useContext(UserContext)
     const [userData, setUserData] = useState()
+
+    const toast= useToast()
 
     useEffect(() => {
         user.getPersonalInformation().then(snapshot => {
@@ -31,7 +34,7 @@ const PersonalInfo = () => {
             return user.getPersonalInformation()
         }).then(snapshot => {
             setUserData(snapshot.data())
-            console.log("UPDATED USER INFO")
+            toast.show("Update successful")
         })
     }
 
@@ -73,6 +76,12 @@ const InfoSpace = ({
     value,
     modifyData=null
 }) => {
+    const toast = useToast()
+
+    const noModifyToast = () => {
+        toast.show(`Can't modify ${title}`)
+    }
+
     return (
         <View style={{
             marginBottom: 20,
@@ -81,14 +90,17 @@ const InfoSpace = ({
             paddingVertical: 5
         }}>
             <Text style={{fontSize: 12, color: "#00D394", marginBottom: 5}}>{title}</Text>
-            {modifyData ? 
-            <TextInput 
-                style={{fontSize: 20, marginLeft: 15}}
-                value={value}
-                onChangeText={modifyData}
-                // onChange={modifyData}
-            /> :
-            <Text style={{fontSize: 20, marginLeft: 15}}>{value}</Text>}
+            <TouchableWithoutFeedback onPress={modifyData ? () => {} : noModifyToast}>
+                {modifyData ? 
+                <TextInput 
+                    style={{fontSize: 20, marginLeft: 15}}
+                    value={value}
+                    onChangeText={modifyData}
+                    // onChange={modifyData}
+                /> :
+                <Text style={{fontSize: 20, marginLeft: 15}}>{value}</Text>}
+            </TouchableWithoutFeedback>
+            
         </View>
     )
 }

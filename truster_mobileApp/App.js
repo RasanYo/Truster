@@ -40,6 +40,7 @@ import ChatPage from './screens/ChatPage';
 import MyRequests from './screens/profile_screens/MyRequests';
 import MyVisits from './screens/profile_screens/MyVisits';
 import PersonalInfo from './screens/profile_screens/PersonalInfo';
+import { ToastProvider } from 'react-native-toast-notifications';
 
 LogBox.ignoreAllLogs();//Ignore all log notifications
 
@@ -51,13 +52,15 @@ export default function App() {
   const [user, setUser] = useState(new Guest())
 
   return (
-    <ActionSheetProvider>
-      <NavigationContainer>
-        <UserContext.Provider value={{user,setUser}}>
-              <Tabs></Tabs>
-        </UserContext.Provider> 
-      </NavigationContainer>
-    </ActionSheetProvider>
+    <ToastProvider>
+      <ActionSheetProvider>
+        <NavigationContainer>
+          <UserContext.Provider value={{user,setUser}}>
+                <Tabs></Tabs>
+          </UserContext.Provider> 
+        </NavigationContainer>
+      </ActionSheetProvider>
+    </ToastProvider>
   );
 }
 
