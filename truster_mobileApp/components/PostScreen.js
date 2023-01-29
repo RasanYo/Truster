@@ -94,6 +94,10 @@ const PostScreen = (props) => {
         navigation.navigate('Chat', {receiverID: poster.uid, postID: post.id})
     }
 
+    const handleRequests = () => {
+        navigation.navigate('Requesters', {requesterIDs: post.requesters, postID: post.id})
+    }
+
     return ( 
         <View style={{flex: 1}}>
             {poster && 
@@ -158,18 +162,17 @@ const PostScreen = (props) => {
                         {/* {!isJustPreview && <TextInput placeholder="Additional information" style={styles.sendRequestText} multiline={true}></TextInput>} */}
                         
                     </View>
+
+                    <TouchableWithoutFeedback onPress={handleRequests}>
+                        <Text>Requesters</Text>
+                    </TouchableWithoutFeedback>
                     
                     {!isOwnPost && <View style={{margin:20,opacity: isJustPreview ? 0.5 : 1}}>
                             <Text style={{fontSize:20}}>Send Request</Text>
                             {isJustPreview ? <Text style={styles.sendRequestText}>Additional information</Text> : <TextInput placeholder="Additional information" style={styles.sendRequestText} multiline={true}></TextInput>}
                     </View>}
                     
-                    {/* <View>
-                        <Text>Requests</Text>
-                        <RequesterList 
-                            requesterIDs={post.requesters.map(request => {return request.uid})}
-                        />
-                    </View>  */}
+                    
                     
                     
                     

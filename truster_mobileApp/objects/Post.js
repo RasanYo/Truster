@@ -26,6 +26,7 @@ export class Post {
     #requesters
     #timeframe
     #creatorUID
+    #visitor = null
 
     constructor(address, timeframe, description="", creatorUID=null, requesters=[], id=null) {
         this.#address = address
@@ -69,6 +70,10 @@ export class Post {
         return "20"
     }
 
+    getVisitor() {
+        return this.#visitor
+    }
+
     asDataObject() {
         return {
             address: this.getAddress(),
@@ -77,7 +82,8 @@ export class Post {
             id: this.getId(),
             requesters: this.getRequesters(),
             timeframe: this.getTimeframe(),
-            creatorUID: this.getCreatorUID()
+            creatorUID: this.getCreatorUID(),
+            visitorID: this.getVisitor()
         }
     }
 

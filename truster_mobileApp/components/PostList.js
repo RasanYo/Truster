@@ -29,8 +29,13 @@ const PostList = ({
     return ( 
         <FlatList 
             data={query.posts}
-            renderItem={({ item }) => (<PostContainer post={item} navigation={nav} isFavorite={favoritesIds ? favoritesIds.includes(item.id) : false} 
-                                                      />)}
+            renderItem={({ item }) => (
+                <PostContainer 
+                    post={item} 
+                    navigation={nav} 
+                    isFavorite={favoritesIds ? favoritesIds.includes(item.id) : false} 
+                />
+            )}
             keyExtractor={post => post.id}
             onEndReached={retrieveMore}
         />

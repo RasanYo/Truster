@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import defaultPic from "../../assets/pictures/no-profile-pic.png";
 import { UserContext } from "../../context";
+import UserPreview from "../UserPreview";
 
 const ChatPreview = (props) => {
 
@@ -20,7 +21,8 @@ const ChatPreview = (props) => {
 
     return ( 
         <TouchableOpacity onPress={() => props.navigation.navigate("Chat", {receiverID: props.receiverID, postID: props.postID})}>
-            <View
+           <UserPreview receiver={receiver} profilePic={profilePic} /> 
+            {/* <View
                 style={{
                     flexDirection: 'row',
                     alignItems: 'center',
@@ -37,7 +39,7 @@ const ChatPreview = (props) => {
 
                 />
                 {receiver && <Text style={{fontSize: 18}}>{receiver.firstName} {receiver.lastName.charAt(0)}.</Text>}
-            </View>
+            </View> */}
         </TouchableOpacity>
      );
 }

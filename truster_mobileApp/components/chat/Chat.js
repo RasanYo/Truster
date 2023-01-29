@@ -26,10 +26,11 @@ const Chat = ({
             .getChatWith(receiverID, postID).then(data => {
                 if (!data) {
                     console.log("OPENING NEW CHAT WITH UID:", receiverID)
-                    user.openChat(receiverID, postID).then(() => {return true})
+                    return user.openChat(receiverID, postID).then(() => {return true})
                 } else {
                     setChatData(data)
                     console.log("CHAT_DATA", chatData)
+                    return false
                 }
                 
             })
@@ -59,6 +60,7 @@ const Chat = ({
         getChat()
         user.getUser(receiverID).then(data => {
             setReceiver(data)
+            console.log("CHAT WITH ", receiver.firstName, receiver.lastName)
         })
         user.getProfilePictureURL(receiverID).then(url => {
             setProfilePic(url)
