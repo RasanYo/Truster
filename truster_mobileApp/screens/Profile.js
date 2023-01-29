@@ -1,7 +1,12 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import Header from "../components/Header"
 
+import { MaterialIcons } from '@expo/vector-icons';
+import { UserContext } from "../context";
+import { useContext } from "react";
+
 const Profile = ({route, navigation}) => {
+    const {user,setUser} = useContext(UserContext)
 
     return ( 
         <View>
@@ -12,6 +17,10 @@ const Profile = ({route, navigation}) => {
             <ProfileLink onClick={() => navigation.navigate("My Posts")} title="My Posts"/>
             <ProfileLink onClick={() => navigation.navigate("My Visits")}title="My upcoming Visits"/>
             <ProfileLink onClick={() => navigation.navigate("My Requests")} title="My pending Requests"/>
+            <TouchableOpacity onPress={() => user.logout()} style={{flexDirection:"row", padding:10, borderColor:"black",borderRadius:10,borderWidth:1,width:120,marginTop:50,marginLeft:30}}>
+                <MaterialIcons name="logout" size={24} color="black" />
+                <Text style={{textAlign:"center",justifyContent:"auto",fontSize:20,marginLeft:10}}>Logout</Text>
+            </TouchableOpacity>
         </View>
      );
 }
