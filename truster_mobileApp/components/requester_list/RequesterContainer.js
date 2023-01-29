@@ -1,46 +1,57 @@
 import { useContext, useState } from "react"
-import { Image, Text, View } from "react-native"
-import { TouchableOpacity } from "react-native-gesture-handler"
+import { Text, TouchableOpacity, View } from "react-native"
 import { UserContext } from "../../context"
+import { useEffect } from "react";
+import UserPreview from "../UserPreview";
+import { AntDesign } from "@expo/vector-icons";
 
 const RequesterContainer = ({
     requesterID,
-    acceptRequest=() => {},
-    rejectRequest=() => {}
+    handleChat,
+    acceptRequest=(r) => {},
+    rejectRequest=(r) => {}
 }) => {
 
     const {user} = useContext(UserContext)
-    const [profilePic, setProfilePic] = useState(null)
-    const [requester, setRequester] = useState()
+
+    const [poster, setPoster] = useState({
+        firstName: "Trustable",
+        lastName: "Trustee"
+    })
 
     useEffect(() => {
-        user.getProfilePictureURL(requesterID).then(url => {
-            setProfilePic(url)
-        })
+        console.log("CHECK1")
         user.getUser(requesterID).then(data => {
-            setRequester(data)
+            setPoster(data)
         })
+        console.log("CHECK2")
     }, [])
 
+
     return ( 
-        <View>
-            <View
+        <View style={{flexDirection: 'row', borderBottomWidth: 1, borderColor: '#d0d0d0'}}>
+            <TouchableOpacity onPress={() => handleChat(requesterID)} style={{flex: 2}}>
+                <View>
+                    <UserPreview 
+                        receiver={poster} 
+                        profilePic={null} 
+                        style={{borderBottomWidth: 0, marginLeft: 20}}/>
+                </View>
+            </TouchableOpacity>
+            
+            <View 
                 style={{
-                    flexDirection: 'row',
+                    flex: 1, 
+                    flexDirection: 'row', 
+                    justifyContent: 'center',
+                    alignItems: 'center',
                 }}
             >
-                <Image 
-                    style={{height: 40, width: 40, borderRadius: 50, marginRight: 10}} 
-                    source={profilePic ? {uri: profilePic} : defaultPic}
-                />
-                {receiver && <Text>{requester.firstName} {requester.lastName.charAt(0)}.</Text>}
-            </View>
-            <View>
-                <TouchableOpacity onPress={acceptRequest}>
-                    <Text>Accept</Text>
+                <TouchableOpacity onPress={() => acceptRequest(requesterID)} style={{marginRight: 20}}>
+                    <AntDesign name="checksquare" size={40} color="#00D394"/>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={rejectRequest}>
-                    <Text>Reject</Text>
+                <TouchableOpacity onPress={() => rejectRequest(requesterID)}>
+                    <AntDesign name="closesquare" size={40} color="red"/>
                 </TouchableOpacity>
             </View>
         </View>

@@ -22,6 +22,7 @@ const MyVisits = ({navigation}) => {
                 ...queryState,
                 posts: p
             })
+            console.log("POST DATA", p)
         })
     }, [])
 

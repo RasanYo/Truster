@@ -16,11 +16,12 @@ const MyPosts = ({navigation}) => {
     })
 
     useEffect(() => {
-        user.getPosts().then(p => {
+        user.getPosts().then(posts => {
             setQueryState({
                 ...queryState,
-                posts: p
+                posts: posts
             })
+            console.log("POST DATA", posts)
         })
     }, [])
 

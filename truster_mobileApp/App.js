@@ -41,6 +41,7 @@ import MyRequests from './screens/profile_screens/MyRequests';
 import MyVisits from './screens/profile_screens/MyVisits';
 import PersonalInfo from './screens/profile_screens/PersonalInfo';
 import { ToastProvider } from 'react-native-toast-notifications';
+import Requests from './screens/Requests';
 
 LogBox.ignoreAllLogs();//Ignore all log notifications
 
@@ -148,6 +149,7 @@ const MakeAVisitStack = () => {
       <Stack.Screen options={{headerShown : true}} name="My Visits" component={MyVisits}/>
       <Stack.Screen options={{headerShown : true}} name="My Requests" component={MyRequests}/>
       <Stack.Screen name="Chat" component={Chat}/>
+      <Stack.Screen options={{headerShown : true}} name="Requesters" component={Requests}/>
       
    </Stack.Navigator>
   )

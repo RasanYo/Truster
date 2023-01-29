@@ -119,7 +119,7 @@ export class AbstractUser {
     uploadProfilePicture(pictureFile, uid) {
         console.log("PICTURE_FILE", pictureFile)
         let fileType = pictureFile.split('.')[0]
-        let storageRef = ref(getStorage(), `${COLLECTIONS.profile_picture(uid)}.png`)
+        let storageRef = ref(getStorage(), `${COLLECTIONS.profile_picture(uid)}`)
         return uploadBytes(storageRef, pictureFile)
     }
 
@@ -132,7 +132,7 @@ export class AbstractUser {
     getProfilePictureURL(imgUrl) {
         let storageRef
         try {
-            storageRef = ref(getStorage(), `${COLLECTIONS.profile_picture(imgUrl)}.png`)
+            storageRef = ref(getStorage(), `${COLLECTIONS.profile_picture(imgUrl)}`)
         } catch (e) {
             throw e
         }

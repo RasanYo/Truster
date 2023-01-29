@@ -84,20 +84,13 @@ export class User extends AbstractUser{
         const postRef = doc(postCol, postID)
         const userRef = doc(userCol, this.getUID())
 
-        const requestedAt = Timestamp.now() 
 
         return updateDoc(postRef, {
-            requesters: arrayUnion({
-                uid: this.getUID(),
-                requestedAt: requestedAt 
-            })
+            requesters: arrayUnion(this.getUID())
         })
         .then(() => {
             return updateDoc(userRef, {
-                myVisitRequests: arrayUnion({
-                    postID: postID,
-                    requestedAt: requestedAt
-                })
+                myVisitRequests: arrayUnion(postID)
             })
         })
     }
@@ -192,6 +185,8 @@ export class User extends AbstractUser{
 
     openChat(receiverID, postID) {
         console.log("openChat")
+        console.log("USER: ", this.#uid)
+        console.log("RECEIVER: ", receiverID)
         const docRef = doc(getFirestore(), COLLECTIONS.chat(this.#uid, receiverID, postID))
         const users = []
 
@@ -209,6 +204,7 @@ export class User extends AbstractUser{
             })
         })
         const id = this.getUID() < receiverID ? `${this.getUID()}_${receiverID}_${postID}` : `${receiverID}_${this.getUID()}_${postID}`
+        // console.log("CHAT ID: ", id)
         this.updatePersonalInformation({
             chats: arrayUnion({
                 id: id,
@@ -260,6 +256,13 @@ export class User extends AbstractUser{
     getPosts() {
         return this.getPersonalInformation().then(snapshot => {
             return snapshot.data().myPosts
+        }).then(posts => {
+            const ids = posts.map(post => {return post.id})
+            const promises = []
+            for (const id of ids) {
+                promises.push(this.getPost(id))
+            }
+            return Promise.all(promises)
         })
     }
 
@@ -280,24 +283,24 @@ export class User extends AbstractUser{
         return getDoc(postRef).then(snapshot => {return snapshot.data()})
     }
     
-    acceptRequest(postID, requesterID) {
-        const postRef = doc(getFirestore(), `${COLLECTIONS.AVAILABLE_VISITS}/${postID}`)
-        const newPostRef = doc(getFirestore(), `${COLLECTIONS.FINISHED_VISITS}/${postID}`)
-        this.getPost(postID).then(postData => {
-            setDoc(newPostRef, {
-                ...postData,
-                visitorID: requesterID
-            })
-        })
+    // acceptRequest(postID, requesterID) {
+    //     const postRef = doc(getFirestore(), `${COLLECTIONS.AVAILABLE_VISITS}/${postID}`)
+    //     const newPostRef = doc(getFirestore(), `${COLLECTIONS.FINISHED_VISITS}/${postID}`)
+    //     this.getPost(postID).then(postData => {
+    //         setDoc(newPostRef, {
+    //             ...postData,
+    //             visitorID: requesterID
+    //         })
+    //     })
         
-    }
+    // }
 
     getRequests() {
         return this.getRequestsInfo()
             .then(requests => {
-                const ids = requests.map(req => {return req.postID})
+                // const ids = requests.map(req => {return req.postID})
                 const promises = []
-                for (const id of ids) {
+                for (const id of requests) {
                     promises.push(this.getPost(id))
                 }
                 return Promise.all(promises)
@@ -307,13 +310,34 @@ export class User extends AbstractUser{
     getVisits() {
         return this.getVisitsInfo()
             .then(visits => {
-                const ids = visits.map(vis => {return vis.postID})
+                // const ids = visits.map(vis => {return vis.postID})
                 const promises = []
-                for (const id of ids) {
+                for (const id of visits) {
                     promises.push(this.getPost(id))
                 }
                 return Promise.all(promises)
             })
+    }
+
+    acceptRequest(postID, requesterID) {
+        const postRef = doc(getFirestore(), `${COLLECTIONS.AVAILABLE_VISITS}/${postID}`)
+        const requesterRef = doc(getFirestore(), `${COLLECTIONS.REGULAR_USERS}/${requesterID}`)
+        return updateDoc(postRef, {
+            requesters: arrayRemove(requesterID),
+            visitorID: requesterID
+        }).then(() => {
+            updateDoc(requesterRef, {
+                myVisits: arrayUnion(postID)
+            })
+        })
+        
+    }
+
+    rejectRequest(postID, requesterID) {
+        const postRef = doc(getFirestore(), `${COLLECTIONS.AVAILABLE_VISITS}/${postID}`)
+        return updateDoc(postRef, {
+            requesters: arrayRemove(requesterID),
+        })
     }
 
 
