@@ -38,14 +38,14 @@ const ProfileStack = createNativeStackNavigator();
 
 export default function App() {
 
-  const [user, setUser] = useState(new Guest())
+  const [user, setUser] = useState(new Guest());
 
   return (
     <ToastProvider>
       <ActionSheetProvider>
         <NavigationContainer>
           <UserContext.Provider value={{user,setUser}}>
-                <Tabs></Tabs>
+            <Tabs></Tabs>
           </UserContext.Provider> 
         </NavigationContainer>
       </ActionSheetProvider>
@@ -60,7 +60,7 @@ function Tabs() {
     <Tab.Navigator screenOptions={{
       headerShown : false,
 
-      }}>
+    }}>
 
 
 
@@ -108,7 +108,7 @@ function Tabs() {
       />
 
     </Tab.Navigator>
-  )
+  );
 }
 
 const getTabBarVisibility = route => {
@@ -125,11 +125,11 @@ const MakeAVisitStack = () => {
     <Stack.Navigator screenOptions={{headerShown : false,}}>
       <Stack.Screen name="Menu" component={Menu}/>
       <Stack.Screen name="MapSearchVisit" component={MapSearchVisit}/>
-      <Stack.Screen name="ListSearchVisit" component={VisitAppartments} options={{ animation:"slide_from_bottom"}}/>
+      <Stack.Screen name="ListSearchVisit" component={VisitAppartments} options={{ animation:'slide_from_bottom'}}/>
       <Stack.Screen name="VisitForm" component={VisitForm}/>
-      <Stack.Screen name="SignUp" component={SignUp} options={{presentation:"modal",headerShown : true,}}/>
-      <Stack.Screen options={{ animation:"slide_from_bottom", presentation:"modal",headerShown : true, 
-      title: 'Sign Up or Login'}} name="LoginMenu" component={LoginMenu}/>
+      <Stack.Screen name="SignUp" component={SignUp} options={{presentation:'modal',headerShown : true,}}/>
+      <Stack.Screen options={{ animation:'slide_from_bottom', presentation:'modal',headerShown : true, 
+        title: 'Sign Up or Login'}} name="LoginMenu" component={LoginMenu}/>
       <Stack.Screen name="PostPreview" component={PostScreen}/>
       <Stack.Screen options={{headerShown : true}} name="Personal Informations" component={PersonalInfo}/>
       <Stack.Screen options={{headerShown : true}} name="My Posts" component={MyPosts}/>
@@ -138,9 +138,9 @@ const MakeAVisitStack = () => {
       <Stack.Screen name="Chat" component={RealtimeChat}/>
       <Stack.Screen options={{headerShown : true}} name="Requesters" component={Requests}/>
       
-   </Stack.Navigator>
-  )
-}
+    </Stack.Navigator>
+  );
+};
 
 const ProfileMenu = () => {
   return (
@@ -151,7 +151,7 @@ const ProfileMenu = () => {
       <ProfileStack.Screen options={{headerShown : true}} name="My Visits" component={MyVisits}/>
       <ProfileStack.Screen options={{headerShown : true}} name="My Requests" component={MyRequests}/>
       
-   </ProfileStack.Navigator>
-  )
-}
+    </ProfileStack.Navigator>
+  );
+};
 

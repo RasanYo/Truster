@@ -1,28 +1,27 @@
-import { useContext, useEffect, useState } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
-import defaultPic from "../../assets/pictures/no-profile-pic.png";
-import { UserContext } from "../../context";
-import UserPreview from "../UserPreview";
+import { useContext, useEffect, useState } from 'react';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import defaultPic from '../../assets/pictures/no-profile-pic.png';
+import { UserContext } from '../../context';
+import UserPreview from '../UserPreview';
 
 const ChatPreview = (props) => {
+  const {user} = useContext(UserContext);
+  const [profilePic, setProfilePic] = useState(null);
+  const [receiver, setReceiver] = useState();
 
-    const {user} = useContext(UserContext)
-    const [profilePic, setProfilePic] = useState(null)
-    const [receiver, setReceiver] = useState()
+  useEffect(() => {
+    user.getProfilePictureURL(props.receiverID).then(url => {
+      setProfilePic(url);
+    });
+    user.getUser(props.receiverID).then(data => {
+      setReceiver(data);
+    });
+  }, []);
 
-    useEffect(() => {
-        user.getProfilePictureURL(props.receiverID).then(url => {
-            setProfilePic(url)
-        })
-        user.getUser(props.receiverID).then(data => {
-            setReceiver(data)
-        })
-    }, [])
-
-    return ( 
-        <TouchableOpacity onPress={() => props.navigation.navigate("Chat", {receiverID: props.receiverID, postID: props.postID})}>
-           <UserPreview receiver={receiver} profilePic={profilePic} /> 
-            {/* <View
+  return ( 
+    <TouchableOpacity onPress={() => props.navigation.navigate('Chat', {receiverID: props.receiverID, postID: props.postID})}>
+      <UserPreview receiver={receiver} profilePic={profilePic} /> 
+      {/* <View
                 style={{
                     flexDirection: 'row',
                     alignItems: 'center',
@@ -40,8 +39,8 @@ const ChatPreview = (props) => {
                 />
                 {receiver && <Text style={{fontSize: 18}}>{receiver.firstName} {receiver.lastName.charAt(0)}.</Text>}
             </View> */}
-        </TouchableOpacity>
-     );
-}
+    </TouchableOpacity>
+  );
+};
  
 export default ChatPreview;

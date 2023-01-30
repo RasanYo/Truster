@@ -1,18 +1,18 @@
-import { FlatList } from "react-native";
-import MessageBox from "./MessageBox";
+import { FlatList } from 'react-native';
+import MessageBox from './MessageBox';
 
 const MessageList = ({
-    messages
+  messages
 }) => {
 
-    return ( 
-        <FlatList 
-            data={messages}
-            renderItem={({ item }) => (
-                <MessageBox msg={item}/>
-            )}
-        />
-     );
-}
+  return ( 
+    <FlatList 
+      data={messages}
+      renderItem={({ item }) => (
+        <MessageBox msg={item}/>
+      )}
+    />
+  );
+};
  
 export default MessageList;
