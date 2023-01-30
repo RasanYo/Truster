@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TouchableWithoutFeedback, TouchableOpacity } from "react-native"
 import {AntDesign} from "@expo/vector-icons";
-import Autocomplete3 from "../objects/autocomplete/Autocomplete3";
+import Autocomplete from "../objects/Autocomplete";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import triggerActionSheet from "../hooks/triggerActionSheet";
 
@@ -16,7 +16,7 @@ export default function AddressInput({
             <AntDesign name="search1" size={24} style={{alignSelf:"flex-start",marginTop:15}}/>
             {isInputClicked ? 
                 <View style={styles.searchBarContainer}>
-                    <Autocomplete3 
+                    <Autocomplete 
                         setAddress={() => {}} 
                         isErasingAll={() => {}} 
                         setIsCity={() => {}}
@@ -25,7 +25,7 @@ export default function AddressInput({
                         placeholder="" 
                         isFocus={true} 
                         handleSelection={handleSelection}>
-                    </Autocomplete3>
+                    </Autocomplete>
                 </View> :  
                 <TouchableWithoutFeedback onPress={() => setIsInputClicked(true)}>
                     <View style={{marginVertical:4}}>

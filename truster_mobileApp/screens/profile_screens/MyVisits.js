@@ -1,6 +1,5 @@
-import { query } from "firebase/database";
 import { useContext, useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import PostList from "../../components/PostList";
 import { UserContext } from "../../context";
 

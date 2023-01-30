@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
+import { Image, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { UserContext } from "../context";
 import { Post } from "../objects/Post";
@@ -9,7 +9,6 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { KeyboardAvoidingView } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import RequesterList from "./requester_list/RequesterList";
 
 
 const PostScreen = (props) => {
@@ -64,14 +63,10 @@ const PostScreen = (props) => {
     } 
 
     const onRequest = e => {
-        // e.preventDefault()
-        // setShowErrors(true)
         if(!user.isLoggedIn()){
             navigation.navigate("LoginMenu")
         }else{
             console.log("connecté")
-            // const p = new Post(post.address, post.timeframe, post.description, user.getUID())
-            // user.post(p).then(() => navigation.goBack(null)).then(() => console.log("Successfully posted"))
             user.requestVisit(post.id).then(() => {
                 navigation.pop()
                 console.log("Successfully requested")
@@ -109,8 +104,7 @@ const PostScreen = (props) => {
                     contentContainerStyle={{ flexGrow: 1 }}
                     style={styles.container} showsVerticalScrollIndicator={false}>
 
-                {/* <ScrollView style={styles.container} showsVerticalScrollIndicator={false}> */}
-                    <View style={styles.mapContainer}>
+                    <View>
                         <MapView style={styles.map} initialRegion={{
                             latitude: coordinate.latitude,
                             longitude: coordinate.longitude,
@@ -207,20 +201,13 @@ function Footer(props){
 const styles = StyleSheet.create({
     container: {
         display: 'flex',
-        // flex: 1,
-        // flexDirection: 'column',
         backgroundColor: '#EBEBEB',
         paddingBottom: 70
-    },
-
-    mapContainer: {
-        // marginBottom: 50,
     },
 
     map: {
         width: "100%",
         height: 400,
-        // zIndex: 999
     },
 
     posterContainer: {
@@ -234,8 +221,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'center',
         padding: 10,
-
-        // zIndex: 1
     },
 
 
@@ -260,7 +245,6 @@ const styles = StyleSheet.create({
         width: "100%",        
         height: 70,
 
-        // padding : 10,
         paddingHorizontal: 20,
         paddingBottom: 10,
         justifyContent:"space-between",
@@ -276,12 +260,9 @@ const styles = StyleSheet.create({
         padding:10,
         borderRadius:10,
         marginRight:20,
-        // marginBottom:20,
     },
 
     footerEraseAll : {
-        // marginRight:20,
-        // marginBottom:20,
         fontSize: 20, 
         textDecorationLine:"underline",
 

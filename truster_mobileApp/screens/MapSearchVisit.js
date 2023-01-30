@@ -3,7 +3,7 @@ import MapView, { Marker, MarkerAnimated } from "react-native-maps";
 import {AntDesign} from "@expo/vector-icons";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useContext, useEffect, useRef, useState } from "react";
-import Autocomplete3 from "../objects/autocomplete/Autocomplete3";
+import Autocomplete from "../objects/Autocomplete";
 import { Ionicons } from '@expo/vector-icons';
 import { UserContext } from "../context";
 
@@ -18,12 +18,6 @@ import Card from "../components/Card";
 export default function MapSearchVisit({navigation,route}){
     const { user } = useContext(UserContext)
     const [isInputClicked,setIsInputClicked] = useState(false)
-    // const coordinate = {
-    //     latitude: 37.78825,
-    //     longitude: -122.4324,
-    //     latitudeDelta: 0.008,
-    //     longitudeDelta: 0.008,
-    // }
     const {queryResults, coords} = route.params ? route.params : [] 
     useEffect(() => {
       console.log("ARGS", queryResults, coords)
@@ -157,8 +151,6 @@ export default function MapSearchVisit({navigation,route}){
             }
         })
 
-        // console.log(country,city,radius,geo.lat,geo.lng)
-        // console.log(user.getPublicPosts(radius, [geo.lat,geo.lng] , false))
         var e = user.getPublicPosts(radius, [geo.lat,geo.lng] , false)
         e.then(y => {
           setResult(y)
@@ -186,13 +178,6 @@ export default function MapSearchVisit({navigation,route}){
           setGeoCache(aux.concat(docs.map(x => x.data().geohash)))
         })
       }
-
-      
-      
-      
-      
-
-      // user.getPublicPosts()
     }
 
     const onMarkerPress = (mapEventData) => {
@@ -209,10 +194,6 @@ export default function MapSearchVisit({navigation,route}){
     //create a onCardPress function to handle the press on a card
     const onCardPress = (post) => {
         navigation.navigate('PostPreview', {post: post, isJustPreview: false})
-        // navigation.navigate("Tabs", {
-        //   screen : "PostPreview",
-        //   params:{post: post, isJustPreview: false}
-        // })
     }
 
 
@@ -235,7 +216,7 @@ export default function MapSearchVisit({navigation,route}){
                       <AntDesign name="search1" size={24} style={{alignSelf:"flex-start",marginTop:13}}/>
                       {isInputClicked ? 
                           <View style={styles.searchBarContainer}>
-                              <Autocomplete3 setAddress={() => {}} isErasingAll={() => {}} setIsCity={() => {}}
+                              <Autocomplete setAddress={() => {}} isErasingAll={() => {}} setIsCity={() => {}}
                                       setIsStreetName={() => {}} setIsStreetNumber={() => {}} placeholder="" isFocus={true} handleSelection={handleSelection}/>
                           </View> :  
                           <TouchableWithoutFeedback onPress={() => setIsInputClicked(true)} >
@@ -263,12 +244,6 @@ export default function MapSearchVisit({navigation,route}){
                               pagingEnabled
                               snapToInterval={CARD_WIDTH+10}
                               snapToAlignment="center"
-                              // contentInset={{
-                              //     top:0,
-                              //     left : SPACING_FOR_CARD_INSET,
-                              //     bottom : 0,
-                              //     right : SPACING_FOR_CARD_INSET
-                              // }}
                               contentContainerStyle={{
                                   paddingHorizontal : Platform.OS == "android" ? SPACING_FOR_CARD_INSET : 0
                               }}
@@ -340,7 +315,6 @@ const styles = StyleSheet.create({
     map: {
       width: "100%",
       height: "100%",
-      // zIndex:-1
     },
 
     searchBar : {
@@ -359,9 +333,6 @@ const styles = StyleSheet.create({
 
     searchBarContainer: {
         position: "relative",
-        // zIndex:100,
-        // top: 13,
-        // left : 40,
         width:250,
       },
 

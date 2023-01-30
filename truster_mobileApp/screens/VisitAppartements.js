@@ -2,19 +2,12 @@ import { useContext, useEffect, useState } from "react";
 import { Text, View, StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { UserContext } from "../context";
 import PostList from "../components/PostList";
-// import { useFonts } from 'expo-font';
-import AddressInput from "../components/AddressInput";
-import { limit, orderBy, startAfter } from "firebase/firestore";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { limit, startAfter } from "firebase/firestore";
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Slider } from "@miblanchard/react-native-slider";
-import Autocomplete3 from "../objects/autocomplete/Autocomplete3";
+import Autocomplete from "../objects/Autocomplete";
 
 export default function VisitAppartments({navigation,route}){
-
-    // const [fontsLoaded] = useFonts({
-    //     'NTR': require('../assets/fonts/NTR-Regular.ttf')
-    //   });
 
     const {user} = useContext(UserContext)
     const [inputClicked, setInputClicked] = useState(false)
@@ -29,10 +22,8 @@ export default function VisitAppartments({navigation,route}){
 
     const [queryState, setQueryState] = useState({
         posts: result,
-        // posts: [],
         limit: 5,
         lastVisible: result.length ? result[result.length-1].geohash : null,
-        // lastVisible: null,
         loading: false,
         refreshing: false
     })
@@ -114,13 +105,11 @@ export default function VisitAppartments({navigation,route}){
                     <Text style={styles.title}>Visit appartments,</Text>
                     <Text style={styles.title2}>Become a Trusty</Text>
                 </View>
-                {/* <Text onPress={() => navigation.pop()}>go back</Text> */}
                 <View style={styles.slideAndSearchBar}>
                     <View 
                         style={{
                             flexDirection: 'row',
                             alignItems: 'center',
-                            // justifyContent: 'center',
                             paddingHorizontal: 100  
                         }}
                     >
@@ -140,7 +129,7 @@ export default function VisitAppartments({navigation,route}){
                         <AntDesign name="search1" size={24} style={{alignSelf:"flex-start",marginTop:15}}/>
                         {inputClicked ? 
                             <View style={styles.searchBarContainer}>
-                                <Autocomplete3 
+                                <Autocomplete 
                                     setAddress={() => {}} 
                                     isErasingAll={() => {}} 
                                     setIsCity={() => {}}
@@ -149,7 +138,7 @@ export default function VisitAppartments({navigation,route}){
                                     placeholder="" 
                                     isFocus={true} 
                                     handleSelection={handleSelection}>
-                                </Autocomplete3>
+                                </Autocomplete>
                             </View> :  
                             <TouchableWithoutFeedback onPress={() => setInputClicked(true)}>
                                 <View style={{marginVertical:4,marginHorizontal:40}}>
@@ -207,18 +196,14 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        // fontFamily: 'NTR',
         fontSize: 40,
         marginTop: 30
-        // lineHeight: 1.25
     },
 
     title2: {
-        // fontFamily: 'NTR',
         fontSize: 40,
         marginTop: 15,
         marginBottom: 30,
-        // lineHeight: 1.25,
         color: '#00D394'
     },
     slideAndSearchBar: {
@@ -234,7 +219,6 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius : 30,
         flexDirection: "row",
-        // justifyContent: "space-between",
         alignItems: "center",
     },
 

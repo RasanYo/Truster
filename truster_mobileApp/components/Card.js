@@ -1,18 +1,12 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 
 const Card = ({itemData, onPress, index}) => {
   return (
     <TouchableOpacity onPress={onPress} key={index}>
-    {/* {console.log("index "+index)} */}
       <View style={styles.card}>
         <View style={styles.cardImgWrapper}>
-          {/* <Image
-            source={itemData.image}
-            resizeMode="cover"
-            style={styles.cardImg}
-          /> */}
         </View>
         <View style={styles.cardInfo}>
           <Text style={styles.cardTitle}>{itemData.title}</Text>
@@ -29,9 +23,7 @@ export default Card;
 const styles = StyleSheet.create({
   card: {
     height: 100,
-    // backgroundColor:"red",
     width:300,
-    // marginVertical: 10,
     flexDirection: 'row',
     shadowColor: '#999',
     shadowOffset: {width: 0, height: 1},
@@ -40,9 +32,6 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginHorizontal:20,
 
-  },
-  cardImgWrapper: {
-    // flex: 1,
   },
   cardImg: {
     height: '100%',

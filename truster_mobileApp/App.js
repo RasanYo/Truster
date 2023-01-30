@@ -1,38 +1,24 @@
-
-
-// import * as firebase from 'firebase';
-
-
 import { Guest } from './objects/Guest';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 
-// import Navigator from './routes/homeStack'
 import { UserContext } from './context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LoginMenu from './screens/LoginMenu';
+import LoginMenu from './screens/authentification_screens/LoginMenu';
 import Menu from './screens/Menu';
-import SignUp from './screens/SignUp';
-import PostPreview from './screens/PostPreview';
+import SignUp from './screens/authentification_screens/SignUp';
 import VisitForm from './screens/VisitForm';
 import MapSearchVisit from './screens/MapSearchVisit';
 import { getFocusedRouteNameFromRoute, NavigationContainer } from '@react-navigation/native';
 import VisitAppartments from './screens/VisitAppartements';
-import { 
-  geohashQueryBounds, 
-  distanceBetween 
-} from "geofire-common"
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import PostScreen from './components/PostScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { color } from 'react-native-reanimated';
 import Chat from './components/chat/Chat';
 import Favorites from './screens/Favorites';
-import Reservations from './screens/Reservations';
 
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Profile from './screens/Profile';
 import MyPosts from './screens/profile_screens/MyPosts';
 import { LogBox } from 'react-native';
@@ -96,13 +82,13 @@ function Tabs() {
         })}
       />
 
-      <Tab.Screen name="Reservations" component={Reservations}
+      {/* <Tab.Screen name="Reservations" component={Reservations}
         options={({ route }) => ({
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons name="greenhouse" size={size} color={color} />
           ),
         })}
-      />
+      /> */}
 
       <Tab.Screen name="Messages" component={ChatPage}
         options={({ route }) => ({
@@ -168,14 +154,3 @@ const ProfileMenu = () => {
   )
 }
 
-
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     alignSelf: 'stretch',
-//   },
-// });

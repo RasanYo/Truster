@@ -1,9 +1,8 @@
 import { Text, View, StyleSheet, TouchableWithoutFeedback, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
-import { useContext, useEffect, useState } from "react";
+import { useContext} from "react";
 import { UserContext } from "../context";
-import { useFocusEffect } from "@react-navigation/native";
 
 
 
@@ -93,29 +92,22 @@ const styles = StyleSheet.create({
 
 
     neighborhood: {
-        // fontFamily: 'NTR',
         fontSize: 24,
         marginBottom: 5
-        // lineHeight: '0.5'
     },
 
     city: {
-        // fontFamily: 'NTR',
         fontSize: 16,
         color: '#939393',
         marginBottom: 3
-        // lineHeight: '2'
     },
 
     timeframe: {
-        // fontFamily: 'Inter-SemiBold',
         fontSize: 14,
         opacity: 0.85,
-        // lineHeight: '0.5'
     },
 
     price: {
-        // fontFamily: 'Inter-SemiBold',
         fontSize: 20,
         fontWeight: 'bold',
         marginTop: 4,
@@ -123,9 +115,7 @@ const styles = StyleSheet.create({
     },
 
     houseType: {
-        // fontFamily: 'Inter-SemiBold',
         color: '#968E8E',
         opacity: 0.74,
-        // lineHeight: '1'
     }
 })

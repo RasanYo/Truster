@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react"
-import {FlatList, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, Keyboard } from "react-native"
-// import {FlatList} from 'react-native-gesture-handler'
+import { useEffect, useState } from "react"
+import {FlatList, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native"
 import {AntDesign} from "@expo/vector-icons"
 import {FontAwesome} from "@expo/vector-icons"
 import {FontAwesome5} from '@expo/vector-icons';
@@ -8,9 +7,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import Autocomplete3 from "../objects/autocomplete/Autocomplete3";
-import { UserContext } from "../context";
-import { Post } from "../objects/Post";
+import Autocomplete from "../objects/Autocomplete";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import * as Location from 'expo-location';
 
@@ -53,13 +50,11 @@ export default function VisitForm({navigation}){
         var aux = new Date()
         aux.setDate(today.getDate() + nbDays)
         setSelectedDate(aux)
-        // console.log(aux)
     }
 
     const handleAccommodationSelected = (val) => {
         console.log(val)
         setAccomodationSelected(val)
-        // console.log(selectedDate)
     }
 
     const dateToString = (date) => {
@@ -129,17 +124,9 @@ export default function VisitForm({navigation}){
         newAddress.lat = geo.lat
         newAddress.lng = geo.lng
         newAddress.fullAddress = details.formatted_address
-
-        // console.log("geometry : " )
-        // console.log(geo.lat, geo.lng)
-        // Location.reverseGeocodeAsync(geo.lat, geo.lng).then(response => {
-        //     console.log(response)
-        // })
         getCityName(geo.lat,geo.lng);
         
-        // console.log("address_components : ")
         t.forEach(x => {
-            // console.log(x)
             if(x.types.includes("street_number")){
                 newAddress.number = x.long_name
                 setIsStreetNumber(true)
@@ -151,10 +138,6 @@ export default function VisitForm({navigation}){
             }else if(x.types.includes("country")){
                 newAddress.country = x.long_name
             }
-            // else if(x.types.includes("locality")){
-            //     newAddress.city = x.long_name
-            //     setIsCity(true)
-            // }
         })
         getCityName(geo.lat,geo.lng).then(response => {
             newAddress.city = response
@@ -199,7 +182,6 @@ export default function VisitForm({navigation}){
                 keyboardOpeningTime={10}
                 contentContainerStyle={{ flexGrow: 1 }}>
                 
-                {/* <Text onPress={() => navigation.navigate("Menu")} style={{marginTop:50}}>go back</Text> */}
                 <TouchableWithoutFeedback onPress={() => navigation.navigate("Menu")} >
                     <View style={{marginTop:50,marginLeft:15,width:35}}>
                     <Ionicons name="caret-back-circle-outline" size={30} color="black" />
@@ -212,8 +194,8 @@ export default function VisitForm({navigation}){
                     <Text style={styles.sectionTitle}>Where is the visit taking place ?</Text>
                     <View style={styles.addressInput}>
                         <AntDesign name="search1" size={20} style={{marginTop:17}}/>
-                        <Autocomplete3 setAddress={setAddress} isErasingAll={isErasingAll} setIsCity={setIsCity} 
-                        setIsStreetName={setIsStreetName} setIsStreetNumber={setIsStreetNumber} handleSelection={handleSelection}></Autocomplete3>
+                        <Autocomplete setAddress={setAddress} isErasingAll={isErasingAll} setIsCity={setIsCity} 
+                        setIsStreetName={setIsStreetName} setIsStreetNumber={setIsStreetNumber} handleSelection={handleSelection}></Autocomplete>
                     </View>
                     <View style={{marginTop:4}}>
                         {(!isCity || !isStreetName || !isStreetNumber) && <Text style={styles.necessaryInfoText}>Please Provide :</Text>}
@@ -299,20 +281,6 @@ function Footer(props){
                             }
                         },
                         isJustPreview : true})
-                    // props.navigation.navigate("Tabs",{
-                    //     screen: 'PostPreview',
-                    //     params: {
-                    //         post : {
-                    //             address: props.addressInfo,
-                    //             description: props.description,
-                    //             timeframe: {
-                    //                 start: props.date,
-                    //                 end: props.date
-                    //             }
-                    //         },
-                    //         isJustPreview : true
-                    //     }
-                    // })
                 }
 
                 }}>

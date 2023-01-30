@@ -1,7 +1,6 @@
-import { useFocusEffect } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import PostList from "../components/PostList";
 import { UserContext } from "../context";
 import { doc, onSnapshot } from "firebase/firestore";
@@ -28,19 +27,6 @@ export default function Favorites({navigation}){
         
     }, [])
 
-    // const [isFavorite, setIsFavorite] = useState()
-
-    // useEffect(() => {
-    //     console.log("using effeect in Favorites")
-    //     if(user.getFavorites().length > 0){
-    //         user.getFavoritesPosts().then(arrayOfFavoritesPosts => {
-    //             setFavorites(arrayOfFavoritesPosts)
-    //         })
-    //     }
-
-    // }, [user.favoritesIDs])
-
-
     return ( 
         <SafeAreaView style={styles.container}>
             <Text style={{marginLeft:30,fontSize:40}}>Favorites</Text>
@@ -56,14 +42,10 @@ export default function Favorites({navigation}){
      );
 }
  
-//create default css for this screen
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: 'red',
-        // alignItems: 'center',
-        // justifyContent: 'center',
     },
 });
 

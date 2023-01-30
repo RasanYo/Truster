@@ -23,16 +23,6 @@ export class Guest extends AbstractUser{
         return signInWithPopup(auth, provider)
     }
 
-    // login() {
-    //     console.log("using the second login")
-    //     return this.login(email, password)
-    //         .then(() => navigation.pop())
-    //         .catch(error => {
-    //             console.log(error.message)
-    //             // setIsGoodPassword(false) 
-    //         })
-    // }
-
     /**
      * 
      * @returns {boolean}
@@ -102,7 +92,6 @@ export class Guest extends AbstractUser{
             })
     }
 
-    //a mettre en private
     #createUser(userObject) {
         let collectionRef = collection(getFirestore(), COLLECTIONS.REGULAR_USERS)
         const userRef = doc(collectionRef, userObject.uid)

@@ -33,9 +33,7 @@ export class AbstractUser {
     }
 
 
-    //center c'est sensé être soit la position du mec qu'on lui aura demandé 
-    //ou bien s'il veut pas la lat/lng de la ville
-   getPublicPosts(radiusInKm, center, sortByPrice, ...queryConstraints) {
+    getPublicPosts(radiusInKm, center, sortByPrice, ...queryConstraints) {
         console.log("getting public posts")
         if(radiusInKm === 0 ) {
             const q = query(collection(this.db, COLLECTIONS.AVAILABLE_VISITS), ...queryConstraints)
@@ -82,12 +80,6 @@ export class AbstractUser {
                     console.log([1, 2, "Test", 5])
                 }
                 
-                // docs.forEach(x => {
-                //     console.log(x.data())
-                // })
-                // console.log(docs)
-                // setResult(docs)
-                //print the number of docs saying that the query was successful with the number of docs
                 console.log("added " + docs.length + " docs to the list")
                 return docs
             });
@@ -104,7 +96,6 @@ export class AbstractUser {
     getPostsFrom(country, city) {
         const col = collection(getFirestore(), COLLECTIONS.AVAILABLE_VISITS)
         return getDocs(col).then(snapshot => {
-            // snapshot.docs.forEach(doc => console.log(doc.data()))
             const retArray = []
             snapshot.docs.forEach(doc => retArray.push(doc.data()))
             return retArray

@@ -1,11 +1,7 @@
-import { useNavigation } from "@react-navigation/native";
-import { useContext, useEffect } from "react";
-import { TouchableWithoutFeedback, View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import { useContext } from "react";
+import { TouchableWithoutFeedback, View, Text, StyleSheet, Image } from "react-native";
 import { UserContext } from "../context";
-import { auth } from '../firebase';
 import useSharedEffect from "../hooks/useSharedEffect";
-import { Guest } from "../objects/Guest";
-import { User } from "../objects/User";
 
 export default function Menu({navigation}) {
 
@@ -56,7 +52,6 @@ const styles = StyleSheet.create({
     container : {
         height:"auto",
         alignSelf: 'stretch',
-        // backgroundColor:"red",
         marginTop : 150,
     },
 
@@ -71,7 +66,6 @@ const styles = StyleSheet.create({
         height:150,
         margin:20,
         borderRadius:20,
-        // shadowOffset: {width: -2, height: 2},  
         shadowColor: '#171717',  
         shadowOpacity: 0.2,  
         shadowRadius: 3,  
@@ -85,7 +79,6 @@ const styles = StyleSheet.create({
 
     buttonDescription : {
         color:"#7c7c7c",
-        // lineHeight:"25%",
         textAlign:"center",
         fontSize:16,
     }
