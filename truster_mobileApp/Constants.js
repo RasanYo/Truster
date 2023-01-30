@@ -12,6 +12,9 @@ export const COLLECTIONS = {
 
     chat: (from, to, postID) => {
         return from < to ? `chats/${from}_${to}_${postID}` : `chats/${to}_${from}_${postID}` 
+    },
+    messages: (from, to, postID) => {
+        return `${COLLECTIONS.chat(from, to, postID)}/messages`
     }
     // profile_picture_URL: (uid) => {
     //     const supportedTypes = ['jpg', 'png', 'jpeg']
