@@ -19,7 +19,7 @@ export default function Menu({navigation}) {
             <View>
                 
                 
-                <Image style={{
+                {/* <Image style={{
                     display:"block",
                     marginLeft:"auto",
                     marginRight:"auto",
@@ -28,7 +28,7 @@ export default function Menu({navigation}) {
                     height:45
                 }}
                     source={require('../assets/pictures/logo.png')}
-                />
+                /> */}
             </View>
             
             <TouchableWithoutFeedback onPress={() => {
