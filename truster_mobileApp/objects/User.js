@@ -14,7 +14,10 @@ import {
     // query,
     where,
     Firestore,
-    arrayRemove
+    arrayRemove,
+    onSnapshot,
+    addDoc,
+    orderBy
 } from "firebase/firestore"
 import { COLLECTIONS } from "../Constants"
 // import { 
@@ -226,6 +229,70 @@ export class User extends AbstractUser{
             id: id,
             associatedPost: postID
         })
+    }
+
+    openRealtimeChat(receiverID, postID) {
+        const path = COLLECTIONS.chat(this.#uid, receiverID, postID)
+        const docRef = doc(getFirestore(), path)
+        const id = path.split("/")[1]
+
+        this.updatePersonalInformation({
+            chats: arrayUnion({
+                id: id,
+                receiverID: receiverID,
+                associatedPost: postID
+            })
+        })
+        updateDoc(doc(getFirestore(), `users/regular/users/${receiverID}`), {
+            chats: arrayUnion({
+                id: id,
+                receiverID: this.getUID(),
+                associatedPost: postID
+            })
+        })
+
+        const users = []
+        return this.getUser(receiverID).then(data => {
+            users.push({
+                uid: receiverID,
+                name: data.firstName
+            })
+            return
+        }).then(() => {
+            return this.getUser(this.#uid)
+        }).then(data => {
+            users.push({
+                uid: this.#uid,
+                name: data.firstName
+            })
+            return 
+        }).then(() => {
+            return setDoc(docRef, {
+                users: users,
+                openedAt: Timestamp.now(),
+                id: id,
+                associatedPost: postID
+            })
+        })
+        
+        
+
+        // const id = this.getUID() < receiverID ? `${this.getUID()}_${receiverID}_${postID}` : `${receiverID}_${this.getUID()}_${postID}`
+    }
+
+    sendRealtimeMessage(receiverID, postID, message) {
+        const messageColRef = collection(getFirestore(), COLLECTIONS.messages(this.#uid, receiverID, postID))
+        const msg = {
+            from: this.#uid,
+            sentAt: Timestamp.now(),
+            message: message
+        }
+        return addDoc(messageColRef, msg)
+    }
+
+    getRealtimeChatListener(receiverID, postID, callback) {
+        const chatColRef = collection(getFirestore(), COLLECTIONS.messages(this.#uid, receiverID, postID))
+        return onSnapshot(chatColRef, callback)
     }
 
     sendMessage(receiverID, postID, message) {
