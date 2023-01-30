@@ -19,12 +19,16 @@ export default function Menu({navigation}) {
             <View>
                 
                 
-                {/* <Image style={{
+                <Image style={{
                     display:"block",
                     marginLeft:"auto",
                     marginRight:"auto",
                     marginBottom:50,
-                }}/> */}
+                    width:350,
+                    height:45
+                }}
+                    source={require('../assets/pictures/logo.png')}
+                />
             </View>
             
             <TouchableWithoutFeedback onPress={() => {
@@ -44,7 +48,6 @@ export default function Menu({navigation}) {
                     <Text style={styles.buttonDescription}>You're looking for someone to trust with your visit ?</Text>
                 </View>
             </TouchableWithoutFeedback>
-            <Text onPress={() => user.logout()}> Logout</Text>
         </View>
     );
 }
