@@ -29,6 +29,7 @@ const Profile = ({route, navigation}) => {
       
           <TouchableOpacity onPress={() => user.logout()} style={{flexDirection:'row', padding:10, borderColor:'black',borderRadius:10,borderWidth:1,width:120,marginTop:50,marginLeft:30}}>
             <MaterialIcons name="logout" size={24} color="black" />
+
             
             <Text style={{textAlign:'center', fontSize:20, marginLeft:10}}>Logout</Text> 
           </TouchableOpacity>

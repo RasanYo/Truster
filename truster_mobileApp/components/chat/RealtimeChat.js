@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { Image, KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { UserContext } from '../../context';
 import Footer from '../Footer';
@@ -26,8 +26,6 @@ const RealtimeChat = ({
 
   const [openNewChat, setOpenNewChat] = useState(false);
   const [messages, setMessages] = useState(null);
-
-  const [unsub, setUnsub] = useState(null);
 
   const toast = useToast()
   
@@ -90,7 +88,7 @@ const RealtimeChat = ({
           paddingTop: 20, 
           alignItems: 'center',
           justifyContent: 'center',
-          flexDirection: 'row'
+          flexDirection: 'row',
         }}
       >
         <Text 
@@ -116,16 +114,16 @@ const RealtimeChat = ({
         </TouchableOpacity>
                 
       </Header>
-      <KeyboardAwareScrollView style={{paddingTop: 10, marginBottom: 80}}>
+      <ScrollView style={{paddingTop: 10, marginBottom: 80}}>
         {messages ? 
           <MessageList messages={messages}/> :
           <Text>Write a message to open the chat</Text>}
-      </KeyboardAwareScrollView>
+      </ScrollView>
             
       {/* <KeyboardAwareScrollView nestedScrollEnabled={true}
         keyboardShouldPersistTaps='handled'
         contentContainerStyle={{ flexGrow: 1 }}> */}
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'position' : null} enabled>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ?'position' : null} enabled>
         <Footer 
           style={{
             flexDirection: 'row',
@@ -164,10 +162,9 @@ const RealtimeChat = ({
           >
             <Text style={{color: 'white'}}>Send</Text>
           </TouchableOpacity>
-
         </Footer>
-        </KeyboardAvoidingView>
       {/* </KeyboardAwareScrollView> */}
+      </KeyboardAvoidingView>
     </View>
   );
 };
