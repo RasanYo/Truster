@@ -16,7 +16,7 @@ export default function Menu({navigation}) {
                 
                 
         <Image style={{
-          display:'block',
+          // display:'block',
           marginLeft:'auto',
           marginRight:'auto',
           marginBottom:50,
