@@ -9,6 +9,7 @@ import Header from '../Header';
 import MessageList from './MessageList';
 import defaultPic from '../../assets/pictures/no-profile-pic.png';
 import { Timestamp } from 'firebase/firestore';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const RealtimeChat = ({
   navigation,
@@ -27,27 +28,7 @@ const RealtimeChat = ({
   const [messages, setMessages] = useState(null);
 
   const [unsub, setUnsub] = useState(null);
-  user.getRealtimeChatListener(receiverID, postID, (snapshot) => {
-    let msg = [];
-    let docs = snapshot.docs;
-        
-    if (!docs.length) setOpenNewChat(true);
-    else {
-      for (let doc in snapshot.docs) {
-        let data = snapshot.docs[doc].data();
-        msg.push(data);
-      }
-      msg.sort((a, b) => {
-        let timeA = new Timestamp(a.sentAt.seconds, a.sentAt.nanoseconds).toDate();
-        let timeB = new Timestamp(b.sentAt.seconds, b.sentAt.nanoseconds).toDate();
-        if (timeA < timeB) return -1;
-        else return 1;
-      });
-            
-      setMessages(msg);
-    }
-        
-  });
+  
 
   useEffect(() => {
     if (openNewChat) {
@@ -57,6 +38,27 @@ const RealtimeChat = ({
   }, [openNewChat]);
 
   useEffect(() => {
+    user.getRealtimeChatListener(receiverID, postID, (snapshot) => {
+      let msg = [];
+      let docs = snapshot.docs;
+          
+      if (!docs.length) setOpenNewChat(true);
+      else {
+        for (let doc in snapshot.docs) {
+          let data = snapshot.docs[doc].data();
+          msg.push(data);
+        }
+        msg.sort((a, b) => {
+          let timeA = new Timestamp(a.sentAt.seconds, a.sentAt.nanoseconds).toDate();
+          let timeB = new Timestamp(b.sentAt.seconds, b.sentAt.nanoseconds).toDate();
+          if (timeA < timeB) return -1;
+          else return 1;
+        });
+              
+        setMessages(msg);
+      }
+          
+    });
     user.getPost(postID).then(p => setPost(p));
     user.getUser(receiverID).then(data => {
       setReceiver(data);
@@ -68,7 +70,10 @@ const RealtimeChat = ({
   }, []);
 
   const handleSendMessage = () => {
-    user.sendRealtimeMessage(receiverID, postID, message).then(() => setMessage(null));
+    user.sendRealtimeMessage(receiverID, postID, message).then(() => {
+      console.log('Sent message');
+      setMessage(null);
+    });
   };
 
   return ( 
@@ -78,7 +83,7 @@ const RealtimeChat = ({
           paddingTop: 20, 
           alignItems: 'center',
           justifyContent: 'center',
-          flexDirection: 'row'
+          flexDirection: 'row',
         }}
       >
         <Text 
@@ -104,15 +109,16 @@ const RealtimeChat = ({
         </TouchableOpacity>
                 
       </Header>
-      <View style={{marginTop: 10}}>
-        {messages ? 
-          <MessageList messages={messages}/> :
-          <Text>Write a message to open the chat</Text>}
-      </View>
-            
       <KeyboardAwareScrollView nestedScrollEnabled={true}
         keyboardShouldPersistTaps='handled'
         contentContainerStyle={{ flexGrow: 1 }}>
+        <View style={{paddingTop: 10,marginBottom:30}}>
+          {messages ? 
+            <MessageList messages={messages}/> :
+            <Text>Write a message to open the chat</Text>}
+        </View>
+            
+      
         <Footer 
           style={{
             flexDirection: 'row',

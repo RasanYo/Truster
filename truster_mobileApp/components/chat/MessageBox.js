@@ -19,7 +19,7 @@ const MessageBox = ({
 
     var time = `${timeFormat(date.getHours())}:${timeFormat(date.getMinutes())}`;
     if (date.getDate() != today.getDate()) {
-      time = `${time} ${date.getDay()}-${date.getMonth()}-${date.getFullYear()}`;
+      time = `${time} ${timeFormat(date.getDay())}-${timeFormat(date.getMonth() + 1)}-${date.getFullYear()}`;
     }
     return time;
   };

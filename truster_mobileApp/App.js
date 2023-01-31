@@ -114,7 +114,7 @@ function Tabs() {
 const getTabBarVisibility = route => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? 'Feed';
 
-  if( routeName == 'MapSearchVisit' || routeName == 'VisitForm' || routeName == 'PostPreview' || routeName == 'SignUp' || routeName == 'LoginMenu') {
+  if( routeName == 'MapSearchVisit' || routeName == 'VisitForm' || routeName == 'PostPreview' || routeName == 'SignUp' || routeName == 'LoginMenu' || routeName == 'Chat') {
     return 'none';
   }
   return 'flex';
