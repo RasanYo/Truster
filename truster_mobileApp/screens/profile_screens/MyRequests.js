@@ -1,38 +1,38 @@
-import { useContext, useEffect, useState } from "react";
-import { Text, View } from "react-native";
-import PostList from "../../components/PostList";
-import { UserContext } from "../../context";
+import { useContext, useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
+import PostList from '../../components/PostList';
+import { UserContext } from '../../context';
 
 const MyRequests = ({navigation}) => {
 
-    const {user} = useContext(UserContext)
+  const {user} = useContext(UserContext);
 
-    const [queryState, setQueryState] = useState({
-        posts: null,
-        limit: 5,
-        lastVisible: null,
-        loading: false,
-        refreshing: false
-    })
+  const [queryState, setQueryState] = useState({
+    posts: null,
+    limit: 5,
+    lastVisible: null,
+    loading: false,
+    refreshing: false
+  });
 
-    useEffect(() => {
-        user.getRequests().then(p => {
-            setQueryState({
-                ...queryState,
-                posts: p
-            })
-        })
-    }, [])
+  useEffect(() => {
+    user.getRequests().then(p => {
+      setQueryState({
+        ...queryState,
+        posts: p
+      });
+    });
+  }, []);
 
-    return ( 
-        <View>
-            {queryState.posts && <PostList 
-                query={queryState}
-                retrieveMore={() => {}}
-                nav={navigation}
-            />}
-        </View>
-     );
-}
+  return ( 
+    <View>
+      {queryState.posts && <PostList 
+        query={queryState}
+        retrieveMore={() => {}}
+        nav={navigation}
+      />}
+    </View>
+  );
+};
  
 export default MyRequests;
