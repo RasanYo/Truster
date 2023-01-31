@@ -14,7 +14,7 @@ const MessageBox = ({
     }
 
     const toTimeString = (seconds, nanoseconds) => {
-        let date = new Timestamp(seconds, nanoseconds).toDate()
+        let date = new Timestamp(seconds, nanoseconds).toDate().
         let today = Timestamp.now().toDate()
 
         var time = `${timeFormat(date.getHours())}:${timeFormat(date.getMinutes())}`
