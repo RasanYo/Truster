@@ -7,6 +7,9 @@ const MessageList = ({
 
   return ( 
     <FlatList 
+      style={{
+        paddingBottom: 20
+      }}
       data={messages}
       renderItem={({ item }) => (
         <MessageBox msg={item}/>

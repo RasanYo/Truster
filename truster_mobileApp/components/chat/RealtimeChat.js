@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { UserContext } from '../../context';
 import Footer from '../Footer';
@@ -96,7 +96,7 @@ const RealtimeChat = ({
             style={{height: 40, width: 40, borderRadius: 50, marginRight: 10,}} 
             source={profilePic ? {uri: profilePic} : defaultPic}
           />
-          {receiver && <Text style={{fontSize: 18}}>REALTIME {receiver.firstName} {receiver.lastName.charAt(0)}.</Text>}
+          {receiver && <Text style={{fontSize: 18}}>{receiver.firstName} {receiver.lastName.charAt(0)}.</Text>}
         </View>
         <TouchableOpacity 
           onPress={post ? () => navigation.navigate('PostPreview', {post: post, isJusPreview: true}) : () => {}}
@@ -108,15 +108,15 @@ const RealtimeChat = ({
         </TouchableOpacity>
                 
       </Header>
-      <View style={{marginTop: 10}}>
+      <ScrollView style={{paddingTop: 10, marginBottom: 80}}>
         {messages ? 
           <MessageList messages={messages}/> :
           <Text>Write a message to open the chat</Text>}
-      </View>
+      </ScrollView>
             
-      <KeyboardAwareScrollView nestedScrollEnabled={true}
+      {/* <KeyboardAwareScrollView nestedScrollEnabled={true}
         keyboardShouldPersistTaps='handled'
-        contentContainerStyle={{ flexGrow: 1 }}>
+        contentContainerStyle={{ flexGrow: 1 }}> */}
         <Footer 
           style={{
             flexDirection: 'row',
@@ -153,11 +153,11 @@ const RealtimeChat = ({
               alignItems: 'center'
             }}
           >
-            <Text style={{color: 'white',}}>Send</Text>
+            <Text style={{color: 'white'}}>Send</Text>
           </TouchableOpacity>
 
         </Footer>
-      </KeyboardAwareScrollView>
+      {/* </KeyboardAwareScrollView> */}
     </View>
   );
 };
