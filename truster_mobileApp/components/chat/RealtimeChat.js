@@ -9,6 +9,7 @@ import Header from '../Header';
 import MessageList from './MessageList';
 import defaultPic from '../../assets/pictures/no-profile-pic.png';
 import { Timestamp } from 'firebase/firestore';
+import { Ionicons } from '@expo/vector-icons';
 
 const RealtimeChat = ({
   navigation,
@@ -85,12 +86,17 @@ const RealtimeChat = ({
           flexDirection: 'row',
         }}
       >
-        <Text 
+        {/* <Text 
           onPress={() => navigation.pop()}
           style={{marginLeft: 0, flex: 1}}
         >
                     Go back
-        </Text>
+        </Text> */}
+        <TouchableOpacity onPress={() => navigation.pop()} style={{marginLeft: 0, flex: 1}}>
+          <Ionicons name="caret-back-circle-outline" size={30} color="black" 
+          />
+        </TouchableOpacity>
+        
         <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row', flex: 2}}>  
           <Image 
             style={{height: 40, width: 40, borderRadius: 50, marginRight: 10,}} 

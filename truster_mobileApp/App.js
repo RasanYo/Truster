@@ -35,6 +35,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const ProfileStack = createNativeStackNavigator();
+const ChatStack = createNativeStackNavigator();
 
 export default function App() {
 
@@ -91,8 +92,11 @@ function Tabs() {
         })}
       /> */}
 
-      <Tab.Screen name="Messages" component={ChatPage}
+      <Tab.Screen name="Messages" component={ChatStackBuilder}
         options={({ route }) => ({
+          tabBarStyle: {
+            display: getTabBarVisibility(route),
+          },
           tabBarIcon: ({color, size}) => (
             <AntDesign name="message1" size={size} color={color} />
           ),
@@ -135,10 +139,19 @@ const MakeAVisitStack = () => {
       <Stack.Screen options={{headerShown : true}} name="My Posts" component={MyPosts}/>
       <Stack.Screen options={{headerShown : true}} name="My Visits" component={MyVisits}/>
       <Stack.Screen options={{headerShown : true}} name="My Requests" component={MyRequests}/>
-      <Stack.Screen name="Chat" component={RealtimeChat}/>
+      {/* <Stack.Screen name="Chat" component={RealtimeChat}/> */}
       <Stack.Screen options={{headerShown : true}} name="Requesters" component={Requests}/>
       
     </Stack.Navigator>
+  );
+};
+
+const ChatStackBuilder = () => {
+  return (
+    <ChatStack.Navigator screenOptions={{headerShown : false,}}>
+      <ChatStack.Screen name="ChatPage" component={ChatPage}/>
+      <ChatStack.Screen name="Chat" component={RealtimeChat}/>      
+    </ChatStack.Navigator>
   );
 };
 
