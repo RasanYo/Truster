@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { UserContext } from '../../context';
 import Footer from '../Footer';
@@ -9,6 +9,7 @@ import Header from '../Header';
 import MessageList from './MessageList';
 import defaultPic from '../../assets/pictures/no-profile-pic.png';
 import { Timestamp } from 'firebase/firestore';
+import { useToast } from 'react-native-toast-notifications';
 
 const RealtimeChat = ({
   navigation,
@@ -27,6 +28,8 @@ const RealtimeChat = ({
   const [messages, setMessages] = useState(null);
 
   const [unsub, setUnsub] = useState(null);
+
+  const toast = useToast()
   
 
   useEffect(() => {
@@ -69,10 +72,15 @@ const RealtimeChat = ({
   }, []);
 
   const handleSendMessage = () => {
-    user.sendRealtimeMessage(receiverID, postID, message).then(() => {
-      console.log("Sent message")
-      setMessage(null)
-    });
+    if (message) {
+      user.sendRealtimeMessage(receiverID, postID, message).then(() => {
+        console.log("Sent message")
+        setMessage(null)
+      });
+    } else {
+      toast.show("Cannot send empty message", {type: 'normal', duration: 1000, placement: 'top'})
+    }
+    
   };
 
   return ( 
@@ -108,15 +116,16 @@ const RealtimeChat = ({
         </TouchableOpacity>
                 
       </Header>
-      <ScrollView style={{paddingTop: 10, marginBottom: 80}}>
+      <KeyboardAwareScrollView style={{paddingTop: 10, marginBottom: 80}}>
         {messages ? 
           <MessageList messages={messages}/> :
           <Text>Write a message to open the chat</Text>}
-      </ScrollView>
+      </KeyboardAwareScrollView>
             
       {/* <KeyboardAwareScrollView nestedScrollEnabled={true}
         keyboardShouldPersistTaps='handled'
         contentContainerStyle={{ flexGrow: 1 }}> */}
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'position' : null} enabled>
         <Footer 
           style={{
             flexDirection: 'row',
@@ -157,6 +166,7 @@ const RealtimeChat = ({
           </TouchableOpacity>
 
         </Footer>
+        </KeyboardAvoidingView>
       {/* </KeyboardAwareScrollView> */}
     </View>
   );
