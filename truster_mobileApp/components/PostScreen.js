@@ -27,7 +27,7 @@ const PostScreen = (props) => {
   const [userData, setUserData] = useState();
 
   useEffect(() => {
-    console.log("VISITOR", post.visitorID)
+    console.log('VISITOR', post.visitorID);
     if (isJustPreview) {
       if(user.isLoggedIn()){
         user.getPersonalInformation().then(snapshot => {
@@ -47,7 +47,7 @@ const PostScreen = (props) => {
         setPoster(data);
         console.log('POSTER ID', data.uid);
         console.log('YOUR ID', user.getUID());
-        let bool = user.getUID() === data.uid
+        let bool = user.getUID() === data.uid;
         console.log('CAN MODIFY ?', bool);
         setIsOwnPost(bool);  
 
