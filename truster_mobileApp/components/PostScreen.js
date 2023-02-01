@@ -193,10 +193,10 @@ const PostScreen = (props) => {
                   <Ionicons name="caret-forward-circle-outline" size={30} color="black" style={{marginLeft: 'auto'}}/>
                 </TouchableOpacity>}
                     
-                {!isOwnPost && <View style={{margin:20,opacity: isJustPreview ? 0.5 : 1}}>
+                {/* {!isOwnPost && <View style={{margin:20,opacity: isJustPreview ? 0.5 : 1}}>
                   <Text style={{fontSize:20}}>Send Request</Text>
                   {isJustPreview ? <Text style={styles.sendRequestText}>Additional information</Text> : <TextInput placeholder="Additional information" style={styles.sendRequestText} multiline={true}></TextInput>}
-                </View>}
+                </View>} */}
                     
                     
                     
