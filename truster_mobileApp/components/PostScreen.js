@@ -45,7 +45,7 @@ const PostScreen = (props) => {
         setPoster(data);
         console.log('POSTER ID', data.uid);
         console.log('YOUR ID', user.getUID());
-        setIsOwnPost(user.getUID() === poster.uid);
+        setIsOwnPost(user.getUID() === data.uid);
         console.log('CAN MODIFY ?', isOwnPost);
 
       });

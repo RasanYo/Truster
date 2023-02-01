@@ -11,6 +11,7 @@ import defaultPic from '../../assets/pictures/no-profile-pic.png';
 import { Timestamp } from 'firebase/firestore';
 import { Ionicons } from '@expo/vector-icons';
 import { useToast } from 'react-native-toast-notifications';
+import { FontAwesome } from '@expo/vector-icons';
 
 const RealtimeChat = ({
   navigation,
@@ -116,7 +117,7 @@ const RealtimeChat = ({
             flex: 1
           }}
         >
-          <Text>See Location</Text>
+          <FontAwesome name="map-marker" size={24} color="black" style={{right:0}}/>
         </TouchableOpacity>
                 
       </Header>
