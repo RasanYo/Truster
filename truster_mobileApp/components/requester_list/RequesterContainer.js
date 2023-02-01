@@ -29,31 +29,34 @@ const RequesterContainer = ({
 
 
   return ( 
-    <View style={{flexDirection: 'row', borderBottomWidth: 1, borderColor: '#d0d0d0'}}>
-      <TouchableOpacity onPress={() => handleChat(requesterID)} style={{flex: 2}}>
-        <View>
-          <UserPreview 
-            receiver={poster} 
-            profilePic={null} 
-            style={{borderBottomWidth: 0, marginLeft: 20}}/>
+    <View style={{borderBottomWidth: 1, borderColor: '#d0d0d0', paddingHorizontal: 20}}>
+      <View style={{flexDirection: 'row'}}>
+        <TouchableOpacity onPress={() => handleChat(requesterID)} style={{flex: 2}}>
+          <View>
+            <UserPreview 
+              receiver={poster} 
+              profilePic={null} 
+              style={{borderBottomWidth: 0}}/>
+          </View>
+        </TouchableOpacity>
+              
+        <View 
+          style={{
+            flex: 1, 
+            flexDirection: 'row', 
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <TouchableOpacity onPress={() => acceptRequest(requesterID)} style={{marginRight: 20}}>
+            <AntDesign name="checksquare" size={40} color="#00D394"/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => rejectRequest(requesterID)}>
+            <AntDesign name="closesquare" size={40} color="red"/>
+          </TouchableOpacity>
         </View>
-      </TouchableOpacity>
-            
-      <View 
-        style={{
-          flex: 1, 
-          flexDirection: 'row', 
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <TouchableOpacity onPress={() => acceptRequest(requesterID)} style={{marginRight: 20}}>
-          <AntDesign name="checksquare" size={40} color="#00D394"/>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => rejectRequest(requesterID)}>
-          <AntDesign name="closesquare" size={40} color="red"/>
-        </TouchableOpacity>
       </View>
+      <Text style={{alignSelf: 'center'}}>(Tap to chat)</Text>
     </View>
   );
 };

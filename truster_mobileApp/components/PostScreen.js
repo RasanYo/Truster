@@ -1,14 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
-import { Image, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { UserContext } from '../context';
 import { Post } from '../objects/Post';
 import defaultPic from '../assets/pictures/no-profile-pic.png';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 
 import { MaterialIcons } from '@expo/vector-icons';
 import { KeyboardAvoidingView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import UserCard from './UserCard';
 
 
 const PostScreen = (props) => {
@@ -26,6 +27,7 @@ const PostScreen = (props) => {
   const [userData, setUserData] = useState();
 
   useEffect(() => {
+    console.log('VISITOR', post.visitorID);
     if (isJustPreview) {
       if(user.isLoggedIn()){
         user.getPersonalInformation().then(snapshot => {
@@ -45,8 +47,9 @@ const PostScreen = (props) => {
         setPoster(data);
         console.log('POSTER ID', data.uid);
         console.log('YOUR ID', user.getUID());
-        setIsOwnPost(user.getUID() === data.uid);
-        console.log('CAN MODIFY ?', isOwnPost);
+        let bool = user.getUID() === data.uid;
+        console.log('CAN MODIFY ?', bool);
+        setIsOwnPost(bool);  
 
       });
       user.getProfilePictureURL(post.creatorUID).then(url => {
@@ -85,8 +88,9 @@ const PostScreen = (props) => {
     }
   };
 
-  const handleChat = () => {
-    navigation.navigate('Chat', {receiverID: poster.uid, postID: post.id});
+  const handleChat = (uid) => {
+    navigation.navigate('Messages'); 
+    navigation.navigate('Chat', {receiverID: uid, postID: post.id});
   };
 
   const handleRequests = () => {
@@ -143,9 +147,9 @@ const PostScreen = (props) => {
                     </View>
                   </View>                                                             
                 </View>
-                <TouchableWithoutFeedback onPress={handleChat}>
+                {/* <TouchableWithoutFeedback onPress={handleChat}>
                   <Text>Chat</Text>
-                </TouchableWithoutFeedback>
+                </TouchableWithoutFeedback> */}
                 <View style={styles.infoContainer}>
                   <Text style={{fontSize: 24}}>{post.address.city}</Text>
                   <Text style={{fontSize: 18, color: '#bfbfbfbf', marginBottom: 15}}>{post.address.npa} {post.address.city}, {post.address.country}</Text>
@@ -157,9 +161,37 @@ const PostScreen = (props) => {
                         
                 </View>
 
-                <TouchableWithoutFeedback onPress={handleRequests}>
-                  <Text>Requesters</Text>
-                </TouchableWithoutFeedback>
+                {isOwnPost && 
+                <TouchableOpacity 
+                  onPress={post.visitorID ? () => handleChat(post.visitorID) : handleRequests}
+                  style={{
+                    marginTop: 10,
+                    borderTopWidth: 1,
+                    borderBottomWidth: 1,
+                    borderColor: '#d0d0d0',
+                    paddingHorizontal: 20,
+                  }}
+                >
+                  <Text style={{fontSize: 14}}>Visitor (tap to chat)</Text>
+                  {post.visitorID && <UserCard uid={post.visitorID} style={{borderBottomWidth: 0}}/>}
+                  {!post.visitorID && <Text>No visitor yet</Text>}
+                </TouchableOpacity>}
+
+                {isOwnPost && 
+                <TouchableOpacity 
+                  onPress={handleRequests}
+                  style={{
+                    marginTop: 5,
+                    borderTopWidth: 1,
+                    borderBottomWidth: 1,
+                    borderColor: '#d0d0d0',
+                    padding: 20,
+                    flexDirection: 'row'
+                  }}
+                >
+                  <Text style={{fontSize: 20}}>Requesters</Text>
+                  <Ionicons name="caret-forward-circle-outline" size={30} color="black" style={{marginLeft: 'auto'}}/>
+                </TouchableOpacity>}
                     
                 {!isOwnPost && <View style={{margin:20,opacity: isJustPreview ? 0.5 : 1}}>
                   <Text style={{fontSize:20}}>Send Request</Text>

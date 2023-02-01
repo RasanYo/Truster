@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useContext } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, Text } from 'react-native';
 import { UserContext } from '../../context';
 import RequesterContainer from './RequesterContainer';
 
@@ -38,17 +38,20 @@ const RequesterList = ({
   };
 
   return ( 
-    <FlatList 
-      data={ids}
-      renderItem={({ item }) => (
-        <RequesterContainer 
-          requesterID={item}
-          handleChat={handleChat}
-          acceptRequest={acceptRequest}
-          rejectRequest={rejectRequest}
-        />
-      )}
-    />
+    <>
+      {!ids.length && <Text style={{alignSelf: 'center', marginTop: 10}}>You received no requests yet</Text>}
+      <FlatList 
+        data={ids}
+        renderItem={({ item }) => (
+          <RequesterContainer 
+            requesterID={item}
+            handleChat={handleChat}
+            acceptRequest={acceptRequest}
+            rejectRequest={rejectRequest}
+          />
+        )}
+      />
+    </>
   );
 };
  

@@ -2,7 +2,6 @@ import { useContext } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { Image, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { UserContext } from '../../context';
 import Footer from '../Footer';
 import Header from '../Header';
@@ -73,9 +72,9 @@ const RealtimeChat = ({
 
   const handleSendMessage = () => {
     if (message) {
+      setMessage(null);
       user.sendRealtimeMessage(receiverID, postID, message).then(() => {
         console.log('Sent message');
-        setMessage(null);
       });
     } else {
       toast.show('Cannot send empty message', {type: 'normal', duration: 1000, placement: 'top'});
@@ -100,8 +99,7 @@ const RealtimeChat = ({
                     Go back
         </Text> */}
         <TouchableOpacity onPress={() => navigation.pop()} style={{marginLeft: 0, flex: 1}}>
-          <Ionicons name="caret-back-circle-outline" size={30} color="black" 
-          />
+          <Ionicons name="caret-back-circle-outline" size={30} color="black" />
         </TouchableOpacity>
         
         <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row', flex: 2}}>  

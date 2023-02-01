@@ -16,6 +16,7 @@ const Requests = ({
 
   const handleChat = (receiverID) => {
     console.log('REDIRECTING TO CHAT');
+    navigation.navigate('Messages')
     navigation.navigate('Chat', {receiverID: receiverID, postID: postID});
   };
 
