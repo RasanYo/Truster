@@ -116,12 +116,12 @@ export class Guest extends AbstractUser{
           {
             uid: userObject.uid,
             createdAt: Timestamp.now(),
-            dob: userObject.birthdate,
+            // dob: userObject.birthdate,
             email: userObject.email,
-            address: null,
+            // address: null,
             firstName: userObject.firstName,
             lastName: userObject.lastName,
-            gender: userObject.gender,
+            // gender: userObject.gender,
             myPosts: [],
             myVisitRequests: [],
             myVisits: [],
@@ -165,16 +165,20 @@ export class Guest extends AbstractUser{
               firstName: userData.firstName,
               lastName: userData.lastName,
               email: userData.email,
-              birthdate: null,
+              // birthdate: null,
               aboutMe: null,
-              gender: null
+              // gender: null
             };
-            this.#createUser(userObject);
+            return this.#createUser(userObject).then(() => {return uid});
           }
           return uid;
         });
 
       });
+  }
+
+  googleSignUp() {
+    
   }
 
   isEmailRegistered(email) {

@@ -50,6 +50,12 @@ export default function LoginMenu({navigation}){
     });
 
   };
+
+  const googleAuth = () => {
+    user.signupWithGoogle().then(() => {
+      navigation.pop();
+    })
+  }
     
 
   const setEmail = text => {
@@ -98,9 +104,9 @@ export default function LoginMenu({navigation}){
         <Text>
                         Continue with : 
         </Text>
-        <View style={styles.componentStyle}>  
+        <TouchableOpacity style={styles.componentStyle} onPress={googleAuth}>  
           <Text style={{textAlign:'center'}}>Google</Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.componentStyle}>  
           <Text style={{textAlign:'center'}}>Apple</Text>
         </View>
