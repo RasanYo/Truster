@@ -83,7 +83,7 @@ const PostScreen = (props) => {
       navigation.navigate('LoginMenu');
     }else{
       console.log('connecté');
-      const p = new Post(post.address, post.timeframe, post.description, user.getUID());
+      const p = new Post(post.address, post.timeframe, post.price, post.description, user.getUID(), );
       user.post(p).then(() => navigation.navigate('Menu')).then(() => console.log('Successfully posted'));
     }
   };
@@ -154,6 +154,7 @@ const PostScreen = (props) => {
                   <Text style={{fontSize: 24}}>{post.address.city}</Text>
                   <Text style={{fontSize: 18, color: '#bfbfbfbf', marginBottom: 15}}>{post.address.npa} {post.address.city}, {post.address.country}</Text>
                   <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 20}}>{post.timeframe.start}  -  {post.timeframe.end}</Text>
+                  <Text style={{fontSize: 16, marginBottom: 20}}>Compensation: <Text style={{fontSize: 20, fontWeight: 'bold'}}>{post.price} €</Text></Text>
                   <Text style={{fontSize: 20, marginBottom: 10}}>Description</Text>
                   <Text style={{marginBottom: 20}}>{post.description || 'No description'}</Text>
                   {/* <Text style={{fontSize: 22}}>Send Request</Text> */}

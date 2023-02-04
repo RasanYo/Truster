@@ -25,6 +25,7 @@ export default function VisitForm({navigation}) {
   const [isCity, setIsCity] = useState(false);
   const [isStreetNumber, setIsStreetNumber] = useState(false);
   const [isStreetName, setIsStreetName] = useState(false);
+  const [price, setPrice] = useState(false);
 
   const [isErasingAll, setIsErasingAll] = useState(false);
 
@@ -238,8 +239,13 @@ export default function VisitForm({navigation}) {
           </View>
         </View>}
 
-
         {/* Third Block */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Compensation for a visitor (€)</Text>
+          <TextInput value={price} onChangeText={(val) => setPrice(val.replace(/[^0-9]/g, ''))} placeholder="20"/>
+        </View>
+
+        {/* Fourth Block */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Description</Text>
           <TextInput placeholder="Describe here what you would expect from your trusty" placeholderTextColor={'gray'} value={description} onChangeText={setDescription} multiline></TextInput>
@@ -247,7 +253,7 @@ export default function VisitForm({navigation}) {
 
       </KeyboardAwareScrollView>
 
-      {selectedDate ? <Footer eraseAll={eraseAll} navigation={navigation} addressInfo={address} date={dateToString(selectedDate)} description={description}></Footer> : null}
+      {selectedDate ? <Footer eraseAll={eraseAll} navigation={navigation} addressInfo={address} date={dateToString(selectedDate)} description={description} price={price}></Footer> : null}
     </View>
 
 
@@ -262,11 +268,12 @@ function Footer(props) {
       </Text>
       <TouchableWithoutFeedback onPress={() => {
         console.log(props.addressInfo);
-        if (props.addressInfo && props.date) {
+        if (props.addressInfo && props.date && props.price) {
           props.navigation.navigate('PostPreview', {
             post: {
               address: props.addressInfo,
               description: props.description,
+              price: props.price,
               timeframe: {
                 start: props.date,
                 end: props.date,

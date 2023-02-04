@@ -208,7 +208,7 @@ export default function MapSearchVisit({navigation,route}){
                       </MapView>}
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Menu')} >
           <View style={{marginTop:50,marginLeft:15,width:35,position:'absolute'}}>
-            <Ionicons name="caret-back-circle-outline" size={30} color="white" />
+            <Ionicons name="caret-back-circle-outline" size={30} color="black" />
           </View>
         </TouchableWithoutFeedback>
 

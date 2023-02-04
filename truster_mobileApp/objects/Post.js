@@ -8,6 +8,7 @@ export const postConverter = {
       description: post.getDescription(),
       geohash: post.getGeohash(),
       id: post.getId(),
+      price: post.getPrice(),
       requesters: post.getRequesters(),
       timeframe: post.getTimeframe(),
       creatorUID: post.getCreatorUID()
@@ -15,7 +16,7 @@ export const postConverter = {
   },
   fromFirestore: (snapshot, options) => {
     const data = snapshot.data(options);
-    return new Post(data.address, data.timeframe, data.description, data.creatorUID, data.requesters, data.id);
+    return new Post(data.address, data.timeframe, data.price, data.description, data.creatorUID, data.requesters, data.id);
   }
 };
 export class Post {
@@ -26,14 +27,16 @@ export class Post {
   #requesters;
   #timeframe;
   #creatorUID;
+  #price;
   #visitor = null;
 
-  constructor(address, timeframe, description='', creatorUID=null, requesters=[], id=null) {
+  constructor(address, timeframe, price, description='', creatorUID=null, requesters=[], id=null) {
     this.#address = address;
     this.#timeframe = timeframe;
     this.#description = description;
     this.#creatorUID = creatorUID;
     this.#requesters = requesters;
+    this.#price = price;
 
     this.#id = id ? id : this.#createID();
   }
@@ -67,7 +70,7 @@ export class Post {
   }
 
   getPrice() {
-    return '20';
+    return this.#price;
   }
 
   getVisitor() {
@@ -80,10 +83,12 @@ export class Post {
       description: this.getDescription(),
       geohash: this.getGeohash(),
       id: this.getId(),
+      price: this.getPrice(),
       requesters: this.getRequesters(),
       timeframe: this.getTimeframe(),
       creatorUID: this.getCreatorUID(),
-      visitorID: this.getVisitor()
+      visitorID: this.getVisitor(),
+      
     };
   }
 
