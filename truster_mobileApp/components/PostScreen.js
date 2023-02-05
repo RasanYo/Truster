@@ -10,6 +10,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { KeyboardAvoidingView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import UserCard from './UserCard';
+import { doc, onSnapshot } from 'firebase/firestore';
+import { COLLECTIONS } from '../Constants';
 
 
 const PostScreen = (props) => {
@@ -19,10 +21,25 @@ const PostScreen = (props) => {
   const {post, isJustPreview} = props.route.params;
   const [isOwnPost, setIsOwnPost] = useState(false);
 
+  const [postData, setPostData] = useState(post);
+
+  useEffect(() => {
+    if(!isJustPreview) {
+      const unsub = onSnapshot(doc(user.db, COLLECTIONS.AVAILABLE_VISITS, post.id), (doc) => {
+        consoloe.log('isJustPreview : ', isJustPreview);
+        
+        console.log('Current data in POST SCREEN: ', doc.data());
+        setPostData(doc.data());
+      });
+    }
+    
+  }, []);
+
   const [poster, setPoster] = useState({
     firstName: 'Trustable',
     lastName: 'Trustee'
   });
+
   const [profilePic, setProfilePic] = useState(null);
   const [userData, setUserData] = useState();
 
@@ -31,13 +48,18 @@ const PostScreen = (props) => {
     if (isJustPreview) {
       if(user.isLoggedIn()){
         user.getPersonalInformation().then(snapshot => {
-          setUserData(snapshot.data());
+          var aux = snapshot.data();
+          console.log('YOYOYOYOYOYOYOYO : ' + aux.firstName);
+          setPoster({
+            firstName : aux.firstName,
+            lastName : aux.lastName
+          });
         })
           .catch(err => {
             console.log('ERROR: ', err);
           });
       }else {
-        setUserData({
+        setPoster({
           firstName : 'You',
           lastName : 'X'
         });
@@ -131,7 +153,8 @@ const PostScreen = (props) => {
                     <View>
                       <Image 
                         style={{height: 40, width: 40, borderRadius: 50, marginRight: 10}} 
-                        source={profilePic ? {uri: profilePic} : defaultPic}
+                        // source={profilePic ? {uri: profilePic} : defaultPic}
+                        source={defaultPic}
                       />
                     </View>
                     <View>
@@ -174,8 +197,8 @@ const PostScreen = (props) => {
                   }}
                 >
                   <Text style={{fontSize: 14}}>Visitor (tap to chat)</Text>
-                  {post.visitorID && <UserCard uid={post.visitorID} style={{borderBottomWidth: 0}}/>}
-                  {!post.visitorID && <Text>No visitor yet</Text>}
+                  {postData && postData.visitorID && <UserCard uid={postData.visitorID} style={{borderBottomWidth: 0}}/>}
+                  {postData && !postData.visitorID && <Text>No visitor yet</Text>}
                 </TouchableOpacity>}
 
                 {isOwnPost && 
@@ -190,7 +213,7 @@ const PostScreen = (props) => {
                     flexDirection: 'row'
                   }}
                 >
-                  <Text style={{fontSize: 20}}>Requesters</Text>
+                  <Text style={{fontSize: 20,marginBottom:150}}>Requesters</Text>
                   <Ionicons name="caret-forward-circle-outline" size={30} color="black" style={{marginLeft: 'auto'}}/>
                 </TouchableOpacity>}
                     
@@ -217,9 +240,12 @@ export default PostScreen;
 function Footer(props){
   return(
     <View style={styles.footer}>
-      <Text style={styles.footerEraseAll} onPress={() => props.navigation.pop()}>
+      <TouchableOpacity onPress={() => props.navigation.pop()}>
+        <Text style={styles.footerEraseAll} >
                 Go back
-      </Text>
+        </Text>
+      </TouchableOpacity>
+      
       {!props.isOwnPost && <TouchableWithoutFeedback onPress={props.onSubmit}>
         <View style={styles.footerPreview} >
           {props.isJustPreview && <MaterialIcons name="add-to-photos" size={24} color="black" />}

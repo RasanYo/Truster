@@ -105,6 +105,9 @@ function Tabs() {
 
       <Tab.Screen name="Profile" component={ProfileMenu}
         options={({ route }) => ({
+          tabBarStyle: {
+            display: getTabBarVisibility(route),
+          },
           tabBarIcon: ({color, size}) => (
             <AntDesign name="user" size={size} color={color} />
           ),
@@ -118,7 +121,7 @@ function Tabs() {
 const getTabBarVisibility = route => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? 'Feed';
 
-  if( routeName == 'MapSearchVisit' || routeName == 'VisitForm' || routeName == 'PostPreview' || routeName == 'SignUp' || routeName == 'LoginMenu' || routeName == 'Chat') {
+  if( routeName == 'MapSearchVisit' || routeName == 'VisitForm' || routeName == 'PostPreview' || routeName == 'SignUp' || routeName == 'LoginMenu' || routeName == 'Chat' || routeName == 'Requesters') {
     return 'none';
   }
   return 'flex';
@@ -163,7 +166,10 @@ const ProfileMenu = () => {
       <ProfileStack.Screen options={{headerShown : true}} name="My Posts" component={MyPosts}/>
       <ProfileStack.Screen options={{headerShown : true}} name="My Visits" component={MyVisits}/>
       <ProfileStack.Screen options={{headerShown : true}} name="My Requests" component={MyRequests}/>
-      
+      <ProfileStack.Screen options={{headerShown : false,}} name="PostPreview" component={PostScreen}/>
+      <ProfileStack.Screen options={{ animation:'slide_from_bottom', presentation:'modal',headerShown : true, 
+        title: 'Sign Up or Login'}} name="LoginMenu" component={LoginMenu}/>
+      <ProfileStack.Screen options={{headerShown : true}} name="Requesters" component={Requests}/>
     </ProfileStack.Navigator>
   );
 };

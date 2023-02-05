@@ -1,22 +1,22 @@
-import { useActionSheet } from '@expo/react-native-action-sheet'
+import { useActionSheet } from '@expo/react-native-action-sheet';
 
 export default function triggerActionSheet(options) {
 
-    const { showActionSheetWithOptions } = useActionSheet();
+  const { showActionSheetWithOptions } = useActionSheet();
 
-    const onPress = () => {
-        const destructiveButtonIndex = 1;
-        const cancelButtonIndex = 2;
-        const title = "Filter by"
+  const onPress = () => {
+    const destructiveButtonIndex = 1;
+    const cancelButtonIndex = 2;
+    const title = 'Filter by';
     
-        showActionSheetWithOptions(
-          {
-            options,
-            title
-          }
-        );
+    showActionSheetWithOptions(
+      {
+        options,
+        title
       }
+    );
+  };
 
-    return (onPress)
+  return (onPress);
 
 }
