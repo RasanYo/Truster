@@ -3,11 +3,11 @@
 Moving to a new city ? Having doubts about your new home offers ?
 Save your time and your money, get someone living nearby to visit your new place before moving in.
 
-Welcome to Truster, the innovative solution designed to make your relocation journey seamless and trustworthy. Truster connects you with locals (Trustees) in your prospective city who can visit apartments on your behalf. This unique service aims to save you time, money, and the hassle of dealing with potential scams.
+Welcome to Truster, the solution designed to make your relocation journey seamless and trustworthy. Truster connects you with locals (Trustees) in your prospective city who can visit apartments on your behalf. This unique service aims to save you time, money, and the hassle of dealing with potential scams.
 
 ## Project Overview
 
-Truster is developed with a focus on providing a reliable and user-friendly platform for people planning to move. Our mobile app is built using React Native, and our web application is crafted with React, ensuring a seamless experience across devices. The project had to be stopped, but we're excited to share our codebase with the community.
+Truster is developed with a focus on providing a reliable and user-friendly platform for people planning to move. Our mobile app is built using React Native, and our web application is crafted with React. The project had to be stopped, but we're excited to share our codebase with the community.
 
 ### Features
 
