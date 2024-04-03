@@ -11,7 +11,7 @@ Truster is developed with a focus on providing a reliable and user-friendly plat
 Both our web and mobile applications share a core set of features:
 
 - **Account Creation**: Sign up and log in functionality integrated with Firebase for secure authentication.
-![simulator_screenshot_33FF2845-BE61-48D6-B974-BFEF1AEA0934](https://github.com/RasanYo/Truster/assets/25123133/9b5d7de4-e8eb-4750-944a-d866190fb493)
+<img src="https://github.com/RasanYo/Truster/assets/25123133/9b5d7de4-e8eb-4750-944a-d866190fb493" width="250">
 
 
 - **Profile Customization**: Easily update and modify your profile information to better match with suitable apartment visits.
