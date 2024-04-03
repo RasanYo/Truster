@@ -15,7 +15,8 @@ Both our web and mobile applications share a core set of features:
 
 - **Account Creation**: Sign up and log in functionality integrated with Firebase for secure authentication.
 - **Profile Customization and Personal Dashboard**: Easily update and modify your profile information, and access all your personal details including your posts, upcoming visits, pending requests, and personal data, all in one convenient location.
-<img src="https://github.com/RasanYo/Truster/assets/25123133/12671432-280c-43e4-8b5b-bd337bf9d379" width="250">
+
+<img src="https://github.com/RasanYo/Truster/assets/25123133/12671432-280c-43e4-8b5b-bd337bf9d379" width="250"><img src="https://github.com/RasanYo/Truster/assets/25123133/94fddae4-cd0c-422d-a37f-0d63f6e04be5" width="250">
 - **Role Flexibility**: Upon signing up, you become a Truster by default. However, you have the option to take on the role of a Trustee, offering your local insights and visiting apartments for others.
 <img src="https://github.com/RasanYo/Truster/assets/25123133/9b5d7de4-e8eb-4750-944a-d866190fb493" width="250">
 - **Posting Visits**: As a Truster, you can create posts detailing your apartment visit needs, including location, budget, desired feedback timeline, housing type, and additional specifics.
@@ -26,6 +27,5 @@ Both our web and mobile applications share a core set of features:
 <img src="https://github.com/RasanYo/Truster/assets/25123133/a2685796-c3d0-4972-9588-7d34effd5a45" width="250"> <img src="https://github.com/RasanYo/Truster/assets/25123133/a436a005-399c-4a26-bb59-41571922da26" width="250">
 - **Engagement**: Users can like posts to bookmark them for future reference and access their message history for ongoing communications.
 <img src="https://github.com/RasanYo/Truster/assets/25123133/90c6d81a-d3b8-41c7-ba75-a8f0ac6100e8" width="250">
-- **Personal dashboard** within the profile allows users to have a holistic view of their activities and engagements on the Truster platform
-<img src="https://github.com/RasanYo/Truster/assets/25123133/94fddae4-cd0c-422d-a37f-0d63f6e04be5" width="250">
+
 
